@@ -1,0 +1,426 @@
+[
+    {
+        "category": "Visual Skills",
+        "skillName": "Hand-Draw",
+        "skillLevel": 70,
+        "iconSource": "/src/Assets/SVG/HandDraw_Icon.svg",
+        "isVisible": true,
+        "type": "skill"
+    },
+    {
+        "category": "Visual Skills",
+        "skillName": "Writing",
+        "skillLevel": 65,
+        "iconSource": "/src/Assets/SVG/Writing_Icon.svg",
+        "isVisible": true,
+        "type": "skill"  
+    },
+    {
+        "category": "Visual Skills",
+        "skillName": "2D Graphics",
+        "skillLevel": 90,
+        "iconSource": "/src/Assets/SVG/2DGraphics_Icon.svg",
+        "isVisible": true,
+        "type": "skill"  
+    },
+    {
+        "category": "Visual Skills",
+        "skillName": "3D Graphics",
+        "skillLevel": 75,
+        "iconSource": "/src/Assets/SVG/3DGraphics_Icon.svg",
+        "isVisible": true,
+        "type": "skill"  
+    },
+    {
+        "category": "Visual Skills",
+        "skillName": "Procedural Programming",
+        "skillLevel": 78,
+        "iconSource": "/src/Assets/SVG/ProceduralProgramming_Icon.svg",
+        "isVisible": true,
+        "type": "skill"
+    },
+    {
+        "category": "Visual Skills",
+        "skillName": "UX/UI Prototyping",
+        "skillLevel": 65,
+        "iconSource": "/src/Assets/SVG/UXUIPrototyping_Icon.svg",
+        "isVisible": true,
+        "type": "skill"  
+    },
+    {
+        "category": "Visual Skills",
+        "skillName": "Applied Mathematics",
+        "skillLevel": 92,
+        "iconSource": "/src/Assets/SVG/AppliedMathematics2.svg",
+        "isVisible": true,
+        "type": "skill"  
+    },
+    {
+        "category": "Visual Skills",
+        "skillName": "Creative Web Front-end",
+        "skillLevel": 55,
+        "iconSource": "/src/Assets/SVG/Illustration_Icon.svg",
+        "isVisible": true,
+        "type": "skill"  
+    },
+    {
+        "category": "Musical Skills",
+        "skillName": "Arrangement",
+        "skillLevel": 70,
+        "iconSource": "/src/Assets/SVG/Arrangement_Icon.svg",
+        "isVisible": true,
+        "type": "skill"
+    },
+    {
+        "category": "Musical Skills",
+        "skillName": "Film Scoring",
+        "skillLevel": 45,
+        "iconSource": "/src/Assets/SVG/FilmScoring_Icon.svg",
+        "isVisible": true,
+        "type": "skill"  
+    },
+    {
+        "category": "Musical Skills",
+        "skillName": "Sound Edition & Production",
+        "skillLevel": 90,
+        "iconSource": "/src/Assets/SVG/SoundEdition_Icon.svg",
+        "isVisible": true,
+        "type": "skill"  
+    },
+    {
+        "category": "Musical Skills",
+        "skillName": "Songwriting",
+        "skillLevel": 95,
+        "iconSource": "/src/Assets/SVG/SongWriting_Icon.svg",
+        "isVisible": true,
+        "type": "skill"  
+    },
+    {
+        "category": "Main Academic Formation",
+        "name": "Bachelors Degree of Architecture (Focused in Technology)",
+        "description": "Degree by Universidad Iberoamericana (UNIBE), Dominican Republic.",
+        "startDate": 2012,
+        "endDate": 2022,
+        "isVisible": true,
+        "type": "background"  
+    },
+    {
+        "category": "Main Academic Formation",
+        "name": "Music Production Interchange",
+        "description": "Interchange year in Escuela de Música de Buenos Aires, Argentina.",
+        "startDate": 2020,
+        "endDate": 2020,
+        "isVisible": true,
+        "type": "background"  
+    },
+    {
+        "category": "Main Academic Formation",
+        "name": "Bachelors Degree of Contemporary Music (Focused in Bussiness)",
+        "description": "Degree by Universidad Nacional Pedro Henríquez Ureña (UNPHU), Dominican Republic.",
+        "startDate": 2016,
+        "endDate": 2021,
+        "isVisible": true,
+        "type": "background"  
+    },
+    {
+        "category": "Main Academic Formation",
+        "name": "Graphics Arts Technical High-School",
+        "description": "Degree by Instituto Técnico Salesiano (ITESA), Dominican Republic.",
+        "startDate": 2008,
+        "endDate": 2012,
+        "isVisible": true,
+        "type": "background"  
+    },
+    {
+        "category": "Work Experience",
+        "name": "UX Sub-Manager (User Experience Design)",
+        "description": "UX Designer for Business App Team in Banco Popular Dominicano.",
+        "startDate": 2021,
+        "endDate": "Present",
+        "isVisible": true,
+        "type": "background"  
+    },
+    {
+        "category": "Work Experience",
+        "name": "Art Team Manager (Temporary Work)",
+        "description": "Team manager for visual art production at Pyhex Work. Conceptual designer and artist recluiter.",
+        "startDate": 2020,
+        "endDate": 2020,
+        "isVisible": true,
+        "type": "background"  
+    },
+    {
+        "category": "Work Experience",
+        "name": "UX/UI Designer for more that 7 Entrepreneurs projects",
+        "description": "Work for Hire for Globusiness 360, Kaba Consulting, Emobit, Mufic Pest Control, Kleio Technology, Legine App.",
+        "startDate": 2019,
+        "endDate": "Present",
+        "isVisible": true,
+        "type": "background"  
+    },
+    {
+        "category": "Work Experience",
+        "name": "Architectural Designer (Outsourcing)",
+        "description": "For Party Fiesta. More than 10 Architectural and Interior projects for new branch offices around the country.",
+        "startDate": 2018,
+        "endDate": 2022,
+        "isVisible": true,
+        "type": "background"  
+    },
+    {
+        "category": "Work Experience",
+        "name": "Prototype Innovation Designs",
+        "description": "New mechanism and special foodtruck for Pantojao RD.",
+        "startDate": 2017,
+        "endDate": 2018,
+        "isVisible": true,
+        "type": "background"  
+    },
+    {
+        "category": "Work Experience",
+        "name": "Architecture and Interior Designer",
+        "description": "For LAV Arquitectura (work in offices).",
+        "startDate": 2015,
+        "endDate": 2015,
+        "isVisible": true,
+        "type": "background"  
+    },
+    {
+        "category": "Work Experience",
+        "name": "Graphic Illustrator and Designer",
+        "description": "For Luminence Design. Graphic Design and digital illustrations (Animation and 3D logotypes).",
+        "startDate": 2014,
+        "endDate": 2014,
+        "isVisible": true,
+        "type": "background"  
+    },
+    {
+        "category": "Work Experience",
+        "name": "Graphic Designer",
+        "description": "For F&S Gráfica at Santo Domingo, República Dominicana.",
+        "startDate": 2014,
+        "endDate": 2014,
+        "isVisible": true,
+        "type": "background"  
+    },
+    {
+        "category": "Complementary Education",
+        "name": "Agile Project Management: Scrum Methodology Workshop",
+        "description": "36 theoretical-practical hours about Agile maagement philosophy focused on Scrum Framework.",
+        "startDate": 2022,
+        "endDate": 2022,
+        "isVisible": true,
+        "type": "background"  
+    },
+    {
+        "category": "Complementary Education",
+        "name": "Introduction to Design Systems with Figma",
+        "description": "Design Systems concept and implementation online course by Domestika.com.",
+        "startDate": 2020,
+        "endDate": 2020,
+        "isVisible": true,
+        "type": "background"  
+    },
+    {
+        "category": "Complementary Education",
+        "name": "Introduction to JavaScript Develop",
+        "description": "Essential Programming in JavaScript for interactive websites. Online course by Domestika.com.",
+        "startDate": 2019,
+        "endDate": 2019,
+        "isVisible": true,
+        "type": "background"  
+    },
+    {
+        "category": "Complementary Education",
+        "name": "Web Develop with HTML5 and CSS3",
+        "description": "48 theoretical-practical hours about Web Develop. Online course by Domestika.com.",
+        "startDate": 2018,
+        "endDate": 2018,
+        "isVisible": true,
+        "type": "background"  
+    },
+    {
+        "category": "Complementary Education",
+        "name": "ARQTUR Caribe 2015 (Workshop at Puerto Plata, Dominican Republic)",
+        "description": "Workshop on Identity in island architecture. (3 days experience)",
+        "startDate": 2015,
+        "endDate": 2015,
+        "isVisible": true,
+        "type": "background"  
+    },
+    {
+        "category": "Complementary Education",
+        "name": "Academic table on Semiotics in XXI century design",
+        "description": "15 hous about Design semiotics. Certified by Universidad Iberoamericana (UNIBE).",
+        "startDate": 2014,
+        "endDate": 2014,
+        "isVisible": true,
+        "type": "background"  
+    },
+    {
+        "category": "Complementary Education",
+        "name": "Master-class: Elía Zenghelis",
+        "description": "About architectural representation.",
+        "startDate": 2014,
+        "endDate": 2014,
+        "isVisible": true,
+        "type": "background"  
+    },
+    {
+        "category": "Awards & Honours",
+        "name": "First Place - Innovation Contest in payment methods.",
+        "description": "2nd annual Innovation Contest in payment methods by Central Bank of Dominican Republic. (with Digital Platform project: LeGine)",
+        "startDate": 2018,
+        "endDate": 2018,
+        "isVisible": true,
+        "type": "background"  
+    },
+    {
+        "category": "Awards & Honours",
+        "name": "Second Place - Innovation and Business Creation Contest",
+        "description": "Contest 5.0 by UNPHU emprende (with art project: “Prané”)",
+        "startDate": 2017,
+        "endDate": 2017,
+        "isVisible": true,
+        "type": "background"  
+    },
+    {
+        "category": "Awards & Honours",
+        "name": "Second Place - Coast Guard booth Architectural design",
+        "description": "Coast Guard booth creation Contest by ARQ-TUR Carribe.",
+        "startDate": 2015,
+        "endDate": 2015,
+        "isVisible": true,
+        "type": "background"  
+    },
+    {
+        "category": "Awards & Honours",
+        "name": "First Place - Literary Contest",
+        "description": "7th UNIBE 2013 Literary Contest: Category of Cinematographic Script",
+        "startDate": 2013,
+        "endDate": 2013,
+        "isVisible": true,
+        "type": "background"  
+    },
+    {
+        "category": "Awards & Honours",
+        "name": "First Place - Music Composition",
+        "description": "Music Composition Contest by M-Gallery",
+        "startDate": 2012,
+        "endDate": 2012,
+        "isVisible": true,
+        "type": "background"  
+    },
+    {
+        "name": "Figma",
+        "description": "UX/UI Design",
+        "skillLevel": 70,
+        "iconSource": "/src/Assets/PNG/Figma_Icon.png",
+        "isVisible": true,
+        "type": "software"  
+    },
+    {
+        "name": "Sketch App",
+        "description": "UX/UI Design",
+        "skillLevel": 50,
+        "iconSource": "/src/Assets/PNG/SketchApp_Icon.png",
+        "isVisible": true,
+        "type": "software"  
+    },
+    {
+        "name": "Unity 3D",
+        "description": "Interactivity & Real-Time Render",
+        "skillLevel": 30,
+        "iconSource": "/src/Assets/PNG/Unity3D_Icon.png",
+        "isVisible": true,
+        "type": "software"  
+    },
+    {
+        "name": "Adobe Illustrator",
+        "description": "2D Vector Design",
+        "skillLevel": 90,
+        "iconSource": "/src/Assets/PNG/Illustrator_Icon.png",
+        "isVisible": true,
+        "type": "software"  
+    },
+    {
+        "name": "Adobe Photoshop",
+        "description": "Pixel Design",
+        "skillLevel": 70,
+        "iconSource": "/src/Assets/PNG/Photoshop_Icon.png",
+        "isVisible": true,
+        "type": "software"  
+    },
+    {
+        "name": "Adobe Premiere Pro",
+        "description": "Video Edition",
+        "skillLevel": 55,
+        "iconSource": "/src/Assets/PNG/PremierePro_Icon.png",
+        "isVisible": true,
+        "type": "software"  
+    },
+    {
+        "name": "Rhinoceros 3D",
+        "description": "3D NURBS Design",
+        "skillLevel": 80,
+        "iconSource": "/src/Assets/PNG/Rhino3D_Icon.png",
+        "isVisible": true,
+        "type": "software"  
+    },
+    {
+        "name": "Grasshopper",
+        "description": "Procedural/Parametric Design",
+        "skillLevel": 65,
+        "iconSource": "/src/Assets/PNG/Grasshopper_Icon.png",
+        "isVisible": true,
+        "type": "software"  
+    },
+    {
+        "name": "Houdini",
+        "description": "Rigging/Particles/Effects",
+        "skillLevel": 30,
+        "iconSource": "/src/Assets/PNG/Houdini_Icon.png",
+        "isVisible": true,
+        "type": "software"  
+    },
+    {
+        "name": "Cinema4D",
+        "description": "3D Polygon Design",
+        "skillLevel": 90,
+        "iconSource": "/src/Assets/PNG/Cinema4D_Icon.png",
+        "isVisible": true,
+        "type": "software"  
+    },
+    {
+        "name": "HTML/CSS",
+        "description": "Web Structure Code",
+        "skillLevel": 70,
+        "iconSource": "/src/Assets/PNG/VisualStudio_Icon.png",
+        "isVisible": true,
+        "type": "software"  
+    },
+    {
+        "name": "JavaScript",
+        "description": "Front-end Develop",
+        "skillLevel": 55,
+        "iconSource": "/src/Assets/PNG/JavaScript_Icon.png",
+        "isVisible": true,
+        "type": "software"  
+    },
+    {
+        "name": "Avid Pro Tools",
+        "description": "Music/Sound Edition",
+        "skillLevel": 80,
+        "iconSource": "/src/Assets/PNG/Pro-tools_Icon.png",
+        "isVisible": true,
+        "type": "software"  
+    },
+    {
+        "name": "Logic Pro X",
+        "description": "Music Production / Sound Effects",
+        "skillLevel": 65,
+        "iconSource": "/src/Assets/PNG/LogicProX_Icon.png",
+        "isVisible": true,
+        "type": "software"  
+    }
+]
