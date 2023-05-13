@@ -25,24 +25,24 @@ export default class Environment {
         this.sunLight.shadow.mapSize.set(1024,1024);
         this.sunLight.shadow.normalBias = 0.05;
         this.sunLight.position.set(3, 14, 6);
-        this.scene.add(this.sunLight);
+        //this.scene.add(this.sunLight);
 
-        this.ambientLight = new THREE.AmbientLight('#ffffff', 0.05);
-        this.scene.add(this.ambientLight);
+        this.ambientLight = new THREE.AmbientLight('#ffffff', 0.4);
+        //this.scene.add(this.ambientLight);
 
         //SCENE LIGHTS
 
         this.sceneLight1 = new THREE.PointLight('#ffe175', 2.0, 8.00, 2.00);
         this.sceneLight1.position.set(0.00, 2.20, 5.29);
-        this.scene.add(this.sceneLight1);
+        //this.scene.add(this.sceneLight1);
 
         this.sceneLight2 = new THREE.PointLight('#75ddff', 2.0, 8.00, 2.00);
         this.sceneLight2.position.set(-5.01, 1.79, 0.34);
-        this.scene.add(this.sceneLight2);
+        //this.scene.add(this.sceneLight2);
 
         this.sceneLight3 = new THREE.PointLight('#ffffff', 2.0, 3.00, 2.00);
         this.sceneLight3.position.set(-0.03, 1.69, 1.44);
-        this.scene.add(this.sceneLight3);
+        //this.scene.add(this.sceneLight3);
 
         //LIGHTS OF SECOND FLOOR MODULE
 
@@ -81,7 +81,7 @@ export default class Environment {
 
         this.lightsGroup = new THREE.Group();
         this.lightsGroup.add(this.pointLight1, this.pointLight2, this.pointLight3, this.studioLight1, this.studioLight2, this.studioLight3, this.modelLight, this.libraryLight1, this.libraryLight2);
-        this.scene.add(this.lightsGroup);
+        //this.scene.add(this.lightsGroup);
     }
 
     resize() {}

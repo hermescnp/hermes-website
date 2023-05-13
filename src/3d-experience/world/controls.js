@@ -17,19 +17,20 @@ export default class Controls {
         this.introStartPosition = new THREE.Vector3(-70.0, 0.0, 0.0);
         this.introEndPosition = new THREE.Vector3(-17.0, 0.0, 0.0);
         this.generalPosition = new THREE.Vector3(-11.0, 6.0, 11.0);
+        this.generalPositionOffset = new THREE.Vector3(-23.0, 6.0, 23.0);
         this.studioPosition = new THREE.Vector3(-4.5, 3.0, 5.5);
         this.lobbyPosition = new THREE.Vector3(-5.0, 2.0, 5.0);
-        this.libraryPosition = new THREE.Vector3(-3.0, 2.5, 6.0);
+        this.libraryPosition = new THREE.Vector3(-2.8, 2.5, 5.0);
         this.stairsPosition = new THREE.Vector3(-6.0, 2.5, 2.0);
-        this.secondFloorPosition = new THREE.Vector3(-4.5, 5.0, 4.5);
+        this.secondFloorPosition = new THREE.Vector3(-5.0, 5.0, 3.0);
 
         // Camera Targets
         this.generalTarget = new THREE.Vector3(0.0, 2.0, 0.0);
         this.studioTarget = new THREE.Vector3(0.7, 1.5, 2.0);
-        this.lobbyTarget = new THREE.Vector3(-2.0, 1.0, 1.5);
-        this.libraryTarget = new THREE.Vector3(-1.0, 1.2, -2.0);
+        this.lobbyTarget = new THREE.Vector3(-1.7, 1.2, 1.8);
+        this.libraryTarget = new THREE.Vector3(-1.3, 1.0, -2.8);
         this.stairsTarget = new THREE.Vector3(-2.5, 2.2, -2.0);
-        this.secondFloorTarget = new THREE.Vector3(-1.8, 4.40, 2.0);
+        this.secondFloorTarget = new THREE.Vector3(-1.8, 4.30, 1.5);
 
         this.objectTarget = new THREE.Object3D();
 
@@ -84,14 +85,19 @@ export default class Controls {
 
     setOrbitControls() {
         this.orbit = new OrbitControls(this.camera.perspectiveCamera, this.canvas);
-        this.camera.perspectiveCamera.position.copy(this.generalPosition);
+
+        if (this.experience.layout.width < this.experience.layout.height) {
+            this.camera.perspectiveCamera.position.copy(this.generalPositionOffset);
+        } else {
+            this.camera.perspectiveCamera.position.copy(this.generalPosition);
+        }
         this.orbit.target0 = this.generalTarget;
         this.orbit.target = this.generalTarget;
         this.orbit.enableZoom = false;
         this.orbit.enableDamping = true;
         this.orbit.dampingFactor = 0.08;
         this.orbit.enableRotate = true;
-        this.orbit.rotateSpeed = 0.25;
+        this.orbit.rotateSpeed = 0.40;
         this.orbit.enablePan = false;
         this.orbit.minAzimuthAngle = -1.7;
         this.orbit.maxAzimuthAngle = 0.1;

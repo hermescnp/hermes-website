@@ -31,11 +31,15 @@ export default class Resources extends EventEmitter {
 
     startLoading() {
         for(const asset of this.assets){
+
             if(asset.type === "glbModel") {
                 this.loaders.gltfLoader.load(asset.path, (file)=>{
                     this.singleAssetLoaded(asset, file);
                 });
-            } else if (asset.type === "videoTexture") {
+            } else
+            
+            if (asset.type === "videoTexture") {
+
                 this.video = {};
                 this.videoTexture = {};
 
@@ -57,7 +61,7 @@ export default class Resources extends EventEmitter {
                 this.videoTexture[asset.name].encoding = THREE.sRGBEncoding;
 
                 this.singleAssetLoaded(asset, this.videoTexture[asset.name]);
-            }
+            } 
         }
     }
 

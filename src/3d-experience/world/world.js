@@ -5,7 +5,6 @@ import { gsap } from 'gsap';
 import Room from './room';
 import Controls from './controls';
 import Environment from './environment';
-import Floor from './floor';
 
 export default class World {
     constructor() {
@@ -17,10 +16,10 @@ export default class World {
         this.resources = this.experience.resources;
 
         this.resources.on('ready', () => {
-            this.controls = new Controls('intro');
+            this.controls = new Controls('explore');
             this.environment = new Environment();
             this.room = new Room();
-            this.floor = new Floor();
+            console.log(this.room);
         });
 
         this.lerp = {
@@ -38,7 +37,7 @@ export default class World {
         window.addEventListener('mousemove', (e) => {
             this.rotationX = ((e.clientX - window.innerWidth / 2) * 2) / window.innerWidth;
             this.rotationY = ((window.innerHeight / 2 - e.clientY) * 2) / window.innerHeight;
-            this.lerp.targetX = this.rotationX  * 0.2;
+            this.lerp.targetX = this.rotationX;
             this.lerp.targetY = this.rotationY;
         })
     }
@@ -73,8 +72,11 @@ export default class World {
             if (this.controls.pathMode === 'intro') {
             }
             else if (this.controls.pathMode === 'story') {
-                this.room.actualRoom.rotation.y = this.lerp.currentX;
-                this.environment.lightsGroup.rotation.y = this.lerp.currentX;
+                //this.room.actualRoom.rotation.y = this.lerp.currentX;
+                // this.environment.lightsGroup.rotation.y = this.lerp.currentX;
+
+                this.camera.perspectiveCamera.position.x = -this.lerp.currentX;
+                this.camera.perspectiveCamera.position.z = -this.lerp.currentX;
                 this.camera.perspectiveCamera.position.y = this.lerp.currentY/2;
             } 
             else if (this.controls.pathMode === 'explore') {

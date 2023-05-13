@@ -757,7 +757,13 @@ circle {
   align-items: center;
 }
 
-@media screen and (max-width: 700px){
+/* CANVAS 2D RENDERING */
+
+.BloomEffect {
+  width: 150px;
+}
+
+@media screen and (orientation: portrait){
   .Background {
       width: 100%;
   }
@@ -766,6 +772,7 @@ circle {
   }
   #Panel {
       width: 100%;
+      transition: transform 1.5s ease;
   }
   .TagContainer {
       justify-content: flex-start;
@@ -780,11 +787,109 @@ circle {
       justify-content: center;
       margin: 0 auto;
   }
+
   #fixedBackground {
-      width: 700px;
+    background: linear-gradient(#1C2434, #374C6C);
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: auto;
+    bottom: 0;
+    left: 0;
+    box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.1);
+    transition: height 0.8s ease;
+    z-index: 1;
   }
+
   #mainLayout {
-    grid-template-columns: auto 1fr;
+    display: block;
+    height: 100%;
+  }
+
+  #renderView {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+  }
+
+  #renderContainer {
+    display: flex;
+    position: fixed;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+  }
+
+  #hiddenPanel {
+    background: linear-gradient(90deg, #1C2434, #374C6C);
+    display: flex;
+    flex-direction: row-reverse;
+
+    width: 100%;
+    height: 60px;
+    position: fixed;
+    top: auto;
+    bottom: -60px;
+    left: 0px;
+  }
+
+  .hiddenBarContainer {
+    display: flex;
+    margin: 0px 0px;
+    z-index: 8;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .hiddenBarText {
+    display: flex;
+    writing-mode: horizontal-tb;
+    flex-direction: row;
+    justify-content: center;
+    transform: rotate(0deg);
+    text-orientation: mixed;
+    text-justify: center;
+    align-items: center;
+    font-family: Inter;
+    font-weight: 200;
+    font-size: 18px;
+    padding: 0px 0px;
+    width: 100%;
+    color: white;
+  }
+
+  .barTextSeparator {
+    display: flex;
+    writing-mode: horizontal-tb;
+    transform: rotate(0deg);
+    text-orientation: mixed;
+    text-justify: center;
+    align-items: center;
+    font-family: Inter;
+    font-weight: 200;
+    font-size: 18px;
+    width: 20px;
+    color: white;
+  }
+
+  #hideButton {
+    transform: rotate(270deg);
+    margin: 0px 10px;
+  }
+
+  #unhideButton {
+    transform: rotate(90deg);
+    padding: 0px 20px;
   }
 }
 

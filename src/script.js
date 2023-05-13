@@ -580,12 +580,25 @@ function hidePanel() {
     const hideButton = document.getElementById('hideButton');
     const fixedBackground = document.getElementById('fixedBackground');
     const translateX = -(panel.offsetWidth);
+    const translateY = (panel.offsetHeight);
     const scaleX = 0;
-    panel.style.transform = `translateX(${translateX}px)`;
-    tabsBar.style.transform = `translateX(${translateX}px)`;
-    fixedBackground.style.width = `${scaleX}px`;
-    renderView.style.width = window.innerWidth + "px";
-    setTimeout(showHiddenPanel, 700);
+    const scaleY = 0;
+
+    if (window.innerWidth < window.innerHeight) {
+        panel.style.transform = `translateY(${translateY}px)`;
+        tabsBar.style.transform = `translateY(${translateY}px)`;
+        fixedBackground.style.height = `${scaleY}px`;
+        renderView.style.width = window.innerWidth + "px";
+        renderView.style.height = window.innerHeight + "px";
+        setTimeout(showHiddenPanel, 700);
+    } else {
+        panel.style.transform = `translateX(${translateX}px)`;
+        tabsBar.style.transform = `translateX(${translateX}px)`;
+        fixedBackground.style.width = `${scaleX}px`;
+        renderView.style.width = window.innerWidth + "px";
+        renderView.style.height = window.innerHeight + "px";
+        setTimeout(showHiddenPanel, 700);
+    }
     hideButton.classList.add('Disapear');
 
     const onAnimationEnd = () => {
@@ -597,14 +610,26 @@ function hidePanel() {
 }
 
 function showHiddenPanel() {
-    const tabTranslateX = (hiddenPanel.offsetWidth);
-    hiddenPanel.style.transform = `translateX(${tabTranslateX}px)`;
+    if (window.innerWidth < window.innerHeight) {
+        const tabTranslateY = -(hiddenPanel.offsetHeight);
+        console.log(hiddenPanel.offsetHeight);
+        hiddenPanel.style.transform = `translateY(${tabTranslateY}px)`;
+    } else {
+        const tabTranslateX = (hiddenPanel.offsetWidth);
+        hiddenPanel.style.transform = `translateX(${tabTranslateX}px)`;
+    }
 }
 
 function tapHiddenBar() {
-    const tabTranslateX = -(hiddenPanel.offsetWidth);
-    hiddenPanel.style.transform = `translateX(${tabTranslateX}px)`;
-    setTimeout(restoreLayout, 280);
+    if (window.innerWidth < window.innerHeight) {
+        const tabTranslateY = (hiddenPanel.offsetHeight);
+        hiddenPanel.style.transform = `translateY(${tabTranslateY}px)`;
+        setTimeout(restoreLayout, 240);
+    } else {
+        const tabTranslateX = -(hiddenPanel.offsetWidth);
+        hiddenPanel.style.transform = `translateX(${tabTranslateX}px)`;
+        setTimeout(restoreLayout, 280);
+    }
     setTimeout(unhidePanel, 300);
 }
 
@@ -613,10 +638,17 @@ function unhidePanel() {
     const tabsBar = document.getElementById("HeaderPanel");
     const hideButton = document.getElementById('hideButton');
     const translateX = 0;
+    const translateY = 0;
+
+    if (window.innerWidth < window.innerHeight) {
+        panel.style.transform = `translateY(${translateY}px)`;
+        tabsBar.style.transform = `translateY(${translateY}px)`;
+    } else {
+        panel.style.transform = `translateX(${translateX}px)`;
+        tabsBar.style.transform = `translateX(${translateX}px)`;
+    }
     panel.style.opacity = 1;
     tabsBar.style.opacity = 1;
-    panel.style.transform = `translateX(${translateX}px)`;
-    tabsBar.style.transform = `translateX(${translateX}px)`;
     hideButton.classList.remove('Disapear');
 }
 
@@ -625,17 +657,23 @@ function restoreLayout() {
     const fixedBackground = document.getElementById('fixedBackground');
     const renderView = document.getElementById('renderView');
     const scaleX = panel.offsetWidth;
-    fixedBackground.style.width = `${scaleX}px`;
-    renderView.style.width = (window.innerWidth - panel.offsetWidth) + "px";
+    const scaleY = window.innerHeight;
+
+    if (window.innerWidth < window.innerHeight) {
+        fixedBackground.style.height = `${scaleY}px`;
+        renderView.style.height = window.innerHeight + "px";
+    } else {
+        fixedBackground.style.width = `${scaleX}px`;
+        renderView.style.width = (window.innerWidth - panel.offsetWidth) + "px";
+    }
 }
 
 window.addEventListener('resize', ()=>{
             
     const renderView = document.getElementById('renderView');
     const fixedBackground = document.getElementById('fixedBackground');
-    let currentHeight = fixedBackground.offsetHeight;
     renderView.style.width = (window.innerWidth - fixedBackground.offsetWidth) + "px";
-    renderView.style.heigth = currentHeight + "px";
+    renderView.style.height = window.innerHeight + "px";
 });
 
 const authorBar = document.getElementById('AuthorBar');
@@ -703,15 +741,27 @@ function hoverAuthorWithAboutMe() {
 }
 
 function hoverBar() {
-    unhideButton.style.opacity = "0.5";
-    unhideButton.style.width = "16px";
-    hiddenPanel.style.paddingLeft = '10px';
+    if (window.innerWidth < window.innerHeight) {
+        unhideButton.style.opacity = "0.5";
+        unhideButton.style.width = "16px";
+        hiddenPanel.style.paddingBottom = '10px';
+    } else {
+        unhideButton.style.opacity = "0.5";
+        unhideButton.style.width = "16px";
+        hiddenPanel.style.paddingLeft = '10px';
+    }
 }
 
 function unhoverBar() {
-    unhideButton.style.opacity = "0.2";
-    unhideButton.style.width = "14px";
-    hiddenPanel.style.paddingLeft = '0px';
+    if (window.innerWidth < window.innerHeight) {
+        unhideButton.style.opacity = "0.2";
+        unhideButton.style.width = "14px";
+        hiddenPanel.style.paddingBottom = '0px';
+    } else {
+        unhideButton.style.opacity = "0.2";
+        unhideButton.style.width = "14px";
+        hiddenPanel.style.paddingLeft = '0px';
+    }
 }
 
 function hoverAuthor() {

@@ -5,8 +5,8 @@ export default [
         path: "/models/virtual-office-room.glb",
     },
     {
-        name: "screen",
+        name: "screenA",
         type: "videoTexture",
         path: "/textures/digital-wave.mp4",
-    },
+    }
 ]
