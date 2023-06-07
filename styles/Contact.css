@@ -1,0 +1,25 @@
+#ContactSection {
+    position: relative;
+    width: 100%;
+    border-top: solid;
+    border-color: white;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 30px;
+}
+
+#ContactInfoContainer {
+    display: flex;
+    flex-direction: column;
+    padding: 0px 20px;
+}
+
+#mapContainer {
+    width: 100%;
+    height: 200px;
+    background-color: #1C2434;
+    margin: 20px 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

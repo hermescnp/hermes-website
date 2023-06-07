@@ -14,7 +14,7 @@ export default function Renderer3d(scW : number, scH : number) {
     })
 
     renderer.toneMapping = THREE.LinearToneMapping;
-    renderer.toneMappingExposure = 1.2;
+    renderer.toneMappingExposure = 1.0;
     renderer.shadowMap.enabled = false;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     renderer.setSize(scW, scH);

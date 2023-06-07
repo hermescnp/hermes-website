@@ -1,55 +1,99 @@
 "use client"
-import React, { useCallback, useEffect, useRef, useState} from 'react'
-import {RenderView} from './styles'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
+import { RenderView } from './styles'
+import '../../styles/Experience.css'
 
 import * as THREE from 'three'
 import { RGBELoader } from "three/examples/jsm/loaders/RGBELoader";
+import gsap from 'gsap';
 
 import Renderer3d from './Renderer3d'
 import Renderer2d from './Renderer2d'
 import Camera from './Camera'
 import Controls from './Controls'
 import getModel from './Model';
+import { createPath } from './PathGenerator'
+import getZones from './Zonification'
+import ObjectSelector from './ObjectSelector';
 
-const Experience: React.FC = () => {
+// Camera Positions
+const introStartPosition = new THREE.Vector3(-70.0, 0.0, 0.0);
+const introEndPosition = new THREE.Vector3(-17.0, 0.0, 0.0);
+const generalPosition = new THREE.Vector3(-11.0, 6.0, 11.0);
+
+// Camera Targets
+const generalTarget = new THREE.Vector3(0.0, 2.0, 0.0);
+
+interface ExperienceProps {
+    isClicked: boolean;
+  }
+
+const Experience: React.FC<ExperienceProps> = ({isClicked}) => {
 
     const refBody = useRef<HTMLDivElement>(null)
     const [loading, setLoading] = useState<boolean>(false);
     const [renderer3d, setRenderer3d] = useState<any>();
     const [renderer2d, setRenderer2d] = useState<any>();
     const [_camera, setCamera] = useState<any>();
-    const [target, setTarget] = useState(new THREE.Vector3(0.0, 2.0, 0.0));
+    const [target, setTarget] = useState(generalTarget);
     const [initialCameraPosition] = useState(
-        new THREE.Vector3(-11.0, 6.0, 11.0)
+        generalPosition
     );
     const [scene] = useState(new THREE.Scene());
     const [_controls, setControls] = useState<any>();
     const [model, setModel] = useState<any>(false);
+    const [lerpState, setLerpState] = useState<number>(0);
+    const [targetPath, setTargetPath] = useState<any>(createPath('general', 'studio'));
+    const lerpStateRef = useRef<number>(lerpState);
+    const targetPathRef = useRef<any>(targetPath);
 
+
+    // HANDLE WINDOW RESIZE
     const handleWindowResize = useCallback(() => {
-        const {current: container} = refBody;
+        const { current: container } = refBody;
         if (container && renderer3d) {
             const scW = container.clientWidth;
             const scH = container.clientHeight;
-            const aspect = scW/scH;
-            
+            const aspect = scW / scH;
+
             renderer3d.setSize(scW, scH);
             renderer3d.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            renderer2d.setSize(scW, scH);
             _camera.aspect = aspect;
             _camera.updateProjectionMatrix();
         }
     }, [renderer3d]);
 
+    // HANDLE BUTTON CLICK
     useEffect(() => {
-        const {current: container} = refBody;
+        setLerpState(0);
+    }, [isClicked]);
+
+
+    // UPDATE TARGET PATH
+    useEffect(() => {
+        targetPathRef.current = targetPath;
+      }, [targetPath]);
+
+
+    // UPDATE LERP STATE
+    useEffect(() => {
+        lerpStateRef.current = lerpState;
+      }, [lerpState]);
+
+
+    //  EXPERIENCE ENGINE
+
+    useEffect(() => {
+        const { current: container } = refBody;
 
         if (container && !renderer3d) {
             const scW = container.clientWidth;
             const scH = container.clientHeight;
-            const aspect = scW/scH;
+            const aspect = scW / scH;
 
 
-            // RENDER VIEW SETTINGS
+            // RENDER SETTINGS
             const renderer2d = Renderer2d(scW, scH, scene);
             const renderer3d = Renderer3d(scW, scH);
             container.appendChild(renderer2d.domElement);
@@ -57,49 +101,144 @@ const Experience: React.FC = () => {
             setRenderer2d(renderer2d);
             setRenderer3d(renderer3d);
 
-            const camera = Camera(initialCameraPosition, target, aspect)
+            const camera = Camera(initialCameraPosition, target, aspect);
             setCamera(camera);
+            //cameraRef.current = camera;
 
 
             // BACKGROUND SETTINGS
             const color = new THREE.Color();
-            color.set(0x1f2637);
-            scene.fog = new THREE.Fog(color, 20, 40);
+            color.set(0x1e2332);
+            scene.fog = new THREE.Fog(color, 20, 50);
 
-            // const ambientLight = new THREE.AmbientLight('#ffffff', 0.5);
-            // scene.add(ambientLight);
+            const ambientLight = new THREE.AmbientLight('#ffe175', 0.2);
+            scene.add(ambientLight);
 
             const hdrEquirect = new RGBELoader();
             hdrEquirect.load(
-                "/textures/night-environment.hdr", (hdri : any) => {
+                "/textures/night-environment.hdr", (hdri: any) => {
                     hdri.mapping = THREE.EquirectangularReflectionMapping;
                     scene.background = hdri;
                     scene.backgroundBlurriness = 0.3;
                     scene.environment = hdri;
                     scene.background = color;
-                    //scene.rotation.y = Math.PI / 12 
                 }
             );
 
+            // RESOURCES
+            const model = getModel(scene);
+            setModel(model);
+            setLoading(false);
+
+            // MAKING SELECTABLE
+             const zones = getZones(scene);
+            const objectSelector = new ObjectSelector();
+
             let req: any = null;
             let frame = 0;
+
+            let isMousePressed = false;
+            let isLongClick = false;
+            let longClickThreshold = 300;
+            let mouseDownTimeout : any;
+
+            window.addEventListener('mousedown', () => {
+                isMousePressed = true;
+                isLongClick = false;
+                mouseDownTimeout = setTimeout(function() {
+                    isLongClick = true;
+                    // Additional logic for long click can be added here
+                }, longClickThreshold);
+            });
+
+            window.addEventListener('mouseup', () => {
+                isMousePressed = false;
+                clearTimeout(mouseDownTimeout);
+            });
+
+            window.addEventListener('click', () => {
+
+                if (!isMousePressed && !isLongClick) {
+                    const pathName = objectSelector.getCurrentSelection();
+                    if (pathName !== 'no selections') {
+                        setTargetPath(createPath('general', pathName));
+                        setLerpState(1);
+                    } else { console.log('you have to select something') }
+                  }
+            });
+
+            // CONTROLS
+            const objectTarget = new THREE.Object3D();
+            const controls = Controls(camera, objectTarget, renderer3d);
+            setControls(controls);
+
+            const lerp = {
+                current: 0,
+                target: 0,
+                ease: 0.05,
+            };
+
+            objectTarget.position.copy(generalTarget);
+            let targetPosition = new THREE.Vector3();
 
             const animate = () => {
                 req = requestAnimationFrame(animate);
                 frame = frame <= 100 ? frame + 1 : frame;
 
+                // IS SELECTED?
+                objectSelector.update(zones, camera);
+
+                // LERPING
+                lerp.current = gsap.utils.interpolate(
+                    lerp.current,
+                    lerp.target,
+                    lerp.ease
+                );
+                lerp.target = gsap.utils.clamp(0, 1, lerp.target);
+                lerp.current = gsap.utils.clamp(0, 1, lerp.current);
+
+                lerp.target = lerpStateRef.current;
+                let currentPath = targetPathRef.current;
+                
+                lerp.target = lerpStateRef.current;
+                controls.autoRotate = true;
+                currentPath.getPointAt(lerp.current, targetPosition);
+                objectTarget.position.copy(targetPosition);
+
+                controls.maxDistance = 23 - (lerp.current * 18);
+                controls.minDistance = 17 - (lerp.current * 12);
+                controls.minAzimuthAngle = -1.7 + (lerp.current / 5);
+                controls.maxAzimuthAngle = 0.1 - (lerp.current / 2);
+                controls.minPolarAngle = Math.PI/(4 - (lerp.current));
+                controls.maxPolarAngle = Math.PI/(2 + (lerp.current / 10));
+                // camera.fov = 25 + (lerp.current * 15);
+                // camera.updateProjectionMatrix();
+
+                if (lerp.current >= 0.999) {
+                    controls.autoRotate = false;
+                    lerp.current = 1;
+                }
+                if (lerp.current <= 0.001) {
+                    controls.autoRotate = true;
+                    lerp.current = 0;
+                }
+
                 controls.update();
+
+                // REVERSE AUTO ROTATION
+                if (camera.position.x >= 1.1) {
+                    controls.autoRotateSpeed = 0.2;
+                } else if (camera.position.z <= -1.4) {
+                    controls.autoRotateSpeed = -0.2;
+                }
+
+                // RENDER ALL
                 renderer3d.render(scene, camera);
+                renderer2d.render(scene, camera);
             }
 
-            // RESOURCES
-            const controls = Controls(camera, target, renderer3d);
-            setControls(controls);
-
-            const model = getModel(scene);
-            setModel(model);
+            // START ANIMATION
             animate();
-            setLoading(false);
 
 
             return () => {
@@ -118,9 +257,9 @@ const Experience: React.FC = () => {
         }
     }, [renderer3d, handleWindowResize])
 
-  return (
-    <RenderView ref={refBody}/>
-  )
+    return (
+        <RenderView ref={refBody} />
+    )
 }
 
 export default Experience

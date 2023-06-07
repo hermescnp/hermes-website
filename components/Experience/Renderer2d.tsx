@@ -1,7 +1,8 @@
 import React, { useEffect} from 'react'
 import * as THREE from 'three'
 import { CSS2DRenderer, CSS2DObject } from 'three/examples/jsm/renderers/CSS2DRenderer';
-import bloomEffect from '../../public/ui-assets/PNG/bloom-effect.png'
+import bloomEffect from '../../public/assets/PNG/bloom-effect.png'
+import vignetteEffect from '../../public/assets/PNG/vignette-effect.png'
 
 export default function Renderer3d(scW : number, scH : number, scene : any) {
 

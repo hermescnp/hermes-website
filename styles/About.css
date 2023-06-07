@@ -1,0 +1,39 @@
+#biography {
+    margin-top: 30px;
+    margin-left: 15px;
+    pointer-events: none;
+}
+
+#offset {
+    width: 100%;
+    overflow: hidden;
+}
+
+#aboutMe {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    top: 95px;
+    left: 0px;
+    width: 100%;
+    height: auto;
+    padding: 0px 15px 0px 95px;
+    transition: all 1s ease;
+    z-index: 6;
+    overflow: hidden;
+}
+
+
+#aboutMeButton {
+    display: flex;
+    cursor: pointer;
+}
+
+#aboutMeButton:hover .SeeMore {
+    opacity: 1.0;
+}
+
+#aboutMeText {
+    margin-left: 15px;
+    overflow: hidden;
+}

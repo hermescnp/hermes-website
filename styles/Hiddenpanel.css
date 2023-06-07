@@ -1,0 +1,128 @@
+.HiddenPanel {
+    background: linear-gradient(#1C2434, #374C6C);
+    background-attachment: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0px;
+    transition: transform 0.3s ease-in-out;
+    cursor: pointer;
+    z-index: 7;
+    padding-left: 0;
+}
+
+.hiddenBarContainer {
+    display: flex;
+    margin: 20px 0px;
+    z-index: 8;
+    flex-direction: column;
+    width: 100%;
+}
+
+.hiddenBarText {
+    display: flex;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    text-orientation: mixed;
+    text-justify: center;
+    align-items: center;
+    font-weight: 200;
+    font-size: 18px;
+    padding: 15px 0px;
+    width: 100%;
+    color: white;
+    /*transition: all 0.3s ease;*/
+}
+
+.hiddenBarText:hover {
+    background-color: rgba(28, 36, 52, 0.7);
+}
+
+.barTextSeparator {
+    display: flex;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    text-orientation: mixed;
+    text-justify: center;
+    align-items: center;
+    font-family: Inter;
+    font-weight: 200;
+    font-size: 18px;
+    width: 100%;
+    color: white;
+}
+
+#unhideButton {
+    transition: all 0.3s ease;
+    opacity: 0.2;
+    width: 14px;
+    transform: rotate(180deg);
+    pointer-events: none;
+    z-index: 8;
+}
+
+@media screen and (orientation: portrait) {
+
+    #hiddenPanel {
+        background: linear-gradient(90deg, #1C2434, #374C6C);
+        display: flex;
+        flex-direction: row-reverse;
+
+        width: 100%;
+        height: 60px;
+        position: fixed;
+        top: auto;
+        bottom: -60px;
+        left: 0px;
+    }
+
+    .hiddenBarContainer {
+        display: flex;
+        margin: 0px 0px;
+        z-index: 8;
+        flex-direction: row;
+        width: 100%;
+        height: 100%;
+    }
+
+    .hiddenBarText {
+        display: flex;
+        writing-mode: horizontal-tb;
+        flex-direction: row;
+        justify-content: center;
+        transform: rotate(0deg);
+        text-orientation: mixed;
+        text-justify: center;
+        align-items: center;
+        font-family: Inter;
+        font-weight: 200;
+        font-size: 18px;
+        padding: 0px 0px;
+        width: 100%;
+        color: white;
+    }
+
+    .barTextSeparator {
+        display: flex;
+        writing-mode: horizontal-tb;
+        transform: rotate(0deg);
+        text-orientation: mixed;
+        text-justify: center;
+        align-items: center;
+        font-family: Inter;
+        font-weight: 200;
+        font-size: 18px;
+        width: 20px;
+        color: white;
+    }
+
+    #unhideButton {
+        transform: rotate(90deg);
+        padding: 0px 20px;
+    }
+}

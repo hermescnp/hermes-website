@@ -10,7 +10,6 @@ export default function getModel(scene : any) {
     resources.startLoading(assets)
       .then(() => {
         const model : any = resources.getItems().room;
-        console.log(model);
         model.scene.traverse((child : any) => {
 
             if (child.name === 'Object_777') {
@@ -21,15 +20,11 @@ export default function getModel(scene : any) {
             if (child.name === 'Object_17') {
                 const textureLoader : any = new THREE.TextureLoader();
                 const textureAlpha = textureLoader.load(alphaTextureFile.src);
-                child.material = new THREE.MeshStandardMaterial({
+                child.material = new THREE.MeshPhongMaterial({
                     map: textureAlpha,
-                    roughness: 1,
                 })
                 child.material.transparent = true;
                 child.material.alphaTest = 0.5;
-                child.material.specular = 0;
-                child.material.shininess = 0;
-                child.material.reflectivity = 0;
             }
         })
     
