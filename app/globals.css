@@ -31,7 +31,7 @@ body {
   top: 0;
   left: 0;
   z-index: 7;
-  transition: transform 0.7s ease;
+  transition: transform 0.5s ease;
 }
 
 .sideBar.hidden {
@@ -146,6 +146,8 @@ button {
   border: none;
   font-family: 'Inter', sans-serif;
   font-size: 18px;
+  padding: 0px;
+  margin: 0px;
 }
 
 .buttonTest {
@@ -235,6 +237,10 @@ summary {
     box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.1);
     transition: height 0.8s ease;
     z-index: 1;
+  }
+
+  .sideBar {
+    width: 100%;
   }
 
   #mainLayout {

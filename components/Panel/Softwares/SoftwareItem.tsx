@@ -1,6 +1,19 @@
 import React from 'react'
 
-const SoftwareItem = ({ item }) => {
+interface SoftwareItemType {
+    name: string;
+    description: string;
+    skillLevel: number;
+    iconSource: string;
+    isVisible: boolean;
+    type: string;
+}
+
+interface SoftwareItemProps {
+    item: SoftwareItemType;
+}
+
+const SoftwareItem: React.FC<SoftwareItemProps> = ({ item }) => {
     const [hovered, setHovered] = React.useState(false);
 
     return (

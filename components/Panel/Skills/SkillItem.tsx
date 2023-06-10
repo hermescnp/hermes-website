@@ -1,18 +1,37 @@
 import React, { useState, useRef } from 'react';
 
-export function SkillItem({ skill }) {
+interface SkillItemType {
+  category: string;
+  skillName: string;
+  skillLevel: number;
+  iconSource: string;
+  isVisible: boolean;
+  type: string;
+}
 
-    const progressAreaRef = useRef(null);
-    const skillItemRef = useRef(null);
+interface CircleProps {
+  cx: number;
+  cy: number;
+  r: number;
+}
+
+interface SkillItemProps {
+  skill: SkillItemType;
+}
+
+export const SkillItem: React.FC<SkillItemProps> = ({ skill }) => {
+
+    const progressAreaRef = useRef<HTMLDivElement>(null);
+    const skillItemRef = useRef<HTMLDivElement>(null);
     const { skillName, skillLevel, iconSource, category } = skill;
 
-    const [circleProps, setCircleProps] = useState({
+    const [circleProps, setCircleProps] = useState<CircleProps>({
         cx: 40,
         cy: 40,
         r: 37
     });
 
-    const [isInflated, setIsInflated] = useState(false);
+    const [isInflated, setIsInflated] = useState<boolean>(false);
 
     const { cx, cy, r } = circleProps;
     const circumference = getCircunference(r);
@@ -48,8 +67,8 @@ export function SkillItem({ skill }) {
                             cx={cx}
                             cy={cy}
                             r={r}
-                            strokeDasharray={circumference}
-                            strokeDashoffset={offset}
+                            strokeDasharray={circumference.toString()}
+                            strokeDashoffset={offset.toString()}
                             strokeLinecap="round"
                             style={{ stroke: 'white', strokeWidth: '6px', fill: 'none', transition: 'all 0.2s ease-out' }}
                         />
@@ -66,11 +85,11 @@ export function SkillItem({ skill }) {
     );
 }
 
-function getCircunference(radius) {
+function getCircunference(radius: number): number {
     return 2 * Math.PI * radius;
 }
 
-function getOffsetValue(circumference, skillLevel) {
+function getOffsetValue(circumference: number, skillLevel: number): number {
     const progressPercentage = skillLevel / 100;
     return circumference * (1 - progressPercentage);
 }

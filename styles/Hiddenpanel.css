@@ -1,5 +1,5 @@
 .HiddenPanel {
-    background: linear-gradient(#1C2434, #374C6C);
+    background: linear-gradient(rgba(28, 36, 52, 1), rgba(55, 76, 108, 0.8));
     background-attachment: fixed;
     display: flex;
     flex-direction: column;
@@ -10,10 +10,14 @@
     position: fixed;
     top: 0;
     left: 0px;
-    transition: transform 0.3s ease-in-out;
+    transition: transform 0.3s ease-in-out, padding-left 0.1s ease-in-out;
     cursor: pointer;
     z-index: 7;
-    padding-left: 0;
+    padding-left: 0px;
+}
+
+.HiddenPanel:hover {
+    padding-left: 5px;
 }
 
 .hiddenBarContainer {
@@ -50,7 +54,6 @@
     text-orientation: mixed;
     text-justify: center;
     align-items: center;
-    font-family: Inter;
     font-weight: 200;
     font-size: 18px;
     width: 100%;
@@ -68,7 +71,7 @@
 
 @media screen and (orientation: portrait) {
 
-    #hiddenPanel {
+    .hiddenPanel {
         background: linear-gradient(90deg, #1C2434, #374C6C);
         display: flex;
         flex-direction: row-reverse;
@@ -99,7 +102,6 @@
         text-orientation: mixed;
         text-justify: center;
         align-items: center;
-        font-family: Inter;
         font-weight: 200;
         font-size: 18px;
         padding: 0px 0px;
@@ -114,7 +116,6 @@
         text-orientation: mixed;
         text-justify: center;
         align-items: center;
-        font-family: Inter;
         font-weight: 200;
         font-size: 18px;
         width: 20px;

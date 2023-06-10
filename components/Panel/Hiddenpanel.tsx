@@ -6,28 +6,29 @@ import chevron from 'public/assets/SVG/Chevron.svg';
 interface HiddenPanelProps {
     hidden: boolean;
     onClick: () => void;
+    handleButtonClick: () => void;
 }
 
-export const HiddenPanel = ({ hidden, onClick }: HiddenPanelProps) => {
+export const HiddenPanel = ({ hidden, onClick, handleButtonClick }: HiddenPanelProps) => {
     return (
-        <div 
-            className="HiddenPanel" 
-            style={{ 
-                transform: hidden ? 'translateX(-100%)' : 'translateX(0)', 
+        <div
+            className="HiddenPanel"
+            style={{
+                transform: hidden ? 'translateX(-100%)' : 'translateX(0)',
                 opacity: hidden ? '0' : '1',
-                transition: 'transform 0.3s ease-out, opacity 0.3s ease-out'
-            }} 
+                transition: 'transform 0.3s ease-out, opacity 0.3s ease-out, padding-left 0.1s ease-in-out'
+            }}
             onClick={onClick} >
 
             <Image id="unhideButton" src={chevron} width={22} height={22} alt="See More" />
             <div className="hiddenBarContainer">
-                <p id="skillsMinimized" className="hiddenBarText">Skills</p>
+                <button id="skillsMinimized" onClick={handleButtonClick}><a href="#SkillSection" className="hiddenBarText">Skills</a></button>
                 <p className="barTextSeparator">|</p>
-                <p id="backgroundMinimized" className="hiddenBarText">Background</p>
+                <button id="backgroundMinimized" onClick={handleButtonClick}><a href="#FormationBackground" className="hiddenBarText">Background</a></button>
                 <p className="barTextSeparator">|</p>
-                <p id="softwaresMinimized" className="hiddenBarText">Softwares</p>
+                <button id="softwaresMinimized" onClick={handleButtonClick}><a href="#SoftwareSection" className="hiddenBarText">Softwares</a></button>
                 <p className="barTextSeparator">|</p>
-                <p id="contactMeMinimized" className="hiddenBarText">Contact</p>
+                <button id="contactMeMinimized" onClick={handleButtonClick}><a href="#SoftwareSection" className="hiddenBarText">Softwares</a></button>
             </div>
 
         </div>

@@ -1,4 +1,4 @@
-import React from "react"
+import React, { CSSProperties, RefObject } from "react";
 import Image from "next/image"
 import '../../styles/About.css'
 import linkedin from 'public/assets/SVG/linkedin_icon.svg'
@@ -9,7 +9,15 @@ import whatsapp from 'public/assets/SVG/whatsapp_icon.svg'
 import email from 'public/assets/SVG/email_icon.svg'
 import chevron from 'public/assets/SVG/Chevron.svg'
 
-export const About = ({ style, className, bioRef, handleAboutMeClick, expanded }) => {
+interface AboutProps {
+    style?: CSSProperties;
+    className?: string;
+    bioRef: RefObject<HTMLParagraphElement>;
+    handleAboutMeClick: () => void;
+    expanded: boolean;
+  }
+  
+  export const About = ({ style, className, bioRef, handleAboutMeClick, expanded }: AboutProps) => {
     return (
         <div id="aboutMe" style={style} className={className}>
             <div id="socialMedia">

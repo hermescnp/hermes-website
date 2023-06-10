@@ -1,7 +1,7 @@
 import React, { useState, useEffect, forwardRef } from "react"
 import { Contact } from './Contact'
 import SoftwareList from './Softwares/SoftwareList'
-import { BackgroundList } from './Background/BackgroundList'
+import BackgroundList from './Background/BackgroundList'
 import SkillList from './Skills/SkillList'
 import '../../styles/Panel.css'
 

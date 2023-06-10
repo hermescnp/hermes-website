@@ -1,7 +1,11 @@
 import React, { useRef } from "react";
 import '../../styles/Tabsbar.css';
 
-export const Tabsbar = ({handleButtonClick}) => {
+interface TabsbarProps {
+    handleButtonClick: () => void;
+}
+
+export const Tabsbar = ({handleButtonClick}: TabsbarProps) => {
 
     return (
         <div>

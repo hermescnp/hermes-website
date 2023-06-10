@@ -1,19 +1,33 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import '../../../styles/Background.css';
 import chevron from 'public/assets/SVG/Chevron.svg';
 import BackgroundItem from './BackgroundItem';
 
-export function BackgroundList({ items }) {
-  const [expandedCategories, setExpandedCategories] = useState([]);
-  const [categoryHeights, setCategoryHeights] = useState([]);
-  const [hoveredCategory, setHoveredCategory] = useState(null);
-  const accordionTittleRefs = useRef([]);
+interface BackgroundItemType {
+  category: string;
+  name: string;
+  description: string;
+  startDate: number;
+  endDate: number;
+  isVisible: boolean;
+  type: string;
+}
 
-  function expand(category, index) {
+interface SoftwareListProps {
+  items: BackgroundItemType[];
+}
+
+const BackgroundList: React.FC<SoftwareListProps> = ({ items }) => {
+  const [expandedCategories, setExpandedCategories] = useState<string[]>([]);
+  const [categoryHeights, setCategoryHeights] = useState<number[]>([]);
+  const [hoveredCategory, setHoveredCategory] = useState<string | null>(null);
+  const accordionTittleRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  function expand(category: string, index: number) {
     if (!expandedCategories.includes(category)) {
       setExpandedCategories((prevCategories) => [...prevCategories, category]);
-      const mainCategoryUl = document.getElementById(category);
+      const mainCategoryUl = document.getElementById(category) as HTMLElement;
       const categoryHeight = mainCategoryUl ? mainCategoryUl.clientHeight + 100 : 0;
       setCategoryHeights((prevHeights) => {
         const newHeights = [...prevHeights];
@@ -21,16 +35,14 @@ export function BackgroundList({ items }) {
         return newHeights;
       });
       setTimeout(() => {
-        const headerHeight = 161;
-        let elementTop = mainCategoryUl.offsetTop - headerHeight;
-        mainCategoryUl.scrollIntoView({ top: elementTop, behavior: 'smooth' });
+        mainCategoryUl.scrollIntoView({ behavior: 'smooth' });
       }, 100);
     } else {
       collapse(category, index);
     }
   }
 
-  function collapse(category, index) {
+  function collapse(category: string, index: number) {
     setExpandedCategories(expandedCategories.filter((c) => c !== category));
     setCategoryHeights((prevHeights) => {
       const newHeights = [...prevHeights];
@@ -39,7 +51,7 @@ export function BackgroundList({ items }) {
     });
   }
 
-  const categories = items.reduce((acc, item) => {
+  const categories = items.reduce<string[]>((acc, item) => {
     if (item.type === 'background' && item.isVisible) {
       const category = item.category;
       if (!acc.includes(category)) {
@@ -48,6 +60,7 @@ export function BackgroundList({ items }) {
     }
     return acc;
   }, []);
+
 
   return (
     <section id="FormationBackground">
@@ -58,12 +71,12 @@ export function BackgroundList({ items }) {
         return (
           <div key={index} className="AccordionContent" id={`${category} Category`} style={{ maxHeight: isExpanded ? '1000px' : '70px', height: categoryHeights[index] + 'px', transition: 'all 0.5s ease-out 0s' }}>
             {isExpanded ? (
-              <div className="AccordionTittle" id={`${category} Tittle`} onClick={() => collapse(category)} style={{ transition: 'all 0.5s ease-out 0s' }} onMouseEnter={() => setHoveredCategory(category)} onMouseLeave={() => setHoveredCategory(null)}>
+              <div className="AccordionTittle" id={`${category} Tittle`} onClick={() => collapse(category, index)} style={{ transition: 'all 0.5s ease-out 0s' }} onMouseEnter={() => setHoveredCategory(category)} onMouseLeave={() => setHoveredCategory(null)}>
                 <h4>{category}</h4>
                 <Image className="SeeLess" src={chevron} width={22} height={22} alt="See Less" />
               </div>
             ) : (
-              <div ref={(el) => accordionTittleRefs.current[index] = el} className="AccordionTittle" id={`${category} Tittle`} onClick={() => expand(category)} style={{ transition: 'all 0.5s ease-out 0s' }} onMouseEnter={() => setHoveredCategory(category)} onMouseLeave={() => setHoveredCategory(null)}>
+              <div ref={(el) => accordionTittleRefs.current[index] = el} className="AccordionTittle" id={`${category} Tittle`} onClick={() => expand(category, index)} style={{ transition: 'all 0.5s ease-out 0s' }} onMouseEnter={() => setHoveredCategory(category)} onMouseLeave={() => setHoveredCategory(null)}>
                 <h4>{category}</h4>
                 <Image className="SeeMore" src={chevron} width={22} height={22} alt="See More" />
               </div>
@@ -81,3 +94,5 @@ export function BackgroundList({ items }) {
     </section>
   );
 }
+
+export default BackgroundList;

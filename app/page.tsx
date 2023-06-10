@@ -75,7 +75,7 @@ export default function Home() {
         <Panel ref={panelRef} />
       </div>
 
-      <HiddenPanel hidden={!displayHiddenPanel || returnHiddenPanel} onClick={() => handleHiddenPanelClick()} />
+      <HiddenPanel hidden={!displayHiddenPanel || returnHiddenPanel} onClick={() => handleHiddenPanelClick()} handleButtonClick={handleButtonClick} />
 
       <div role="contentinfo" className="FooterInfo">
         <p className="metaInfo">Web designed and Developed by: Hermes Concepción</p>
