@@ -55,7 +55,7 @@ interface AboutProps {
             </div>
 
             <div id="aboutMeButton" onClick={handleAboutMeClick}>
-                <p id="aboutMeText">About Me</p> <Image id="AboutMeChevron" className={expanded ? "SeeLess" : "SeeMore"} src={chevron} width={22} height={22} alt="See More" />
+                <p id="aboutMeText">About Me</p> <Image id="AboutMeChevron" className={expanded ? "SeeLess" : "SeeMore"} src={chevron} width={20} height={20} alt="See More" />
             </div>
 
             <p id="biography" ref={bioRef}>Experienced in 2D and 3D digital graphics generation, specially NURBS-based and Procedural Design. Focused on the development of Art-tech products like Apps, Video-Games, Webs, Interactive simulations and Prototypes. More than 7 years of design experience as UX/UI, 3D modeling, rendering and systems documentation. Good at Dev-team and Artists communication, specially for mathematical stuff and gamified experiences where fast and clear conceptual sketching and explanatory diagrams are needed.

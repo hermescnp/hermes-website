@@ -2,8 +2,8 @@
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
     grid-template-rows: 50px;
-    margin-bottom: 15px;
-    margin-right: 15px;
+    margin-bottom: 10px;
+    margin-right: 10px;
 }
 
 #socialMediaFooter {
@@ -20,8 +20,8 @@
 }
 
 .socialMediaIcon {
-    width: 40px;
-    height: 40px;
+    width: 35px;
+    height: 35px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -29,28 +29,30 @@
     border-radius: 50%;
     border: solid 2px #374C6C;
     transition: all 0.3s ease;
+    cursor: pointer;
 }
 
 .socialMediaIconFooter {
-    width: 43px;
-    height: 43px;
+    width: 40px;
+    height: 40px;
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: #374C6C;
     border-radius: 50%;
     transition: all 0.3s ease;
+    cursor: pointer;
 }
 
 .socialMediaIcon:hover {
-    width: 45px;
-    height: 45px;
+    width: 37px;
+    height: 37px;
     background-color: white;
 }
 
 .socialMediaIconFooter:hover {
-    width: 48px;
-    height: 48px;
+    width: 42px;
+    height: 42px;
     background-color: white;
 }
 

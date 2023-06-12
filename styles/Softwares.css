@@ -19,16 +19,16 @@
     height: auto;
     grid-template-columns: auto 1fr;
     box-sizing: border-box;
-    padding: 15px 30px 15px 30px;
+    padding: 10px 20px;
     cursor: default;
   }
   
   .Logotype {
-    width: 40px;
+    width: 35px;
   }
   
   .inflatedLogo {
-    width: 45px;
+    width: 40px;
   }
   
   .itemHover {
@@ -39,7 +39,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    margin-left: 20px;
+    margin-left: 15px;
     height: 55px;
     flex-grow: 1;
   }
@@ -47,6 +47,7 @@
   .SoftwareName {
     margin: 0;
     cursor: default;
+    font-size: 14px;
   }
   
   .SoftwareIcon {

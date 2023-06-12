@@ -5,6 +5,7 @@ import { Panel } from '@/components/Panel/Panel';
 import { HeaderPanel } from '@/components/Header/Headerpanel';
 import { HiddenPanel } from '@/components/Panel/Hiddenpanel';
 import { Tabsbar } from '@/components/Header/Tabsbar';
+import { Author } from '@/components/Header/Author'
 
 const Experience = dynamic(() => import('../components/Experience/Experience'), {
   ssr: false,
@@ -16,7 +17,6 @@ export default function Home() {
   const [sidebarHidden, setSidebarHidden] = useState<boolean>(false);
   const [displayHiddenPanel, setDisplayHiddenPanel] = useState<boolean>(false);
   const [returnHiddenPanel, setReturnHiddenPanel] = useState<boolean>(false);
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   const panelRef = useRef<HTMLDivElement>(null);
   const sideBarRef = useRef<HTMLDivElement>(null);
@@ -46,18 +46,6 @@ export default function Home() {
   };
 
   useEffect(() => {
-    const handleWindowResize = () => {
-      setWindowWidth(window.innerWidth);
-    };
-
-    window.addEventListener("resize", handleWindowResize);
-
-    return () => {
-      window.removeEventListener("resize", handleWindowResize);
-    };
-  }, []);
-
-  useEffect(() => {
     const handleTransitionEnd = () => {
       if (sidebarHidden) {
         setTimeout(() => {
@@ -78,14 +66,12 @@ export default function Home() {
     };
   }, [sidebarHidden]);
 
-  const scaleFactor = windowWidth >= 450 ? 1 : windowWidth / 450;
-
   return (
     <div className="Page">
       <Experience isClicked={isClicked} />
+      <Author />
 
-      <div ref={sideBarRef}
-        className={`sideBar${sidebarHidden ? ' hidden' : ''}`}>
+      <div ref={sideBarRef} className={`sideBar${sidebarHidden ? ' hidden' : ''}`}>
         <HeaderPanel onSidebarHide={handleSidebarHide} />
         <Tabsbar handleButtonClick={handleButtonClick} />
         <Panel ref={panelRef} />

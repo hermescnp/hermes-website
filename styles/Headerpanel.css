@@ -13,8 +13,9 @@
     justify-content: flex-end;
     align-items: flex-start;
     transition: height 0.5s ease;
-    height: 80px;
+    height: 60px;
     padding: 15px 0px 15px 15px;
+    cursor: pointer;
 }
 
 #hideButton {

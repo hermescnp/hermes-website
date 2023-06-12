@@ -3,10 +3,6 @@ import '../../styles/Headerpanel.css'
 import chevron from 'public/assets/SVG/Chevron.svg'
 import Image from "next/image"
 import { About } from '@/components/Header/About'
-import { Author } from '@/components/Header/Author'
-import { Panel } from '@/components/Panel/Panel'
-
-import avatarImg from 'public/assets/HermesPrane.jpg'
 
 interface HeaderPanelProps {
     onSidebarHide: (hidden: boolean) => void;
@@ -25,7 +21,7 @@ export const HeaderPanel = ({ onSidebarHide }: HeaderPanelProps) => {
 
     const hoverAuthor = () => {
         hoverTimeoutRef.current = setTimeout(() => {
-            setOffsetHeight(110);
+            setOffsetHeight(95);
             appearAboutMe();
         }, 500);
     }
@@ -75,8 +71,6 @@ export const HeaderPanel = ({ onSidebarHide }: HeaderPanelProps) => {
 
     return (
         <div id="HeaderPanel" onMouseEnter={hoverAuthor} onMouseLeave={unhoverAuthor}>
-
-            <Author />
 
             <div id="HeaderPanelBehind">
                 <Image

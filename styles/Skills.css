@@ -1,8 +1,8 @@
 .SkillSectionTittle {
-    padding-top: 20px;
-    padding-left: 20px;
-    padding-right: 20px;
-    padding-bottom: 10px;
+    padding-top: 25px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 15px;
 }
 
 .TagContainer {
@@ -11,7 +11,7 @@
     flex-wrap: wrap;
     justify-content: center;
     width: 100%;
-    margin: 10px 0px;
+    margin: 8px 0px;
     box-sizing: border-box;
 }
 
@@ -19,8 +19,8 @@
     position: relative;
     background-color: rgba(0, 0, 0, 0.3);
     display: flex;
-    width: 80px;
-    height: 80px;
+    width: 70px;
+    height: 70px;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
@@ -42,6 +42,7 @@
     border-radius: 50%;
     z-index: 4;
     transition: all 0.2s ease-out;
+    cursor: pointer;
 }
 
 .SkillLabel {
@@ -49,6 +50,7 @@
     height: auto;
     text-align: center;
     padding-top: 10px;
+    font-size: 14px;
 }
 
 .SkillTag {
@@ -56,8 +58,8 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    width: 110px;
-    height: 150px;
+    width: 95px;
+    height: 140px;
     cursor: default;
 }
 
@@ -74,8 +76,8 @@
 }
 
 .inflatedOuter {
-    width: 90px;
-    height: 90px;
+    width: 80px;
+    height: 80px;
 }
 
 .inflatedInner {

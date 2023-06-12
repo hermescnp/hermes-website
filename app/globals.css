@@ -23,15 +23,18 @@ body {
 
 .sideBar {
   position: fixed;
-  background: linear-gradient(rgba(28, 36, 52, 1), rgba(55, 76, 108, 0.8));
-  width: 475px;
+  background: linear-gradient(rgba(28, 36, 52, 1), rgba(55, 76, 108, 0.7));
+  width: 400px;
   height: 100vh;
   display: grid;
   grid-template-rows: auto auto 1fr;
+  grid-template-columns: 400px;
   top: 0;
   left: 0;
   z-index: 7;
   transition: transform 0.5s ease;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .sideBar.hidden {
@@ -55,19 +58,19 @@ body {
 
 h1 {
   font-weight: 400;
-  font-size: 32px;
+  font-size: 28px;
   margin: 0px;
 }
 
 h2 {
   font-weight: 300;
-  font-size: 24px;
+  font-size: 20px;
   margin: 0px 0px 5px 0px;
 }
 
 h4 {
   font-weight: 300;
-  font-size: 18px;
+  font-size: 16px;
   margin: 0px;
 }
 
@@ -79,6 +82,7 @@ strong {
 
 p {
   margin: 0px;
+  font-size: 14px;
 }
 
 picture {
@@ -145,7 +149,7 @@ button {
   color: white;
   border: none;
   font-family: 'Inter', sans-serif;
-  font-size: 18px;
+  font-size: 16px;
   padding: 0px;
   margin: 0px;
 }
@@ -155,7 +159,7 @@ button {
   color: white;
   border: solid 2px white;
   font-family: 'Inter', sans-serif;
-  font-size: 18px;
+  font-size: 16px;
 }
 
 .buttonTest:hover {
@@ -165,7 +169,7 @@ button {
 a {
   color: white;
   font-family: 'Inter', sans-serif;
-  font-size: 18px;
+  font-size: 16px;
   text-decoration: none;
 }
 
@@ -180,6 +184,8 @@ a {
   align-items: flex-start;
   overflow: hidden;
   opacity: 0.5;
+  width: 20px;
+  height: 20px;
 }
 
 .SeeMore:hover {
@@ -189,6 +195,8 @@ a {
 .SeeLess {
   transform: rotate(90deg);
   transition: all 0.3s ease;
+  width: 20px;
+  height: 20px;
 }
 
 summary {
@@ -241,6 +249,7 @@ summary {
 @media screen and (orientation: portrait) {
   .sideBar {
     width: 100%;
+    grid-template-columns: 100%;
   }
 
   .sideBar.hidden {

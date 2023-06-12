@@ -26,9 +26,9 @@ export const SkillItem: React.FC<SkillItemProps> = ({ skill }) => {
     const { skillName, skillLevel, iconSource, category } = skill;
 
     const [circleProps, setCircleProps] = useState<CircleProps>({
-        cx: 40,
-        cy: 40,
-        r: 37
+        cx: 35,
+        cy: 35,
+        r: 33
     });
 
     const [isInflated, setIsInflated] = useState<boolean>(false);
@@ -39,18 +39,18 @@ export const SkillItem: React.FC<SkillItemProps> = ({ skill }) => {
 
     const handleMouseEnter = () => {
         setCircleProps({
-            cx: 45,
-            cy: 45,
-            r: 42
+            cx: 40,
+            cy: 40,
+            r: 38
         });
         setIsInflated(true);
     };
 
     const handleMouseLeave = () => {
         setCircleProps({
-            cx: 40,
-            cy: 40,
-            r: 37
+            cx: 35,
+            cy: 35,
+            r: 33
         });
         setIsInflated(false);
     };
@@ -62,7 +62,7 @@ export const SkillItem: React.FC<SkillItemProps> = ({ skill }) => {
         <li onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
             <div className="SkillTag">
                 <div className={progressAreaClasses} ref={progressAreaRef}>
-                    <svg width="160px" height="160px" version="1.1" className="CircleProgress">
+                    <svg width="150px" height="150px" version="1.1" className="CircleProgress">
                         <circle
                             cx={cx}
                             cy={cy}
@@ -70,7 +70,7 @@ export const SkillItem: React.FC<SkillItemProps> = ({ skill }) => {
                             strokeDasharray={circumference.toString()}
                             strokeDashoffset={offset.toString()}
                             strokeLinecap="round"
-                            style={{ stroke: 'white', strokeWidth: '6px', fill: 'none', transition: 'all 0.2s ease-out' }}
+                            style={{ stroke: 'white', strokeWidth: '4px', fill: 'none', transition: 'all 0.2s ease-out' }}
                         />
                     </svg>
                     <div className={skillItemClasses} ref={skillItemRef}>
