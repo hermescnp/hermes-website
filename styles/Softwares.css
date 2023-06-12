@@ -14,14 +14,12 @@
   }
 
   .SoftwareItem {
-    display: flex;
-    width: auto;
+    display: grid;
+    width: 100%;
     height: auto;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    align-items: center;
-    padding: 15px 40px 15px 30px;
+    grid-template-columns: auto 1fr;
+    box-sizing: border-box;
+    padding: 15px 30px 15px 30px;
     cursor: default;
   }
   

@@ -2,10 +2,9 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    overflow-y: auto;
+    overflow-y: scroll;
     overflow-x: hidden;
-    transition: transform 0.8s ease;
-    transition: height 0.5s ease;
+    transition: transform 0.8s ease, height 0.5s ease;
     scroll-behavior: smooth;
     width: 100%;
     height: 100%;

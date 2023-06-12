@@ -29,15 +29,3 @@
     opacity: 0.5;
     width: 16px;
 }
-
-@media screen and (orientation: portrait){
-
-    #HeaderPanel {
-        width: 100%;
-    }
-
-    #hideButton {
-        transform: rotate(270deg);
-        margin: 0px 10px;
-    }
-}

@@ -217,36 +217,13 @@ summary {
   opacity: 0;
 }
 
-@media screen and (orientation: portrait) {
-  .Background {
-    width: 100%;
-  }
+.inflatedOuter {
+  width: 90px;
+  height: 90px;
+}
 
-  .FooterInfo {
-    display: none;
-  }
-
-  #fixedBackground {
-    background: linear-gradient(#1C2434, #374C6C);
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    top: auto;
-    bottom: 0;
-    left: 0;
-    box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.1);
-    transition: height 0.8s ease;
-    z-index: 1;
-  }
-
-  .sideBar {
-    width: 100%;
-  }
-
-  #mainLayout {
-    display: block;
-    height: 100%;
-  }
+.inflatedInner {
+  background: #374C6C;
 }
 
 ::-webkit-scrollbar {
@@ -259,4 +236,76 @@ summary {
 
 ::-webkit-scrollbar-thumb {
   background-color: black;
+}
+
+@media screen and (orientation: portrait) {
+  .sideBar {
+    width: 100%;
+  }
+
+  .sideBar.hidden {
+    transform: translateY(100%);
+  }
+
+  .Background {
+    width: 100%;
+  }
+
+  #HeaderPanel {
+    width: 100%;
+  }
+
+  #Panel {
+    width: 100%;
+    transition: transform 1.5s ease;
+  }
+
+  .TagContainer {
+    justify-content: flex-start;
+    grid-column: 2;
+    width: auto;
+  }
+
+  .FooterInfo {
+    display: none;
+  }
+
+  .TagContainerPartner {
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+  }
+
+  #mainLayout {
+    display: block;
+    height: 100%;
+  }
+
+  #renderView {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+  }
+
+  #renderContainer {
+    display: flex;
+    position: fixed;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+  }
+
+  #hideButton {
+    transform: rotate(270deg);
+    margin: 0px 10px;
+  }
 }

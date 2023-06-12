@@ -76,7 +76,7 @@ export const HeaderPanel = ({ onSidebarHide }: HeaderPanelProps) => {
     return (
         <div id="HeaderPanel" onMouseEnter={hoverAuthor} onMouseLeave={unhoverAuthor}>
 
-            <Author avatar={avatarImg} />
+            <Author />
 
             <div id="HeaderPanelBehind">
                 <Image
