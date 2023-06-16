@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef, forwardRef, Ref } from 'react';
 import Image from 'next/image';
 import '../../../styles/Background.css';
 import chevron from 'public/assets/SVG/Chevron.svg';
@@ -14,11 +14,12 @@ interface BackgroundItemType {
   type: string;
 }
 
-interface SoftwareListProps {
+interface BackgroundListProps {
   items: BackgroundItemType[];
+  ref: Ref<HTMLDivElement>;
 }
 
-const BackgroundList: React.FC<SoftwareListProps> = ({ items }) => {
+const BackgroundList = forwardRef<HTMLDivElement, BackgroundListProps>(({ items }, ref) => {
   const [expandedCategories, setExpandedCategories] = useState<string[]>([]);
   const [categoryHeights, setCategoryHeights] = useState<number[]>([]);
   const [hoveredCategory, setHoveredCategory] = useState<string | null>(null);
@@ -61,9 +62,8 @@ const BackgroundList: React.FC<SoftwareListProps> = ({ items }) => {
     return acc;
   }, []);
 
-
   return (
-    <section id="FormationBackground">
+    <section id="FormationBackground" ref={ref}>
       {categories.map((category, index) => {
         const isExpanded = expandedCategories.includes(category);
         const isHovered = hoveredCategory === category;
@@ -93,6 +93,6 @@ const BackgroundList: React.FC<SoftwareListProps> = ({ items }) => {
       })}
     </section>
   );
-}
+});
 
 export default BackgroundList;

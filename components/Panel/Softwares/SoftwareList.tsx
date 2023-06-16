@@ -1,4 +1,4 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import '../../../styles/Softwares.css';
 import SoftwareItem from "./SoftwareItem";
 
@@ -13,11 +13,13 @@ interface SoftwareItemType {
 
 interface SoftwareListProps {
     items: SoftwareItemType[];
+    // removed the ref from here
 }
 
-const SoftwareList: React.FC<SoftwareListProps> = ({ items }) => {
+// Wrapped component in forwardRef, note that ref is now a second parameter to the function
+const SoftwareList = forwardRef<HTMLDivElement, SoftwareListProps>(( { items }, ref ) => {
     return (
-        <section id="SoftwareSection">
+        <section id="SoftwareSection" ref={ref}>
             <h4 className="SkillSectionTittle">Software Expertise</h4>
             <ul id="softwareContainer" className="SoftwareContainer">
                 {items.map((item, i) => {
@@ -28,6 +30,6 @@ const SoftwareList: React.FC<SoftwareListProps> = ({ items }) => {
             </ul>
         </section>
     );
-};
+});
 
 export default SoftwareList;

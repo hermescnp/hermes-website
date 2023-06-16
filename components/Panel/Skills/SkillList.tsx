@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { SkillItem } from './SkillItem';
 import '../../../styles/Skills.css';
 
@@ -11,11 +11,11 @@ interface SkillItemType {
   type: string;
 }
 
-interface SoftwareListProps {
+interface SkillListProps {
   items: SkillItemType[];
 }
 
-const SkillList: React.FC<SoftwareListProps> = ({ items }) => {
+const SkillList = forwardRef<HTMLDivElement, SkillListProps>(({ items }, ref) => {
 
   let skillData = items.filter(item => item.type === 'skill');
 
@@ -25,7 +25,7 @@ const SkillList: React.FC<SoftwareListProps> = ({ items }) => {
   }, {});
 
   return (
-    <div id="SkillSection">
+    <div id="SkillSection" ref={ref}>
       {Object.entries(categorySkills).map(([category, skills]: [string, SkillItemType[]]) => (
         <div key={category}>
           <h4 className="SkillSectionTittle">{category}</h4>
@@ -36,6 +36,6 @@ const SkillList: React.FC<SoftwareListProps> = ({ items }) => {
       ))}
     </div>
   );
-}
+})
 
 export default SkillList;

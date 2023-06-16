@@ -2,6 +2,15 @@ html {
   scroll-behavior: smooth;
 }
 
+.Layout {
+  position: fixed;
+  display: grid;
+  grid-template-rows: 50px 1fr;
+  background-color: rgba(18, 23, 34, 1);
+  top: 0;
+  left: 0;
+}
+
 body {
   font-family: 'Inter', sans-serif;
   font-weight: 100;
@@ -18,11 +27,11 @@ body {
   padding: 0;
   height: 100%;
   width: 100%;
-  position: absolute;
+  position: relative;
 }
 
 .sideBar {
-  position: fixed;
+  position: absolute;
   background: linear-gradient(rgba(28, 36, 52, 1), rgba(55, 76, 108, 0.7));
   width: 400px;
   height: 100vh;
@@ -208,19 +217,6 @@ summary {
   cursor: default;
 }
 
-.FooterInfo {
-  display: flex;
-  flex-direction: row;
-  position: fixed;
-  bottom: 0;
-  right: 0;
-}
-
-.metaInfo {
-  font-size: 12px;
-  margin: 20px;
-}
-
 .Disapear {
   opacity: 0;
 }
@@ -283,11 +279,6 @@ summary {
     display: flex;
     justify-content: center;
     margin: 0 auto;
-  }
-
-  #mainLayout {
-    display: block;
-    height: 100%;
   }
 
   #renderView {

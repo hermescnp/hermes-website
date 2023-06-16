@@ -23,6 +23,11 @@ export const Contact = () => {
 
             <Socialmedia />
 
+            <div role="contentinfo" className="FooterInfo">
+                <p className="metaInfo">Web designed and Developed by: Hermes Concepción</p>
+                <p className="metaInfo">Last Edit: May 15, 2023</p>
+            </div>
+
         </section>
     )
 }

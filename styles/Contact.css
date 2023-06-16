@@ -5,13 +5,13 @@
     border-color: white;
     display: flex;
     flex-direction: column;
-    margin-bottom: 30px;
+    padding-bottom: 50px;
 }
 
 #ContactInfoContainer {
     display: flex;
     flex-direction: column;
-    padding: 0px 20px;
+    padding: 0px 15px;
 }
 
 #mapContainer {
@@ -23,3 +23,17 @@
     justify-content: center;
     align-items: center;
 }
+
+.FooterInfo {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 50px;
+    bottom: 0;
+    right: 0;
+    padding: 0px 15px 30px 15px;
+  }
+  
+  .metaInfo {
+    font-size: 12px;
+  }

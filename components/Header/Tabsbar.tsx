@@ -2,17 +2,17 @@ import React, { useRef } from "react";
 import '../../styles/Tabsbar.css';
 
 interface TabsbarProps {
-    handleButtonClick: () => void;
+    handleRefClick: (sectionId: string) => void;
 }
 
-export const Tabsbar = ({handleButtonClick}: TabsbarProps) => {
+export const Tabsbar = ({ handleRefClick}: TabsbarProps) => {
 
     return (
         <div>
             <nav id="NavPanel">
-                <button id="skillsButton" className="Tab" onClick={handleButtonClick}><a href="#SkillSection">Skills</a></button>
-                <button id="backgroundButton" className="Tab" onClick={handleButtonClick}><a href="#FormationBackground">Background</a></button>
-                <button id="softwaresButton" className="Tab" onClick={handleButtonClick}><a href="#SoftwareSection">Softwares</a></button>
+                <button id="skillsButton" className="Tab" onClick={() => handleRefClick('SkillSection')}><a>Skills</a></button>
+                <button id="backgroundButton" className="Tab" onClick={() => handleRefClick('FormationBackground')}><a>Background</a></button>
+                <button id="softwaresButton" className="Tab" onClick={() => handleRefClick('SoftwareSection')}><a>Softwares</a></button>
             </nav>
             <div id="snakeSpace">
                 <svg id="snakeElement" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 194.12 4.56">

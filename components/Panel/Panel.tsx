@@ -5,7 +5,13 @@ import BackgroundList from './Background/BackgroundList'
 import SkillList from './Skills/SkillList'
 import '../../styles/Panel.css'
 
-const Panel = forwardRef<HTMLDivElement>((props, ref) => {
+interface PanelProps {
+  skillRef: React.RefObject<HTMLDivElement>;
+  backgroundRef: React.RefObject<HTMLDivElement>;
+  softwareRef: React.RefObject<HTMLDivElement>;
+}
+
+const Panel = forwardRef<HTMLDivElement, PanelProps>(({ skillRef, backgroundRef, softwareRef }, ref) => {
 
     const [Data, setData] = useState([]);
 
@@ -21,11 +27,11 @@ const Panel = forwardRef<HTMLDivElement>((props, ref) => {
     return (
         <div ref={ref} className="Panel panelWrapper" >
 
-            <SkillList items={Data} />
+            <SkillList items={Data} ref={skillRef}/>
 
-            <BackgroundList items={Data} />
+            <BackgroundList items={Data} ref={backgroundRef}/>
 
-            <SoftwareList items={Data} />
+            <SoftwareList items={Data} ref={softwareRef}/>
 
             <Contact />
 

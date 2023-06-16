@@ -6,6 +6,8 @@ import { HeaderPanel } from '@/components/Header/Headerpanel';
 import { HiddenPanel } from '@/components/Panel/Hiddenpanel';
 import { Tabsbar } from '@/components/Header/Tabsbar';
 import { Author } from '@/components/Header/Author'
+import { useExperienceContext } from '@/context/ExperienceContext';
+
 
 const Experience = dynamic(() => import('../components/Experience/Experience'), {
   ssr: false,
@@ -13,7 +15,7 @@ const Experience = dynamic(() => import('../components/Experience/Experience'), 
 });
 
 export default function Home() {
-  const [isClicked, setIsClicked] = useState<boolean>(false);
+  const { isClicked } = useExperienceContext();
   const [sidebarHidden, setSidebarHidden] = useState<boolean>(false);
   const [displayHiddenPanel, setDisplayHiddenPanel] = useState<boolean>(false);
   const [returnHiddenPanel, setReturnHiddenPanel] = useState<boolean>(false);
@@ -21,10 +23,10 @@ export default function Home() {
   const panelRef = useRef<HTMLDivElement>(null);
   const sideBarRef = useRef<HTMLDivElement>(null);
 
-  const callExperience = (event: any) => {
-    event.stopPropagation();
-    setIsClicked(!isClicked);
-  };
+  // Create refs for each section
+  const skillRef = useRef<HTMLDivElement>(null);
+  const backgroundRef = useRef<HTMLDivElement>(null);
+  const softwareRef = useRef<HTMLDivElement>(null);
 
   const handleSidebarHide = (hidden: boolean) => {
     setSidebarHidden(hidden);
@@ -39,12 +41,6 @@ export default function Home() {
     setTimeout(() => setSidebarHidden(false), 300);
   };
 
-  const handleButtonClick = () => {
-    if (panelRef.current) {
-      panelRef.current.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
   useEffect(() => {
     const handleTransitionEnd = () => {
       if (sidebarHidden) {
@@ -55,16 +51,21 @@ export default function Home() {
     };
 
     const node = sideBarRef.current;
-    if (node) {
-      node.addEventListener('transitionend', handleTransitionEnd);
-    }
+    node?.addEventListener('transitionend', handleTransitionEnd);
 
     return () => {
-      if (node) {
-        node.removeEventListener('transitionend', handleTransitionEnd);
-      }
+      node?.removeEventListener('transitionend', handleTransitionEnd);
     };
   }, [sidebarHidden]);
+
+  const handleRefClick = (sectionId: string) => {
+    const sectionRef = sectionId === "SkillSection" ? skillRef :
+      sectionId === "FormationBackground" ? backgroundRef :
+        softwareRef;
+    if (sectionRef.current) {
+      sectionRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   return (
     <div className="Page">
@@ -73,17 +74,16 @@ export default function Home() {
 
       <div ref={sideBarRef} className={`sideBar${sidebarHidden ? ' hidden' : ''}`}>
         <HeaderPanel onSidebarHide={handleSidebarHide} />
-        <Tabsbar handleButtonClick={handleButtonClick} />
-        <Panel ref={panelRef} />
+        <Tabsbar
+          handleRefClick={handleRefClick} />
+        <Panel ref={panelRef} skillRef={skillRef} backgroundRef={backgroundRef} softwareRef={softwareRef} />
       </div>
 
-      <HiddenPanel hidden={!displayHiddenPanel || returnHiddenPanel} onClick={() => handleHiddenPanelClick()} handleButtonClick={handleButtonClick} />
-
-      <div role="contentinfo" className="FooterInfo">
-        <p className="metaInfo">Web designed and Developed by: Hermes Concepción</p>
-        <p className="metaInfo">Last Edit: May 15, 2023</p>
-        <button id="testingButton" type="button" className="buttonTest" onClick={callExperience}>Testing Function</button>
-      </div>
+      <HiddenPanel
+        hidden={!displayHiddenPanel || returnHiddenPanel}
+        onClick={() => handleHiddenPanelClick()}
+        handleRefClick={handleRefClick}
+      />
     </div>
   );
 }

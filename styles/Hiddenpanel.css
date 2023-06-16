@@ -5,9 +5,9 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 40px;
+    width: 50px;
     height: 100%;
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0px;
     transition: transform 0.3s ease-in-out, padding-left 0.1s ease-in-out, padding-bottom 0.1s ease-in-out;
