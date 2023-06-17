@@ -13,8 +13,9 @@ import Camera from './Camera'
 import Controls from './Controls'
 import getModel from './Model';
 import { createPath } from './PathGenerator'
-import getZones from './Zonification'
+import Zonification from './Zonification'
 import ObjectSelector from './ObjectSelector';
+import { useExperienceContext } from '@/context/ExperienceContext';
 
 // Camera Positions
 const introStartPosition = new THREE.Vector3(-70.0, 0.0, 0.0);
@@ -25,10 +26,11 @@ const generalPosition = new THREE.Vector3(-11.0, 6.0, 11.0);
 const generalTarget = new THREE.Vector3(0.0, 2.0, 0.0);
 
 interface ExperienceProps {
+    data: any[];
     isClicked: boolean;
-  }
+}
 
-const Experience: React.FC<ExperienceProps> = ({isClicked}) => {
+const Experience: React.FC<ExperienceProps> = ({ data, isClicked }) => {
 
     const refBody = useRef<HTMLDivElement>(null)
     const [loading, setLoading] = useState<boolean>(false);
@@ -46,7 +48,10 @@ const Experience: React.FC<ExperienceProps> = ({isClicked}) => {
     const [targetPath, setTargetPath] = useState<any>(createPath('general', 'studio'));
     const lerpStateRef = useRef<number>(lerpState);
     const targetPathRef = useRef<any>(targetPath);
+    const { setPlaceHover, placehover } = useExperienceContext();
 
+    const [zones, setZones] = useState<any>([]);  // Declare zones state
+    const zonesRef = useRef(zones);  // Declare zones ref
 
     // HANDLE WINDOW RESIZE
     const handleWindowResize = useCallback(() => {
@@ -69,21 +74,22 @@ const Experience: React.FC<ExperienceProps> = ({isClicked}) => {
         setLerpState(0);
     }, [isClicked]);
 
-
     // UPDATE TARGET PATH
     useEffect(() => {
         targetPathRef.current = targetPath;
-      }, [targetPath]);
-
+    }, [targetPath]);
 
     // UPDATE LERP STATE
     useEffect(() => {
         lerpStateRef.current = lerpState;
-      }, [lerpState]);
+    }, [lerpState]);
 
+    // UPDATE ZONES
+    useEffect(() => {
+        zonesRef.current = zones;
+    }, [zones]);
 
     //  EXPERIENCE ENGINE
-
     useEffect(() => {
         const { current: container } = refBody;
 
@@ -131,8 +137,10 @@ const Experience: React.FC<ExperienceProps> = ({isClicked}) => {
             setLoading(false);
 
             // MAKING SELECTABLE
-             const zones = getZones(scene);
-            const objectSelector = new ObjectSelector();
+            const zonification = new Zonification(scene, data);
+            const zones = zonification.getZones();
+            setZones(zones);
+            const objectSelector = new ObjectSelector(renderer3d);
 
             let req: any = null;
             let frame = 0;
@@ -140,20 +148,23 @@ const Experience: React.FC<ExperienceProps> = ({isClicked}) => {
             let isMousePressed = false;
             let isLongClick = false;
             let longClickThreshold = 300;
-            let mouseDownTimeout : any;
+            let mouseDownTimeout: any;
 
             window.addEventListener('mousedown', () => {
                 isMousePressed = true;
                 isLongClick = false;
-                mouseDownTimeout = setTimeout(function() {
+                mouseDownTimeout = setTimeout(function () {
                     isLongClick = true;
-                    // Additional logic for long click can be added here
+                    setPlaceHover('')
                 }, longClickThreshold);
             });
 
             window.addEventListener('mouseup', () => {
                 isMousePressed = false;
                 clearTimeout(mouseDownTimeout);
+                setTimeout(function () {
+                    isLongClick = false;
+                }, 100);
             });
 
             window.addEventListener('click', () => {
@@ -164,7 +175,7 @@ const Experience: React.FC<ExperienceProps> = ({isClicked}) => {
                         setTargetPath(createPath('general', pathName));
                         setLerpState(1);
                     } else { console.log('you have to select something') }
-                  }
+                }
             });
 
             // CONTROLS
@@ -172,6 +183,7 @@ const Experience: React.FC<ExperienceProps> = ({isClicked}) => {
             const controls = Controls(camera, objectTarget, renderer3d);
             setControls(controls);
 
+            // ANIMATION SETTINGS
             const lerp = {
                 current: 0,
                 target: 0,
@@ -186,7 +198,20 @@ const Experience: React.FC<ExperienceProps> = ({isClicked}) => {
                 frame = frame <= 100 ? frame + 1 : frame;
 
                 // IS SELECTED?
-                objectSelector.update(zones, camera);
+                if (zonesRef.current && zonesRef.current.length > 0) {
+                    objectSelector.update(zonesRef.current, camera);
+                    const currentSelection = objectSelector.getCurrentSelection();
+                    if (placehover !== currentSelection && isLongClick === false) {
+                        if (currentSelection === 'no selections') {
+                            setPlaceHover('');
+                        } else {
+                            const selectedObject = data.find(obj => obj.key === currentSelection);
+                            if (selectedObject) {
+                                setPlaceHover(selectedObject.name);
+                            }
+                        }
+                    }
+                }
 
                 // LERPING
                 lerp.current = gsap.utils.interpolate(
@@ -199,7 +224,7 @@ const Experience: React.FC<ExperienceProps> = ({isClicked}) => {
 
                 lerp.target = lerpStateRef.current;
                 let currentPath = targetPathRef.current;
-                
+
                 lerp.target = lerpStateRef.current;
                 controls.autoRotate = true;
                 currentPath.getPointAt(lerp.current, targetPosition);
@@ -209,8 +234,8 @@ const Experience: React.FC<ExperienceProps> = ({isClicked}) => {
                 controls.minDistance = 17 - (lerp.current * 12);
                 controls.minAzimuthAngle = -1.7 + (lerp.current / 5);
                 controls.maxAzimuthAngle = 0.1 - (lerp.current / 2);
-                controls.minPolarAngle = Math.PI/(4 - (lerp.current));
-                controls.maxPolarAngle = Math.PI/(2 + (lerp.current / 10));
+                controls.minPolarAngle = Math.PI / (4 - (lerp.current));
+                controls.maxPolarAngle = Math.PI / (2 + (lerp.current / 10));
                 // camera.fov = 25 + (lerp.current * 15);
                 // camera.updateProjectionMatrix();
 
@@ -238,8 +263,7 @@ const Experience: React.FC<ExperienceProps> = ({isClicked}) => {
             }
 
             // START ANIMATION
-            animate();
-
+            req = requestAnimationFrame(animate);
 
             return () => {
                 console.log('unmount');

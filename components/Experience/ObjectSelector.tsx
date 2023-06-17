@@ -6,12 +6,17 @@ export default class ObjectSelector {
     private raycaster = new THREE.Raycaster();
     private mouse = new THREE.Vector2();
     private selection : string = '';
+    private rendererDomElement : HTMLCanvasElement;
 
-    constructor() {
+    constructor(renderer: THREE.WebGLRenderer) {
+
+        this.rendererDomElement = renderer.domElement;
 
         window.addEventListener('mousemove', (event) => {
-            this.mouse.x = event.clientX / window.innerWidth * 2 - 1;
-            this.mouse.y = - (event.clientY / window.innerHeight * 2 - 1);
+            var rect = this.rendererDomElement.getBoundingClientRect();
+
+            this.mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+            this.mouse.y = - ((event.clientY - rect.top) / rect.height) * 2 + 1;
         })
     }
 
@@ -22,7 +27,6 @@ export default class ObjectSelector {
         // INTERSECT HOVER
         if (intersects.length > 0) {
             for (const intersect of intersects) {
-                //console.log(intersect.object.name);
                 this.selection = intersect.object.name;
             }
         } else {

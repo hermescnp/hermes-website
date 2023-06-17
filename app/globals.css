@@ -5,7 +5,7 @@ html {
 .Layout {
   position: fixed;
   display: grid;
-  grid-template-rows: 50px 1fr;
+  grid-template-rows: 56px 1fr;
   background-color: rgba(18, 23, 34, 1);
   top: 0;
   left: 0;

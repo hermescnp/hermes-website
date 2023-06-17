@@ -2,7 +2,7 @@
 import './globals.css'
 import React, { useState, useEffect } from 'react';
 import { Inter } from 'next/font/google'
-import { Navbar } from '@/components/Navbar';
+import { Navbar } from '@/components/Navbar/Navbar';
 import { ExperienceProvider, useExperienceContext } from '@/context/ExperienceContext';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -18,7 +18,10 @@ interface AppProps {
 
 const App: React.FC<AppProps> = ({ children }) => {
     const [isClient, setIsClient] = useState(false);
-    const { InstanceBackButton } = isClient ? useExperienceContext() : { InstanceBackButton: () => {} };
+    const experienceContext = useExperienceContext();
+
+    const InstanceBackButton = isClient ? experienceContext.InstanceBackButton : () => {};
+    const placehover = isClient ? experienceContext.placehover : null;
   
     useEffect(() => {
       setIsClient(true);
@@ -27,12 +30,11 @@ const App: React.FC<AppProps> = ({ children }) => {
     return (
       <html lang="en">
         <body className='Layout'>
-          <Navbar handleBackButton={InstanceBackButton} />
+          <Navbar handleBackButton={InstanceBackButton} placehover={placehover} />
           <div className={inter.className}>{children}</div>
         </body>
       </html>
     );
-  }
-  
+}
 
 export default App;

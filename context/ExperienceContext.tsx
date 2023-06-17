@@ -4,12 +4,15 @@ import React, { createContext, useState, useContext } from 'react';
 type ExperienceContextType = {
   isClicked: boolean;
   InstanceBackButton: (vent: any) => void;
+  placehover: string | null;
+  setPlaceHover: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
 export const ExperienceContext = createContext<ExperienceContextType | undefined>(undefined);
 
 export const ExperienceProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isClicked, setIsClicked] = useState<boolean>(false);
+  const [placehover, setPlaceHover] = useState<string | null>(null);
 
   const InstanceBackButton = (event: any) => {
     event.stopPropagation();
@@ -17,7 +20,7 @@ export const ExperienceProvider: React.FC<{ children: React.ReactNode }> = ({ ch
   };
 
   return (
-    <ExperienceContext.Provider value={{ isClicked, InstanceBackButton }}>
+    <ExperienceContext.Provider value={{ isClicked, InstanceBackButton, placehover, setPlaceHover }}>
       {children}
     </ExperienceContext.Provider>
   );

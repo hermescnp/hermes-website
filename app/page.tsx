@@ -8,7 +8,6 @@ import { Tabsbar } from '@/components/Header/Tabsbar';
 import { Author } from '@/components/Header/Author'
 import { useExperienceContext } from '@/context/ExperienceContext';
 
-
 const Experience = dynamic(() => import('../components/Experience/Experience'), {
   ssr: false,
   loading: () => <p>loading...</p>
@@ -19,6 +18,8 @@ export default function Home() {
   const [sidebarHidden, setSidebarHidden] = useState<boolean>(false);
   const [displayHiddenPanel, setDisplayHiddenPanel] = useState<boolean>(false);
   const [returnHiddenPanel, setReturnHiddenPanel] = useState<boolean>(false);
+  const [panelData, setPanelData] = useState([]);
+  const [spaceData, setSpaceData] = useState([]);
 
   const panelRef = useRef<HTMLDivElement>(null);
   const sideBarRef = useRef<HTMLDivElement>(null);
@@ -42,6 +43,20 @@ export default function Home() {
   };
 
   useEffect(() => {
+    fetch('/user/data.json')
+      .then(response => response.json())
+      .then(data1 => {
+        setPanelData(data1);
+      })
+      .catch(error => console.error('Error:', error));
+
+    fetch('/models/space-map.json')
+      .then(response => response.json())
+      .then(data2 => {
+        setSpaceData(data2);
+      })
+      .catch(error => console.error('Error:', error));
+
     const handleTransitionEnd = () => {
       if (sidebarHidden) {
         setTimeout(() => {
@@ -69,14 +84,14 @@ export default function Home() {
 
   return (
     <div className="Page">
-      <Experience isClicked={isClicked} />
+      <Experience data={spaceData} isClicked={isClicked} />
       <Author />
 
       <div ref={sideBarRef} className={`sideBar${sidebarHidden ? ' hidden' : ''}`}>
         <HeaderPanel onSidebarHide={handleSidebarHide} />
         <Tabsbar
           handleRefClick={handleRefClick} />
-        <Panel ref={panelRef} skillRef={skillRef} backgroundRef={backgroundRef} softwareRef={softwareRef} />
+        <Panel data={panelData} ref={panelRef} skillRef={skillRef} backgroundRef={backgroundRef} softwareRef={softwareRef} />
       </div>
 
       <HiddenPanel
@@ -87,3 +102,4 @@ export default function Home() {
     </div>
   );
 }
+
