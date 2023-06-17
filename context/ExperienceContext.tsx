@@ -6,6 +6,8 @@ type ExperienceContextType = {
   InstanceBackButton: (vent: any) => void;
   placehover: string | null;
   setPlaceHover: React.Dispatch<React.SetStateAction<string | null>>;
+  currentInstance: string;
+  setCurrentInstance: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export const ExperienceContext = createContext<ExperienceContextType | undefined>(undefined);
@@ -13,6 +15,7 @@ export const ExperienceContext = createContext<ExperienceContextType | undefined
 export const ExperienceProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isClicked, setIsClicked] = useState<boolean>(false);
   const [placehover, setPlaceHover] = useState<string | null>(null);
+  const [currentInstance, setCurrentInstance] = useState<string>('main');
 
   const InstanceBackButton = (event: any) => {
     event.stopPropagation();
@@ -20,7 +23,7 @@ export const ExperienceProvider: React.FC<{ children: React.ReactNode }> = ({ ch
   };
 
   return (
-    <ExperienceContext.Provider value={{ isClicked, InstanceBackButton, placehover, setPlaceHover }}>
+    <ExperienceContext.Provider value={{ isClicked, InstanceBackButton, placehover, setPlaceHover, currentInstance, setCurrentInstance }}>
       {children}
     </ExperienceContext.Provider>
   );

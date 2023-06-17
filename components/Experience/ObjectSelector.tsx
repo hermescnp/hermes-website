@@ -20,9 +20,9 @@ export default class ObjectSelector {
         })
     }
 
-    update(objects : any, camera : any) {
+    update(instances : any, camera : any) {
         this.raycaster.setFromCamera(this.mouse, camera);
-        const intersects = this.raycaster.intersectObjects(objects);
+        const intersects = this.raycaster.intersectObjects(instances);
         
         // INTERSECT HOVER
         if (intersects.length > 0) {

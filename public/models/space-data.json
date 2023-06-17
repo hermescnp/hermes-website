@@ -1,0 +1,21 @@
+{
+    "id": "id number",
+    "name": "Hermes's Office",
+    "moc": "moc name string",
+    "mapData": "file url",
+    "mocData": "file url",
+    "model": "file url",
+    "ownerProfile": "id number",
+    "lastEdit": "date",
+    "isPrivate": "boolean",
+    "isVerified": "boolean",
+    "coverImg": "file url",
+    "logotype": "file url",
+    "catalog": "string",
+    "description": "string",
+    "tags": "string",
+    "primaryColor": "hex color string",
+    "secondaryColor": "hex color string",
+    "accentColor": "hex color string",
+    "backgroundColor": "hex color string"
+}

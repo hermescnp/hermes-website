@@ -12,7 +12,7 @@ import Renderer2d from './Renderer2d'
 import Camera from './Camera'
 import Controls from './Controls'
 import getModel from './Model';
-import { createPath } from './PathGenerator'
+import PathGenerator from './PathGenerator'
 import Zonification from './Zonification'
 import ObjectSelector from './ObjectSelector';
 import { useExperienceContext } from '@/context/ExperienceContext';
@@ -22,15 +22,18 @@ const introStartPosition = new THREE.Vector3(-70.0, 0.0, 0.0);
 const introEndPosition = new THREE.Vector3(-17.0, 0.0, 0.0);
 const generalPosition = new THREE.Vector3(-11.0, 6.0, 11.0);
 
-// Camera Targets
-const generalTarget = new THREE.Vector3(0.0, 2.0, 0.0);
-
 interface ExperienceProps {
     data: any[];
     isClicked: boolean;
 }
 
 const Experience: React.FC<ExperienceProps> = ({ data, isClicked }) => {
+
+    // INSTANCE TRAVELER
+    const pathGenerator = new PathGenerator(data);
+
+    // MAIN CAMERA TARGET
+    const generalTarget = new THREE.Vector3(data[0].positionX, data[0].positionY, data[0].positionZ);
 
     const refBody = useRef<HTMLDivElement>(null)
     const [loading, setLoading] = useState<boolean>(false);
@@ -45,10 +48,11 @@ const Experience: React.FC<ExperienceProps> = ({ data, isClicked }) => {
     const [_controls, setControls] = useState<any>();
     const [model, setModel] = useState<any>(false);
     const [lerpState, setLerpState] = useState<number>(0);
-    const [targetPath, setTargetPath] = useState<any>(createPath('general', 'studio'));
+    const [targetPath, setTargetPath] = useState<any>(pathGenerator.createPath('main', 'studio'));
     const lerpStateRef = useRef<number>(lerpState);
     const targetPathRef = useRef<any>(targetPath);
-    const { setPlaceHover, placehover } = useExperienceContext();
+    const { placehover, setPlaceHover, currentInstance, setCurrentInstance } = useExperienceContext();
+    const [prevInstance, setPrevInstance] = useState<string>('main');
 
     const [zones, setZones] = useState<any>([]);  // Declare zones state
     const zonesRef = useRef(zones);  // Declare zones ref
@@ -72,6 +76,11 @@ const Experience: React.FC<ExperienceProps> = ({ data, isClicked }) => {
     // HANDLE BUTTON CLICK
     useEffect(() => {
         setLerpState(0);
+        const instance = data.find((item: any) => item.key === currentInstance);
+        const instanceParent = instance?.parentKey;
+        if (instanceParent !== 'root') {
+            setCurrentInstance(instanceParent);
+        }
     }, [isClicked]);
 
     // UPDATE TARGET PATH
@@ -88,6 +97,14 @@ const Experience: React.FC<ExperienceProps> = ({ data, isClicked }) => {
     useEffect(() => {
         zonesRef.current = zones;
     }, [zones]);
+
+    // SPACE TRAVELER
+    useEffect(() => {
+        if (currentInstance !== 'main') {
+            setTargetPath(pathGenerator.createPath(prevInstance, currentInstance));
+            setLerpState(1);
+        }
+    }, [currentInstance]);
 
     //  EXPERIENCE ENGINE
     useEffect(() => {
@@ -172,8 +189,9 @@ const Experience: React.FC<ExperienceProps> = ({ data, isClicked }) => {
                 if (!isMousePressed && !isLongClick) {
                     const pathName = objectSelector.getCurrentSelection();
                     if (pathName !== 'no selections') {
-                        setTargetPath(createPath('general', pathName));
-                        setLerpState(1);
+                        //setLerpState(0);
+                        setPrevInstance(currentInstance);
+                        setCurrentInstance(pathName);
                     } else { console.log('you have to select something') }
                 }
             });
@@ -225,7 +243,6 @@ const Experience: React.FC<ExperienceProps> = ({ data, isClicked }) => {
                 lerp.target = lerpStateRef.current;
                 let currentPath = targetPathRef.current;
 
-                lerp.target = lerpStateRef.current;
                 controls.autoRotate = true;
                 currentPath.getPointAt(lerp.current, targetPosition);
                 objectTarget.position.copy(targetPosition);

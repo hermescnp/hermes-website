@@ -1,6 +1,6 @@
 "use client"
 import './globals.css'
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, use } from 'react';
 import { Inter } from 'next/font/google'
 import { Navbar } from '@/components/Navbar/Navbar';
 import { ExperienceProvider, useExperienceContext } from '@/context/ExperienceContext';
@@ -22,6 +22,12 @@ const App: React.FC<AppProps> = ({ children }) => {
 
     const InstanceBackButton = isClient ? experienceContext.InstanceBackButton : () => {};
     const placehover = isClient ? experienceContext.placehover : null;
+    const currentInstance = isClient ? experienceContext.currentInstance : 'main';
+    const setCurrentInstance = isClient ? experienceContext.setCurrentInstance : () => {};
+
+    useEffect(() => {
+      console.log(currentInstance);
+    }, [currentInstance]);
   
     useEffect(() => {
       setIsClient(true);
@@ -30,7 +36,7 @@ const App: React.FC<AppProps> = ({ children }) => {
     return (
       <html lang="en">
         <body className='Layout'>
-          <Navbar handleBackButton={InstanceBackButton} placehover={placehover} />
+          <Navbar handleBackButton={InstanceBackButton} placehover={placehover} currentInstance={currentInstance} setCurrentInstance={setCurrentInstance} />
           <div className={inter.className}>{children}</div>
         </body>
       </html>

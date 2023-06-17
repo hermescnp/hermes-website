@@ -8,9 +8,11 @@ import NavSearchBar from './NavSearchBar'
 interface NavbarProps {
   handleBackButton: (event: React.MouseEvent<HTMLButtonElement>) => void;
   placehover?: string | null;
+  currentInstance: string;
+  setCurrentInstance: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export const Navbar = ({ handleBackButton, placehover }: NavbarProps) => {
+export const Navbar = ({ handleBackButton, placehover, currentInstance, setCurrentInstance }: NavbarProps) => {
     const stopPropagation = (event: React.SyntheticEvent) => {
         event.stopPropagation();
     }
@@ -18,7 +20,7 @@ export const Navbar = ({ handleBackButton, placehover }: NavbarProps) => {
     return (
         <div className="NavBar" onClick={stopPropagation}>
             <button className="BackButton" onClick={handleBackButton}>
-                <Image id="backChevron" className="BackChevron" src={chevron} width={25} height={25} alt="Back" />
+                <Image id="backChevron" className="BackChevron" src={chevron} width={20} height={20} alt="Back" />
             </button>
             <div className="Navigation">
                 <NavInstance instanceName={"Root"} />

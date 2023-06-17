@@ -12,7 +12,9 @@ export default function NavInstance({ placehover }: SearchBarProps) {
     const [isFocused, setIsFocused] = useState(false);
 
     useEffect(() => {
-        setInputValue(placehover || '');
+        if (isFocused === false) {
+            setInputValue(placehover || '');
+        }
     }, [placehover]);
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {

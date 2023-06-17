@@ -1,5 +1,17 @@
 [
     {
+        "key": "main",
+        "isSubSpace": true,
+        "name": "Hermes's Office",
+        "parentKey": "root",
+        "positionX": 0.00,
+        "positionY": 2.00,
+        "positionZ": 0.00,
+        "width": 0.00,
+        "height": 0.00,
+        "depth": 0.00
+    },
+    {
         "key": "studio",
         "isSubSpace": true,
         "name": "Prané Music Studio",
