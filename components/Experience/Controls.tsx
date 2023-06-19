@@ -2,7 +2,7 @@ import React from 'react'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
-export default function Controls(camera : any, target : any, renderer : any) {
+export default function Controls(camera : any, target : any, renderer : any, data : any) {
 
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableZoom = true;
@@ -12,13 +12,13 @@ export default function Controls(camera : any, target : any, renderer : any) {
     controls.enableRotate = true;
     controls.rotateSpeed = 0.40;
     controls.enablePan = false;
-    controls.minAzimuthAngle = -1.7;
-    controls.maxAzimuthAngle = 0.1;
-    controls.minPolarAngle = Math.PI/4;
-    controls.maxPolarAngle = Math.PI/2;
     controls.target = target.position;
-    controls.maxDistance = 20;
-    controls.minDistance = 12;
+    controls.maxDistance = data[0].maxDistance;
+    controls.minDistance = data[0].mixDistance;
+    controls.maxAzimuthAngle = data[0].maxAzimuthAngle;
+    controls.minAzimuthAngle = data[0].minAzimuthAngle;
+    controls.maxPolarAngle = Math.PI/data[0].maxPolarAngle;
+    controls.minPolarAngle = Math.PI/data[0].minPolarAngle;
     controls.autoRotate = true;
     controls.autoRotateSpeed = 0.2;
 

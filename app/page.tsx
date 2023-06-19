@@ -19,7 +19,6 @@ export default function Home() {
   const [displayHiddenPanel, setDisplayHiddenPanel] = useState<boolean>(false);
   const [returnHiddenPanel, setReturnHiddenPanel] = useState<boolean>(false);
   const [panelData, setPanelData] = useState([]);
-  const [spaceData, setSpaceData] = useState([]);
 
   const panelRef = useRef<HTMLDivElement>(null);
   const sideBarRef = useRef<HTMLDivElement>(null);
@@ -45,15 +44,8 @@ export default function Home() {
   useEffect(() => {
     fetch('/user/data.json')
       .then(response => response.json())
-      .then(data1 => {
-        setPanelData(data1);
-      })
-      .catch(error => console.error('Error:', error));
-
-    fetch('/models/space-map.json')
-      .then(response => response.json())
-      .then(data2 => {
-        setSpaceData(data2);
+      .then(data => {
+        setPanelData(data);
       })
       .catch(error => console.error('Error:', error));
 
@@ -84,7 +76,7 @@ export default function Home() {
 
   return (
     <div className="Page">
-      <Experience data={spaceData} isClicked={isClicked} />
+      <Experience isClicked={isClicked} />
       <Author />
 
       <div ref={sideBarRef} className={`sideBar${sidebarHidden ? ' hidden' : ''}`}>

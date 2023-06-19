@@ -16,6 +16,7 @@ import PathGenerator from './PathGenerator'
 import Zonification from './Zonification'
 import ObjectSelector from './ObjectSelector';
 import { useExperienceContext } from '@/context/ExperienceContext';
+import InstanceControls from './InstanceControls'
 
 // Camera Positions
 const introStartPosition = new THREE.Vector3(-70.0, 0.0, 0.0);
@@ -23,11 +24,14 @@ const introEndPosition = new THREE.Vector3(-17.0, 0.0, 0.0);
 const generalPosition = new THREE.Vector3(-11.0, 6.0, 11.0);
 
 interface ExperienceProps {
-    data: any[];
     isClicked: boolean;
 }
 
-const Experience: React.FC<ExperienceProps> = ({ data, isClicked }) => {
+const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
+
+    // DATA
+    const experienceContext = useExperienceContext();
+    const data = experienceContext.spaceData;
 
     // INSTANCE TRAVELER
     const pathGenerator = new PathGenerator(data);
@@ -53,6 +57,11 @@ const Experience: React.FC<ExperienceProps> = ({ data, isClicked }) => {
     const targetPathRef = useRef<any>(targetPath);
     const { placehover, setPlaceHover, currentInstance, setCurrentInstance } = useExperienceContext();
     const [prevInstance, setPrevInstance] = useState<string>('main');
+    const [instanceControls, setInstanceControls] = useState<any>(InstanceControls(currentInstance, data));
+    const [prevControls, setPrevControls] = useState<any>(InstanceControls(prevInstance, data));
+    const instanceControlsRef = useRef<any>(instanceControls);
+    const prevControlsRef = useRef<any>(prevControls);
+    const instanceRef = useRef<string>(currentInstance);
 
     const [zones, setZones] = useState<any>([]);  // Declare zones state
     const zonesRef = useRef(zones);  // Declare zones ref
@@ -86,6 +95,8 @@ const Experience: React.FC<ExperienceProps> = ({ data, isClicked }) => {
     // UPDATE TARGET PATH
     useEffect(() => {
         targetPathRef.current = targetPath;
+        prevControlsRef.current = prevControls;
+        instanceControlsRef.current = instanceControls;
     }, [targetPath]);
 
     // UPDATE LERP STATE
@@ -100,8 +111,11 @@ const Experience: React.FC<ExperienceProps> = ({ data, isClicked }) => {
 
     // SPACE TRAVELER
     useEffect(() => {
+        instanceRef.current = currentInstance;
         if (currentInstance !== 'main') {
             setTargetPath(pathGenerator.createPath(prevInstance, currentInstance));
+            setPrevControls(InstanceControls(prevInstance, data));
+            setInstanceControls(InstanceControls(currentInstance, data));
             setLerpState(1);
         }
     }, [currentInstance]);
@@ -198,8 +212,11 @@ const Experience: React.FC<ExperienceProps> = ({ data, isClicked }) => {
 
             // CONTROLS
             const objectTarget = new THREE.Object3D();
-            const controls = Controls(camera, objectTarget, renderer3d);
+            const controls = Controls(camera, objectTarget, renderer3d, data);
             setControls(controls);
+
+            objectTarget.position.copy(generalTarget);
+            let targetPosition = new THREE.Vector3();
 
             // ANIMATION SETTINGS
             const lerp = {
@@ -208,8 +225,9 @@ const Experience: React.FC<ExperienceProps> = ({ data, isClicked }) => {
                 ease: 0.05,
             };
 
-            objectTarget.position.copy(generalTarget);
-            let targetPosition = new THREE.Vector3();
+            // Counter for unchanged camera position frames
+            let previousCameraPos = new THREE.Vector3();
+            let unchangedFrames = 0;
 
             const animate = () => {
                 req = requestAnimationFrame(animate);
@@ -217,7 +235,7 @@ const Experience: React.FC<ExperienceProps> = ({ data, isClicked }) => {
 
                 // IS SELECTED?
                 if (zonesRef.current && zonesRef.current.length > 0) {
-                    objectSelector.update(zonesRef.current, camera);
+                    objectSelector.update(zonesRef.current, camera, instanceRef.current);
                     const currentSelection = objectSelector.getCurrentSelection();
                     if (placehover !== currentSelection && isLongClick === false) {
                         if (currentSelection === 'no selections') {
@@ -242,17 +260,25 @@ const Experience: React.FC<ExperienceProps> = ({ data, isClicked }) => {
 
                 lerp.target = lerpStateRef.current;
                 let currentPath = targetPathRef.current;
+                let currentControls = instanceControlsRef.current;
+                let prevControls = prevControlsRef.current;
+                let currentMaxDistance = THREE.MathUtils.lerp(prevControls.maxDistance, currentControls.maxDistance, lerp.current);
+                let currentMinDistance = THREE.MathUtils.lerp(prevControls.minDistance, currentControls.minDistance, lerp.current);
+                let currentMaxAzimuthAngle = THREE.MathUtils.lerp(prevControls.maxAzimuthAngle, currentControls.maxAzimuthAngle, lerp.current);
+                let currentMinAzimuthAngle = THREE.MathUtils.lerp(prevControls.minAzimuthAngle, currentControls.minAzimuthAngle, lerp.current);
+                let currentMaxPolarAngle = THREE.MathUtils.lerp(prevControls.maxPolarAngle, currentControls.maxPolarAngle, lerp.current);
+                let currentMinPolarAngle = THREE.MathUtils.lerp(prevControls.minPolarAngle, currentControls.minPolarAngle, lerp.current);
 
                 controls.autoRotate = true;
                 currentPath.getPointAt(lerp.current, targetPosition);
                 objectTarget.position.copy(targetPosition);
 
-                controls.maxDistance = 23 - (lerp.current * 18);
-                controls.minDistance = 17 - (lerp.current * 12);
-                controls.minAzimuthAngle = -1.7 + (lerp.current / 5);
-                controls.maxAzimuthAngle = 0.1 - (lerp.current / 2);
-                controls.minPolarAngle = Math.PI / (4 - (lerp.current));
-                controls.maxPolarAngle = Math.PI / (2 + (lerp.current / 10));
+                controls.maxDistance = currentMaxDistance;
+                controls.minDistance = currentMinDistance;
+                controls.maxAzimuthAngle = currentMaxAzimuthAngle;
+                controls.minAzimuthAngle = currentMinAzimuthAngle;
+                controls.maxPolarAngle = Math.PI / currentMaxPolarAngle;
+                controls.minPolarAngle = Math.PI / currentMinPolarAngle;
                 // camera.fov = 25 + (lerp.current * 15);
                 // camera.updateProjectionMatrix();
 
@@ -265,14 +291,23 @@ const Experience: React.FC<ExperienceProps> = ({ data, isClicked }) => {
                     lerp.current = 0;
                 }
 
+                // UPDATE CONTROLS
                 controls.update();
 
-                // REVERSE AUTO ROTATION
-                if (camera.position.x >= 1.1) {
-                    controls.autoRotateSpeed = 0.2;
-                } else if (camera.position.z <= -1.4) {
-                    controls.autoRotateSpeed = -0.2;
+                // Compare current position with previous position
+                if (camera.position.x === previousCameraPos.x) {
+                    unchangedFrames++;
+                } else {
+                    unchangedFrames = 0;
                 }
+                previousCameraPos.copy(camera.position);
+
+                // If the position hasn't changed significantly for a certain number of frames, invert the rotation
+                if (unchangedFrames > 10) {
+                    controls.autoRotateSpeed *= -1;
+                    unchangedFrames = 0;
+                }
+
 
                 // RENDER ALL
                 renderer3d.render(scene, camera);

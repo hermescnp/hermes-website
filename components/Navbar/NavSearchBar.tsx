@@ -5,14 +5,15 @@ import searchIcon from 'public/assets/SVG/search_icon.svg'
 
 interface SearchBarProps {
     placehover?: string | null;
+    isMapOpened: boolean;
 }
 
-export default function NavInstance({ placehover }: SearchBarProps) {
+export default function NavInstance({ placehover, isMapOpened }: SearchBarProps) {
     const [inputValue, setInputValue] = useState(placehover || '');
     const [isFocused, setIsFocused] = useState(false);
 
     useEffect(() => {
-        if (isFocused === false) {
+        if (isFocused === false && isMapOpened === false) {
             setInputValue(placehover || '');
         }
     }, [placehover]);
