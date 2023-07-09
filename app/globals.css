@@ -1,0 +1,311 @@
+html {
+  scroll-behavior: smooth;
+}
+
+.Layout {
+  position: fixed;
+  display: grid;
+  grid-template-rows: 56px 1fr;
+  background-color: rgba(18, 23, 34, 1);
+  top: 0;
+  left: 0;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  font-weight: 100;
+  line-height: 1.4;
+  background-color: #1e2332;
+  color: white;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+}
+
+.Page {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  position: relative;
+}
+
+.sideBar {
+  position: absolute;
+  background: linear-gradient(rgba(28, 36, 52, 1), rgba(55, 76, 108, 0.7));
+  width: 400px;
+  height: 100vh;
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  grid-template-columns: 400px;
+  top: 0;
+  left: 0;
+  z-index: 7;
+  transition: transform 0.5s ease;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.sideBar.hidden {
+  transform: translateX(-100%);
+}
+
+.panelWrapper {
+  height: calc(100% - 100px);
+}
+
+.renderView {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  top: 0;
+  left: 0;
+  /*make the box unclickeable*/
+  pointer-events: none;
+}
+
+h1 {
+  font-weight: 400;
+  font-size: 28px;
+  margin: 0px;
+}
+
+h2 {
+  font-weight: 300;
+  font-size: 20px;
+  margin: 0px 0px 5px 0px;
+}
+
+h4 {
+  font-weight: 300;
+  font-size: 16px;
+  margin: 0px;
+}
+
+strong {
+  font-weight: 500;
+  padding: 3px 0px;
+  overflow: hidden;
+}
+
+p {
+  margin: 0px;
+  font-size: 14px;
+}
+
+picture {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: auto;
+  height: auto;
+}
+
+.hidden {
+  pointer-events: none;
+}
+
+img {
+  width: 50px;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  list-style: none;
+}
+
+details>summary::-webkit-details-marker {
+  display: none;
+}
+
+details {
+  overflow: hidden;
+}
+
+details[open] .content {
+  opacity: 1;
+  max-height: 100vh;
+  transition: opacity 0.5s, max-height 0.5s;
+}
+
+.details .content {
+  opacity: 0;
+  max-height: 0;
+  transition: opacity 0.5s, max-height 0.5s;
+}
+
+.Icon {
+  width: 50%;
+  height: 50%;
+}
+
+.IconSmall {
+  width: 70%;
+}
+
+.Clear {
+  clear: right;
+}
+
+button {
+  background-color: transparent;
+  color: white;
+  border: none;
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  padding: 0px;
+  margin: 0px;
+}
+
+.buttonTest {
+  background-color: slategrey;
+  color: white;
+  border: solid 2px white;
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+}
+
+.buttonTest:hover {
+  background-color: darkslategray;
+}
+
+a {
+  color: white;
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  text-decoration: none;
+}
+
+.Toggle {
+  width: 45%;
+  height: 50px;
+}
+
+.SeeMore {
+  transition: all 0.3s ease;
+  transform: rotate(270deg);
+  align-items: flex-start;
+  overflow: hidden;
+  opacity: 0.5;
+  width: 20px;
+  height: 20px;
+}
+
+.SeeMore:hover {
+  opacity: 1.0;
+}
+
+.SeeLess {
+  transform: rotate(90deg);
+  transition: all 0.3s ease;
+  width: 20px;
+  height: 20px;
+}
+
+summary {
+  list-style: none;
+  outline: none;
+  padding: 20px;
+  border-top: solid;
+  border-color: white;
+  cursor: default;
+}
+
+.Disapear {
+  opacity: 0;
+}
+
+.inflatedOuter {
+  width: 90px;
+  height: 90px;
+}
+
+.inflatedInner {
+  background: #374C6C;
+}
+
+::-webkit-scrollbar {
+  width: 0em;
+}
+
+::-webkit-scrollbar-track {
+  background-color: black;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: black;
+}
+
+@media screen and (orientation: portrait) {
+  .sideBar {
+    width: 100%;
+    grid-template-columns: 100%;
+  }
+
+  .sideBar.hidden {
+    transform: translateY(100%);
+  }
+
+  .Background {
+    width: 100%;
+  }
+
+  #HeaderPanel {
+    width: 100%;
+  }
+
+  #Panel {
+    width: 100%;
+    transition: transform 1.5s ease;
+  }
+
+  .TagContainer {
+    justify-content: flex-start;
+    grid-column: 2;
+    width: auto;
+  }
+
+  .FooterInfo {
+    display: none;
+  }
+
+  .TagContainerPartner {
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+  }
+
+  #renderView {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+  }
+
+  #renderContainer {
+    display: flex;
+    position: fixed;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+  }
+
+  #hideButton {
+    transform: rotate(270deg);
+    margin: 0px 10px;
+  }
+}

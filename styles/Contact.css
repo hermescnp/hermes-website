@@ -1,0 +1,39 @@
+#ContactSection {
+    position: relative;
+    width: 100%;
+    border-top: solid;
+    border-color: white;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 50px;
+}
+
+#ContactInfoContainer {
+    display: flex;
+    flex-direction: column;
+    padding: 0px 15px;
+}
+
+#mapContainer {
+    width: 100%;
+    height: 200px;
+    background-color: #1C2434;
+    margin: 20px 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.FooterInfo {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 50px;
+    bottom: 0;
+    right: 0;
+    padding: 0px 15px 30px 15px;
+  }
+  
+  .metaInfo {
+    font-size: 12px;
+  }

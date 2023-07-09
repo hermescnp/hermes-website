@@ -1,0 +1,32 @@
+#HeaderPanel {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    z-index: 5;
+    transition: transform 0.8s ease;
+}
+
+#HeaderPanelBehind {
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+    transition: height 0.5s ease;
+    height: 65px;
+    padding: 15px 0px 15px 15px;
+    cursor: pointer;
+}
+
+#hideButton {
+    transition: all 0.3s ease;
+    opacity: 0.2;
+    width: 14px;
+    z-index: 10;
+    padding: 0px 15px;
+}
+
+#hideButton:hover {
+    opacity: 0.5;
+    width: 16px;
+}

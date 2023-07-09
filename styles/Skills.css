@@ -1,0 +1,85 @@
+.SkillSectionTittle {
+    padding-top: 25px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 15px;
+}
+
+.TagContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    margin: 8px 0px;
+    box-sizing: border-box;
+}
+
+.ProgressArea {
+    position: relative;
+    background-color: rgba(0, 0, 0, 0.3);
+    display: flex;
+    width: 70px;
+    height: 70px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    margin-top: 5px;
+    transition: all 0.2s ease-out;
+}
+
+.SkillItem {
+    display: flex;
+    width: 85%;
+    height: 85%;
+    background: linear-gradient(90deg, #1C2434, #374C6C);
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    z-index: 4;
+    transition: all 0.2s ease-out;
+    cursor: pointer;
+}
+
+.SkillLabel {
+    width: auto;
+    height: auto;
+    text-align: center;
+    padding-top: 10px;
+    font-size: 14px;
+}
+
+.SkillTag {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 95px;
+    height: 140px;
+    cursor: default;
+}
+
+#SkillSection {
+    width: 100%;
+    position: relative;
+}
+
+.CircleProgress {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+.inflatedOuter {
+    width: 80px;
+    height: 80px;
+}
+
+.inflatedInner {
+    background: #374C6C;
+}

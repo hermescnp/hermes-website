@@ -1,0 +1,225 @@
+.NavBar {
+    display: grid;
+    grid-template-columns: 50px 50px 1fr auto;
+    position: relative;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+}
+
+.MapButtonContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.MapButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 45px;
+    height: 45px;
+    border: 1px solid rgba(55, 76, 108, 1);
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.MapButtonOpened {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 45px;
+    height: 45px;
+    border: 1px solid rgba(55, 76, 108, 1);
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    background-color: rgba(55, 76, 108, 1);
+}
+
+.MapButtonOpened:hover {
+    background-color: rgba(55, 76, 108, 0.5);
+}
+
+.MapButtonOpened:hover .MapIcon {
+    opacity: 0.5;
+}
+
+.MapButton:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.MapButton:hover .MapIcon {
+    opacity: 1;
+}
+
+.MapIcon {
+    opacity: 0.5;
+    transition: all 0.3s ease;
+}
+
+.MapIconOpened {
+    opacity: 1;
+    transition: all 0.3s ease;
+}
+
+.BackButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    transition: all 0.3s ease;
+}
+
+.BackButton:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.BackChevron {
+    opacity: 0.5;
+    transition: all 0.3s ease;
+}
+
+.BackButton:hover .BackChevron {
+    opacity: 1;
+}
+
+.Navigation {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.RootInstance {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+    height: 100%;
+    transition: all 0.3s ease;
+}
+
+.LegineIcon {
+    opacity: 0.5;
+}
+
+.RootInstance:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.RootInstance:hover .LegineIcon {
+    opacity: 1;
+}
+
+.NavigationInstance {
+    display: grid;
+    grid-template-columns: auto auto;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: auto;
+    height: 100%;
+    transition: all 0.3s ease;
+}
+
+.NavSearchBar {
+    display: grid;
+    grid-template-columns: auto auto;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: auto;
+    height: 100%;
+    transition: all 0.3s ease;
+}
+
+.NavSearchBar:hover .Arrow {
+    opacity: 1;
+}
+
+.Arrow {
+    opacity: 0.5;
+    transition: all 0.3s ease;
+    transform: rotate(180deg);
+    height: 15px;
+    width: 15px;
+}
+
+.InstanceButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    font-weight: 100;
+    width: auto;
+    height: 100%;
+    padding: 0px 20px;
+    transition: all 0.3s ease;
+}
+
+.SearchBar {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    height: 36px;
+    width: 250px;
+    vertical-align: middle;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 50px;
+    padding-left: 15px;
+    margin: 0px 10px;
+}
+
+.SearchBar--focused {
+    border-color: rgba(255, 255, 255, 1);
+}
+
+.InstanceInput {
+    width: 100%;
+    height: 100%;
+    border: none;
+    padding: 0px;
+    border-radius: 50px;
+    font-size: 14px;
+    font-weight: 100;
+    background-color: transparent;
+    color: white;
+}
+
+.InstanceInput:focus {
+    outline: none;
+}
+
+.SearchIconContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.SearchIcon {
+    padding: 5px;
+    height: 95%;
+    width: 95%;
+    box-sizing: border-box;
+    opacity: 0.5;
+    transition: all 0.3s ease;
+}
+
+.SearchIcon--enabled {
+    opacity: 1;
+    cursor: pointer;
+}
+
+.NavigationInstance:hover .Arrow {
+    opacity: 1;
+}
+
+.NavigationInstance:hover .InstanceButton {
+    background-color: rgba(0, 0, 0, 0.5);
+}
