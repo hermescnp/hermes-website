@@ -1,7 +1,7 @@
 import React from 'react'
 import * as THREE from 'three'
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
-import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader"
+import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader"
 
 export default class Resources {
 
@@ -14,8 +14,9 @@ export default class Resources {
         return this.items;
     }
 
-    startLoading(assets: any) {
-        const gltfLoader = new GLTFLoader();
+    startLoading(assets: any, loadingManager: any) {
+
+        const gltfLoader = new GLTFLoader(loadingManager);
         const dracoLoader = new DRACOLoader();
         dracoLoader.setDecoderPath('/draco/');
         gltfLoader.setDRACOLoader(dracoLoader);

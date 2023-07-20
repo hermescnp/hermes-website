@@ -11,6 +11,7 @@ export default class PathGenerator {
       let vector = new THREE.Vector3(instance.positionX, instance.positionY, instance.positionZ);
       this.targets[instance.key] = vector;
     }
+    this.targets['intro'] = new THREE.Vector3(-50.0, 0.0, 0.0)
   }
 
   createPath(pointA: THREE.Vector3 | string , pointB: THREE.Vector3 | string ): THREE.CatmullRomCurve3 {
