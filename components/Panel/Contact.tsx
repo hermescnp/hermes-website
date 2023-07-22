@@ -4,17 +4,28 @@ import '../../styles/Contact.css'
 
 class Contact extends Component<any, any> {
 
+  // TODO: Move to a config file
+  private githubToken: string = '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';
+  private githubApiUrl: string = 'https://api.github.com/repos/hermescnp/hermes-website/commits/main';
+
   lastEdit: string = '';
 
   async componentDidMount() {
-    const result = await fetch('https://api.github.com/repos/hermescnp/hermes-website/commits/main', {
+    const result = await fetch(this.githubApiUrl, {
       headers: {
-        'Authorization': 'Bearer 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'
+        'Authorization': `Bearer ${this.githubToken}`
       }
     });
 
     const response = await result.json();
-    this.lastEdit = response.commit.author.date;
+    this.lastEdit = this.parseDate(response.commit.author.date);
+  }
+
+  private parseDate(date: string): string {
+    const parsedDate = new Date(date);
+    return parsedDate.toLocaleDateString('en-US', {
+      year: 'numeric', month: 'long', day: 'numeric'
+    });
   }
 
   render() {
@@ -49,8 +60,3 @@ class Contact extends Component<any, any> {
 }
 
 export {Contact};
-
-async function getLastEdit() {
-
-}
-
