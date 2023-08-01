@@ -4,8 +4,8 @@ import React, { createContext, useState, useContext, useEffect } from 'react';
 type ExperienceContextType = {
   isClicked: boolean;
   InstanceBackButton: (vent: any) => void;
-  placehover: string | null;
-  setPlaceHover: React.Dispatch<React.SetStateAction<string | null>>;
+  placehover: PlaceHoverType;
+  setPlaceHover: React.Dispatch<React.SetStateAction<PlaceHoverType>>;
   currentInstance: string;
   setCurrentInstance: React.Dispatch<React.SetStateAction<string>>;
   spaceData: any[];
@@ -17,11 +17,16 @@ type ExperienceContextType = {
   setStartExperience: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
+type PlaceHoverType = {
+  name: string | null;
+  isSibling: boolean | null;
+}
+
 export const ExperienceContext = createContext<ExperienceContextType | undefined>(undefined);
 
 export const ExperienceProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isClicked, setIsClicked] = useState<boolean>(false);
-  const [placehover, setPlaceHover] = useState<string | null>(null);
+  const [placehover, setPlaceHover] = useState<PlaceHoverType>({ name: '', isSibling: null });
   const [currentInstance, setCurrentInstance] = useState<string>('main');
   const [spaceData, setSpaceData] = useState([]);
   const [loadingState, setLoadingState] = useState('Loading metaverse');

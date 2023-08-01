@@ -9,9 +9,9 @@
     },
     {
         "category": "Visual Skills",
-        "skillName": "Writing",
-        "skillLevel": 65,
-        "iconSource": "/Assets/SVG/Writing_Icon.svg",
+        "skillName": "Conceptual Analysis",
+        "skillLevel": 85,
+        "iconSource": "/Assets/SVG/space_map.svg",
         "isVisible": true,
         "type": "skill"  
     },

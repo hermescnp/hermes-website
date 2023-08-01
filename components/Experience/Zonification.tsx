@@ -8,7 +8,6 @@ export default class Zonification {
   constructor(scene: THREE.Scene, data: any[]) {
     this.scene = scene;
     this.generateZones(data);
-    console.log(this.zones);
   }
 
 generateZones = (data: any) => {

@@ -15,8 +15,8 @@ const Experience = dynamic(() => import('../components/Experience/Experience'), 
 
 export default function Home() {
   const { isClicked } = useExperienceContext();
-  const [sidebarHidden, setSidebarHidden] = useState<boolean>(false);
-  const [displayHiddenPanel, setDisplayHiddenPanel] = useState<boolean>(false);
+  const [sidebarHidden, setSidebarHidden] = useState<boolean>(true);
+  const [displayHiddenPanel, setDisplayHiddenPanel] = useState<boolean>(true);
   const [returnHiddenPanel, setReturnHiddenPanel] = useState<boolean>(false);
   const [panelData, setPanelData] = useState([]);
 
