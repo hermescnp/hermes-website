@@ -18,30 +18,30 @@ interface AppProps {
 }
 
 const App: React.FC<AppProps> = ({ children }) => {
-    const [isClient, setIsClient] = useState<boolean>(false);
-    const experienceContext = useExperienceContext();
-    const loadingState = isClient ? experienceContext.loadingState : '';
-    const [displayLoading, setDisplayLoading] = useState<boolean>(true);
+  const [isClient, setIsClient] = useState<boolean>(false);
+  const experienceContext = useExperienceContext();
+  const loadingState = isClient ? experienceContext.loadingState : '';
+  const [displayLoading, setDisplayLoading] = useState<boolean>(true);
 
-    useEffect(() => {
-      if ( loadingState === 'started' ) {
-          setTimeout(()=>{setDisplayLoading(false)}, 2000)
-      }
+  useEffect(() => {
+    if (loadingState === 'started') {
+      setTimeout(() => { setDisplayLoading(false) }, 2000)
+    }
   }, [loadingState]);
-  
-    useEffect(() => {
-      setIsClient(true);
-    }, []);
-  
-    return (
-      <html lang="en">
-        <body className='Layout'>
-          <Navbar isClient={isClient} />
-          <div className={inter.className}>{children}</div>
-          {displayLoading? <LoadingPage isClient={isClient} /> : null}
-        </body>
-      </html>
-    );
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  return (
+    <html lang="en">
+      <body className='Layout'>
+        <Navbar isClient={isClient} />
+        <div className={inter.className}>{children}</div>
+        {displayLoading ? <LoadingPage isClient={isClient} /> : null}
+      </body>
+    </html>
+  );
 }
 
 export default App;

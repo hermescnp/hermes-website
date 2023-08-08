@@ -41,6 +41,10 @@ export default function Home() {
     setTimeout(() => setSidebarHidden(false), 300);
   };
 
+  const handleSidebarClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    event.stopPropagation();
+  };  
+
   useEffect(() => {
     fetch('/user/data.json')
       .then(response => response.json())
@@ -79,7 +83,7 @@ export default function Home() {
       <Experience isClicked={isClicked} />
       <Author />
 
-      <div ref={sideBarRef} className={`sideBar${sidebarHidden ? ' hidden' : ''}`}>
+      <div ref={sideBarRef} className={`sideBar${sidebarHidden ? ' hidden' : ''}`} onClick={handleSidebarClick}>
         <HeaderPanel onSidebarHide={handleSidebarHide} />
         <Tabsbar
           handleRefClick={handleRefClick} />

@@ -10,7 +10,7 @@
     {
         "category": "Visual Skills",
         "skillName": "Conceptual Analysis",
-        "skillLevel": 85,
+        "skillLevel": 95,
         "iconSource": "/Assets/SVG/space_map.svg",
         "isVisible": true,
         "type": "skill"  
@@ -294,19 +294,64 @@
         "type": "background"  
     },
     {
-        "name": "Figma",
-        "description": "UX/UI Design",
+        "name": "HTML / CSS / JavaScript",
+        "description": "Web Dev",
         "skillLevel": 70,
-        "iconSource": "/Assets/PNG/Figma_Icon.png",
+        "iconSource": "/Assets/PNG/Webpack_Icon.png",
         "isVisible": true,
         "type": "software",
         "isImportant": true
     },
     {
+        "name": "Typescript",
+        "description": "Software Development",
+        "skillLevel": 55,
+        "iconSource": "/Assets/PNG/Typescript_Icon.png",
+        "isVisible": true,
+        "type": "software",
+        "isImportant": true
+    },
+    {
+        "name": "React.js",
+        "description": "Front-end Develop",
+        "skillLevel": 50,
+        "iconSource": "/Assets/PNG/React_Icon.png",
+        "isVisible": true,
+        "type": "software",
+        "isImportant": true
+    },
+    {
+        "name": "Three.js",
+        "description": "Game Develop / Front-end",
+        "skillLevel": 75,
+        "iconSource": "/Assets/PNG/Threejs_Icon.png",
+        "isVisible": true,
+        "type": "software",
+        "isImportant": true
+    },
+    {
+        "name": "Figma",
+        "description": "UX/UI Design",
+        "skillLevel": 80,
+        "iconSource": "/Assets/PNG/Figma_Icon.png",
+        "isVisible": true,
+        "type": "software",
+        "isImportant": false
+    },
+    {
         "name": "Sketch App",
         "description": "UX/UI Design",
-        "skillLevel": 50,
+        "skillLevel": 70,
         "iconSource": "/Assets/PNG/SketchApp_Icon.png",
+        "isVisible": true,
+        "type": "software",
+        "isImportant": false
+    },
+    {
+        "name": "Next.js",
+        "description": "Front-end Framework",
+        "skillLevel": 50,
+        "iconSource": "/Assets/PNG/Nextjs_Icon.png",
         "isVisible": true,
         "type": "software",
         "isImportant": false
@@ -339,15 +384,6 @@
         "isImportant": false
     },
     {
-        "name": "Adobe Premiere Pro",
-        "description": "Video Edition",
-        "skillLevel": 55,
-        "iconSource": "/Assets/PNG/PremierePro_Icon.png",
-        "isVisible": true,
-        "type": "software",
-        "isImportant": false
-    },
-    {
         "name": "Rhinoceros 3D",
         "description": "3D NURBS Design",
         "skillLevel": 80,
@@ -366,10 +402,10 @@
         "isImportant": false
     },
     {
-        "name": "Houdini",
+        "name": "Blender",
         "description": "Rigging/Particles/Effects",
-        "skillLevel": 30,
-        "iconSource": "/Assets/PNG/Houdini_Icon.png",
+        "skillLevel": 70,
+        "iconSource": "/Assets/PNG/Blender_Icon.png",
         "isVisible": true,
         "type": "software",
         "isImportant": false
@@ -382,42 +418,6 @@
         "isVisible": true,
         "type": "software",
         "isImportant": false
-    },
-    {
-        "name": "HTML/CSS",
-        "description": "Web Structure Code",
-        "skillLevel": 70,
-        "iconSource": "/Assets/PNG/VisualStudio_Icon.png",
-        "isVisible": true,
-        "type": "software",
-        "isImportant": false
-    },
-    {
-        "name": "Javascript/Typescript",
-        "description": "Software Develop",
-        "skillLevel": 55,
-        "iconSource": "/Assets/PNG/JavaScript_Icon.png",
-        "isVisible": true,
-        "type": "software",
-        "isImportant": true
-    },
-    {
-        "name": "React.js",
-        "description": "Front-end Develop",
-        "skillLevel": 55,
-        "iconSource": "/Assets/PNG/React_Icon.png",
-        "isVisible": true,
-        "type": "software",
-        "isImportant": true
-    },
-    {
-        "name": "Three.js",
-        "description": "Game Develop / Front-end",
-        "skillLevel": 55,
-        "iconSource": "/Assets/PNG/Threejs_Icon.png",
-        "isVisible": true,
-        "type": "software",
-        "isImportant": true
     },
     {
         "name": "Avid Pro Tools",
