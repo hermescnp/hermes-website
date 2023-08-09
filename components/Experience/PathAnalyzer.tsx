@@ -25,12 +25,7 @@ export function isPathEquivalent(pathA : THREE.CatmullRomCurve3, pathB : THREE.C
 }
 
 function findParentKey(data : any, key : string) {
-    for (let i = 0; i < data.length; i++) {
-      if (data[i].key === key) {
-        return data[i].parentKey;
-      }
-    }
-    return null;
+return data.find(x => x.key === key)?.parentKey;
   }
   
 export function isInstanceDescendant(current : string, previous : string, data : any) {
