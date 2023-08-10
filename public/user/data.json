@@ -299,7 +299,8 @@
         "skillLevel": 70,
         "iconSource": "/Assets/PNG/Figma_Icon.png",
         "isVisible": true,
-        "type": "software"  
+        "type": "software",
+        "isImportant": true
     },
     {
         "name": "Sketch App",
@@ -307,7 +308,8 @@
         "skillLevel": 50,
         "iconSource": "/Assets/PNG/SketchApp_Icon.png",
         "isVisible": true,
-        "type": "software"  
+        "type": "software",
+        "isImportant": false
     },
     {
         "name": "Unity 3D",
@@ -315,7 +317,8 @@
         "skillLevel": 30,
         "iconSource": "/Assets/PNG/Unity3D_Icon.png",
         "isVisible": true,
-        "type": "software"  
+        "type": "software",
+        "isImportant": true
     },
     {
         "name": "Adobe Illustrator",
@@ -323,7 +326,8 @@
         "skillLevel": 90,
         "iconSource": "/Assets/PNG/Illustrator_Icon.png",
         "isVisible": true,
-        "type": "software"  
+        "type": "software",
+        "isImportant": false
     },
     {
         "name": "Adobe Photoshop",
@@ -331,7 +335,8 @@
         "skillLevel": 70,
         "iconSource": "/Assets/PNG/Photoshop_Icon.png",
         "isVisible": true,
-        "type": "software"  
+        "type": "software",
+        "isImportant": false
     },
     {
         "name": "Adobe Premiere Pro",
@@ -339,7 +344,8 @@
         "skillLevel": 55,
         "iconSource": "/Assets/PNG/PremierePro_Icon.png",
         "isVisible": true,
-        "type": "software"  
+        "type": "software",
+        "isImportant": false
     },
     {
         "name": "Rhinoceros 3D",
@@ -347,7 +353,8 @@
         "skillLevel": 80,
         "iconSource": "/Assets/PNG/Rhino3D_Icon.png",
         "isVisible": true,
-        "type": "software"  
+        "type": "software",
+        "isImportant": false
     },
     {
         "name": "Grasshopper",
@@ -355,7 +362,8 @@
         "skillLevel": 65,
         "iconSource": "/Assets/PNG/Grasshopper_Icon.png",
         "isVisible": true,
-        "type": "software"  
+        "type": "software",
+        "isImportant": false
     },
     {
         "name": "Houdini",
@@ -363,7 +371,8 @@
         "skillLevel": 30,
         "iconSource": "/Assets/PNG/Houdini_Icon.png",
         "isVisible": true,
-        "type": "software"  
+        "type": "software",
+        "isImportant": false
     },
     {
         "name": "Cinema4D",
@@ -371,7 +380,8 @@
         "skillLevel": 90,
         "iconSource": "/Assets/PNG/Cinema4D_Icon.png",
         "isVisible": true,
-        "type": "software"  
+        "type": "software",
+        "isImportant": false
     },
     {
         "name": "HTML/CSS",
@@ -379,15 +389,35 @@
         "skillLevel": 70,
         "iconSource": "/Assets/PNG/VisualStudio_Icon.png",
         "isVisible": true,
-        "type": "software"  
+        "type": "software",
+        "isImportant": false
     },
     {
-        "name": "JavaScript",
-        "description": "Front-end Develop",
+        "name": "Javascript/Typescript",
+        "description": "Software Develop",
         "skillLevel": 55,
         "iconSource": "/Assets/PNG/JavaScript_Icon.png",
         "isVisible": true,
-        "type": "software"  
+        "type": "software",
+        "isImportant": true
+    },
+    {
+        "name": "React.js",
+        "description": "Front-end Develop",
+        "skillLevel": 55,
+        "iconSource": "/Assets/PNG/React_Icon.png",
+        "isVisible": true,
+        "type": "software",
+        "isImportant": true
+    },
+    {
+        "name": "Three.js",
+        "description": "Game Develop / Front-end",
+        "skillLevel": 55,
+        "iconSource": "/Assets/PNG/Threejs_Icon.png",
+        "isVisible": true,
+        "type": "software",
+        "isImportant": true
     },
     {
         "name": "Avid Pro Tools",
@@ -395,7 +425,8 @@
         "skillLevel": 80,
         "iconSource": "/Assets/PNG/Pro-tools_Icon.png",
         "isVisible": true,
-        "type": "software"  
+        "type": "software",
+        "isImportant": false
     },
     {
         "name": "Logic Pro X",
@@ -403,6 +434,7 @@
         "skillLevel": 65,
         "iconSource": "/Assets/PNG/LogicProX_Icon.png",
         "isVisible": true,
-        "type": "software"  
+        "type": "software",
+        "isImportant": false
     }
 ]

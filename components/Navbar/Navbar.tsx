@@ -6,7 +6,7 @@ import mapIcon from 'public/assets/SVG/space_map.svg'
 import NavInstance from './NavInstance'
 import NavSearchBar from './NavSearchBar'
 import { SpaceMap } from '../SpaceMap/SpaceMap'
-import { useExperienceContext } from '@/context/ExperienceContext';
+import { useExperienceContext } from '@/context/ExperienceContext'
 
 interface NavbarProps {
     isClient: boolean;
@@ -19,7 +19,7 @@ export const Navbar: React.FC<NavbarProps> = ({ isClient }) => {
     const currentInstance = isClient ? experienceContext.currentInstance : 'main';
     const setCurrentInstance = isClient ? experienceContext.setCurrentInstance : () => { };
     const spaceData = isClient ? experienceContext.spaceData : [];
-    const [isMapOpened, setIsMapOpened] = useState<boolean>(false);
+    const [isMapOpened, setIsMapOpened] = useState<boolean>(true);
 
     const stopPropagation = (event: React.SyntheticEvent) => {
         event.stopPropagation();
@@ -49,6 +49,7 @@ export const Navbar: React.FC<NavbarProps> = ({ isClient }) => {
     useEffect(() => {
         setNavInstances([]); // Clear previous navigation instances
         createNavInstances(currentInstance); // Create new navigation instances
+        setIsMapOpened(false);
     }, [currentInstance, spaceData]);
 
     return (
@@ -62,7 +63,7 @@ export const Navbar: React.FC<NavbarProps> = ({ isClient }) => {
                 </button>
             </div>
             <div className="Navigation">
-                <NavInstance instanceName={"Root"} />
+                {/* <NavInstance instanceName={"Root"} /> */}
                 {navInstances}
                 <NavSearchBar placehover={placehover} isMapOpened={isMapOpened} />
             </div>
