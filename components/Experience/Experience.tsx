@@ -13,6 +13,7 @@ import Camera from './Camera'
 import Controls from './Controls'
 import getModel from './Model';
 import PathGenerator from './PathGenerator'
+import IntroCinematic from './IntroCinematic'
 import Zonification from './Zonification'
 import ObjectSelector from './ObjectSelector';
 import { useExperienceContext } from '@/context/ExperienceContext';
