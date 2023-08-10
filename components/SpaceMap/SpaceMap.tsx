@@ -40,7 +40,7 @@ const initialNodes: any = [
   {
     id: 'main',
     type: 'turbo',
-    data: { icon: <Image id='example' className='ObjectIcon' src={ExampleImage} width={20} height={20} alt='example image' />, title: "Hermes's Office", subline: 'Metaverse Office' },
+    data: { icon: <Image id='example' className='ObjectIcon' src={ExampleImage} width={20} height={20} alt='example image' />, title: "Hermes Science's Lab", subline: 'Metaverse Space' },
     position: { x: 930, y: 0 },
     className: 'dark',
   },

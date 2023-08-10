@@ -3,7 +3,7 @@ import { ExperienceProvider } from '@/context/ExperienceContext';
 import App from './App';
 
 export const metadata = {
-  title: "Hermes's Virtual Office",
+  title: "Hermes Science's Lab",
   description: 'UX/Technical Artist | Professional Musician Portfolio',
 }
 
