@@ -150,12 +150,35 @@
     width: 15px;
 }
 
+.PhantomArrow {
+    opacity: 0;
+    height: 15px;
+    width: 15px;
+}
+
+.PhantomArrow--active {
+    opacity: 1;
+}   
+
 .InstanceButton {
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 14px;
     font-weight: 100;
+    width: auto;
+    height: 100%;
+    padding: 0px 20px;
+    transition: all 0.3s ease;
+}
+
+.PhantomInstance {
+    display: flex;
+    color: #374C6C;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    font-weight: 400;
     width: auto;
     height: 100%;
     padding: 0px 20px;
@@ -222,4 +245,8 @@
 
 .NavigationInstance:hover .InstanceButton {
     background-color: rgba(0, 0, 0, 0.5);
+}
+
+.SiblingInstance {
+    color: blue;
 }
