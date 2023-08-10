@@ -8,7 +8,7 @@ interface SearchBarProps {
     isMapOpened: boolean;
 }
 
-export default function NavSearchBar({ placehover, isMapOpened }: SearchBarProps) {
+export default function NavInstance({ placehover, isMapOpened }: SearchBarProps) {
     const [inputValue, setInputValue] = useState(placehover || '');
     const [isFocused, setIsFocused] = useState(false);
 
