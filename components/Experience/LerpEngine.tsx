@@ -30,7 +30,7 @@ let currentControls = {
   minPolarAngle: 0,
 };
 
-  if (isDescending === true) {
+  if (isDescending) {
     currentControls.maxDistance = THREE.MathUtils.lerp(prevControls.maxDistance, nextControls.maxDistance, lerpFactor);
     currentControls.minDistance = THREE.MathUtils.lerp(prevControls.minDistance, nextControls.minDistance, lerpFactor);
     currentControls.maxAzimuthAngle = THREE.MathUtils.lerp(prevControls.maxAzimuthAngle, nextControls.maxAzimuthAngle, lerpFactor);
