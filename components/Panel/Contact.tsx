@@ -5,17 +5,12 @@ import '../../styles/Contact.css'
 class Contact extends Component<any, any> {
 
   // TODO: Move to a config file
-  private githubToken: string = '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';
   private githubApiUrl: string = 'https://api.github.com/repos/hermescnp/hermes-website/commits/main';
 
   lastEdit: string = '';
 
   async componentDidMount() {
-    const result = await fetch(this.githubApiUrl, {
-      headers: {
-        'Authorization': `Bearer ${this.githubToken}`
-      }
-    });
+    const result = await fetch(this.githubApiUrl);
 
     const response = await result.json();
     this.lastEdit = this.parseDate(response.commit.author.date);
