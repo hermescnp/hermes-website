@@ -15,8 +15,8 @@ const Experience = dynamic(() => import('../components/Experience/Experience'), 
 
 export default function Home() {
   const { isClicked } = useExperienceContext();
-  const [sidebarHidden, setSidebarHidden] = useState<boolean>(true);
-  const [displayHiddenPanel, setDisplayHiddenPanel] = useState<boolean>(true);
+  const [sidebarHidden, setSidebarHidden] = useState<boolean>(false);
+  const [displayHiddenPanel, setDisplayHiddenPanel] = useState<boolean>(false);
   const [returnHiddenPanel, setReturnHiddenPanel] = useState<boolean>(false);
   const [panelData, setPanelData] = useState([]);
 
@@ -40,10 +40,6 @@ export default function Home() {
     }, 300);
     setTimeout(() => setSidebarHidden(false), 300);
   };
-
-  const handleSidebarClick = (event: React.MouseEvent<HTMLDivElement>) => {
-    event.stopPropagation();
-  };  
 
   useEffect(() => {
     fetch('/user/data.json')
@@ -83,7 +79,7 @@ export default function Home() {
       <Experience isClicked={isClicked} />
       <Author />
 
-      <div ref={sideBarRef} className={`sideBar${sidebarHidden ? ' hidden' : ''}`} onClick={handleSidebarClick}>
+      <div ref={sideBarRef} className={`sideBar${sidebarHidden ? ' hidden' : ''}`}>
         <HeaderPanel onSidebarHide={handleSidebarHide} />
         <Tabsbar
           handleRefClick={handleRefClick} />
