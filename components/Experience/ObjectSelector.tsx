@@ -22,34 +22,27 @@ export default class ObjectSelector {
 
     update(instances: THREE.Object3D[], camera: any, currentInstance: string) {
         this.raycaster.setFromCamera(this.mouse, camera);
-    
-        // Find the parentKey of the currentInstance
-        const currentInstanceObject = instances.find(instance => instance.name === currentInstance);
-        const currentParentKey = currentInstanceObject ? currentInstanceObject.userData.parentKey : null;
-    
-        // Filter the instances whose "parentKey" value matches the currentInstance or currentParentKey
-        const selectableInstances = instances.filter(instance => instance.userData.parentKey === currentInstance
-        //    || instance.userData.parentKey === currentParentKey
-            );
-    
+
+        // Filter only the instances whose "parentKey" value matches the currentInstance
+        const selectableInstances = instances.filter(instance => instance.userData.parentKey === currentInstance);
+
         const intersects = this.raycaster.intersectObjects(selectableInstances);
-    
+
         // INTERSECT HOVER
         if (intersects.length > 0) {
             for (const intersect of intersects) {
                 this.selection = intersect.object.name;
             }
-    
+
             // Change cursor to pointer when hovering over a selectable object
             this.rendererDomElement.style.cursor = 'pointer';
         } else {
             this.selection = "no selections";
-    
+
             // Change cursor back to default when not hovering over a selectable object
             this.rendererDomElement.style.cursor = 'auto';
         }
     }
-    
 
     getCurrentSelection() {
         return (this.selection)

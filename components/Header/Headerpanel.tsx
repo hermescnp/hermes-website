@@ -13,9 +13,11 @@ export const HeaderPanel = ({ onSidebarHide }: HeaderPanelProps) => {
     const [biographyExpanded, setBiographyExpanded] = useState<boolean>(false);
     const [aboutMeOpacity, setAboutMeOpacity] = useState<number>(0);
     const [aboutMeHidden, setAboutMeHidden] = useState<boolean>(true);
+
+    const aboutMeRef = useRef<HTMLDivElement>(null);
     const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
     const bioRef = useRef<HTMLDivElement>(null);
-
+    const panelRef = useRef<HTMLDivElement>(null);
 
     const hoverAuthor = () => {
         hoverTimeoutRef.current = setTimeout(() => {

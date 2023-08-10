@@ -32,12 +32,8 @@ export const LoadingPage: React.FC<LoadingScreenProps> = ({ isClient }) => {
         experienceContext.setStartExperience(true);
     }
 
-    const stopClickPropagation = (event: React.MouseEvent<HTMLDivElement>) => {
-        event.stopPropagation();
-      };  
-
     return (
-        <div className={isExperienceStarted? 'LoadingPage Invisible' : 'LoadingPage'} onClick={stopClickPropagation}>
+        <div className={isExperienceStarted? 'LoadingPage Invisible' : 'LoadingPage'}>
             <Image id="officeLogo" className={isExperienceStarted? 'OfficeLogo Inflated' : 'OfficeLogo'} src={logo} width={200} height={200} alt="Logo" />
             <div className='LoadingBar'>
                 <progress className='LoadingProgress' value={loadingProgress} max="100"></progress>

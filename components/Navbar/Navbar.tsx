@@ -3,9 +3,8 @@ import Image from 'next/image'
 import '../../styles/Navbar.css'
 import chevron from 'public/assets/SVG/Chevron.svg'
 import mapIcon from 'public/assets/SVG/space_map.svg'
-import { NavInstance } from './NavInstance'
+import NavInstance from './NavInstance'
 import NavSearchBar from './NavSearchBar'
-import PhantomInstance from './PhantomInstance'
 import { SpaceMap } from '../SpaceMap/SpaceMap'
 import { useExperienceContext } from '@/context/ExperienceContext'
 
@@ -16,7 +15,7 @@ interface NavbarProps {
 export const Navbar: React.FC<NavbarProps> = ({ isClient }) => {
     const experienceContext = useExperienceContext();
     const InstanceBackButton = isClient ? experienceContext.InstanceBackButton : () => { };
-    const placehover = isClient ? experienceContext.placehover : { name: '', isSibling: null };
+    const placehover = isClient ? experienceContext.placehover : null;
     const currentInstance = isClient ? experienceContext.currentInstance : 'main';
     const setCurrentInstance = isClient ? experienceContext.setCurrentInstance : () => { };
     const spaceData = isClient ? experienceContext.spaceData : [];
@@ -30,9 +29,7 @@ export const Navbar: React.FC<NavbarProps> = ({ isClient }) => {
         setIsMapOpened(prevState => !prevState);
     }
 
-    const [navInstances, setNavInstances] = useState<Array<{ instance: JSX.Element, placehover: { name: string, isSibling: boolean } }>>([]);
-    let navInstancePlacehover = placehover?.isSibling ? placehover?.name : null;
-    let navSearchBarPlaceHover = placehover?.isSibling ? null : placehover?.name;
+    const [navInstances, setNavInstances] = useState<JSX.Element[]>([]);
 
     // Function to recursively find parent spaces and add them to navInstances
     const createNavInstances = (key: string) => {
@@ -41,16 +38,9 @@ export const Navbar: React.FC<NavbarProps> = ({ isClient }) => {
             if (currentSpace.parentKey !== 'root') {
                 createNavInstances(currentSpace.parentKey);
             }
-            setNavInstances((prevNavInstances: any) => [
+            setNavInstances(prevNavInstances => [
                 ...prevNavInstances,
-                {
-                    instance: <NavInstance
-                        key={currentSpace.key}
-                        instanceName={currentSpace.name}
-                        placehover={placehover?.isSibling ? navInstancePlacehover : null}
-                        HandleInstanceClick={InstanceBackButton} />,
-                    placehover: placehover
-                }
+                <NavInstance key={currentSpace.key} instanceName={currentSpace.name} />
             ]);
         }
     }
@@ -74,16 +64,8 @@ export const Navbar: React.FC<NavbarProps> = ({ isClient }) => {
             </div>
             <div className="Navigation">
                 {/* <NavInstance instanceName={"Root"} /> */}
-                {navInstances.map(instanceData => instanceData.instance)}
-
-                {/* <NavSearchBar
-                    placehover={!placehover?.isSibling ? navSearchBarPlaceHover : null}
-                    isMapOpened={isMapOpened}
-                /> */}
-                
-                <PhantomInstance
-                    placehover={!placehover?.isSibling ? navSearchBarPlaceHover : null}
-                    isMapOpened={isMapOpened} />
+                {navInstances}
+                <NavSearchBar placehover={placehover} isMapOpened={isMapOpened} />
             </div>
             <SpaceMap isOpened={isMapOpened} onMouseOver={stopPropagation} />
         </div>
