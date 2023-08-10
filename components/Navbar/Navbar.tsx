@@ -84,7 +84,6 @@ export const Navbar: React.FC<NavbarProps> = ({ isClient }) => {
                 <PhantomInstance
                     placehover={!placehover?.isSibling ? navSearchBarPlaceHover : null}
                     isMapOpened={isMapOpened} />
-
             </div>
             <SpaceMap isOpened={isMapOpened} onMouseOver={stopPropagation} />
         </div>
