@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
-import chevron from 'public/assets/SVG/Chevron.svg'
+import chevron from 'public/assets/SVG/Phantom_Chevron.svg'
 import searchIcon from 'public/assets/SVG/search_icon.svg'
 
 interface SearchBarProps {
@@ -8,7 +8,7 @@ interface SearchBarProps {
     isMapOpened: boolean;
 }
 
-export default function NavSearchBar({ placehover, isMapOpened }: SearchBarProps) {
+export default function PhantomInstance({ placehover, isMapOpened }: SearchBarProps) {
     const [inputValue, setInputValue] = useState(placehover || '');
     const [isFocused, setIsFocused] = useState(false);
 
@@ -22,7 +22,7 @@ export default function NavSearchBar({ placehover, isMapOpened }: SearchBarProps
         const value = event.target.value;
         const trimmedValue = value.replace(/^ +/g, ''); // Remove leading spaces
         setInputValue(trimmedValue);
-    }    
+    }
 
     const handleFocus = () => {
         setIsFocused(true);
@@ -44,24 +44,12 @@ export default function NavSearchBar({ placehover, isMapOpened }: SearchBarProps
         }
     }
 
+    let active = inputValue ? 'PhantomArrow--active' : '';
+
     return (
-        <div className="NavSearchBar">
-            <Image id="arrow" className="Arrow" src={chevron} width={15} height={15} alt="Arrow"></Image>
-            <div className={`SearchBar ${isFocused ? 'SearchBar--focused' : ''}`}>
-                <input 
-                    type="text" 
-                    placeholder='Search Places or Objects' 
-                    className="InstanceInput" 
-                    value={inputValue} 
-                    onChange={handleInputChange}
-                    onFocus={handleFocus} 
-                    onBlur={handleBlur} 
-                    onKeyDown={handleKeyDown}
-                />
-                <div className="SearchIconContainer" onClick={handleSubmit}>
-                    <Image id="searchIcon" className={`SearchIcon ${inputValue ? 'SearchIcon--enabled' : ''}`} src={searchIcon} width={20} height={20} alt="Search"></Image>
-                </div>
-            </div>
+        <div className="NavigationInstance">
+            <Image id="arrow" className={`PhantomArrow ${active}`} src={chevron} width={15} height={15} alt="Arrow"></Image>
+            <div className={`PhantomInstance`}>{inputValue}</div>
         </div>
     )
 }

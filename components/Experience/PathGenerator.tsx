@@ -1,5 +1,5 @@
 import React from 'react'
-import * as THREE from 'three';
+import * as THREE from 'three'
 
 export default class PathGenerator {
   targets: { [key: string]: THREE.Vector3 };
