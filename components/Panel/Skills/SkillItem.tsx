@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import Image from "next/image"
 
 interface SkillItemType {
   category: string;
@@ -74,7 +75,7 @@ export const SkillItem: React.FC<SkillItemProps> = ({ skill }) => {
                         />
                     </svg>
                     <div className={skillItemClasses} ref={skillItemRef}>
-                        <img src={iconSource} alt={skillName} className="Icon" />
+                        <Image src={`/assets/SVG/${iconSource}`} alt={skillName} className="SkillIcon" width={70} height={70} />
                     </div>
                 </div>
                 <div className="SkillLabel">

@@ -71,6 +71,8 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
     const prevTargetPathRef = useRef<any>(prevTargetPath);
     const [isNavDescending, setIsNavDescending] = useState<boolean>(false);
     const isNavDescendingRef = useRef<boolean>(isNavDescending);
+    const [isPortrait, setIsPortrait] = useState<boolean>(false);
+    const isPortraitRef = useRef<any>(isPortrait);
 
     const [zones, setZones] = useState<any>([]);  // Declare zones state
     const zonesRef = useRef(zones);  // Declare zones ref
@@ -89,6 +91,11 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
             renderer2d.setSize(scW, scH);
             _camera.aspect = aspect;
             _camera.updateProjectionMatrix();
+            if (aspect < 1) {
+                setIsPortrait(true)
+            } else {
+                setIsPortrait(false)
+            }
         }
     }, [renderer3d]);
 
@@ -156,6 +163,11 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
         isPathChangedRef.current = isPathChanged;
     }, [isPathChanged]);
 
+    // UPDATE PORTRAIT / LANDSCAPE STATE
+    useEffect(() => {
+        isPortraitRef.current = isPortrait;
+    }, [isPortrait])
+
     // SPACE TRAVELER
     useEffect(() => {
         instanceRef.current = currentInstance;
@@ -175,7 +187,7 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
                 setPrevTargetPath(nextPath);
                 setTargetPath(nextPath);
             } else if (isInstanceSibling(currentInstance, prevInstanceRef.current, data)) {
-                console.log('sibling');
+                //console.log('sibling');
             } else {
                 let backPath = pathGenerator.createPath(currentInstance, prevInstanceRef.current);
                 setIsNavDescending(false);
@@ -208,6 +220,11 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
             setRenderer3d(renderer3d);
 
             const camera = Camera(currentCameraPosition, target, aspect);
+            if (aspect < 1) {
+                setIsPortrait(true)
+            } else {
+                setIsPortrait(false)
+            }
             setCamera(camera);
 
             // BACKGROUND SETTINGS
@@ -331,6 +348,10 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
                 prevControls = prevControlsRef.current;
                 currentControls = lerpControls(prevControls, nextControls, lerpProgress, isNavDescendingRef.current);
 
+                if (isPortraitRef.current) {
+                    currentControls.maxDistance *= 2;
+                    currentControls.minDistance *= 2;
+                }
                 controls.maxDistance = currentControls.maxDistance;
                 controls.minDistance = currentControls.minDistance;
                 controls.maxAzimuthAngle = currentControls.maxAzimuthAngle;

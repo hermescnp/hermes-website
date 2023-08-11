@@ -83,3 +83,8 @@
 .inflatedInner {
     background: #374C6C;
 }
+
+.SkillIcon {
+    width: 50%;
+    height: 50%;
+}
