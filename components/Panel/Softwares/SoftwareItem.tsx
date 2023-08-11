@@ -1,4 +1,5 @@
 import React from 'react'
+import Image from "next/image"
 
 interface SoftwareItemType {
     name: string;
@@ -24,10 +25,11 @@ const SoftwareItem: React.FC<SoftwareItemProps> = ({ item }) => {
             style={{ transition: 'all 0.2s ease-out' }}
         >
             <div className="SoftwareIcon">
-                <img
+                <Image
                     className={`Logotype ${hovered ? 'inflatedLogo' : ''}`}
-                    src={item.iconSource}
+                    src={`/assets/${item.iconSource}`}
                     style={{ transition: 'all 0.2s ease-out' }}
+                    alt={item.name} width={35} height={35}
                 />
             </div>
             <div className="SoftwareInfo">

@@ -3,7 +3,7 @@
         "category": "Visual Skills",
         "skillName": "Hand-Draw",
         "skillLevel": 70,
-        "iconSource": "/Assets/SVG/HandDraw_Icon.svg",
+        "iconSource": "HandDraw_Icon.svg",
         "isVisible": true,
         "type": "skill"
     },
@@ -11,7 +11,7 @@
         "category": "Visual Skills",
         "skillName": "Conceptual Analysis",
         "skillLevel": 95,
-        "iconSource": "/Assets/SVG/space_map.svg",
+        "iconSource": "space_map.svg",
         "isVisible": true,
         "type": "skill"  
     },
@@ -19,7 +19,7 @@
         "category": "Visual Skills",
         "skillName": "2D Graphics",
         "skillLevel": 90,
-        "iconSource": "/Assets/SVG/2DGraphics_Icon.svg",
+        "iconSource": "2DGraphics_Icon.svg",
         "isVisible": true,
         "type": "skill"  
     },
@@ -27,7 +27,7 @@
         "category": "Visual Skills",
         "skillName": "3D Graphics",
         "skillLevel": 75,
-        "iconSource": "/Assets/SVG/3DGraphics_Icon.svg",
+        "iconSource": "3DGraphics_Icon.svg",
         "isVisible": true,
         "type": "skill"  
     },
@@ -35,7 +35,7 @@
         "category": "Visual Skills",
         "skillName": "Procedural Programming",
         "skillLevel": 78,
-        "iconSource": "/Assets/SVG/ProceduralProgramming_Icon.svg",
+        "iconSource": "ProceduralProgramming_Icon.svg",
         "isVisible": true,
         "type": "skill"
     },
@@ -43,7 +43,7 @@
         "category": "Visual Skills",
         "skillName": "UX/UI Prototyping",
         "skillLevel": 65,
-        "iconSource": "/Assets/SVG/UXUIPrototyping_Icon.svg",
+        "iconSource": "UXUIPrototyping_Icon.svg",
         "isVisible": true,
         "type": "skill"  
     },
@@ -51,7 +51,7 @@
         "category": "Visual Skills",
         "skillName": "Applied Mathematics",
         "skillLevel": 62,
-        "iconSource": "/Assets/SVG/AppliedMathematics2.svg",
+        "iconSource": "AppliedMathematics2.svg",
         "isVisible": true,
         "type": "skill"  
     },
@@ -59,7 +59,7 @@
         "category": "Visual Skills",
         "skillName": "Creative Web Front-end",
         "skillLevel": 55,
-        "iconSource": "/Assets/SVG/Illustration_Icon.svg",
+        "iconSource": "Illustration_Icon.svg",
         "isVisible": true,
         "type": "skill"  
     },
@@ -67,7 +67,7 @@
         "category": "Musical Skills",
         "skillName": "Arrangement",
         "skillLevel": 70,
-        "iconSource": "/Assets/SVG/Arrangement_Icon.svg",
+        "iconSource": "Arrangement_Icon.svg",
         "isVisible": true,
         "type": "skill"
     },
@@ -75,7 +75,7 @@
         "category": "Musical Skills",
         "skillName": "Film Scoring",
         "skillLevel": 45,
-        "iconSource": "/Assets/SVG/FilmScoring_Icon.svg",
+        "iconSource": "FilmScoring_Icon.svg",
         "isVisible": true,
         "type": "skill"  
     },
@@ -83,7 +83,7 @@
         "category": "Musical Skills",
         "skillName": "Sound Edition & Production",
         "skillLevel": 90,
-        "iconSource": "/Assets/SVG/SoundEdition_Icon.svg",
+        "iconSource": "SoundEdition_Icon.svg",
         "isVisible": true,
         "type": "skill"  
     },
@@ -91,7 +91,7 @@
         "category": "Musical Skills",
         "skillName": "Songwriting",
         "skillLevel": 95,
-        "iconSource": "/Assets/SVG/SongWriting_Icon.svg",
+        "iconSource": "SongWriting_Icon.svg",
         "isVisible": true,
         "type": "skill"  
     },
@@ -297,7 +297,7 @@
         "name": "HTML / CSS / JavaScript",
         "description": "Web Dev",
         "skillLevel": 70,
-        "iconSource": "/Assets/PNG/Webpack_Icon.png",
+        "iconSource": "PNG/Webpack_Icon.png",
         "isVisible": true,
         "type": "software",
         "isImportant": true
@@ -306,7 +306,7 @@
         "name": "Typescript",
         "description": "Software Development",
         "skillLevel": 55,
-        "iconSource": "/Assets/PNG/Typescript_Icon.png",
+        "iconSource": "PNG/Typescript_Icon.png",
         "isVisible": true,
         "type": "software",
         "isImportant": true
@@ -315,7 +315,7 @@
         "name": "React.js",
         "description": "Front-end Develop",
         "skillLevel": 50,
-        "iconSource": "/Assets/PNG/React_Icon.png",
+        "iconSource": "PNG/React_Icon.png",
         "isVisible": true,
         "type": "software",
         "isImportant": true
@@ -324,7 +324,7 @@
         "name": "Three.js",
         "description": "Game Develop / Front-end",
         "skillLevel": 75,
-        "iconSource": "/Assets/PNG/Threejs_Icon.png",
+        "iconSource": "PNG/Threejs_Icon.png",
         "isVisible": true,
         "type": "software",
         "isImportant": true
@@ -333,7 +333,7 @@
         "name": "Figma",
         "description": "UX/UI Design",
         "skillLevel": 80,
-        "iconSource": "/Assets/PNG/Figma_Icon.png",
+        "iconSource": "PNG/Figma_Icon.png",
         "isVisible": true,
         "type": "software",
         "isImportant": false
@@ -342,7 +342,7 @@
         "name": "Sketch App",
         "description": "UX/UI Design",
         "skillLevel": 70,
-        "iconSource": "/Assets/PNG/SketchApp_Icon.png",
+        "iconSource": "PNG/SketchApp_Icon.png",
         "isVisible": true,
         "type": "software",
         "isImportant": false
@@ -351,7 +351,7 @@
         "name": "Next.js",
         "description": "Front-end Framework",
         "skillLevel": 50,
-        "iconSource": "/Assets/PNG/Nextjs_Icon.png",
+        "iconSource": "PNG/Nextjs_Icon.png",
         "isVisible": true,
         "type": "software",
         "isImportant": false
@@ -360,7 +360,7 @@
         "name": "Unity 3D",
         "description": "Interactivity & Real-Time Render",
         "skillLevel": 30,
-        "iconSource": "/Assets/PNG/Unity3D_Icon.png",
+        "iconSource": "PNG/Unity3D_Icon.png",
         "isVisible": true,
         "type": "software",
         "isImportant": true
@@ -369,7 +369,7 @@
         "name": "Adobe Illustrator",
         "description": "2D Vector Design",
         "skillLevel": 90,
-        "iconSource": "/Assets/PNG/Illustrator_Icon.png",
+        "iconSource": "PNG/Illustrator_Icon.png",
         "isVisible": true,
         "type": "software",
         "isImportant": false
@@ -378,7 +378,7 @@
         "name": "Adobe Photoshop",
         "description": "Pixel Design",
         "skillLevel": 70,
-        "iconSource": "/Assets/PNG/Photoshop_Icon.png",
+        "iconSource": "PNG/Photoshop_Icon.png",
         "isVisible": true,
         "type": "software",
         "isImportant": false
@@ -387,7 +387,7 @@
         "name": "Rhinoceros 3D",
         "description": "3D NURBS Design",
         "skillLevel": 80,
-        "iconSource": "/Assets/PNG/Rhino3D_Icon.png",
+        "iconSource": "PNG/Rhino3D_Icon.png",
         "isVisible": true,
         "type": "software",
         "isImportant": false
@@ -396,7 +396,7 @@
         "name": "Grasshopper",
         "description": "Procedural/Parametric Design",
         "skillLevel": 65,
-        "iconSource": "/Assets/PNG/Grasshopper_Icon.png",
+        "iconSource": "PNG/Grasshopper_Icon.png",
         "isVisible": true,
         "type": "software",
         "isImportant": false
@@ -405,7 +405,7 @@
         "name": "Blender",
         "description": "Rigging/Particles/Effects",
         "skillLevel": 70,
-        "iconSource": "/Assets/PNG/Blender_Icon.png",
+        "iconSource": "PNG/Blender_Icon.png",
         "isVisible": true,
         "type": "software",
         "isImportant": false
@@ -414,7 +414,7 @@
         "name": "Cinema4D",
         "description": "3D Polygon Design",
         "skillLevel": 90,
-        "iconSource": "/Assets/PNG/Cinema4D_Icon.png",
+        "iconSource": "PNG/Cinema4D_Icon.png",
         "isVisible": true,
         "type": "software",
         "isImportant": false
@@ -423,7 +423,7 @@
         "name": "Avid Pro Tools",
         "description": "Music/Sound Edition",
         "skillLevel": 80,
-        "iconSource": "/Assets/PNG/Pro-tools_Icon.png",
+        "iconSource": "PNG/Pro-tools_Icon.png",
         "isVisible": true,
         "type": "software",
         "isImportant": false
@@ -432,7 +432,7 @@
         "name": "Logic Pro X",
         "description": "Music Production / Sound Effects",
         "skillLevel": 65,
-        "iconSource": "/Assets/PNG/LogicProX_Icon.png",
+        "iconSource": "PNG/LogicProX_Icon.png",
         "isVisible": true,
         "type": "software",
         "isImportant": false

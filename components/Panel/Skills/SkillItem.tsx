@@ -75,7 +75,7 @@ export const SkillItem: React.FC<SkillItemProps> = ({ skill }) => {
                         />
                     </svg>
                     <div className={skillItemClasses} ref={skillItemRef}>
-                        <Image src={iconSource} alt={skillName} className="SkillIcon" width={70} height={70} />
+                        <Image src={`/assets/SVG/${iconSource}`} alt={skillName} className="SkillIcon" width={70} height={70} />
                     </div>
                 </div>
                 <div className="SkillLabel">
