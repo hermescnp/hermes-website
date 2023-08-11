@@ -7,7 +7,7 @@ export default function setBackground(scene: any) {
     // BACKGROUND SETTINGS
     const color = new THREE.Color();
     color.set(0x1e2332);
-    scene.fog = new THREE.Fog(color, 20, 50);
+    scene.fog = new THREE.Fog(color, 50, 70);
 
     const ambientLight = new THREE.AmbientLight('#ffe175', 0.2);
     scene.add(ambientLight);
