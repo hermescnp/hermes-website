@@ -22,30 +22,31 @@ const App: React.FC<AppProps> = ({ children }) => {
     const experienceContext = useExperienceContext();
     const loadingState = isClient ? experienceContext.loadingState : '';
     const [displayLoading, setDisplayLoading] = useState<boolean>(true);
-    const [isPortraitMode, setIsPortraitMode] = useState<boolean>(window.innerHeight > window.innerWidth);
+    const [isPortraitMode, setIsPortraitMode] = useState<boolean>(false);
     const isPortraitModeRef = useRef<boolean>(isPortraitMode);
 
     // Function to update orientation mode
-    const updateOrientationMode = () => {
-      const newIsPortraitMode = window.innerHeight > window.innerWidth;
-      setIsPortraitMode(newIsPortraitMode);
-      isPortraitModeRef.current = newIsPortraitMode;
-    };
-
-    // Function to handle screen orientation change
-    const handleOrientationChange = () => {
-      updateOrientationMode();
-    };
-
-    // Function to handle window resize
-    const handleWindowResize = () => {
-      updateOrientationMode();
-    };
-
-    // Add event listeners for orientation change and window resize
     useEffect(() => {
+      setIsClient(true);
+      setIsPortraitMode(window.innerHeight > window.innerWidth);
+      isPortraitModeRef.current = window.innerHeight > window.innerWidth;
+  
+      const updateOrientationMode = () => {
+        setIsPortraitMode(window.innerHeight > window.innerWidth);
+        isPortraitModeRef.current = window.innerHeight > window.innerWidth;
+      };
+  
+      const handleOrientationChange = () => {
+        updateOrientationMode();
+      };
+  
+      const handleWindowResize = () => {
+        updateOrientationMode();
+      };
+  
       window.addEventListener('orientationchange', handleOrientationChange);
       window.addEventListener('resize', handleWindowResize);
+  
       return () => {
         window.removeEventListener('orientationchange', handleOrientationChange);
         window.removeEventListener('resize', handleWindowResize);
@@ -64,7 +65,6 @@ const App: React.FC<AppProps> = ({ children }) => {
 
     useEffect(() => {
       isPortraitModeRef.current = isPortraitMode;
-      console.log(isPortraitMode);
   }, [isPortraitMode]);
   
     return (

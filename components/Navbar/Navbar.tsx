@@ -85,7 +85,6 @@ export const Navbar: React.FC<NavbarProps> = ({ isClient, isPortrait }) => {
 
     useEffect(() => {
         setPortraitMode(isPortrait);
-        //console.log(isPortrait);
     }, [isPortrait]);
 
     return (
