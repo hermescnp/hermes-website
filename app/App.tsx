@@ -1,6 +1,6 @@
 "use client"
 import './globals.css'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { Inter } from 'next/font/google'
 import { Navbar } from '@/components/Navbar/Navbar'
 import { LoadingPage } from '@/components/LoadingPage'
@@ -22,6 +22,35 @@ const App: React.FC<AppProps> = ({ children }) => {
     const experienceContext = useExperienceContext();
     const loadingState = isClient ? experienceContext.loadingState : '';
     const [displayLoading, setDisplayLoading] = useState<boolean>(true);
+    const [isPortraitMode, setIsPortraitMode] = useState<boolean>(window.innerHeight > window.innerWidth);
+    const isPortraitModeRef = useRef<boolean>(isPortraitMode);
+
+    // Function to update orientation mode
+    const updateOrientationMode = () => {
+      const newIsPortraitMode = window.innerHeight > window.innerWidth;
+      setIsPortraitMode(newIsPortraitMode);
+      isPortraitModeRef.current = newIsPortraitMode;
+    };
+
+    // Function to handle screen orientation change
+    const handleOrientationChange = () => {
+      updateOrientationMode();
+    };
+
+    // Function to handle window resize
+    const handleWindowResize = () => {
+      updateOrientationMode();
+    };
+
+    // Add event listeners for orientation change and window resize
+    useEffect(() => {
+      window.addEventListener('orientationchange', handleOrientationChange);
+      window.addEventListener('resize', handleWindowResize);
+      return () => {
+        window.removeEventListener('orientationchange', handleOrientationChange);
+        window.removeEventListener('resize', handleWindowResize);
+      };
+    }, []);
 
     useEffect(() => {
       if ( loadingState === 'started' ) {
@@ -32,11 +61,16 @@ const App: React.FC<AppProps> = ({ children }) => {
     useEffect(() => {
       setIsClient(true);
     }, []);
+
+    useEffect(() => {
+      isPortraitModeRef.current = isPortraitMode;
+      console.log(isPortraitMode);
+  }, [isPortraitMode]);
   
     return (
       <html lang="en">
         <body className='Layout'>
-          <Navbar isClient={isClient} />
+          <Navbar isClient={isClient} isPortrait={isPortraitModeRef.current} />
           <div className={inter.className}>{children}</div>
           {displayLoading? <LoadingPage isClient={isClient} /> : null}
         </body>

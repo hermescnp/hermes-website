@@ -11,9 +11,15 @@ import { useExperienceContext } from '@/context/ExperienceContext'
 
 interface NavbarProps {
     isClient: boolean;
+    isPortrait: boolean;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ isClient }) => {
+type PlaceHoverType = {
+    name: string | null;
+    isSibling: boolean | null;
+}
+
+export const Navbar: React.FC<NavbarProps> = ({ isClient, isPortrait }) => {
     const experienceContext = useExperienceContext();
     const InstanceBackButton = isClient ? experienceContext.InstanceBackButton : () => { };
     const placehover = isClient ? experienceContext.placehover : { name: '', isSibling: null };
@@ -21,6 +27,7 @@ export const Navbar: React.FC<NavbarProps> = ({ isClient }) => {
     const setCurrentInstance = isClient ? experienceContext.setCurrentInstance : () => { };
     const spaceData = isClient ? experienceContext.spaceData : [];
     const [isMapOpened, setIsMapOpened] = useState<boolean>(true);
+    const [portraitMode, setPortraitMode] = useState<boolean>(isPortrait)
 
     const stopPropagation = (event: React.SyntheticEvent) => {
         event.stopPropagation();
@@ -30,7 +37,7 @@ export const Navbar: React.FC<NavbarProps> = ({ isClient }) => {
         setIsMapOpened(prevState => !prevState);
     }
 
-    const [navInstances, setNavInstances] = useState<Array<{ instance: JSX.Element, placehover: { name: string, isSibling: boolean } }>>([]);
+    const [navInstances, setNavInstances] = useState<Array<{ instance: JSX.Element, placehover: PlaceHoverType }>>([]);
     let navInstancePlacehover = placehover?.isSibling ? placehover?.name : null;
     let navSearchBarPlaceHover = placehover?.isSibling ? null : placehover?.name;
 
@@ -41,17 +48,31 @@ export const Navbar: React.FC<NavbarProps> = ({ isClient }) => {
             if (currentSpace.parentKey !== 'root') {
                 createNavInstances(currentSpace.parentKey);
             }
-            setNavInstances((prevNavInstances: any) => [
-                ...prevNavInstances,
-                {
-                    instance: <NavInstance
-                        key={currentSpace.key}
-                        instanceName={currentSpace.name}
-                        placehover={placehover?.isSibling ? navInstancePlacehover : null}
-                        HandleInstanceClick={InstanceBackButton} />,
-                    placehover: placehover
-                }
-            ]);
+            if (!navInstancePlacehover && isPortrait) {
+                // Only show the current instance in portrait mode
+                setNavInstances([
+                    {
+                        instance: <NavInstance
+                            key={currentSpace.key}
+                            instanceName={currentSpace.name}
+                            placehover={placehover?.isSibling ? navInstancePlacehover : null}
+                            HandleInstanceClick={InstanceBackButton} />,
+                        placehover: placehover
+                    }
+                ]);
+            } else {
+                setNavInstances((prevNavInstances: any) => [
+                    ...prevNavInstances,
+                    {
+                        instance: <NavInstance
+                            key={currentSpace.key}
+                            instanceName={currentSpace.name}
+                            placehover={placehover?.isSibling ? navInstancePlacehover : null}
+                            HandleInstanceClick={InstanceBackButton} />,
+                        placehover: placehover
+                    }
+                ]);
+            }
         }
     }
 
@@ -60,7 +81,12 @@ export const Navbar: React.FC<NavbarProps> = ({ isClient }) => {
         setNavInstances([]); // Clear previous navigation instances
         createNavInstances(currentInstance); // Create new navigation instances
         setIsMapOpened(false);
-    }, [currentInstance, spaceData]);
+    }, [currentInstance, spaceData, isPortrait]);
+
+    useEffect(() => {
+        setPortraitMode(isPortrait);
+        //console.log(isPortrait);
+    }, [isPortrait]);
 
     return (
         <div className="NavBar" onClick={stopPropagation}>
@@ -73,17 +99,27 @@ export const Navbar: React.FC<NavbarProps> = ({ isClient }) => {
                 </button>
             </div>
             <div className="Navigation">
-                {/* <NavInstance instanceName={"Root"} /> */}
-                {navInstances.map(instanceData => instanceData.instance)}
+                {portraitMode ? (
+                    // Portrait Mode
+                    <>
+                        {navInstances.map(instanceData => instanceData.instance)}
+                    </>
+                ) : (
+                    // Landscape Mode
+                    <>
+                        {/* <NavInstance instanceName={"Root"} /> */}
+                        {navInstances.map(instanceData => instanceData.instance)}
 
-                {/* <NavSearchBar
+                        {/* <NavSearchBar
                     placehover={!placehover?.isSibling ? navSearchBarPlaceHover : null}
                     isMapOpened={isMapOpened}
                 /> */}
-                
-                <PhantomInstance
-                    placehover={!placehover?.isSibling ? navSearchBarPlaceHover : null}
-                    isMapOpened={isMapOpened} />
+
+                        <PhantomInstance
+                            placehover={!placehover?.isSibling ? navSearchBarPlaceHover : null}
+                            isMapOpened={isMapOpened} />
+                    </>
+                )}
             </div>
             <SpaceMap isOpened={isMapOpened} onMouseOver={stopPropagation} />
         </div>

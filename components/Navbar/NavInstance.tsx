@@ -9,11 +9,6 @@ interface NavInstanceProps {
     HandleInstanceClick: any;
 }
 
-type PlaceHoverType = {
-    name: string | null;
-    isSibling: boolean | null;
-}
-
 export const NavInstance: React.FC<NavInstanceProps> = ({ instanceName, placehover, HandleInstanceClick }) => {
     const [hoverName, setHoverName] = useState(placehover || '');
 

@@ -245,35 +245,63 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
             let isMousePressed = false;
             let isLongClick = false;
             let longClickThreshold = 300;
+            let doubleClickThreshold = 300; // Adjust this value based on your needs
             let mouseDownTimeout: any;
-
+            let clickCount = 0;
+            let lastClickTime = 0;
+            
             window.addEventListener('mousedown', () => {
                 isMousePressed = true;
                 isLongClick = false;
-                mouseDownTimeout = setTimeout(function () {
+                mouseDownTimeout = setTimeout(() => {
                     isLongClick = true;
-                    setPlaceHover({ name: '', isSibling: false })
+                    setPlaceHover({ name: '', isSibling: false });
                 }, longClickThreshold);
             });
-
+            
             window.addEventListener('mouseup', () => {
                 isMousePressed = false;
                 clearTimeout(mouseDownTimeout);
-                setTimeout(function () {
+                setTimeout(() => {
                     isLongClick = false;
                 }, 100);
             });
-
+            
             window.addEventListener('click', () => {
+                const currentTime = Date.now();
                 if (!isMousePressed && !isLongClick) {
-                    const pathName = objectSelector.getCurrentSelection();
-                    if (pathName !== 'no selections') {
-                        setPrevInstance(instanceRef.current);  // updating previous instance ref
-                        setCurrentInstance(pathName);
-                    } else { console.log('you have to select something') }
+                    if (currentTime - lastClickTime <= doubleClickThreshold) {
+                        // Double click logic here
+                        clickCount = 0; // Reset the click count
+                        const instance = data.find((item: any) => item.key === instanceRef.current);
+                        const instanceParent = instance?.parentKey;
+                        const current = instance?.key;
+                        if (instanceParent !== 'root') {
+                            setPrevInstance(current);  // updating previous instance ref
+                            setCurrentInstance(instanceParent);
+                        }
+                    } else {
+                        clickCount++;
+                    }
+            
+                    if (clickCount === 1) {
+                        lastClickTime = currentTime;
+                        setTimeout(() => {
+                            if (clickCount === 1) {
+                                // Single click logic here
+                                const pathName = objectSelector.getCurrentSelection();
+                                if (pathName !== 'no selections') {
+                                    setPrevInstance(instanceRef.current);
+                                    setCurrentInstance(pathName);
+                                } else {
+                                    console.log('you have to select something');
+                                }
+                            }
+                            clickCount = 0; // Reset the click count
+                        }, doubleClickThreshold + 50); // A slight delay to allow for double click detection
+                    }
                 }
-            });
-
+            });            
 
             // CONTROLS
             const objectTarget = new THREE.Object3D();
