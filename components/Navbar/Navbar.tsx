@@ -106,10 +106,12 @@ export const Navbar: React.FC<NavbarProps> = ({ isClient, isPortrait }) => {
                 ) : (
                     // Landscape Mode
                     <>
-                        {/* <NavInstance instanceName={"Root"} /> */}
+                        {/*TODO: Implement Root Instance when LeGine becomes the Root.
+                        <NavInstance instanceName={"Root"} /> */}
                         {navInstances.map(instanceData => instanceData.instance)}
 
-                        {/* <NavSearchBar
+                        {/*TODO: Implement Search Bar when the navigation allows jumping to any ramdom instance.
+                        <NavSearchBar
                     placehover={!placehover?.isSibling ? navSearchBarPlaceHover : null}
                     isMapOpened={isMapOpened}
                 /> */}

@@ -36,21 +36,8 @@ const App: React.FC<AppProps> = ({ children }) => {
         isPortraitModeRef.current = window.innerHeight > window.innerWidth;
       };
   
-      const handleOrientationChange = () => {
-        updateOrientationMode();
-      };
-  
-      const handleWindowResize = () => {
-        updateOrientationMode();
-      };
-  
-      window.addEventListener('orientationchange', handleOrientationChange);
-      window.addEventListener('resize', handleWindowResize);
-  
-      return () => {
-        window.removeEventListener('orientationchange', handleOrientationChange);
-        window.removeEventListener('resize', handleWindowResize);
-      };
+      window.addEventListener('orientationchange', updateOrientationMode);
+      window.addEventListener('resize', updateOrientationMode);
     }, []);
 
     useEffect(() => {
