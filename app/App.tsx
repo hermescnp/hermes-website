@@ -1,6 +1,6 @@
 "use client"
 import './globals.css'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { Inter } from 'next/font/google'
 import { Navbar } from '@/components/Navbar/Navbar'
 import { LoadingPage } from '@/components/LoadingPage'
@@ -22,6 +22,23 @@ const App: React.FC<AppProps> = ({ children }) => {
     const experienceContext = useExperienceContext();
     const loadingState = isClient ? experienceContext.loadingState : '';
     const [displayLoading, setDisplayLoading] = useState<boolean>(true);
+    const [isPortraitMode, setIsPortraitMode] = useState<boolean>(false);
+    const isPortraitModeRef = useRef<boolean>(isPortraitMode);
+
+    // Function to update orientation mode
+    useEffect(() => {
+      setIsClient(true);
+      setIsPortraitMode(window.innerHeight > window.innerWidth);
+      isPortraitModeRef.current = window.innerHeight > window.innerWidth;
+  
+      const updateOrientationMode = () => {
+        setIsPortraitMode(window.innerHeight > window.innerWidth);
+        isPortraitModeRef.current = window.innerHeight > window.innerWidth;
+      };
+  
+      window.addEventListener('orientationchange', updateOrientationMode);
+      window.addEventListener('resize', updateOrientationMode);
+    }, []);
 
     useEffect(() => {
       if ( loadingState === 'started' ) {
@@ -32,11 +49,15 @@ const App: React.FC<AppProps> = ({ children }) => {
     useEffect(() => {
       setIsClient(true);
     }, []);
+
+    useEffect(() => {
+      isPortraitModeRef.current = isPortraitMode;
+  }, [isPortraitMode]);
   
     return (
       <html lang="en">
         <body className='Layout'>
-          <Navbar isClient={isClient} />
+          <Navbar isClient={isClient} isPortrait={isPortraitModeRef.current} />
           <div className={inter.className}>{children}</div>
           {displayLoading? <LoadingPage isClient={isClient} /> : null}
         </body>
