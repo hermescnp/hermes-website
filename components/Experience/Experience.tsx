@@ -19,7 +19,7 @@ import ObjectSelector from './ObjectSelector';
 import { useExperienceContext } from '@/context/ExperienceContext';
 import InstanceControls from './InstanceControls'
 import { LerpEngine, lerpControls } from './LerpEngine'
-import { calculateInstanceLevel, calculateSiblingSecuence, getInstancePosition, getCurrentInstance, isInstanceDescendant, isInstanceSibling, getSiblingOrientation, isUniqueChildInstance } from './InstanceAnalyzer'
+import { calculateInstanceLevel, calculateSiblingSequence, getInstancePosition, getCurrentInstance, isInstanceDescendant, isInstanceSibling, getSiblingOrientation, isUniqueChildInstance } from './InstanceAnalyzer'
 import { isPathEquivalent, calculateSiblingPosition } from './PathAnalyzer'
 
 // Camera Positions
@@ -81,9 +81,9 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
     const [siblingPosition, setSiblingPosition] = useState<THREE.Vector2>(new THREE.Vector2(0, 0));
     const siblingPositionRef = useRef<THREE.Vector2>(siblingPosition);
 
-    const [verticalSiblingAxis, setVerticalSiblingAxis] = useState<any>(pathGenerator.getSiblingAxis(calculateSiblingSecuence('main', 'vertical', data)));
+    const [verticalSiblingAxis, setVerticalSiblingAxis] = useState<any>(pathGenerator.getSiblingAxis(calculateSiblingSequence('main', 'vertical', data)));
     const verticalSiblingAxisRef = useRef<any>(verticalSiblingAxis);
-    const [horizontalSiblingAxis, setHorizontalSiblingAxis] = useState<any>(pathGenerator.getSiblingAxis(calculateSiblingSecuence('main', 'horizontal', data)));
+    const [horizontalSiblingAxis, setHorizontalSiblingAxis] = useState<any>(pathGenerator.getSiblingAxis(calculateSiblingSequence('main', 'horizontal', data)));
     const horizontalSiblingAxisRef = useRef<any>(horizontalSiblingAxis);
 
     const [navigationAxis, setNavigationAxis] = useState<string>('x');
@@ -228,11 +228,17 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
         if (isUniqueChildInstance(currentInstance, data)) {
             setSiblingPosition(new THREE.Vector2(0, 0));
         } else {
-            verticalSiblingPath = pathGenerator.getSiblingAxis(calculateSiblingSecuence(currentInstance, 'vertical', data));
+            const verticalSiblingSecuence = calculateSiblingSequence(currentInstance, 'vertical', data);
+            const horizontalSiblingSecuence = calculateSiblingSequence(currentInstance, 'horizontal', data);
+            verticalSiblingPath = pathGenerator.getSiblingAxis(verticalSiblingSecuence);
             const newVerticalSiblingPosition = calculateSiblingPosition(getInstancePosition(currentInstance, data), verticalSiblingPath);
-            horizontalSiblingPath = pathGenerator.getSiblingAxis(calculateSiblingSecuence(currentInstance, 'horizontal', data));
+            horizontalSiblingPath = pathGenerator.getSiblingAxis(horizontalSiblingSecuence);
             const newHorizontalSiblingPosition = calculateSiblingPosition(getInstancePosition(currentInstance, data), horizontalSiblingPath);
             setSiblingPosition(new THREE.Vector2(newVerticalSiblingPosition, newHorizontalSiblingPosition));
+            setVerticalSiblingAxis(verticalSiblingPath);
+            setHorizontalSiblingAxis(horizontalSiblingPath);
+            console.log(verticalSiblingSecuence.orderedSiblings);
+            console.log(horizontalSiblingSecuence.orderedSiblings);
         }
 
         // Test if the new instance is not the biggest parent
@@ -257,18 +263,12 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
                 // If is not descending, test if is a sibling instance to travel through Sibling Axis
             } else if (isInstanceSibling(currentInstance, prevInstanceRef.current, data)) {
                 const movementAxis = getSiblingOrientation(currentInstance, prevInstanceRef.current, data);
+                //console.log(movementAxis);
                 // If next instance is on vertical axis
                 if (movementAxis === 'vertical') {
                     setNavigationAxis('y');
-                    setHorizontalSiblingAxis(horizontalSiblingPath);
                 } else if (movementAxis === 'horizontal') { // If next instance is on horizontal axis
                     setNavigationAxis('z');
-                    setVerticalSiblingAxis(verticalSiblingPath);
-                } else {
-                    setNavigationAxis('y');
-                    setNavigationAxis('z');
-                    setVerticalSiblingAxis(verticalSiblingPath);
-                    setHorizontalSiblingAxis(horizontalSiblingPath);
                 }
                 // If is not sibling, that means that user is trying to travel back to parent instance
             } else {
@@ -277,8 +277,6 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
                 setIsPathChanged(true);
                 setPrevTargetPath(backPath);
                 setTargetPath(backPath);
-                setVerticalSiblingAxis(verticalSiblingPath);
-                setHorizontalSiblingAxis(horizontalSiblingPath);
                 setNavigationAxis('x');
             }
         }
@@ -481,6 +479,7 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
                 prevFramePath = currentPath;
                 currentPath = targetPathRef.current;
                 currentVerticalSiblingAxis = verticalSiblingAxisRef.current;
+                currentHorizontalSiblingAxis = horizontalSiblingAxisRef.current;
                 if (currentPath !== prevFramePath) {
                     lerpXProgress = isNavDescendingRef.current ? 0 : 1;
                     historyProgress = isNavDescendingRef.current ? 0 : 1;
@@ -489,7 +488,7 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
                     historyProgress = lerpHistory.current - Math.floor(lerpHistory.current);
                 }
                 lerpYProgress = lerpY.current;
-                lerpZProgress = lerpY.current;
+                lerpZProgress = lerpZ.current;
 
                 // LERP BETWEEN CONTROLS
                 nextControls = instanceControlsRef.current;
@@ -518,7 +517,7 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
                         setIsPathChanged(false);
                     }
                 } else if (navigationAxisRef.current === 'z') {
-                    currentVerticalSiblingAxis.getPointAt(lerpZProgress, targetPosition);
+                    currentHorizontalSiblingAxis.getPointAt(lerpZProgress, targetPosition);
                     if (lerpZProgress >= 0.999) {
                         lerpZProgress = 1;
                         setIsPathChanged(false);
@@ -546,6 +545,9 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
                 if (historyProgress <= 0.001) {
                     historyProgress = 0;
                 }
+
+                //console.log(parseFloat(lerpXProgress.toFixed(2)), parseFloat(lerpYProgress.toFixed(2)), parseFloat(lerpZProgress.toFixed(2)));
+                //console.log(navigationAxisRef.current);
 
                 // UPDATE CONTROLS
                 controls.update();

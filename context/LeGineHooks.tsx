@@ -19,10 +19,6 @@ function useHistory(): [string[], (item: string) => void, () => void, () => void
     const clearHistory = () => {
       setHistory([]);
     };
-
-    useEffect(() => {
-        console.log(history)
-    }, [history]);
   
     return [history, pushToHistory, stepBackHistory, clearHistory];
 }

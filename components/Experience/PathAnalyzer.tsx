@@ -25,6 +25,7 @@ export function isPathEquivalent(pathA : THREE.CatmullRomCurve3, pathB : THREE.C
 }
 
 export function calculateSiblingPosition(instancePosition: THREE.Vector3, axis?: THREE.CatmullRomCurve3) {
+  // If the axis parameter is not provided, return 0
   if (!axis) {
     return 0;
   }
@@ -36,12 +37,6 @@ export function calculateSiblingPosition(instancePosition: THREE.Vector3, axis?:
   for (let i = 0; i <= numSamples; i++) {
     const t = i / numSamples;
     const samplePoint = axis.getPoint(t);
-
-    if (!samplePoint || typeof samplePoint.x === 'undefined' || typeof samplePoint.y === 'undefined' || typeof samplePoint.z === 'undefined') {
-      console.error("Invalid samplePoint for t:", t);
-      continue;  // Skip this iteration of the loop
-    }
-
     const distanceSquared = instancePosition.distanceToSquared(samplePoint);
 
     if (distanceSquared < closestDistanceSquared) {
@@ -52,6 +47,7 @@ export function calculateSiblingPosition(instancePosition: THREE.Vector3, axis?:
 
   return closestT;
 }
+
 
 
 
