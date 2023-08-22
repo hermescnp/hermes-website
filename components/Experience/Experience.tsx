@@ -19,8 +19,8 @@ import ObjectSelector from './ObjectSelector';
 import { useExperienceContext } from '@/context/ExperienceContext';
 import InstanceControls from './InstanceControls'
 import { LerpEngine, lerpControls } from './LerpEngine'
-import calculateInstanceLevel from './InstanceLevelCalculator'
-import { isPathEquivalent, isInstanceDescendant, isInstanceSibling } from './PathAnalyzer'
+import { calculateInstanceLevel, calculateSiblingSecuence, getInstancePosition, getCurrentInstance, isInstanceDescendant, isInstanceSibling, getSiblingOrientation, isUniqueChildInstance } from './InstanceAnalyzer'
+import { isPathEquivalent, calculateSiblingPosition } from './PathAnalyzer'
 
 // Camera Positions
 const introStartPosition = new THREE.Vector3(-50.0, 0.0, 0.0);
@@ -51,29 +51,55 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
     const [scene] = useState(new THREE.Scene());
     const [_controls, setControls] = useState<any>();
     const [model, setModel] = useState<any>(false);
+    const { placehover, setPlaceHover, history, pushToHistory, stepBackHistory, setLoadingState, setLoadingProgress } = useExperienceContext();
+    const [isIntroCompleted, setIsIntroCompleted] = useState<boolean>(false);
+    const isIntroCompletedRef = useRef<boolean>(isIntroCompleted);
+
+    // NAVIGATION HOOKS
+    const [currentInstance, setCurrentInstance] = useState<string>(getCurrentInstance(history));
+    const historyRef = useRef<string[]>(history);
+    const instanceRef = useRef<string>(currentInstance);
+    const [prevInstance, setPrevInstance] = useState<string>('intro');
+    const prevInstanceRef = useRef<string>(prevInstance);
+    const isHistoryIncreasing = useRef<boolean>(true);
+
+    const [instanceLevel, setInstanceLevel] = useState<number>(1);
+    const instanceLevelRef = useRef<number>(instanceLevel);
+
+    const [isPathChanged, setIsPathChanged] = useState<boolean>(false);
+    const isPathChangedRef = useRef<boolean>(isPathChanged);
+
     const [targetPath, setTargetPath] = useState<any>(pathGenerator.createPath('main', 'intro'));
     const targetPathRef = useRef<any>(targetPath);
-    const { placehover, setPlaceHover, currentInstance, setCurrentInstance, setLoadingState, setLoadingProgress } = useExperienceContext();
-    const [prevInstance, setPrevInstance] = useState<string>('main');
+
+    const [prevTargetPath, setPrevTargetPath] = useState<any>(targetPath);
+    const prevTargetPathRef = useRef<any>(prevTargetPath);
+
+    const [isNavDescending, setIsNavDescending] = useState<boolean>(false);
+    const isNavDescendingRef = useRef<boolean>(isNavDescending);
+
+    const [siblingPosition, setSiblingPosition] = useState<THREE.Vector2>(new THREE.Vector2(0, 0));
+    const siblingPositionRef = useRef<THREE.Vector2>(siblingPosition);
+
+    const [verticalSiblingAxis, setVerticalSiblingAxis] = useState<any>(pathGenerator.getSiblingAxis(calculateSiblingSecuence('main', 'vertical', data)));
+    const verticalSiblingAxisRef = useRef<any>(verticalSiblingAxis);
+    const [horizontalSiblingAxis, setHorizontalSiblingAxis] = useState<any>(pathGenerator.getSiblingAxis(calculateSiblingSecuence('main', 'horizontal', data)));
+    const horizontalSiblingAxisRef = useRef<any>(horizontalSiblingAxis);
+
+    const [navigationAxis, setNavigationAxis] = useState<string>('x');
+    const navigationAxisRef = useRef<string>(navigationAxis);
+
+    // CONTROLS HOOKS
     const [instanceControls, setInstanceControls] = useState<any>(InstanceControls(currentInstance, data));
     const [prevControls, setPrevControls] = useState<any>(InstanceControls(prevInstance, data));
     const instanceControlsRef = useRef<any>(instanceControls);
     const prevControlsRef = useRef<any>(prevControls);
-    const instanceRef = useRef<string>(currentInstance);
-    const prevInstanceRef = useRef<string>(prevInstance);
-    const [isIntroCompleted, setIsIntroCompleted] = useState<boolean>(false);
-    const isIntroCompletedRef = useRef<boolean>(isIntroCompleted);
-    const [instanceLevel, setInstanceLevel] = useState<number>(1);
-    const instanceLevelRef = useRef<number>(instanceLevel);
-    const [isPathChanged, setIsPathChanged] = useState<boolean>(false);
-    const isPathChangedRef = useRef<boolean>(isPathChanged);
-    const [prevTargetPath, setPrevTargetPath] = useState<any>(targetPath);
-    const prevTargetPathRef = useRef<any>(prevTargetPath);
-    const [isNavDescending, setIsNavDescending] = useState<boolean>(false);
-    const isNavDescendingRef = useRef<boolean>(isNavDescending);
+
+    // RESPONSIVE HOOKS
     const [isPortrait, setIsPortrait] = useState<boolean>(false);
     const isPortraitRef = useRef<any>(isPortrait);
 
+    // POSITION HOOKS
     const [zones, setZones] = useState<any>([]);  // Declare zones state
     const zonesRef = useRef(zones);  // Declare zones ref
     const cameraPositionRef = useRef(currentCameraPosition); // Ref to camera Position
@@ -96,6 +122,7 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
             } else {
                 setIsPortrait(false)
             }
+            stepBackHistory();
         }
     }, [renderer3d]);
 
@@ -107,27 +134,40 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
         const current = instance?.key;
         if (instanceParent !== 'root') {
             setPrevInstance(current);  // updating previous instance ref
-            setCurrentInstance(instanceParent);
+            stepBackHistory();
         }
     }, [isClicked]);
 
     useEffect(() => {
-        if (experienceContext.startExperience === true) {
-            // setTimeout(() => {
-            //     setLerpState(1);
-            // }, 3000)
-            // setTimeout(() => {
-            //     setIsIntroCompleted(true);
-            // }, 10000)
-        }
+        if (experienceContext.startExperience === true) { }
     }, [experienceContext.startExperience]);
+
+    // UPDATE CURRENT INSTANCE
+    useEffect(() => {
+        if (historyRef.current.length < history.length) { isHistoryIncreasing.current = true }
+        else { isHistoryIncreasing.current = false }
+        historyRef.current = history;
+        setCurrentInstance(getCurrentInstance(history));
+    }, [history]);
 
     // UPDATE TARGET PATH
     useEffect(() => {
         targetPathRef.current = targetPath;
+    }, [targetPath]);
+
+    // UPDATE CONTROLS
+    useEffect(() => {
         prevControlsRef.current = prevControls;
         instanceControlsRef.current = instanceControls;
-    }, [targetPath]);
+    }, [instanceControls]);
+
+    // UPDATE SIBLING AXISES
+    useEffect(() => {
+        verticalSiblingAxisRef.current = verticalSiblingAxis;
+    }, [verticalSiblingAxis]);
+    useEffect(() => {
+        horizontalSiblingAxisRef.current = horizontalSiblingAxis;
+    }, [horizontalSiblingAxis]);
 
     useEffect(() => {
         prevTargetPathRef.current = prevTargetPath;
@@ -138,10 +178,18 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
         isNavDescendingRef.current = isNavDescending;
     }, [isNavDescending]);
 
+    useEffect(() => {
+        navigationAxisRef.current = navigationAxis;
+    }, [navigationAxis]);
+
     // UPDATE LERP STATE
     useEffect(() => {
         instanceLevelRef.current = instanceLevel;
     }, [instanceLevel]);
+
+    useEffect(() => {
+        siblingPositionRef.current = siblingPosition;
+    }, [siblingPosition]);
 
     // UPDATE ZONES
     useEffect(() => {
@@ -174,26 +222,64 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
         prevInstanceRef.current = prevInstance;
         const level = calculateInstanceLevel(currentInstance, data);
         setInstanceLevel(level);
+        let verticalSiblingPath = null;
+        let horizontalSiblingPath = null;
 
+        if (isUniqueChildInstance(currentInstance, data)) {
+            setSiblingPosition(new THREE.Vector2(0, 0));
+        } else {
+            verticalSiblingPath = pathGenerator.getSiblingAxis(calculateSiblingSecuence(currentInstance, 'vertical', data));
+            const newVerticalSiblingPosition = calculateSiblingPosition(getInstancePosition(currentInstance, data), verticalSiblingPath);
+            horizontalSiblingPath = pathGenerator.getSiblingAxis(calculateSiblingSecuence(currentInstance, 'horizontal', data));
+            const newHorizontalSiblingPosition = calculateSiblingPosition(getInstancePosition(currentInstance, data), horizontalSiblingPath);
+            setSiblingPosition(new THREE.Vector2(newVerticalSiblingPosition, newHorizontalSiblingPosition));
+        }
+
+        // Test if the new instance is not the biggest parent
         if (currentInstance !== 'root') {
 
             let nextPath = pathGenerator.createPath(prevInstanceRef.current, currentInstance);
 
+            // Test is the path to navigate is same as mounted to prevent unnecessary replacement
             if (isPathEquivalent(prevTargetPathRef.current, nextPath)) {
                 setIsPathChanged(false);
+
+                // If is different, test if its decending to travel through the new path
             } else if (isInstanceDescendant(currentInstance, prevInstanceRef.current, data)) {
                 setIsNavDescending(true);
                 setIsPathChanged(true);
                 setPrevTargetPath(nextPath);
                 setTargetPath(nextPath);
+                setVerticalSiblingAxis(verticalSiblingPath);
+                setHorizontalSiblingAxis(horizontalSiblingPath);
+                setNavigationAxis('x');
+
+                // If is not descending, test if is a sibling instance to travel through Sibling Axis
             } else if (isInstanceSibling(currentInstance, prevInstanceRef.current, data)) {
-                //console.log('sibling');
+                const movementAxis = getSiblingOrientation(currentInstance, prevInstanceRef.current, data);
+                // If next instance is on vertical axis
+                if (movementAxis === 'vertical') {
+                    setNavigationAxis('y');
+                    setHorizontalSiblingAxis(horizontalSiblingPath);
+                } else if (movementAxis === 'horizontal') { // If next instance is on horizontal axis
+                    setNavigationAxis('z');
+                    setVerticalSiblingAxis(verticalSiblingPath);
+                } else {
+                    setNavigationAxis('y');
+                    setNavigationAxis('z');
+                    setVerticalSiblingAxis(verticalSiblingPath);
+                    setHorizontalSiblingAxis(horizontalSiblingPath);
+                }
+                // If is not sibling, that means that user is trying to travel back to parent instance
             } else {
                 let backPath = pathGenerator.createPath(currentInstance, prevInstanceRef.current);
                 setIsNavDescending(false);
                 setIsPathChanged(true);
                 setPrevTargetPath(backPath);
                 setTargetPath(backPath);
+                setVerticalSiblingAxis(verticalSiblingPath);
+                setHorizontalSiblingAxis(horizontalSiblingPath);
+                setNavigationAxis('x');
             }
         }
         setPrevControls(InstanceControls(prevInstanceRef.current, data));
@@ -249,7 +335,7 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
             let mouseDownTimeout: any;
             let clickCount = 0;
             let lastClickTime = 0;
-            
+
             window.addEventListener('mousedown', () => {
                 isMousePressed = true;
                 isLongClick = false;
@@ -258,7 +344,7 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
                     setPlaceHover({ name: '', isSibling: false });
                 }, longClickThreshold);
             });
-            
+
             window.addEventListener('mouseup', () => {
                 isMousePressed = false;
                 clearTimeout(mouseDownTimeout);
@@ -266,7 +352,7 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
                     isLongClick = false;
                 }, 100);
             });
-            
+
             window.addEventListener('click', () => {
                 const currentTime = Date.now();
                 if (!isMousePressed && !isLongClick) {
@@ -278,12 +364,12 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
                         const current = instance?.key;
                         if (instanceParent !== 'root') {
                             setPrevInstance(current);  // updating previous instance ref
-                            setCurrentInstance(instanceParent);
+                            pushToHistory(instanceParent);
                         }
                     } else {
                         clickCount++;
                     }
-            
+
                     if (clickCount === 1) {
                         lastClickTime = currentTime;
                         setTimeout(() => {
@@ -292,7 +378,7 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
                                 const pathName = objectSelector.getCurrentSelection();
                                 if (pathName !== 'no selections') {
                                     setPrevInstance(instanceRef.current);
-                                    setCurrentInstance(pathName);
+                                    pushToHistory(pathName);
                                 } else {
                                     console.log('you have to select something');
                                 }
@@ -301,24 +387,32 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
                         }, doubleClickThreshold + 50); // A slight delay to allow for double click detection
                     }
                 }
-            });            
+            });
 
             // CONTROLS
             const objectTarget = new THREE.Object3D();
             const controls = Controls(camera, objectTarget, renderer3d, data);
             setControls(controls);
 
-            let currentPath : any;
-            let nextControls : any;
-            let prevControls : any;
-            let currentControls : any;
+            let currentPath: any;
+            let currentVerticalSiblingAxis: any;
+            let currentHorizontalSiblingAxis: any;
+            let nextControls: any;
+            let prevControls: any;
+            let currentControls: any;
 
             objectTarget.position.copy(generalTarget);
             let targetPosition = new THREE.Vector3();
 
             // LERP SETTINGS
-            const lerp = new LerpEngine();
-            let lerpProgress: number;
+            const lerpX = new LerpEngine();
+            const lerpY = new LerpEngine();
+            const lerpZ = new LerpEngine();
+            const lerpHistory = new LerpEngine();
+            let lerpXProgress: number;
+            let lerpYProgress: number;
+            let lerpZProgress: number;
+            let historyProgress: number;
             let prevFramePath: any;
 
             // Counter for unchanged camera position frames
@@ -340,7 +434,7 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
                             const selectedObject = data.find(obj => obj.key === currentSelection);
                             const isSibling = isInstanceSibling(selectedObject.key, instanceRef.current, data);
                             if (selectedObject) {
-                                setPlaceHover({name: selectedObject.name, isSibling: isSibling});
+                                setPlaceHover({ name: selectedObject.name, isSibling: isSibling });
                             }
                         }
                     }
@@ -355,26 +449,52 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
                 }
 
                 // LERPING
-                lerp.current = gsap.utils.interpolate(
-                    lerp.current,
-                    lerp.target,
-                    lerp.ease
+                lerpX.current = gsap.utils.interpolate(
+                    lerpX.current,
+                    lerpX.target,
+                    lerpX.ease
+                );
+                lerpY.current = gsap.utils.interpolate(
+                    lerpY.current,
+                    lerpY.target,
+                    lerpY.ease
+                );
+                lerpZ.current = gsap.utils.interpolate(
+                    lerpZ.current,
+                    lerpZ.target,
+                    lerpZ.ease
+                );
+                lerpHistory.current = gsap.utils.interpolate(
+                    lerpHistory.current,
+                    lerpHistory.target,
+                    lerpHistory.ease
                 );
 
-                lerp.target = instanceLevelRef.current - 1;
+                lerpX.target = instanceLevelRef.current - 1;
+                lerpY.target = siblingPositionRef.current.x;
+                lerpZ.target = siblingPositionRef.current.y;
+                lerpHistory.target = historyRef.current.length - 1;
 
                 // GLITCH DETECTION
                 prevCameraPosition.copy(camera.position);
 
                 prevFramePath = currentPath;
                 currentPath = targetPathRef.current;
+                currentVerticalSiblingAxis = verticalSiblingAxisRef.current;
                 if (currentPath !== prevFramePath) {
-                    lerpProgress = isNavDescendingRef.current? 0 : 1;
-                } else { lerpProgress = lerp.current - Math.floor(lerp.current) }
+                    lerpXProgress = isNavDescendingRef.current ? 0 : 1;
+                    historyProgress = isNavDescendingRef.current ? 0 : 1;
+                } else {
+                    lerpXProgress = lerpX.current - Math.floor(lerpX.current);
+                    historyProgress = lerpHistory.current - Math.floor(lerpHistory.current);
+                }
+                lerpYProgress = lerpY.current;
+                lerpZProgress = lerpY.current;
 
+                // LERP BETWEEN CONTROLS
                 nextControls = instanceControlsRef.current;
                 prevControls = prevControlsRef.current;
-                currentControls = lerpControls(prevControls, nextControls, lerpProgress, isNavDescendingRef.current);
+                currentControls = lerpControls(prevControls, nextControls, historyProgress, isHistoryIncreasing.current);
 
                 if (isPortraitRef.current) {
                     currentControls.maxDistance *= 2;
@@ -386,18 +506,45 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
                 controls.minAzimuthAngle = currentControls.minAzimuthAngle;
                 controls.maxPolarAngle = Math.PI / currentControls.maxPolarAngle;
                 controls.minPolarAngle = Math.PI / currentControls.minPolarAngle;
-                currentPath.getPointAt(lerpProgress, targetPosition);
+
+                if (navigationAxisRef.current === 'y') {
+                    currentVerticalSiblingAxis.getPointAt(lerpYProgress, targetPosition);
+                    if (lerpYProgress >= 0.999) {
+                        lerpYProgress = 1;
+                        setIsPathChanged(false);
+                    }
+                    if (lerpYProgress <= 0.001) {
+                        lerpYProgress = 0;
+                        setIsPathChanged(false);
+                    }
+                } else if (navigationAxisRef.current === 'z') {
+                    currentVerticalSiblingAxis.getPointAt(lerpZProgress, targetPosition);
+                    if (lerpZProgress >= 0.999) {
+                        lerpZProgress = 1;
+                        setIsPathChanged(false);
+                    }
+                    if (lerpZProgress <= 0.001) {
+                        lerpZProgress = 0;
+                        setIsPathChanged(false);
+                    }
+                } else {
+                    currentPath.getPointAt(lerpXProgress, targetPosition);
+                    if (lerpXProgress >= 0.999) {
+                        lerpXProgress = 1;
+                        setIsPathChanged(false);
+                    }
+                    if (lerpXProgress <= 0.001) {
+                        lerpXProgress = 0;
+                        setIsPathChanged(false);
+                    }
+                };
                 objectTarget.position.copy(targetPosition);
 
-                if (lerpProgress >= 0.999) {
-                    //controls.autoRotate = false;
-                    lerpProgress = 1;
-                    setIsPathChanged(false);
+                if (historyProgress >= 0.999) {
+                    historyProgress = 1;
                 }
-                if (lerpProgress <= 0.001) {
-                    //controls.autoRotate = true;
-                    lerpProgress = 0;
-                    setIsPathChanged(false);
+                if (historyProgress <= 0.001) {
+                    historyProgress = 0;
                 }
 
                 // UPDATE CONTROLS

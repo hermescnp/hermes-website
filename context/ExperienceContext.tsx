@@ -1,13 +1,15 @@
 "use client"
-import React, { createContext, useState, useContext, useEffect } from 'react';
+import React, { createContext, useState, useContext, useEffect } from 'react'
+import useHistory from './LeGineHooks'
 
 type ExperienceContextType = {
   isClicked: boolean;
   InstanceBackButton: (vent: any) => void;
   placehover: PlaceHoverType;
   setPlaceHover: React.Dispatch<React.SetStateAction<PlaceHoverType>>;
-  currentInstance: string;
-  setCurrentInstance: React.Dispatch<React.SetStateAction<string>>;
+  history: string[];
+  pushToHistory: (item: string) => void;
+  stepBackHistory: () => void;
   spaceData: any[];
   loadingState: string;
   setLoadingState: React.Dispatch<React.SetStateAction<string>>;
@@ -32,6 +34,7 @@ export const ExperienceProvider: React.FC<{ children: React.ReactNode }> = ({ ch
   const [loadingState, setLoadingState] = useState('Loading metaverse');
   const [loadingProgress, setLoadingProgress] = useState<number>(0);
   const [startExperience, setStartExperience] = useState<boolean>(false);
+  const [history, pushToHistory, stepBackHistory, clearHistory] = useHistory();
 
   const InstanceBackButton = (event: any) => {
     event.stopPropagation();
@@ -55,8 +58,9 @@ export const ExperienceProvider: React.FC<{ children: React.ReactNode }> = ({ ch
       InstanceBackButton,
       placehover,
       setPlaceHover,
-      currentInstance,
-      setCurrentInstance,
+      history,
+      pushToHistory,
+      stepBackHistory,
       spaceData,
       loadingState,
       setLoadingState,

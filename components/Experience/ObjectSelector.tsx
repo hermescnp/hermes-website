@@ -29,7 +29,7 @@ export default class ObjectSelector {
     
         // Filter the instances whose "parentKey" value matches the currentInstance or currentParentKey
         const selectableInstances = instances.filter(instance => instance.userData.parentKey === currentInstance
-        //    || instance.userData.parentKey === currentParentKey
+            || instance.userData.parentKey === currentParentKey
             );
     
         const intersects = this.raycaster.intersectObjects(selectableInstances);

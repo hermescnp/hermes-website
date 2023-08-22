@@ -23,8 +23,7 @@ export const Navbar: React.FC<NavbarProps> = ({ isClient, isPortrait }) => {
     const experienceContext = useExperienceContext();
     const InstanceBackButton = isClient ? experienceContext.InstanceBackButton : () => { };
     const placehover = isClient ? experienceContext.placehover : { name: '', isSibling: null };
-    const currentInstance = isClient ? experienceContext.currentInstance : 'main';
-    const setCurrentInstance = isClient ? experienceContext.setCurrentInstance : () => { };
+    const history = isClient ? experienceContext.history : () => ['main'];
     const spaceData = isClient ? experienceContext.spaceData : [];
     const [isMapOpened, setIsMapOpened] = useState<boolean>(true);
     const [portraitMode, setPortraitMode] = useState<boolean>(isPortrait)
@@ -40,6 +39,13 @@ export const Navbar: React.FC<NavbarProps> = ({ isClient, isPortrait }) => {
     const [navInstances, setNavInstances] = useState<Array<{ instance: JSX.Element, placehover: PlaceHoverType }>>([]);
     let navInstancePlacehover = placehover?.isSibling ? placehover?.name : null;
     let navSearchBarPlaceHover = placehover?.isSibling ? null : placehover?.name;
+
+    const getLastItem = (array : any): string | null => {
+        if (array.length > 0) {
+            return array[array.length - 1];
+        }
+        return null;
+    }
 
     // Function to recursively find parent spaces and add them to navInstances
     const createNavInstances = (key: string) => {
@@ -78,10 +84,13 @@ export const Navbar: React.FC<NavbarProps> = ({ isClient, isPortrait }) => {
 
     // Run createNavInstances once on component mount
     useEffect(() => {
-        setNavInstances([]); // Clear previous navigation instances
-        createNavInstances(currentInstance); // Create new navigation instances
-        setIsMapOpened(false);
-    }, [currentInstance, spaceData, isPortrait]);
+        const lastHistoryItem = getLastItem(history);
+        if (lastHistoryItem) {
+            setNavInstances([]); // Clear previous navigation instances
+            createNavInstances(lastHistoryItem); // Create new navigation instances based on the last item in history
+            setIsMapOpened(false);
+        }
+    }, [history, spaceData, isPortrait]);
 
     useEffect(() => {
         setPortraitMode(isPortrait);
