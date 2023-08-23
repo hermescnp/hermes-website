@@ -36,12 +36,12 @@ type SiblingSequence = {
 
 type OrientationType = "vertical" | "horizontal";
 
-export function calculateSiblingSequence(instanceKey: string, orientation: OrientationType, data: any[]): SiblingSequence {
+export function calculateSiblingSequence(instanceKey: string, orientation: OrientationType, data: any[], previousInstanceKey?: string): SiblingSequence {
     const instanceData = data.find(item => item.key === instanceKey);
     if (!instanceData) {
         return { orderedSiblings: [], isLoop: false }; // instanceKey not found in data
     }
-    
+
     const siblings = data.filter(item => item.parentKey === instanceData.parentKey);
 
     // Construct the dynamic property name based on orientation
@@ -51,16 +51,22 @@ export function calculateSiblingSequence(instanceKey: string, orientation: Orien
     const seenKeys = new Set<string>();
 
     // Traverse before the instanceKey
-    let previousInstanceKey = instanceData[nearestSiblingProperty];
-    while (previousInstanceKey !== "root") {
-        const previousInstance = siblings.find(item => item.key === previousInstanceKey);
-        if (!previousInstance || seenKeys.has(previousInstance.key)) {
+    let currentInstanceKey = instanceData[nearestSiblingProperty];
+    while (currentInstanceKey !== "root") {
+        const currentInstance = siblings.find(item => item.key === currentInstanceKey);
+        if (!currentInstance || seenKeys.has(currentInstance.key)) {
             // Detect a loop or missing link
             return { orderedSiblings: chain, isLoop: true };
         }
-        chain = [previousInstance.key, ...chain];
-        seenKeys.add(previousInstance.key);
-        previousInstanceKey = previousInstance[nearestSiblingProperty];
+        
+        // If previousInstanceKey is provided, ensure the currentInstance matches the provided key
+        if (previousInstanceKey && currentInstanceKey === instanceKey && currentInstance[nearestSiblingProperty] !== previousInstanceKey) {
+            break;
+        }
+        
+        chain = [currentInstance.key, ...chain];
+        seenKeys.add(currentInstance.key);
+        currentInstanceKey = currentInstance[nearestSiblingProperty];
     }
 
     // Reset seenKeys for forward traversal
@@ -68,7 +74,7 @@ export function calculateSiblingSequence(instanceKey: string, orientation: Orien
     seenKeys.add(instanceKey);
 
     // Traverse after the instanceKey
-    let currentInstanceKey = instanceKey;
+    currentInstanceKey = instanceKey;
     let currentInstance = instanceData;
     while (currentInstance) {
         currentInstance = siblings.find(item => item[nearestSiblingProperty] === currentInstanceKey);
@@ -131,23 +137,38 @@ export function isInstanceSibling(current: string, previous: string, data: any) 
     return currentParentKey === previousParentKey;
 }
 
-export function getSiblingOrientation(current: string, previous: string, data: any): OrientationType | null {
+export function calculateNearestWayTo(current: string, previous: string, data: any): OrientationType | null {
     // Calculate sibling sequences for the previous instance.
     const verticalSequence = calculateSiblingSequence(previous, "vertical", data);
     const horizontalSequence = calculateSiblingSequence(previous, "horizontal", data);
 
-    // Check in which sequence the current instance exists.
-    if (verticalSequence.orderedSiblings.includes(current)) {
+    const verticalIndex = verticalSequence.orderedSiblings.indexOf(current);
+    const horizontalIndex = horizontalSequence.orderedSiblings.indexOf(current);
+
+    // If the current instance isn't in either sequence, return null.
+    if (verticalIndex === -1 && horizontalIndex === -1) {
+        return null;
+    }
+
+    // If the current instance is only in one of the sequences, return that orientation.
+    if (verticalIndex === -1) {
+        return "horizontal";
+    }
+    if (horizontalIndex === -1) {
         return "vertical";
     }
 
-    if (horizontalSequence.orderedSiblings.includes(current)) {
-        return "horizontal";
-    }
+    // Calculate distances in both sequences.
+    const distanceInVertical = Math.abs(verticalIndex - verticalSequence.orderedSiblings.indexOf(previous));
+    const distanceInHorizontal = Math.abs(horizontalIndex - horizontalSequence.orderedSiblings.indexOf(previous));
 
-    // If the current instance isn't in either sequence, return null.
-    return null;
+    // Return the orientation with the shortest distance.
+    if (distanceInVertical <= distanceInHorizontal) {
+        return "vertical";
+    }
+    return "horizontal";
 }
+
 
 export function isUniqueChildInstance(instanceKey: string, data: any): boolean {
     // Find the parent key of the instance

@@ -4,7 +4,13 @@ function useHistory(): [string[], (item: string) => void, () => void, () => void
     const [history, setHistory] = useState<string[]>(['main']);
   
     const pushToHistory = (item: string) => {
-      setHistory((prevHistory) => [...prevHistory, item]);
+      setHistory((prevHistory) => {
+        // If the last item in the history is the same as the new item, don't push the new item.
+        if (prevHistory[prevHistory.length - 1] === item) {
+          return prevHistory;
+        }
+        return [...prevHistory, item];
+      });
     };
 
     const stepBackHistory = () => {
@@ -14,7 +20,7 @@ function useHistory(): [string[], (item: string) => void, () => void, () => void
           }
           return prevHistory; // Returns the array unchanged if it's empty
         });
-      };
+    };
   
     const clearHistory = () => {
       setHistory([]);

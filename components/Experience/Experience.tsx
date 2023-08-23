@@ -19,7 +19,7 @@ import ObjectSelector from './ObjectSelector';
 import { useExperienceContext } from '@/context/ExperienceContext';
 import InstanceControls from './InstanceControls'
 import { LerpEngine, lerpControls } from './LerpEngine'
-import { calculateInstanceLevel, calculateSiblingSequence, getInstancePosition, getCurrentInstance, isInstanceDescendant, isInstanceSibling, getSiblingOrientation, isUniqueChildInstance } from './InstanceAnalyzer'
+import { calculateInstanceLevel, calculateSiblingSequence, getInstancePosition, getCurrentInstance, isInstanceDescendant, isInstanceSibling, calculateNearestWayTo, isUniqueChildInstance } from './InstanceAnalyzer'
 import { isPathEquivalent, calculateSiblingPosition } from './PathAnalyzer'
 
 // Camera Positions
@@ -66,8 +66,8 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
     const [instanceLevel, setInstanceLevel] = useState<number>(1);
     const instanceLevelRef = useRef<number>(instanceLevel);
 
-    const [isPathChanged, setIsPathChanged] = useState<boolean>(false);
-    const isPathChangedRef = useRef<boolean>(isPathChanged);
+    const [isXPathChanged, setIsXPathChanged] = useState<boolean>(false);
+    const isXPathChangedRef = useRef<boolean>(isXPathChanged);
 
     const [targetPath, setTargetPath] = useState<any>(pathGenerator.createPath('main', 'intro'));
     const targetPathRef = useRef<any>(targetPath);
@@ -75,7 +75,7 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
     const [prevTargetPath, setPrevTargetPath] = useState<any>(targetPath);
     const prevTargetPathRef = useRef<any>(prevTargetPath);
 
-    const [isNavDescending, setIsNavDescending] = useState<boolean>(false);
+    const [isNavDescending, setIsNavDescending] = useState<boolean>(true);
     const isNavDescendingRef = useRef<boolean>(isNavDescending);
 
     const [siblingPosition, setSiblingPosition] = useState<THREE.Vector2>(new THREE.Vector2(0, 0));
@@ -122,7 +122,6 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
             } else {
                 setIsPortrait(false)
             }
-            stepBackHistory();
         }
     }, [renderer3d]);
 
@@ -164,9 +163,11 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
     // UPDATE SIBLING AXISES
     useEffect(() => {
         verticalSiblingAxisRef.current = verticalSiblingAxis;
+        console.log(verticalSiblingAxis, horizontalSiblingAxisRef.current);
     }, [verticalSiblingAxis]);
     useEffect(() => {
         horizontalSiblingAxisRef.current = horizontalSiblingAxis;
+        console.log(verticalSiblingAxisRef.current, horizontalSiblingAxis);
     }, [horizontalSiblingAxis]);
 
     useEffect(() => {
@@ -208,8 +209,8 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
 
     // UPDATE PATH CHANGED STATE
     useEffect(() => {
-        isPathChangedRef.current = isPathChanged;
-    }, [isPathChanged]);
+        isXPathChangedRef.current = isXPathChanged;
+    }, [isXPathChanged]);
 
     // UPDATE PORTRAIT / LANDSCAPE STATE
     useEffect(() => {
@@ -224,21 +225,36 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
         setInstanceLevel(level);
         let verticalSiblingPath = null;
         let horizontalSiblingPath = null;
+        let verticalSiblingSecuence;
+        let horizontalSiblingSecuence;
+        const movementAxis = calculateNearestWayTo(currentInstance, prevInstanceRef.current, data);
 
         if (isUniqueChildInstance(currentInstance, data)) {
             setSiblingPosition(new THREE.Vector2(0, 0));
         } else {
-            const verticalSiblingSecuence = calculateSiblingSequence(currentInstance, 'vertical', data);
-            const horizontalSiblingSecuence = calculateSiblingSequence(currentInstance, 'horizontal', data);
-            verticalSiblingPath = pathGenerator.getSiblingAxis(verticalSiblingSecuence);
-            const newVerticalSiblingPosition = calculateSiblingPosition(getInstancePosition(currentInstance, data), verticalSiblingPath);
-            horizontalSiblingPath = pathGenerator.getSiblingAxis(horizontalSiblingSecuence);
-            const newHorizontalSiblingPosition = calculateSiblingPosition(getInstancePosition(currentInstance, data), horizontalSiblingPath);
-            setSiblingPosition(new THREE.Vector2(newVerticalSiblingPosition, newHorizontalSiblingPosition));
-            setVerticalSiblingAxis(verticalSiblingPath);
-            setHorizontalSiblingAxis(horizontalSiblingPath);
-            console.log(verticalSiblingSecuence.orderedSiblings);
-            console.log(horizontalSiblingSecuence.orderedSiblings);
+            if (movementAxis === 'vertical') {
+                horizontalSiblingSecuence = calculateSiblingSequence(currentInstance, 'horizontal', data);
+                horizontalSiblingPath = pathGenerator.getSiblingAxis(horizontalSiblingSecuence);
+                const newHorizontalSiblingPosition = calculateSiblingPosition(getInstancePosition(currentInstance, data), horizontalSiblingPath);
+                const newVerticalSiblingPosition = calculateSiblingPosition(getInstancePosition(currentInstance, data), verticalSiblingAxisRef.current);
+                setSiblingPosition(new THREE.Vector2(newVerticalSiblingPosition, newHorizontalSiblingPosition));
+            } else if (movementAxis === 'horizontal') {
+                verticalSiblingSecuence = calculateSiblingSequence(currentInstance, 'vertical', data);
+                verticalSiblingPath = pathGenerator.getSiblingAxis(verticalSiblingSecuence);
+                const newVerticalSiblingPosition = calculateSiblingPosition(getInstancePosition(currentInstance, data), verticalSiblingPath);
+                const newHorizontalSiblingPosition = calculateSiblingPosition(getInstancePosition(currentInstance, data), horizontalSiblingAxisRef.current);
+                setSiblingPosition(new THREE.Vector2(newVerticalSiblingPosition, newHorizontalSiblingPosition));
+            } else {
+                verticalSiblingSecuence = calculateSiblingSequence(currentInstance, 'vertical', data);
+                verticalSiblingPath = pathGenerator.getSiblingAxis(verticalSiblingSecuence);
+                const newVerticalSiblingPosition = calculateSiblingPosition(getInstancePosition(currentInstance, data), verticalSiblingPath);
+
+                horizontalSiblingSecuence = calculateSiblingSequence(currentInstance, 'horizontal', data);
+                horizontalSiblingPath = pathGenerator.getSiblingAxis(horizontalSiblingSecuence);
+                const newHorizontalSiblingPosition = calculateSiblingPosition(getInstancePosition(currentInstance, data), horizontalSiblingPath);
+
+                setSiblingPosition(new THREE.Vector2(newVerticalSiblingPosition, newHorizontalSiblingPosition));
+            }
         }
 
         // Test if the new instance is not the biggest parent
@@ -248,12 +264,15 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
 
             // Test is the path to navigate is same as mounted to prevent unnecessary replacement
             if (isPathEquivalent(prevTargetPathRef.current, nextPath)) {
-                setIsPathChanged(false);
+                setIsXPathChanged(false);
+                setNavigationAxis('x');
+                setVerticalSiblingAxis(verticalSiblingPath);
+                setHorizontalSiblingAxis(horizontalSiblingPath);
 
                 // If is different, test if its decending to travel through the new path
             } else if (isInstanceDescendant(currentInstance, prevInstanceRef.current, data)) {
                 setIsNavDescending(true);
-                setIsPathChanged(true);
+                setIsXPathChanged(true);
                 setPrevTargetPath(nextPath);
                 setTargetPath(nextPath);
                 setVerticalSiblingAxis(verticalSiblingPath);
@@ -262,22 +281,24 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
 
                 // If is not descending, test if is a sibling instance to travel through Sibling Axis
             } else if (isInstanceSibling(currentInstance, prevInstanceRef.current, data)) {
-                const movementAxis = getSiblingOrientation(currentInstance, prevInstanceRef.current, data);
-                //console.log(movementAxis);
                 // If next instance is on vertical axis
                 if (movementAxis === 'vertical') {
                     setNavigationAxis('y');
+                    setHorizontalSiblingAxis(horizontalSiblingPath);
                 } else if (movementAxis === 'horizontal') { // If next instance is on horizontal axis
                     setNavigationAxis('z');
+                    setVerticalSiblingAxis(verticalSiblingPath);
                 }
                 // If is not sibling, that means that user is trying to travel back to parent instance
             } else {
                 let backPath = pathGenerator.createPath(currentInstance, prevInstanceRef.current);
                 setIsNavDescending(false);
-                setIsPathChanged(true);
+                setIsXPathChanged(true);
                 setPrevTargetPath(backPath);
                 setTargetPath(backPath);
                 setNavigationAxis('x');
+                setVerticalSiblingAxis(verticalSiblingPath);
+                setHorizontalSiblingAxis(horizontalSiblingPath);
             }
         }
         setPrevControls(InstanceControls(prevInstanceRef.current, data));
@@ -507,36 +528,23 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
                 controls.minPolarAngle = Math.PI / currentControls.minPolarAngle;
 
                 if (navigationAxisRef.current === 'y') {
-                    currentVerticalSiblingAxis.getPointAt(lerpYProgress, targetPosition);
-                    if (lerpYProgress >= 0.999) {
-                        lerpYProgress = 1;
-                        setIsPathChanged(false);
-                    }
-                    if (lerpYProgress <= 0.001) {
-                        lerpYProgress = 0;
-                        setIsPathChanged(false);
-                    }
+                    currentVerticalSiblingAxis?.getPointAt(lerpYProgress, targetPosition);
+
                 } else if (navigationAxisRef.current === 'z') {
-                    currentHorizontalSiblingAxis.getPointAt(lerpZProgress, targetPosition);
-                    if (lerpZProgress >= 0.999) {
-                        lerpZProgress = 1;
-                        setIsPathChanged(false);
-                    }
-                    if (lerpZProgress <= 0.001) {
-                        lerpZProgress = 0;
-                        setIsPathChanged(false);
-                    }
+                    currentHorizontalSiblingAxis?.getPointAt(lerpZProgress, targetPosition);
+
                 } else {
                     currentPath.getPointAt(lerpXProgress, targetPosition);
                     if (lerpXProgress >= 0.999) {
                         lerpXProgress = 1;
-                        setIsPathChanged(false);
+                        setIsXPathChanged(false);
                     }
                     if (lerpXProgress <= 0.001) {
                         lerpXProgress = 0;
-                        setIsPathChanged(false);
+                        setIsXPathChanged(false);
                     }
                 };
+
                 objectTarget.position.copy(targetPosition);
 
                 if (historyProgress >= 0.999) {
@@ -545,9 +553,6 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
                 if (historyProgress <= 0.001) {
                     historyProgress = 0;
                 }
-
-                //console.log(parseFloat(lerpXProgress.toFixed(2)), parseFloat(lerpYProgress.toFixed(2)), parseFloat(lerpZProgress.toFixed(2)));
-                //console.log(navigationAxisRef.current);
 
                 // UPDATE CONTROLS
                 controls.update();
