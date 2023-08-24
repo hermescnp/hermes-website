@@ -27,11 +27,9 @@ export default function getTravelingData(fromInstance: string, toInstance: strin
     const destinationlevel = calculateInstanceLevel(toInstance, data);
     let verticalSiblingPath = null;
     let horizontalSiblingPath = null;
-    let newVerticalSiblingPosition = 0;
-    let newHorizontalSiblingPosition = 0;
     let isNavDescending = false;
     const movementAxis = calculateNearestWayTo(toInstance, fromInstance, data);
-    let destinationSiblingPosition = new THREE.Vector2(0, 0);
+    let destinationSiblingPosition;
 
     if (isInstanceDescendant(toInstance, fromInstance, data)) {
         isNavDescending = true;
@@ -39,34 +37,18 @@ export default function getTravelingData(fromInstance: string, toInstance: strin
 
     const travelingPath = isNavDescending ? pathGenerator.createPath(fromInstance, toInstance) : pathGenerator.createPath(toInstance, fromInstance);
 
-    if (!isUniqueChildInstance(toInstance, data)) {
-        const verticalSiblingSecuence = calculateSiblingSequence(toInstance, 'vertical', data);
-        const horizontalSiblingSecuence = calculateSiblingSequence(toInstance, 'horizontal', data);
-        if (verticalSiblingSecuence.orderedSiblings.length > 1) {
-            verticalSiblingPath = pathGenerator.getSiblingAxis(verticalSiblingSecuence);
-            newVerticalSiblingPosition = calculateSiblingPosition(getInstancePosition(toInstance, data), verticalSiblingPath);
-        } else { newVerticalSiblingPosition = 0 }
-        if (horizontalSiblingSecuence.orderedSiblings.length > 1) {
-            horizontalSiblingPath = pathGenerator.getSiblingAxis(horizontalSiblingSecuence);
-            newHorizontalSiblingPosition = calculateSiblingPosition(getInstancePosition(toInstance, data), horizontalSiblingPath);
-        } else { newHorizontalSiblingPosition = 0 }
-        destinationSiblingPosition = new THREE.Vector2(newVerticalSiblingPosition, newHorizontalSiblingPosition);
-    }
-
     if (isUniqueChildInstance(toInstance, data)) {
         destinationSiblingPosition = new THREE.Vector2(0, 0);
     } else {
         const verticalSiblingSecuence = calculateSiblingSequence(toInstance, 'vertical', data);
         const horizontalSiblingSecuence = calculateSiblingSequence(toInstance, 'horizontal', data);
-
         verticalSiblingPath = pathGenerator.getSiblingAxis(verticalSiblingSecuence);
-        const newVerticalSiblingPosition = calculateSiblingPosition(getInstancePosition(toInstance, data), verticalSiblingPath);
-
         horizontalSiblingPath = pathGenerator.getSiblingAxis(horizontalSiblingSecuence);
+
+        const newVerticalSiblingPosition = calculateSiblingPosition(getInstancePosition(toInstance, data), verticalSiblingPath);
         const newHorizontalSiblingPosition = calculateSiblingPosition(getInstancePosition(toInstance, data), horizontalSiblingPath);
 
         destinationSiblingPosition = new THREE.Vector2(newVerticalSiblingPosition, newHorizontalSiblingPosition);
-
     }
 
     return {
@@ -75,7 +57,7 @@ export default function getTravelingData(fromInstance: string, toInstance: strin
         travelingPath: travelingPath,
         destinationSiblingAxis: {
             verticalPath: verticalSiblingPath,
-            horizontalPath: verticalSiblingPath
+            horizontalPath: horizontalSiblingPath
         },
         destinationInstanceSiblingPosition: destinationSiblingPosition,
         originControls: InstanceControls(fromInstance, data),
