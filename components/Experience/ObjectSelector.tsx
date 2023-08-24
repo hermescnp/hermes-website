@@ -1,5 +1,6 @@
 import React from 'react'
-import * as THREE from 'three';
+import * as THREE from 'three'
+import { calculateInstanceLevel, calculateSiblingSequence, getInstancePosition, isInstanceDescendant, isInstanceSibling, calculateNearestWayTo, isUniqueChildInstance } from './InstanceAnalyzer'
 
 export default class ObjectSelector {
 
@@ -20,16 +21,19 @@ export default class ObjectSelector {
         })
     }
 
-    update(instances: THREE.Object3D[], camera: any, currentInstance: string) {
+    update(instances: THREE.Object3D[], camera: any, currentInstance: string, data: any) {
         this.raycaster.setFromCamera(this.mouse, camera);
     
         // Find the parentKey of the currentInstance
         const currentInstanceObject = instances.find(instance => instance.name === currentInstance);
         const currentParentKey = currentInstanceObject ? currentInstanceObject.userData.parentKey : null;
+        const verticalSiblings = calculateSiblingSequence(currentInstance, 'vertical', data);
+        const horizontalSiblings = calculateSiblingSequence(currentInstance, 'horizontal', data);
     
         // Filter the instances whose "parentKey" value matches the currentInstance or currentParentKey
         const selectableInstances = instances.filter(instance => instance.userData.parentKey === currentInstance
             || instance.userData.parentKey === currentParentKey
+            && (verticalSiblings.orderedSiblings.includes(instance.name) || horizontalSiblings.orderedSiblings.includes(instance.name))
             );
     
         const intersects = this.raycaster.intersectObjects(selectableInstances);

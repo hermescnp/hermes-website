@@ -21,7 +21,6 @@ import { getCurrentInstance, isInstanceSibling } from './InstanceAnalyzer'
 import getTravelingData from './InstanceTraveler'
 
 // Camera Positions
-const introStartPosition = new THREE.Vector3(-50.0, 0.0, 0.0);
 const generalPosition = new THREE.Vector3(-11.0, 6.0, 11.0);
 
 interface ExperienceProps {
@@ -94,13 +93,12 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
 
     // HANDLE BUTTON CLICK
     useEffect(() => {
-
         const instance = data.find((item: any) => item.key === instanceRef.current);
         const instanceParent = instance?.parentKey;
         const current = instance?.key;
         if (instanceParent !== 'root') {
             setPrevInstance(current);  // updating previous instance ref
-            stepBackHistory();
+            pushToHistory(instanceParent);
         }
     }, [isClicked]);
 
@@ -283,7 +281,7 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
 
                 // IS SELECTED?
                 if (zonesRef.current && zonesRef.current.length > 0) {
-                    objectSelector.update(zonesRef.current, camera, instanceRef.current);
+                    objectSelector.update(zonesRef.current, camera, instanceRef.current, data);
                     const currentSelection = objectSelector.getCurrentSelection();
                     if (placehover.name !== currentSelection && isLongClick === false) {
                         if (currentSelection === 'no selections') {
@@ -342,7 +340,7 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
                 currentHorizontalSiblingAxis = travelingDataRef.current.destinationSiblingAxis.horizontalPath;
                 if (currentPath !== prevFramePath) {
                     lerpXProgress = travelingDataRef.current.isNavDescending ? 0 : 1;
-                    historyProgress = 0;
+                    historyProgress = isHistoryIncreasing? 0 : 1;
                 } else {
                     lerpXProgress = lerpX.current - Math.floor(lerpX.current);
                     historyProgress = lerpHistory.current - Math.floor(lerpHistory.current);
