@@ -21,6 +21,7 @@ import InstanceControls from './InstanceControls'
 import { LerpEngine, lerpControls } from './LerpEngine'
 import { calculateInstanceLevel, calculateSiblingSequence, getInstancePosition, getCurrentInstance, isInstanceDescendant, isInstanceSibling, calculateNearestWayTo, isUniqueChildInstance } from './InstanceAnalyzer'
 import { isPathEquivalent, calculateSiblingPosition } from './PathAnalyzer'
+import getTravelingData from './InstanceTraveler'
 
 // Camera Positions
 const introStartPosition = new THREE.Vector3(-50.0, 0.0, 0.0);
@@ -62,21 +63,11 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
     const [prevInstance, setPrevInstance] = useState<string>('intro');
     const prevInstanceRef = useRef<string>(prevInstance);
     const isHistoryIncreasing = useRef<boolean>(true);
+    const [travelingData, setTravelingData] = useState<any>(getTravelingData('intro', 'main', data, pathGenerator));
+    const travelingDataRef = useRef<any>(travelingData);
 
-    const [instanceLevel, setInstanceLevel] = useState<number>(1);
-    const instanceLevelRef = useRef<number>(instanceLevel);
-
-    const [isXPathChanged, setIsXPathChanged] = useState<boolean>(false);
-    const isXPathChangedRef = useRef<boolean>(isXPathChanged);
-
-    const [targetPath, setTargetPath] = useState<any>(pathGenerator.createPath('main', 'intro'));
-    const targetPathRef = useRef<any>(targetPath);
-
-    const [prevTargetPath, setPrevTargetPath] = useState<any>(targetPath);
+    const [prevTargetPath, setPrevTargetPath] = useState<any>(travelingDataRef.current.travelingPath);
     const prevTargetPathRef = useRef<any>(prevTargetPath);
-
-    const [isNavDescending, setIsNavDescending] = useState<boolean>(true);
-    const isNavDescendingRef = useRef<boolean>(isNavDescending);
 
     const [siblingPosition, setSiblingPosition] = useState<THREE.Vector2>(new THREE.Vector2(0, 0));
     const siblingPositionRef = useRef<THREE.Vector2>(siblingPosition);
@@ -149,10 +140,10 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
         setCurrentInstance(getCurrentInstance(history));
     }, [history]);
 
-    // UPDATE TARGET PATH
+    // UPDATE TRAVELING DATA
     useEffect(() => {
-        targetPathRef.current = targetPath;
-    }, [targetPath]);
+        travelingDataRef.current = travelingData;
+    }, [travelingData]);
 
     // UPDATE CONTROLS
     useEffect(() => {
@@ -163,11 +154,9 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
     // UPDATE SIBLING AXISES
     useEffect(() => {
         verticalSiblingAxisRef.current = verticalSiblingAxis;
-        console.log(verticalSiblingAxis, horizontalSiblingAxisRef.current);
     }, [verticalSiblingAxis]);
     useEffect(() => {
         horizontalSiblingAxisRef.current = horizontalSiblingAxis;
-        console.log(verticalSiblingAxisRef.current, horizontalSiblingAxis);
     }, [horizontalSiblingAxis]);
 
     useEffect(() => {
@@ -176,18 +165,10 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
 
     // UPDATE NAVIGATION STATE
     useEffect(() => {
-        isNavDescendingRef.current = isNavDescending;
-    }, [isNavDescending]);
-
-    useEffect(() => {
         navigationAxisRef.current = navigationAxis;
     }, [navigationAxis]);
 
     // UPDATE LERP STATE
-    useEffect(() => {
-        instanceLevelRef.current = instanceLevel;
-    }, [instanceLevel]);
-
     useEffect(() => {
         siblingPositionRef.current = siblingPosition;
     }, [siblingPosition]);
@@ -207,22 +188,19 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
         cameraPositionRef.current = currentCameraPosition;
     }, [currentCameraPosition]);
 
-    // UPDATE PATH CHANGED STATE
-    useEffect(() => {
-        isXPathChangedRef.current = isXPathChanged;
-    }, [isXPathChanged]);
-
     // UPDATE PORTRAIT / LANDSCAPE STATE
     useEffect(() => {
         isPortraitRef.current = isPortrait;
     }, [isPortrait])
 
-    // SPACE TRAVELER
+    // CALL INSTANCE TRAVELER
     useEffect(() => {
         instanceRef.current = currentInstance;
         prevInstanceRef.current = prevInstance;
-        const level = calculateInstanceLevel(currentInstance, data);
-        setInstanceLevel(level);
+        const newTravelingData = getTravelingData(prevInstanceRef.current, currentInstance, data, pathGenerator);
+        setTravelingData(newTravelingData);
+
+        const level = newTravelingData.originInstanceLevel;
         let verticalSiblingPath = null;
         let horizontalSiblingPath = null;
         let verticalSiblingSecuence;
@@ -264,17 +242,13 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
 
             // Test is the path to navigate is same as mounted to prevent unnecessary replacement
             if (isPathEquivalent(prevTargetPathRef.current, nextPath)) {
-                setIsXPathChanged(false);
                 setNavigationAxis('x');
                 setVerticalSiblingAxis(verticalSiblingPath);
                 setHorizontalSiblingAxis(horizontalSiblingPath);
 
                 // If is different, test if its decending to travel through the new path
             } else if (isInstanceDescendant(currentInstance, prevInstanceRef.current, data)) {
-                setIsNavDescending(true);
-                setIsXPathChanged(true);
                 setPrevTargetPath(nextPath);
-                setTargetPath(nextPath);
                 setVerticalSiblingAxis(verticalSiblingPath);
                 setHorizontalSiblingAxis(horizontalSiblingPath);
                 setNavigationAxis('x');
@@ -292,10 +266,7 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
                 // If is not sibling, that means that user is trying to travel back to parent instance
             } else {
                 let backPath = pathGenerator.createPath(currentInstance, prevInstanceRef.current);
-                setIsNavDescending(false);
-                setIsXPathChanged(true);
                 setPrevTargetPath(backPath);
-                setTargetPath(backPath);
                 setNavigationAxis('x');
                 setVerticalSiblingAxis(verticalSiblingPath);
                 setHorizontalSiblingAxis(horizontalSiblingPath);
@@ -489,7 +460,7 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
                     lerpHistory.ease
                 );
 
-                lerpX.target = instanceLevelRef.current - 1;
+                lerpX.target = travelingDataRef.current.originInstanceLevel - 1;
                 lerpY.target = siblingPositionRef.current.x;
                 lerpZ.target = siblingPositionRef.current.y;
                 lerpHistory.target = historyRef.current.length - 1;
@@ -498,12 +469,13 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
                 prevCameraPosition.copy(camera.position);
 
                 prevFramePath = currentPath;
-                currentPath = targetPathRef.current;
+                currentPath = travelingDataRef.current.travelingPath;
                 currentVerticalSiblingAxis = verticalSiblingAxisRef.current;
                 currentHorizontalSiblingAxis = horizontalSiblingAxisRef.current;
                 if (currentPath !== prevFramePath) {
-                    lerpXProgress = isNavDescendingRef.current ? 0 : 1;
-                    historyProgress = isNavDescendingRef.current ? 0 : 1;
+                    lerpXProgress = travelingDataRef.current.isNavDescending ? 0 : 1;
+                    historyProgress = travelingDataRef.current.isNavDescending ? 0 : 1;
+                    console.log(travelingDataRef.current.isNavDescending);
                 } else {
                     lerpXProgress = lerpX.current - Math.floor(lerpX.current);
                     historyProgress = lerpHistory.current - Math.floor(lerpHistory.current);
@@ -537,11 +509,9 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
                     currentPath.getPointAt(lerpXProgress, targetPosition);
                     if (lerpXProgress >= 0.999) {
                         lerpXProgress = 1;
-                        setIsXPathChanged(false);
                     }
                     if (lerpXProgress <= 0.001) {
                         lerpXProgress = 0;
-                        setIsXPathChanged(false);
                     }
                 };
 

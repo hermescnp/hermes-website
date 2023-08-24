@@ -48,6 +48,10 @@ export function calculateSiblingPosition(instancePosition: THREE.Vector3, axis?:
   return closestT;
 }
 
+export function invertPath(path: THREE.CatmullRomCurve3): THREE.CatmullRomCurve3 {
+  const invertedPoints = [...path.points].reverse();
+  return new THREE.CatmullRomCurve3(invertedPoints);
+}
 
 
 
