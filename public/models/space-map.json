@@ -153,7 +153,7 @@
         "depth": 2.00,
         "maxDistance": 5.00,
         "minDistance": 5.00,
-        "maxAzimuthAngle": -0.40,
+        "maxAzimuthAngle": -1.00,
         "minAzimuthAngle": -1.70,
         "maxPolarAngle": 2.30,
         "minPolarAngle": 5.00,
@@ -163,7 +163,7 @@
     {
         "key": "certificates",
         "isSubSpace": true,
-        "name": "Bachelor Degrees",
+        "name": "Background",
         "description": "Certificates",
         "parentKey": "main",
         "nearestVerticalSibling": "rooftop",
@@ -499,8 +499,8 @@
         "maxDistance": 2.00,
         "minDistance": 2.00,
         "maxAzimuthAngle": -0.40,
-        "minAzimuthAngle": -1.70,
-        "maxPolarAngle": 2.30,
+        "minAzimuthAngle": -1.10,
+        "maxPolarAngle": 2.10,
         "minPolarAngle": 5.00,
         "isLocked": false,
         "contentPath": null
