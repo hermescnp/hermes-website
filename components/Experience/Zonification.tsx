@@ -17,7 +17,8 @@ generateZones = (data: any) => {
       color: 0x00aaff,
       transparent: true,
       opacity: 0.5,
-      visible: false
+      // switch this property TRUE to view the zones
+      visible: true
     });
     const zoneMesh = new THREE.Mesh(
       new THREE.BoxGeometry(zone.width, zone.height, zone.depth),
