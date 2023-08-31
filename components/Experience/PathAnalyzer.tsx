@@ -26,11 +26,11 @@ export function isPathEquivalent(pathA : THREE.CatmullRomCurve3, pathB : THREE.C
 
 export function calculateSiblingPosition(instancePosition: THREE.Vector3, axis?: THREE.CatmullRomCurve3) {
   // If the axis parameter is not provided, return 0
-  if (!axis) {
+  if (!axis || axis.points.length < 2) {
     return 0;
-  }
+}
+  const numSamples = 100
 
-  const numSamples = 1000;
   let closestDistanceSquared = Infinity;
   let closestT = 0;
 
