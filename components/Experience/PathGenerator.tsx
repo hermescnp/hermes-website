@@ -15,7 +15,6 @@ export default class PathGenerator {
 
   createPath(pointA: THREE.Vector3 | string, pointB: THREE.Vector3 | string): THREE.CatmullRomCurve3 {
 
-    let path = new THREE.CatmullRomCurve3;
     let startPoint: THREE.Vector3;
     let endPoint: THREE.Vector3;
 
@@ -30,7 +29,7 @@ export default class PathGenerator {
       endPoint = this.targets[pointB];
     }
 
-    path = new THREE.CatmullRomCurve3([
+    let path = new THREE.CatmullRomCurve3([
       startPoint,
       endPoint
     ], false);

@@ -18,7 +18,7 @@ import ObjectSelector from './ObjectSelector';
 import { useExperienceContext } from '@/context/ExperienceContext';
 import { LerpEngine, lerpControls } from './LerpEngine'
 import { getCurrentInstance, isInstanceSibling } from './InstanceAnalyzer'
-import getTravelingData from './InstanceTraveler'
+import {getTravelingData, getDefaultTravelingData} from './InstanceTraveler'
 
 // Camera Positions
 const generalPosition = new THREE.Vector3(-11.0, 6.0, 11.0);
@@ -52,14 +52,14 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
     const isIntroCompletedRef = useRef<boolean>(isIntroCompleted);
 
     // NAVIGATION HOOKS
-    const [currentInstance, setCurrentInstance] = useState<string>(getCurrentInstance(history));
+    const [currentInstance, setCurrentInstance] = useState<string>('main');
     const historyRef = useRef<string[]>(history);
     const instanceRef = useRef<string>(currentInstance);
     const [prevInstance, setPrevInstance] = useState<string>('intro');
     const prevInstanceRef = useRef<string>(prevInstance);
     const isHistoryIncreasing = useRef<boolean>(true);
     
-    const [travelingData, setTravelingData] = useState<any>(getTravelingData('intro', 'main', data, pathGenerator));
+    const [travelingData, setTravelingData] = useState<any>(getDefaultTravelingData(data));
     const travelingDataRef = useRef<any>(travelingData);
 
     // RESPONSIVE HOOKS
@@ -235,8 +235,6 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
                                 if (pathName !== 'no selections') {
                                     setPrevInstance(instanceRef.current);
                                     pushToHistory(pathName);
-                                } else {
-                                    console.log('you have to select something');
                                 }
                             }
                             clickCount = 0; // Reset the click count
