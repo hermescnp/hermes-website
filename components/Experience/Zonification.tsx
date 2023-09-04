@@ -17,8 +17,13 @@ generateZones = (data: any) => {
       color: 0x00aaff,
       transparent: true,
       opacity: 0.5,
+      // Switch this property TRUE to view the zones
       visible: false
     });
+
+    // Make visible only the zones with an especific parents
+    // if (zone.parentKey === 'certificates') {material.visible = true}
+
     const zoneMesh = new THREE.Mesh(
       new THREE.BoxGeometry(zone.width, zone.height, zone.depth),
       material

@@ -24,33 +24,34 @@ export function isPathEquivalent(pathA : THREE.CatmullRomCurve3, pathB : THREE.C
     );
 }
 
-function findParentKey(data : any, key : string) {
-  for (let i = 0; i < data.length; i++) {
-    if (data[i].key === key) {
-      return data[i].parentKey;
-    }
-  }
-  return null;
+export function calculateSiblingPosition(instancePosition: THREE.Vector3, axis?: THREE.CatmullRomCurve3) {
+  // If the axis parameter is not provided, return 0
+  if (!axis || axis.points.length < 2 || !instancePosition) {
+    return 0;
 }
-  
-export function isInstanceDescendant(current : string, previous : string, data : any) {
-    let parentKey = findParentKey(data, current);
-  
-    while (parentKey !== null) {
-      if (parentKey === previous) {
-        return true;
-      }
-  
-      parentKey = findParentKey(data, parentKey);
+  const numSamples = 100
+
+  let closestDistanceSquared = Infinity;
+  let closestT = 0;
+
+  for (let i = 0; i <= numSamples; i++) {
+    const t = i / numSamples;
+    const samplePoint = axis.getPoint(t);
+    const distanceSquared = instancePosition.distanceToSquared(samplePoint);
+
+    if (distanceSquared < closestDistanceSquared) {
+      closestDistanceSquared = distanceSquared;
+      closestT = t;
     }
-  
-    return false;
   }
-  
-  export function isInstanceSibling(current : string, previous : string, data : any) {
-    let currentParentKey = findParentKey(data, current);
-    let previousParentKey = findParentKey(data, previous);
-    
-    return currentParentKey === previousParentKey;
-  }
-  
+
+  return closestT;
+}
+
+export function invertPath(path: THREE.CatmullRomCurve3): THREE.CatmullRomCurve3 {
+  const invertedPoints = [...path.points].reverse();
+  return new THREE.CatmullRomCurve3(invertedPoints);
+}
+
+
+
