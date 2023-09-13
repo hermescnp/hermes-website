@@ -96,6 +96,42 @@
         "type": "skill"  
     },
     {
+        "category": "Work Experience",
+        "name": "Digital Visualization Professor",
+        "description": "Teaching courses on computer graphics, rendering process and post-production techniques at UNPHU (university).",
+        "startDate": 2023,
+        "endDate": "Present",
+        "isVisible": true,
+        "type": "background"  
+    },
+    {
+        "category": "Work Experience",
+        "name": "UX Sub-Manager (User Experience Design)",
+        "description": "UX Designer for Business App Team in Banco Popular Dominicano.",
+        "startDate": 2021,
+        "endDate": "Present",
+        "isVisible": true,
+        "type": "background"  
+    },
+    {
+        "category": "Work Experience",
+        "name": "Art Team Manager (Temporary Work)",
+        "description": "Team manager for visual art production at Pyhex Work. Conceptual designer and artist recluiter.",
+        "startDate": 2020,
+        "endDate": 2020,
+        "isVisible": true,
+        "type": "background"  
+    },
+    {
+        "category": "Work Experience",
+        "name": "UX/UI Designer for more that 7 Entrepreneurs projects",
+        "description": "Work for Hire for Globusiness 360, Kaba Consulting, Emobit, Mufic Pest Control, Kleio Technology, Legine App.",
+        "startDate": 2018,
+        "endDate": 2019,
+        "isVisible": true,
+        "type": "background"  
+    },
+    {
         "category": "Main Academic Formation",
         "name": "Master's Degree in Computer Games and Programming Skills",
         "description": "Degree by TECH Technological University.",
@@ -137,51 +173,6 @@
         "description": "Degree by Instituto Técnico Salesiano (ITESA), Dominican Republic.",
         "startDate": 2008,
         "endDate": 2012,
-        "isVisible": true,
-        "type": "background"  
-    },
-    {
-        "category": "Work Experience",
-        "name": "UX Sub-Manager (User Experience Design)",
-        "description": "UX Designer for Business App Team in Banco Popular Dominicano.",
-        "startDate": 2021,
-        "endDate": "Present",
-        "isVisible": true,
-        "type": "background"  
-    },
-    {
-        "category": "Work Experience",
-        "name": "Art Team Manager (Temporary Work)",
-        "description": "Team manager for visual art production at Pyhex Work. Conceptual designer and artist recluiter.",
-        "startDate": 2020,
-        "endDate": 2020,
-        "isVisible": true,
-        "type": "background"  
-    },
-    {
-        "category": "Work Experience",
-        "name": "UX/UI Designer for more that 7 Entrepreneurs projects",
-        "description": "Work for Hire for Globusiness 360, Kaba Consulting, Emobit, Mufic Pest Control, Kleio Technology, Legine App.",
-        "startDate": 2019,
-        "endDate": "Present",
-        "isVisible": true,
-        "type": "background"  
-    },
-    {
-        "category": "Work Experience",
-        "name": "Architectural Designer (Outsourcing)",
-        "description": "For Party Fiesta / LAV Arquitectura / ...Others. More than 10 Architectural and Interior projects for new branch offices around the country.",
-        "startDate": 2017,
-        "endDate": 2022,
-        "isVisible": true,
-        "type": "background"  
-    },
-    {
-        "category": "Work Experience",
-        "name": "Graphic Illustrator and Designer",
-        "description": "For Luminence Design and F&S Gráfica. Graphic Design and digital illustrations (Animation and 3D logotypes).",
-        "startDate": 2014,
-        "endDate": 2015,
         "isVisible": true,
         "type": "background"  
     },
