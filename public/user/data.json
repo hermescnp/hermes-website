@@ -178,19 +178,19 @@
     },
     {
         "category": "Complementary Education",
-        "name": "Agile Project Management: Scrum Methodology Workshop",
-        "description": "36 theoretical-practical hours about Agile maagement philosophy focused on Scrum Framework.",
-        "startDate": 2022,
-        "endDate": 2022,
+        "name": "Google Dev-Fest 2023",
+        "description": "Multiple conferences with Google experts about new developer tools, Artificial Intelligence (AI), User Experience (UX), and more.",
+        "startDate": 2023,
+        "endDate": 2023,
         "isVisible": true,
         "type": "background"  
     },
     {
         "category": "Complementary Education",
-        "name": "Introduction to Design Systems with Figma",
-        "description": "Design Systems concept and implementation online course by Domestika.com.",
-        "startDate": 2020,
-        "endDate": 2020,
+        "name": "Agile Project Management: Scrum Methodology Workshop",
+        "description": "36 theoretical-practical hours about Agile maagement philosophy focused on Scrum Framework.",
+        "startDate": 2022,
+        "endDate": 2022,
         "isVisible": true,
         "type": "background"  
     },
@@ -260,7 +260,7 @@
     {
         "category": "Awards & Honours",
         "name": "Second Place - Coast Guard booth Architectural design",
-        "description": "Coast Guard booth creation Contest by ARQ-TUR Carribe.",
+        "description": "Coast Guard booth creation Contest by ARQ-TUR Caribe.",
         "startDate": 2015,
         "endDate": 2015,
         "isVisible": true,
