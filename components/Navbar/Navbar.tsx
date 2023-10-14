@@ -5,6 +5,7 @@ import chevron from 'public/assets/SVG/Chevron.svg'
 import mapIcon from 'public/assets/SVG/space_map.svg'
 import { NavInstance } from './NavInstance'
 import NavSearchBar from './NavSearchBar'
+import { Optionsmenu } from './Optionsmenu'
 import PhantomInstance from './PhantomInstance'
 import { SpaceMap } from '../SpaceMap/SpaceMap'
 import { useExperienceContext } from '@/context/ExperienceContext'
@@ -12,6 +13,7 @@ import { useExperienceContext } from '@/context/ExperienceContext'
 interface NavbarProps {
     isClient: boolean;
     isPortrait: boolean;
+    isMapOpened: boolean;
 }
 
 type PlaceHoverType = {
@@ -19,21 +21,16 @@ type PlaceHoverType = {
     isSibling: boolean | null;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ isClient, isPortrait }) => {
+export const Navbar: React.FC<NavbarProps> = ({ isClient, isPortrait, isMapOpened }) => {
     const experienceContext = useExperienceContext();
     const InstanceBackButton = isClient ? experienceContext.InstanceBackButton : () => { };
     const placehover = isClient ? experienceContext.placehover : { name: '', isSibling: null };
     const history = isClient ? experienceContext.history : () => ['main'];
     const spaceData = isClient ? experienceContext.spaceData : [];
-    const [isMapOpened, setIsMapOpened] = useState<boolean>(true);
     const [portraitMode, setPortraitMode] = useState<boolean>(isPortrait)
 
     const stopPropagation = (event: React.SyntheticEvent) => {
         event.stopPropagation();
-    }
-
-    const openSpaceMapWindow = () => {
-        setIsMapOpened(prevState => !prevState);
     }
 
     const [navInstances, setNavInstances] = useState<Array<{ instance: JSX.Element, placehover: PlaceHoverType }>>([]);
@@ -59,7 +56,7 @@ export const Navbar: React.FC<NavbarProps> = ({ isClient, isPortrait }) => {
                 setNavInstances([
                     {
                         instance: <NavInstance
-                            key={currentSpace.key}
+                            instanceKey={currentSpace.key}
                             instanceName={currentSpace.name}
                             placehover={placehover?.isSibling ? navInstancePlacehover : null}
                             HandleInstanceClick={InstanceBackButton} />,
@@ -71,7 +68,7 @@ export const Navbar: React.FC<NavbarProps> = ({ isClient, isPortrait }) => {
                     ...prevNavInstances,
                     {
                         instance: <NavInstance
-                            key={currentSpace.key}
+                            instanceKey={currentSpace.key}
                             instanceName={currentSpace.name}
                             placehover={placehover?.isSibling ? navInstancePlacehover : null}
                             HandleInstanceClick={InstanceBackButton} />,
@@ -88,7 +85,6 @@ export const Navbar: React.FC<NavbarProps> = ({ isClient, isPortrait }) => {
         if (lastHistoryItem) {
             setNavInstances([]); // Clear previous navigation instances
             createNavInstances(lastHistoryItem); // Create new navigation instances based on the last item in history
-            setIsMapOpened(false);
         }
     }, [history, spaceData, isPortrait]);
 
@@ -101,11 +97,6 @@ export const Navbar: React.FC<NavbarProps> = ({ isClient, isPortrait }) => {
             <button className="BackButton" onClick={InstanceBackButton}>
                 <Image id="backChevron" className="BackChevron" src={chevron} width={20} height={20} alt="Back" />
             </button>
-            <div className="MapButtonContainer">
-                <button className={`${isMapOpened ? 'MapButtonOpened' : 'MapButton'}`} onClick={openSpaceMapWindow}>
-                    <Image id="mapIcon" className={`${isMapOpened ? 'MapIconOpened' : 'MapIcon'}`} src={mapIcon} width={22} height={22} alt="Map" />
-                </button>
-            </div>
             <div className="Navigation">
                 {portraitMode ? (
                     // Portrait Mode
@@ -131,7 +122,7 @@ export const Navbar: React.FC<NavbarProps> = ({ isClient, isPortrait }) => {
                     </>
                 )}
             </div>
-            <SpaceMap isOpened={isMapOpened} onMouseOver={stopPropagation} />
+            <Optionsmenu />
         </div>
     )
 }

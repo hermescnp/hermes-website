@@ -5,6 +5,7 @@
     height: auto;
     z-index: 5;
     transition: transform 0.8s ease;
+    box-shadow: inset 0px 8px 8px -8px rgba(0, 0, 0, 0.5);
 }
 
 #HeaderPanelBehind {

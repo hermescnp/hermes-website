@@ -4,8 +4,6 @@ html {
 
 .Layout {
   position: fixed;
-  display: grid;
-  grid-template-rows: 56px 1fr;
   background-color: rgba(18, 23, 34, 1);
   top: 0;
   left: 0;
@@ -32,14 +30,16 @@ body {
 
 .sideBar {
   position: absolute;
-  background: linear-gradient(rgba(28, 36, 52, 1), rgba(55, 76, 108, 0.7));
+  background-color: rgba(18, 23, 34, 0.5);
+  backdrop-filter: blur(10px);
   width: 400px;
   height: 100vh;
+  margin-top: 65px;
   display: grid;
   grid-template-rows: auto auto 1fr;
   grid-template-columns: 400px;
   top: 0;
-  left: 0;
+  right: 0;
   z-index: 7;
   transition: transform 0.5s ease;
   box-sizing: border-box;
@@ -47,7 +47,7 @@ body {
 }
 
 .sideBar.hidden {
-  transform: translateX(-100%);
+  transform: translateX(100%);
 }
 
 .panelWrapper {

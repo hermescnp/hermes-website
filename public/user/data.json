@@ -330,15 +330,6 @@
         "isImportant": false
     },
     {
-        "name": "Sketch App",
-        "description": "UX/UI Design",
-        "skillLevel": 70,
-        "iconSource": "PNG/SketchApp_Icon.png",
-        "isVisible": true,
-        "type": "software",
-        "isImportant": false
-    },
-    {
         "name": "Next.js",
         "description": "Front-end Framework",
         "skillLevel": 50,
@@ -397,15 +388,6 @@
         "description": "Rigging/Particles/Effects",
         "skillLevel": 70,
         "iconSource": "PNG/Blender_Icon.png",
-        "isVisible": true,
-        "type": "software",
-        "isImportant": false
-    },
-    {
-        "name": "Cinema4D",
-        "description": "3D Polygon Design",
-        "skillLevel": 90,
-        "iconSource": "PNG/Cinema4D_Icon.png",
         "isVisible": true,
         "type": "software",
         "isImportant": false

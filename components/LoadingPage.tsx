@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import '../styles/LoadingPage.css'
 import Image from 'next/image'
+import Botface from './Uxhelper/Botface'
 import logo from 'public/assets/SVG/office_logo.svg'
 import { useExperienceContext } from '@/context/ExperienceContext'
 
@@ -44,6 +45,7 @@ export const LoadingPage: React.FC<LoadingScreenProps> = ({ isClient }) => {
             </div>
             <div className='LoadingText'>{`${isReady ? 'The office is ready!' : loadingState + '...'}`}</div>
             <button className={isReady? 'StartButton Visible' : 'StartButton'} onClick={handleStart} >START EXPERIENCE</button>
+            <Botface />
         </div>
     )
 }

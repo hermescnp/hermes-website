@@ -25,40 +25,6 @@ interface AboutProps {
 
     return (
         <div id="aboutMe" style={style} className={className}>
-            <div id="socialMedia">
-                <div className="grid-cell">
-                <div className="socialMediaIcon" onClick={() => openLink('https://www.linkedin.com/in/hermes-concepci%C3%B3n-2ab5741b9/')}>
-                        <Image id="linkedin" className="MediaIconSrc" src={linkedin} width={40} height={40} alt="Linked in" />
-                    </div>
-                </div>
-                <div className="grid-cell">
-                    <div className="socialMediaIcon" onClick={() => openLink('https://www.instagram.com/hermes.science/')}>
-                        <Image id="instagram" className="MediaIconSrc" src={instagram} width={40} height={40} alt="Instagram" />
-                    </div>
-                </div>
-                <div className="grid-cell">
-                    <div className="socialMediaIcon" onClick={() => openLink('https://www.youtube.com/@Hermes.science')}>
-                        <Image id="youtube" className="MediaIconSrc" src={youtube} width={40} height={40} alt="YouTube" />
-                    </div>
-                </div>
-                <div className="grid-cell">
-                    <div className="socialMediaIcon" onClick={() => openLink('https://twitter.com/hermesscience')}>
-                        <Image id="twitter" className="MediaIconSrc" src={twitter} width={40} height={40} alt="Twitter" />
-                    </div>
-                </div>
-                <div className="grid-cell">
-                    <div className="socialMediaIcon" onClick={() => openLink('https://www.twitch.tv/hermesscience')}>
-                        <Image id="twitch" className="MediaIconSrc" src={twitch} width={40} height={40} alt="Twitch" />
-                    </div>
-                </div>
-                <div className="grid-cell">
-                    <div className="socialMediaIcon" onClick={() => openLink('mailto:hermes.cnp@gmail.com?subject=Contact from Hermes.science&body=Hola Hermes,')}>
-                        <Image id="email" className="MediaIconSrc" src={email} width={40} height={40} alt="E-mail" />
-                    </div>
-                </div>
-
-            </div>
-
             <div id="aboutMeButton" onClick={handleAboutMeClick}>
                 <p id="aboutMeText">About Me</p> <Image id="AboutMeChevron" className={expanded ? "SeeLess" : "SeeMore"} src={chevron} width={20} height={20} alt="See More" />
             </div>

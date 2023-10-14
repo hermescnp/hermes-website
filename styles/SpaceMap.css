@@ -1,12 +1,13 @@
 .SpaceMapWindow {
     position: fixed;
-    top: 56px;
+    top: 65px;
     left: 0;
     bottom: 0;
     width: 100%;
-    height: calc(100% - 56px);
+    height: calc(100% - 65px);
     overflow: hidden;
-    background-color: rgba(18, 23, 34, 0.9);
+    background-color: rgba(18, 23, 34, 0.5);
+    backdrop-filter: blur(10px);
     z-index: 10;
     transition: all 0.3s ease;
     overflow: hidden;
