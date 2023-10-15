@@ -12,11 +12,11 @@
 #optionsMenu {
     box-sizing: border-box;
     display: grid;
-    grid-template-columns: 1fr 110px;
+    grid-template-columns: auto 110px;
     align-items: center;
     top: 95px;
     left: 0px;
-    width: 400px;
+    width: auto;
     height: 100%;
     transition: all 1s ease;
     z-index: 6;
@@ -38,7 +38,6 @@
     cursor: pointer;
     width: 100px;
     height: 32px;
-    background-color: rgba(18, 23, 34, 1);
     border-radius: 16px;
     border: solid 1px white;
     transition: all 0.3s ease;
@@ -47,11 +46,18 @@
 }
 
 #aboutButton:hover {
-    width: 105px;
-    height: 38px;
-    border-radius: 19px;
-    background-color: #374C6C;
+    font-size: 14px;
+    height: 40px;
+    border-radius: 20px;
     border: solid 1px white;
+}
+
+.sidebarOpenedButton {
+    background-color: #374C6C;
+}
+
+.sidebarClosedButton {
+    background-color: rgba(18, 23, 34, 1);
 }
 
 #aboutMeButton:hover .SeeMore {

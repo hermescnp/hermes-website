@@ -37,14 +37,14 @@
     align-items: center;
     width: 65px;
     height: 65px;
-    border: 1px solid rgba(55, 76, 108, 1);
+    border: 1px solid white;
     border-radius: 0px 0px 10px 10px;
     transition: all 0.3s ease;
     background-color: rgba(55, 76, 108, 1);
 }
 
 .MapButtonOpened:hover {
-    background-color: rgba(55, 76, 108, 0.5);
+    background-color: rgba(35, 56, 88, 1);
 }
 
 .MapButtonOpened:hover .MapIcon {
@@ -67,4 +67,20 @@
 .MapIconOpened {
     opacity: 1;
     transition: all 0.3s ease;
+}
+
+@media screen and (orientation: portrait) {
+    .MetaverseActionsBar {
+        top: auto;
+        bottom: 0px;
+    }
+
+    .MapButton {
+        background-color: rgba(18, 23, 34, 0.5);
+        backdrop-filter: blur(10px);
+    }
+
+    .MapButtonOpened {
+        border-radius: 10px 10px 0px 0px;
+    }
 }

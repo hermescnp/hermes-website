@@ -8,8 +8,8 @@
     display: block;
     transition: height 0.5s ease;
     overflow: hidden;
-    border-top: solid;
-    border-color: white;
+    border-top: solid 1px;
+    border-color: rgba(255, 255, 255, 0.2);
 }
 
 .AccordionTittle {

@@ -2,18 +2,19 @@ import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
 import '../../styles/Navbar.css'
 import chevron from 'public/assets/SVG/Chevron.svg'
-import mapIcon from 'public/assets/SVG/space_map.svg'
 import { NavInstance } from './NavInstance'
 import NavSearchBar from './NavSearchBar'
 import { Optionsmenu } from './Optionsmenu'
 import PhantomInstance from './PhantomInstance'
-import { SpaceMap } from '../SpaceMap/SpaceMap'
 import { useExperienceContext } from '@/context/ExperienceContext'
+import ObjectIcon from 'public/assets/SVG/3DGraphics_Icon.svg'
 
 interface NavbarProps {
     isClient: boolean;
     isPortrait: boolean;
     isMapOpened: boolean;
+    handleAboutButtonClick: () => void;
+    isSidebarOpened: boolean;
 }
 
 type PlaceHoverType = {
@@ -21,13 +22,14 @@ type PlaceHoverType = {
     isSibling: boolean | null;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ isClient, isPortrait, isMapOpened }) => {
+export const Navbar: React.FC<NavbarProps> = ({ isClient, isPortrait, isMapOpened, handleAboutButtonClick, isSidebarOpened }) => {
     const experienceContext = useExperienceContext();
     const InstanceBackButton = isClient ? experienceContext.InstanceBackButton : () => { };
     const placehover = isClient ? experienceContext.placehover : { name: '', isSibling: null };
     const history = isClient ? experienceContext.history : () => ['main'];
     const spaceData = isClient ? experienceContext.spaceData : [];
-    const [portraitMode, setPortraitMode] = useState<boolean>(isPortrait)
+    const [portraitMode, setPortraitMode] = useState<boolean>(isPortrait);
+    const [currentInstance, setCurrentInstance] = useState<string>('main');
 
     const stopPropagation = (event: React.SyntheticEvent) => {
         event.stopPropagation();
@@ -37,7 +39,7 @@ export const Navbar: React.FC<NavbarProps> = ({ isClient, isPortrait, isMapOpene
     let navInstancePlacehover = placehover?.isSibling ? placehover?.name : null;
     let navSearchBarPlaceHover = placehover?.isSibling ? null : placehover?.name;
 
-    const getLastItem = (array : any): string | null => {
+    const getLastItem = (array: any): string | null => {
         if (array.length > 0) {
             return array[array.length - 1];
         }
@@ -51,7 +53,7 @@ export const Navbar: React.FC<NavbarProps> = ({ isClient, isPortrait, isMapOpene
             if (currentSpace.parentKey !== 'root') {
                 createNavInstances(currentSpace.parentKey);
             }
-            if (!navInstancePlacehover && isPortrait) {
+            if (isPortrait) {
                 // Only show the current instance in portrait mode
                 setNavInstances([
                     {
@@ -82,6 +84,7 @@ export const Navbar: React.FC<NavbarProps> = ({ isClient, isPortrait, isMapOpene
     // Run createNavInstances once on component mount
     useEffect(() => {
         const lastHistoryItem = getLastItem(history);
+        setCurrentInstance(lastHistoryItem || 'main');
         if (lastHistoryItem) {
             setNavInstances([]); // Clear previous navigation instances
             createNavInstances(lastHistoryItem); // Create new navigation instances based on the last item in history
@@ -101,6 +104,9 @@ export const Navbar: React.FC<NavbarProps> = ({ isClient, isPortrait, isMapOpene
                 {portraitMode ? (
                     // Portrait Mode
                     <>
+                        {currentInstance !== "main" ? (
+                            <Image id="objectIcon" className="ObjectIcon" src={ObjectIcon} width={15} height={15} alt="Object Icon"></Image>
+                        ) : null}
                         {navInstances.map(instanceData => instanceData.instance)}
                     </>
                 ) : (
@@ -122,7 +128,7 @@ export const Navbar: React.FC<NavbarProps> = ({ isClient, isPortrait, isMapOpene
                     </>
                 )}
             </div>
-            <Optionsmenu />
+            <Optionsmenu handleAboutButtonClick={handleAboutButtonClick} isSidebarOpened={isSidebarOpened} isPortrait={portraitMode} />
         </div>
     )
 }

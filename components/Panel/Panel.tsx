@@ -3,6 +3,7 @@ import { Contact } from './Contact'
 import SoftwareList from './Softwares/SoftwareList'
 import BackgroundList from './Background/BackgroundList'
 import SkillList from './Skills/SkillList'
+import { About } from '@/components/Header/About'
 import '../../styles/Panel.css'
 
 interface PanelProps {
@@ -16,6 +17,8 @@ const Panel = forwardRef<HTMLDivElement, PanelProps>(({ data, skillRef, backgrou
 
     return (
         <div ref={ref} className="Panel panelWrapper" >
+
+            <About />
 
             <SkillList items={data} ref={skillRef}/>
 

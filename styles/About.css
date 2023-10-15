@@ -1,6 +1,5 @@
 #biography {
-    margin-top: 20px;
-    margin-left: 5px;
+    margin: 25px;
     pointer-events: none;
 }
 
@@ -9,20 +8,20 @@
     overflow: hidden;
 }
 
-#aboutMe {
-    box-sizing: border-box;
+#aboutContent {
     display: flex;
     flex-direction: column;
-    top: 95px;
-    left: 0px;
+    align-items: flex-start;
+    justify-content: flex-start;
     width: 100%;
-    height: auto;
-    padding: 0px 15px 0px 85px;
-    transition: all 1s ease;
-    z-index: 6;
-    overflow: hidden;
+    border-bottom: solid 1px;
+    border-color: rgba(255, 255, 255, 0.2);
 }
 
+.AuthorImage {
+    width: 100%;
+    height: auto;
+}
 
 #aboutMeButton {
     display: flex;
@@ -37,4 +36,13 @@
     margin-left: 5px;
     margin-right: 10px;
     overflow: hidden;
+}
+
+.AuthorInfoPanel {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border: none;
+    margin: 20px;
+    pointer-events: none;
 }

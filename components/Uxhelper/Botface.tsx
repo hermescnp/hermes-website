@@ -38,7 +38,7 @@ const Botface: React.FC = () => {
       // Set a timeout to move the pupil back to the center after 1 second of no movement
       movementTimeout = setTimeout(() => {
         setPupilPosition({ x: 0, y: 0 });
-      }, 500);
+      }, 800);
     };
 
     document.addEventListener('mousemove', handleMouseMove);

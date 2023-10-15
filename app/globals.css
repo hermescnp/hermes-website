@@ -35,15 +35,17 @@ body {
   width: 400px;
   height: 100vh;
   margin-top: 65px;
+  padding-top: 10px;
   display: grid;
   grid-template-rows: auto auto 1fr;
   grid-template-columns: 400px;
   top: 0;
   right: 0;
-  z-index: 7;
+  z-index: 11;
   transition: transform 0.5s ease;
   box-sizing: border-box;
   overflow: hidden;
+  box-shadow: inset 0px 8px 8px -8px rgba(0, 0, 0, 0.5);
 }
 
 .sideBar.hidden {
@@ -102,9 +104,18 @@ picture {
   height: auto;
 }
 
+.visible {
+  opacity: 1;
+}
+
 .hidden {
   pointer-events: none;
 }
+
+.invisible {
+  opacity: 0;
+  pointer-events: none;
+} 
 
 img {
   width: 50px;
@@ -246,10 +257,6 @@ summary {
   .sideBar {
     width: 100%;
     grid-template-columns: 100%;
-  }
-
-  .sideBar.hidden {
-    transform: translateY(100%);
   }
 
   .Background {

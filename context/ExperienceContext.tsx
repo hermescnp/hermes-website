@@ -29,7 +29,6 @@ export const ExperienceContext = createContext<ExperienceContextType | undefined
 export const ExperienceProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isClicked, setIsClicked] = useState<boolean>(false);
   const [placehover, setPlaceHover] = useState<PlaceHoverType>({ name: '', isSibling: null });
-  const [currentInstance, setCurrentInstance] = useState<string>('main');
   const [spaceData, setSpaceData] = useState([]);
   const [loadingState, setLoadingState] = useState('Loading metaverse');
   const [loadingProgress, setLoadingProgress] = useState<number>(0);
@@ -40,8 +39,6 @@ export const ExperienceProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     event.stopPropagation();
     setIsClicked(prev => !prev);
   };
-
-  const startIntroButton = (event: any) => {}
 
   useEffect(() => {
     fetch('/models/space-map.json')

@@ -2,7 +2,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     grid-template-rows: 50px;
-    width: 100%;
+    width: 250px;
 }
 
 #socialMediaFooter {

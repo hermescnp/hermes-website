@@ -1,15 +1,15 @@
 import React from "react"
-import '../styles/Uxhelper.css'
+import '../../styles/Uxhelper.css'
+import Botface from '@/components/Uxhelper/Botface'
+import { useExperienceContext } from '@/context/ExperienceContext'
 
 export const Uxhelper = () => {
+    const experienceContext = useExperienceContext();
+    const isExperienceStarted = experienceContext.startExperience;
+
     return (
-        <div>
-            <div className="eye" id="left-eye">
-                <div className="pupil" id="left-pupil"></div>
-            </div>
-            <div className="eye" id="right-eye">
-                <div className="pupil" id="right-pupil"></div>
-            </div>
+        <div className={isExperienceStarted ? 'ChatbotContainer' : 'LoadingChatbotContainer'}>
+            <Botface />
         </div>
     )
 }

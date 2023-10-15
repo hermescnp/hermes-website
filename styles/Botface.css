@@ -1,7 +1,5 @@
 .eye-container {
-    position: absolute;
-    top: 15px;
-    left: 15px;
+    position: relative;
     object-fit: cover;
     width: 70px;
     height: 70px;
@@ -32,6 +30,6 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    transition: transform 0.3s ease-out;
+    transition: transform 0.2s ease-out;
   }
   

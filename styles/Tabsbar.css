@@ -1,8 +1,7 @@
 .Tab {
     width: 33.33%;
-    height: 30px;
+    height: 40px;
     font-weight: 300;
-    margin: 0;
     z-index: 9;
 }
 
@@ -17,8 +16,8 @@
 #snakeSpace {
     display: flex;
     flex-direction: column-reverse;
-    border-bottom: solid;
-    border-color: white;
+    border-bottom: solid 1px;
+    border-color: rgba(255, 255, 255, 0.2);
     height: 10px;
     overflow: hidden;
 }

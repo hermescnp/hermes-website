@@ -8,6 +8,7 @@
     overflow: hidden;
     background-color: rgba(18, 23, 34, 0.5);
     backdrop-filter: blur(10px);
+    box-shadow: inset 0px 8px 8px -8px rgba(0, 0, 0, 0.5);
     z-index: 10;
     transition: all 0.3s ease;
     overflow: hidden;
