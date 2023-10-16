@@ -1,0 +1,98 @@
+#chatBox {
+    position: relative;
+    width: auto;
+    max-width: 300px;
+    height: auto;
+    min-height: 100px;
+    max-height: 150px;
+    padding-top: 30px;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    row-gap: 8px;
+    overflow-y: scroll;
+    -webkit-mask-image: linear-gradient(to bottom, transparent, black 50%, black);
+    mask-image: linear-gradient(to bottom, transparent, black 10%, black);
+    flex-shrink: 0;
+}
+
+.messageBubble {
+    position: relative;
+    top: 0px;
+    width: auto;
+    max-width: 300px;
+    height: auto;
+    border-radius: 0px 15px 15px 15px;
+    padding: 15px;
+    transition: all 0.3s ease;
+    background-color: rgba(18, 23, 34, 0.6);
+    overflow: hidden;
+    max-height: 200px;
+    flex-shrink: 0;
+}
+
+.messageBubble.active {
+    animation: growHeight 1s forwards;
+    border: 1px solid #315F8C;
+    background-color: rgba(18, 23, 34, 0.9);
+}
+
+.bot-text {
+    font-size: 14px;
+    font-weight: 300;
+    color: white;
+    line-height: 22px;
+}
+
+.blinking-cursor {
+    display: inline-block;
+    width: 6px;
+    height: 1.4em;
+    background-color: #384D6C;
+    /* Inherits the color of the parent element */
+    vertical-align: bottom;
+    animation: blink .5s infinite step-end alternate;
+}
+
+@keyframes blink {
+
+    0%,
+    49% {
+        opacity: 1;
+    }
+
+    50%,
+    100% {
+        opacity: 0;
+    }
+}
+
+@-webkit-keyframes blink {
+
+    0%,
+    49% {
+        opacity: 1;
+    }
+
+    50%,
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes growHeight {
+    from {
+        max-height: 0;
+    }
+
+    to {
+        max-height: 200px;
+    }
+}
+
+@media screen and (orientation: portrait) {
+    #chatBox {
+        max-width: 70%;
+    }
+}

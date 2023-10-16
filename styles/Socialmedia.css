@@ -24,9 +24,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #374C6C;
+    background-color: #315F8C;
     border-radius: 50%;
-    border: solid 1px #374C6C;
+    border: solid 1px #315F8C;
     transition: all 0.3s ease;
     cursor: pointer;
 }
@@ -37,7 +37,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #374C6C;
+    background-color: #315F8C;
     border-radius: 50%;
     transition: all 0.3s ease;
     cursor: pointer;

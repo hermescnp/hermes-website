@@ -10,9 +10,9 @@ interface AuthorProps {
 export const Author: React.FC<AuthorProps> = ({ isVisible }) => {
   return (
     <div id="AuthorBar" className={isVisible ? 'visible' : 'invisible'}>
-      <picture>
+      {/* <picture>
         <Image className="Avatar" src={avatarImg} width={70} height={70} alt="Fotografía del autor" />
-      </picture>
+      </picture> */}
       <div className="AuthorInfo">
         <h2>Hermes Concepción</h2>
         <p>UX/Technical Artist | Professional Musician</p>
