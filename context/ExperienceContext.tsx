@@ -33,7 +33,7 @@ export const ExperienceProvider: React.FC<{ children: React.ReactNode }> = ({ ch
   const [loadingState, setLoadingState] = useState('Loading metaverse');
   const [loadingProgress, setLoadingProgress] = useState<number>(0);
   const [startExperience, setStartExperience] = useState<boolean>(false);
-  const [history, pushToHistory, stepBackHistory, clearHistory] = useHistory();
+  const [history, pushToHistory, stepBackHistory, clearHistory, getLastItem] = useHistory();
 
   const InstanceBackButton = (event: any) => {
     event.stopPropagation();

@@ -28,7 +28,7 @@ generateZones = (data: any) => {
       new THREE.BoxGeometry(zone.width, zone.height, zone.depth),
       material
     );
-    zoneMesh.position.set(zone.positionX, zone.positionY, zone.positionZ);
+    zoneMesh.position.set(zone?.positionX, zone?.positionY, zone?.positionZ);
     zoneMesh.name = zone.key;
     zoneMesh.userData.parentKey = zone.parentKey;
     this.scene.add(zoneMesh);

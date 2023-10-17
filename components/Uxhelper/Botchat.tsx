@@ -1,5 +1,6 @@
-import React, { useRef, useEffect, useState } from 'react';
-import { TypingEffect } from '@/components/Uxhelper/TypingEffect';
+import React, { useRef, useEffect, useState } from 'react'
+import { TypingEffect } from '@/components/Uxhelper/TypingEffect'
+import { MessageProvider } from '@/components/Uxhelper/MessageProvider'
 import '@/styles/Botchat.css'
 
 export default function Botchat() {
@@ -38,9 +39,7 @@ export default function Botchat() {
           </div>
         ))}
       </div>
-      <button onClick={() => addNewMessage("Hello... how can i help you?")}>
-        +
-      </button>
+      <MessageProvider chatPrint={addNewMessage} />
     </>
   )
 }

@@ -8,7 +8,7 @@ export default class PathGenerator {
     this.targets = {};
 
     for (let instance of instances) {
-      let vector = new THREE.Vector3(instance.positionX, instance.positionY, instance.positionZ);
+      let vector = new THREE.Vector3(instance?.positionX, instance?.positionY, instance?.positionZ);
       this.targets[instance.key] = vector;
     }
   }
