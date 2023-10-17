@@ -156,6 +156,10 @@ details[open] .content {
   height: 50%;
 }
 
+.icon-disabled {
+  opacity: 0.3;
+}
+
 .IconSmall {
   width: 70%;
 }

@@ -119,7 +119,7 @@ const App: React.FC<AppProps> = ({ children }) => {
           <Panel data={panelData} ref={panelRef} skillRef={skillRef} backgroundRef={backgroundRef} softwareRef={softwareRef} />
         </div>
         {displayLoading ? <LoadingPage isClient={isClient} /> : null}
-        <Uxhelper />
+        <Uxhelper isVisible={!isMapOpened}/>
       </body>
     </html>
   );

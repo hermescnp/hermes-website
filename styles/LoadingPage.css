@@ -49,7 +49,7 @@ progress::-webkit-progress-value {
 }
 
 progress::-webkit-progress-bar {
-    background-color: rgb(55, 76, 108);
+    background-color: #315F8C;
     transition: all 0.3s ease;
 }
 
@@ -61,8 +61,8 @@ progress::-webkit-progress-bar {
 .StartButton {
     width: 250px;
     height: 50px;
-    color: rgb(55, 76, 108);
-    border: solid 2px rgb(55, 76, 108);
+    color: #315F8C;
+    border: solid 2px #315F8C;
     border-radius: 25px;
     transition: all 0.3s ease;
     opacity: 0;

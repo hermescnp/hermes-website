@@ -43,6 +43,8 @@ const initialNodes: any = [
     data: { icon: <Image id='example' className='ObjectIcon' src={ObjectIcon} width={20} height={20} alt='example image' />, title: "Hermes Science's Lab", subline: 'Metaverse Space' },
     position: { x: 930, y: 0 },
     className: 'dark',
+    isDraggable: false,
+    isMoveable: false,
   },
   {
     id: 'studio',
@@ -51,6 +53,8 @@ const initialNodes: any = [
     position: { x: 0, y: 150 },
     className: 'light',
     style: { backgroundColor: 'rgba(0, 115, 198, 0.2)', width: 360, height: 520, color: '#ffffff', border: '1px solid white' },
+    isDraggable: false,
+    isMoveable: false,
   },
   {
     id: 'awards',
@@ -59,6 +63,8 @@ const initialNodes: any = [
     position: { x: 400, y: 150 },
     className: 'light',
     style: { backgroundColor: 'rgba(0, 115, 198, 0.2)', width: 290, height: 520, color: '#ffffff', border: '1px solid white' },
+    isDraggable: false,
+    isMoveable: false,
   },
   {
     id: 'lobby',
@@ -488,7 +494,7 @@ export const SpaceMap: React.FC<Props> = ({ onMouseOver, isOpened }) => {
 
   return (
 
-    <div className='SpaceMapWindow' style={divStyle} onMouseOver={onMouseOver} >
+    <div className='SpaceMapWindow' style={divStyle} onMouseOver={onMouseOver}>
 
       <ReactFlow
         nodes={nodes}
@@ -500,6 +506,7 @@ export const SpaceMap: React.FC<Props> = ({ onMouseOver, isOpened }) => {
         nodeTypes={nodeTypes}
         edgeTypes={edgeTypes}
         defaultEdgeOptions={defaultEdgeOptions}
+        nodesDraggable={false}
       >
         <Controls showInteractive={false} />
         <svg>

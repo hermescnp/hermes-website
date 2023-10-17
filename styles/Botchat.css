@@ -49,7 +49,7 @@
     display: inline-block;
     width: 6px;
     height: 1.4em;
-    background-color: #384D6C;
+    background-color: #315F8C;
     /* Inherits the color of the parent element */
     vertical-align: bottom;
     animation: blink .5s infinite step-end alternate;

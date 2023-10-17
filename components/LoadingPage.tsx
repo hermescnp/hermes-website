@@ -14,6 +14,7 @@ export const LoadingPage: React.FC<LoadingScreenProps> = ({ isClient }) => {
     const loadingProgress = isClient ? experienceContext.loadingProgress : 0;
     const [isReady, setIsReady] = useState<boolean>(false);
     const [isExperienceStarted, setIsExperienceStarted] = useState<boolean>(false);
+    const [loadingStateList, setLoadingStateList] = useState<string[]>([]);
 
     // Test if model is ready
     useEffect(() => {
@@ -25,7 +26,14 @@ export const LoadingPage: React.FC<LoadingScreenProps> = ({ isClient }) => {
         if ( loadingState === 'started' ) {
             setIsExperienceStarted(true);
         }
+        pushLoadingState(loadingState);
     }, [loadingState]);
+
+    const pushLoadingState = (item: string) => {
+        setLoadingStateList((prevLoadingStates) => {
+          return [...prevLoadingStates, item];
+        });
+      };
 
     const handleStart = () => {
         experienceContext.setLoadingState('started');
@@ -40,7 +48,7 @@ export const LoadingPage: React.FC<LoadingScreenProps> = ({ isClient }) => {
         <div className={isExperienceStarted? 'LoadingPage Invisible' : 'LoadingPage'} onClick={stopClickPropagation}>
             <Image id="officeLogo" className={isExperienceStarted? 'OfficeLogo Inflated' : 'OfficeLogo'} src={logo} width={200} height={200} alt="Logo" />
             <div className='LoadingBar'>
-                <progress className='LoadingProgress' value={loadingProgress} max="100"></progress>
+                <progress className='LoadingProgress' value={(loadingProgress/2) + (loadingStateList.length * 10)} max="100"></progress>
             </div>
             <div className='LoadingText'>{`${isReady ? 'The office is ready!' : loadingState + '...'}`}</div>
             <button className={isReady? 'StartButton Visible' : 'StartButton'} onClick={handleStart} >START EXPERIENCE</button>
