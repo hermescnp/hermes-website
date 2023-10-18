@@ -4,11 +4,12 @@
   left: 30px;
   z-index: 21;
   transition: all 0.5s ease;
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: auto 1fr;
   align-items: flex-start;
   overflow: visible;
   column-gap: 10px;
+  margin-right: 25px;
 }
 
 .LoadingChatbotContainer {
@@ -16,18 +17,21 @@
   top: 30px;
   left: 30px;
   z-index: 21;
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: auto 1fr;
   align-items: flex-start;
   overflow: visible;
   transition: all 0.5s ease;
   column-gap: 10px;
+  margin-right: 25px;
 }
 
 @media screen and (orientation: portrait) {
   .ChatbotContainer {
-    top: 65px;
+    top: auto;
+    bottom: calc(70px + env(safe-area-inset-bottom));
     left: 20px;
+    align-items: flex-end;
   }
 
   .LoadingChatbotContainer {
