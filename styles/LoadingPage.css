@@ -84,4 +84,8 @@ progress::-webkit-progress-bar {
         height: 250px;
         padding-right: 30px;
     }
+
+    .LoadingPage {
+        padding-top: 60px;
+    }
 }
