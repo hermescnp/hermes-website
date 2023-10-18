@@ -5,10 +5,10 @@ import { Botchat } from '@/components/Uxhelper/Botchat'
 import { useExperienceContext } from '@/context/ExperienceContext'
 
 interface UxhelperProps {
-    isVisible: boolean;
+    isNotVisible: boolean;
 }
 
-export const Uxhelper : React.FC<UxhelperProps> = ({ isVisible }) => {
+export const Uxhelper : React.FC<UxhelperProps> = ({ isNotVisible }) => {
     const isExperienceStarted = useExperienceContext().startExperience
     const [messages, setMessages] = useState<string[]>([
         "Hi! This is the Hermes's Science Lab, I'm here to assist you in your experience through this metaverse."
@@ -35,7 +35,7 @@ export const Uxhelper : React.FC<UxhelperProps> = ({ isVisible }) => {
     };    
 
     return (
-        <div className={`${isExperienceStarted ? 'ChatbotContainer' : 'LoadingChatbotContainer'} ${isVisible ? '' : 'invisible'}`}>
+        <div className={`${isExperienceStarted ? 'ChatbotContainer' : 'LoadingChatbotContainer'} ${isNotVisible ? 'invisible' : ''}`}>
             <Botface chatPrint={addNewMessage}/>
             <Botchat messages={messages} chatPrinter={addNewMessage} chatBoxRef={chatBoxRef}/>
         </div>
