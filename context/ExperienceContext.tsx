@@ -10,6 +10,7 @@ type ExperienceContextType = {
   history: string[];
   pushToHistory: (item: string) => void;
   stepBackHistory: () => void;
+  getLastHistoryItem: () => string;
   spaceData: any[];
   loadingState: string;
   setLoadingState: React.Dispatch<React.SetStateAction<string>>;
@@ -33,7 +34,7 @@ export const ExperienceProvider: React.FC<{ children: React.ReactNode }> = ({ ch
   const [loadingState, setLoadingState] = useState('Loading metaverse');
   const [loadingProgress, setLoadingProgress] = useState<number>(0);
   const [startExperience, setStartExperience] = useState<boolean>(false);
-  const [history, pushToHistory, stepBackHistory, clearHistory, getLastItem] = useHistory();
+  const [history, pushToHistory, stepBackHistory, clearHistory, getLastHistoryItem] = useHistory();
 
   const InstanceBackButton = (event: any) => {
     event.stopPropagation();
@@ -58,6 +59,7 @@ export const ExperienceProvider: React.FC<{ children: React.ReactNode }> = ({ ch
       history,
       pushToHistory,
       stepBackHistory,
+      getLastHistoryItem,
       spaceData,
       loadingState,
       setLoadingState,

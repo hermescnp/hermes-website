@@ -3,23 +3,15 @@ import { TypingEffect } from '@/components/Uxhelper/TypingEffect'
 import { MessageProvider } from '@/components/Uxhelper/MessageProvider'
 import '@/styles/Botchat.css'
 
-export default function Botchat() {
-  const [messages, setMessages] = useState<string[]>([
-    "It's ok, I was only testing how a very long text looks. It seems right!"
-  ]);
+interface BotchatProps {
+  messages: string[];
+  chatPrinter: (newMessage: string) => void;
+  chatBoxRef: React.MutableRefObject<HTMLDivElement | null>;
+}
 
-  const chatBoxRef = useRef<HTMLDivElement | null>(null);
+export const Botchat: React.FC<BotchatProps> = ({ messages, chatPrinter, chatBoxRef}) => {
+
   const lastMessageRef = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    if (chatBoxRef.current) {
-      chatBoxRef.current.scrollTop = 999999; // a large number to ensure it's at the bottom
-    }
-  }, [messages]);
-
-  const addNewMessage = (newMessage: string) => {
-    setMessages(prevMessages => [...prevMessages, newMessage]);
-  };
 
   return (
     <>
@@ -33,13 +25,13 @@ export default function Botchat() {
           >
             <TypingEffect
               message={message}
-              typingSpeed={50}
+              typingSpeed={30}
               showCursor={index === messages.length - 1}
             />
           </div>
         ))}
       </div>
-      <MessageProvider chatPrint={addNewMessage} />
+      <MessageProvider chatPrint={chatPrinter} />
     </>
   )
 }

@@ -10,7 +10,11 @@ interface EyeProps {
   pupilPosition: Position;
 }
 
-const Botface: React.FC = () => {
+interface BotfaceProps {
+  chatPrint: (newMessage: string) => void;
+}
+
+const Botface: React.FC<BotfaceProps> = ({ chatPrint }) => {
   const [pupilPosition, setPupilPosition] = useState<Position>({ x: 0, y: 0 });
   let movementTimeout: ReturnType<typeof setTimeout>;
 
@@ -49,8 +53,13 @@ const Botface: React.FC = () => {
     };
   }, []);
 
+  const handleBotClick = (event: MouseEvent) => {
+    chatPrint("You won't get anything by clicking on me.")
+    event.stopPropagation();
+  };
+
   return (
-    <div className="eye-container">
+    <div className="eye-container" onClick={handleBotClick}>
       <Eye pupilPosition={pupilPosition} />
       <Eye pupilPosition={pupilPosition} />
     </div>
