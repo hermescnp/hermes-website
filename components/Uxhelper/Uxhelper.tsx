@@ -37,7 +37,7 @@ export const Uxhelper : React.FC<UxhelperProps> = ({ isNotVisible }) => {
     return (
         <div className={`${isExperienceStarted ? 'ChatbotContainer' : 'LoadingChatbotContainer'} ${isNotVisible ? 'invisible' : ''}`}>
             <Botface chatPrint={addNewMessage}/>
-            <Botchat messages={messages} chatPrinter={addNewMessage} chatBoxRef={chatBoxRef}/>
+            <Botchat messages={messages} chatPrinter={addNewMessage} chatBoxRef={chatBoxRef} isExperienceStarted={isExperienceStarted}/>
         </div>
     )
 }

@@ -97,7 +97,7 @@ export const Navbar: React.FC<NavbarProps> = ({ isClient, isPortrait, isMapOpene
 
     return (
         <div className="NavBar" onClick={stopPropagation}>
-            <button className="BackButton" onClick={InstanceBackButton}>
+            <button className="BackButton" onClick={isPortrait && isSidebarOpened? handleAboutButtonClick : InstanceBackButton}>
                 <Image id="backChevron" className="BackChevron" src={chevron} width={20} height={20} alt="Back" />
             </button>
             <div className="Navigation">

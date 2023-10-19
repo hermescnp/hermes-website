@@ -32,7 +32,28 @@
     flex-shrink: 0;
 }
 
+.loadingMessageBubble {
+    position: relative;
+    top: 0px;
+    width: auto;
+    max-width: 300px;
+    height: auto;
+    border-radius: 0px 15px 15px 15px;
+    padding: 15px;
+    transition: all 0.3s ease;
+    background-color: rgba(18, 23, 34, 0.6);
+    overflow: hidden;
+    max-height: 200px;
+    flex-shrink: 0;
+}
+
 .messageBubble.active {
+    animation: growHeight 1s forwards;
+    border: 1px solid #315F8C;
+    background-color: rgba(18, 23, 34, 0.9);
+}
+
+.loadingMessageBubble.active {
     animation: growHeight 1s forwards;
     border: 1px solid #315F8C;
     background-color: rgba(18, 23, 34, 0.9);
@@ -100,5 +121,10 @@
     .messageBubble {
         max-width: 100%;
         border-radius: 15px 15px 15px 0px;
+    }
+
+    .loadingMessageBubble {
+        max-width: 100%;
+        border-radius: 0px 15px 15px 15px;
     }
 }

@@ -7,9 +7,10 @@ interface BotchatProps {
   messages: string[];
   chatPrinter: (newMessage: string) => void;
   chatBoxRef: React.MutableRefObject<HTMLDivElement | null>;
+  isExperienceStarted: boolean; 
 }
 
-export const Botchat: React.FC<BotchatProps> = ({ messages, chatPrinter, chatBoxRef}) => {
+export const Botchat: React.FC<BotchatProps> = ({ messages, chatPrinter, chatBoxRef, isExperienceStarted}) => {
 
   const lastMessageRef = useRef<HTMLDivElement | null>(null);
 
@@ -19,9 +20,8 @@ export const Botchat: React.FC<BotchatProps> = ({ messages, chatPrinter, chatBox
         {messages.map((message, index) => (
           <div
             key={index}
-            className={`messageBubble ${index === messages.length - 1 ? 'active' : ''}`}
+            className={ (isExperienceStarted? 'messageBubble' : 'loadingMessageBubble') + ' ' + (index === messages.length - 1 ? 'active' : '')}
             ref={index === messages.length - 1 ? lastMessageRef : null}
-
           >
             <TypingEffect
               message={message}

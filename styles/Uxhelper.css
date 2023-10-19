@@ -1,5 +1,5 @@
 .ChatbotContainer {
-  position: absolute;
+  position: fixed;
   top: 100px;
   left: 30px;
   z-index: 21;
@@ -13,7 +13,7 @@
 }
 
 .LoadingChatbotContainer {
-  position: absolute;
+  position: fixed;
   top: 30px;
   left: 30px;
   z-index: 21;
