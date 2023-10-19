@@ -4,7 +4,7 @@
     height: 60px;
     border: 3px solid;
     border-radius: 50%;
-    border-color: #374C6C;
+    border-color: #315F8C;
     pointer-events: none;
 }
 
@@ -13,11 +13,12 @@
     grid-template-columns: auto 1fr;
     position: absolute;
     width: auto;
-    top: 0px;
+    bottom: 0px;
     left: 0px;
-    margin: 15px 0px 0px 15px;
+    margin: 30px;
     z-index: 9;
     pointer-events: none;
+    transition: all 1s ease;
 }
 
 .AuthorInfo {
@@ -27,4 +28,13 @@
     border: none;
     margin-left: 10px;
     pointer-events: none;
+    row-gap: 5px;
+}
+
+@media screen and (orientation: portrait) {
+    #AuthorBar {
+        bottom: 65px;
+        opacity: 0;
+        pointer-events: none;
+    }
 }

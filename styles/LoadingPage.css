@@ -5,7 +5,7 @@
     width: 100%;
     height: 100%;
     background-color: rgba(18, 23, 34, 1);
-    z-index: 100;
+    z-index: 20;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -21,7 +21,7 @@
 .OfficeLogo {
     width: 300px;
     height: 300px;
-    padding-right: 75px;
+    padding-right: 50px;
     transition: all 1s ease;
 }
 
@@ -49,7 +49,7 @@ progress::-webkit-progress-value {
 }
 
 progress::-webkit-progress-bar {
-    background-color: rgb(55, 76, 108);
+    background-color: #315F8C;
     transition: all 0.3s ease;
 }
 
@@ -61,8 +61,8 @@ progress::-webkit-progress-bar {
 .StartButton {
     width: 250px;
     height: 50px;
-    color: rgb(55, 76, 108);
-    border: solid 2px rgb(55, 76, 108);
+    color: #315F8C;
+    border: solid 2px #315F8C;
     border-radius: 25px;
     transition: all 0.3s ease;
     opacity: 0;
@@ -76,4 +76,16 @@ progress::-webkit-progress-bar {
 .StartButton:hover {
     color: white;
     border-color: white;
+}
+
+@media screen and (orientation: portrait) {
+    .OfficeLogo {
+        width: 250px;
+        height: 250px;
+        padding-right: 30px;
+    }
+
+    .LoadingPage {
+        padding-top: 60px;
+    }
 }

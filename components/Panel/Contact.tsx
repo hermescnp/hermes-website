@@ -10,11 +10,19 @@ class Contact extends Component<any, any> {
   lastEdit: string = '';
 
   async componentDidMount() {
-    const result = await fetch(this.githubApiUrl);
-
-    const response = await result.json();
-    this.lastEdit = this.parseDate(response.commit.author.date);
-  }
+    try {
+      const result = await fetch(this.githubApiUrl);
+      
+      if (!result.ok) {
+        throw new Error('Network response was not ok: ' + result.statusText);
+      }
+  
+      const response = await result.json();
+      this.lastEdit = this.parseDate(response.commit.author.date);
+    } catch (error) {
+      console.error('There has been a problem with your fetch operation:', error);
+    }
+  }  
 
   private parseDate(date: string): string {
     const parsedDate = new Date(date);

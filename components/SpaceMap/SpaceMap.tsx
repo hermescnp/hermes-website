@@ -15,7 +15,7 @@ import 'reactflow/dist/base.css';
 import TurboNode, { TurboNodeData } from './TurboNode';
 import TurboGroup, { TurboGroupData } from './TurboGroup';
 import TurboEdge from './TurboEdge';
-import ExampleImage from 'public/assets/SVG/3DGraphics_Icon.svg'
+import ObjectIcon from 'public/assets/SVG/3DGraphics_Icon.svg'
 
 interface Props {
   onMouseOver?: (event: React.SyntheticEvent) => void;
@@ -40,9 +40,11 @@ const initialNodes: any = [
   {
     id: 'main',
     type: 'turbo',
-    data: { icon: <Image id='example' className='ObjectIcon' src={ExampleImage} width={20} height={20} alt='example image' />, title: "Hermes Science's Lab", subline: 'Metaverse Space' },
+    data: { icon: <Image id='example' className='ObjectIcon' src={ObjectIcon} width={20} height={20} alt='example image' />, title: "Hermes Science's Lab", subline: 'Metaverse Space' },
     position: { x: 930, y: 0 },
     className: 'dark',
+    isDraggable: false,
+    isMoveable: false,
   },
   {
     id: 'studio',
@@ -51,6 +53,8 @@ const initialNodes: any = [
     position: { x: 0, y: 150 },
     className: 'light',
     style: { backgroundColor: 'rgba(0, 115, 198, 0.2)', width: 360, height: 520, color: '#ffffff', border: '1px solid white' },
+    isDraggable: false,
+    isMoveable: false,
   },
   {
     id: 'awards',
@@ -59,6 +63,8 @@ const initialNodes: any = [
     position: { x: 400, y: 150 },
     className: 'light',
     style: { backgroundColor: 'rgba(0, 115, 198, 0.2)', width: 290, height: 520, color: '#ffffff', border: '1px solid white' },
+    isDraggable: false,
+    isMoveable: false,
   },
   {
     id: 'lobby',
@@ -87,13 +93,13 @@ const initialNodes: any = [
   {
     id: 'stairs',
     type: 'turbo',
-    data: { icon: <Image id='example' className='ObjectIcon' src={ExampleImage} width={20} height={20} alt='example image' />, title: "Handmade Portfolio", subline: 'Framed Panel' },
+    data: { icon: <Image id='example' className='ObjectIcon' src={ObjectIcon} width={20} height={20} alt='example image' />, title: "Handmade Portfolio", subline: 'Framed Panel' },
     position: { x: 1710, y: 150 },
   },
   {
     id: 'aboutprane',
     type: 'turbo',
-    data: { icon: <Image id='example' className='ObjectIcon' src={ExampleImage} width={20} height={20} alt='example image' />, title: "About Prané", subline: "Prané's Logotype Panel" },
+    data: { icon: <Image id='example' className='ObjectIcon' src={ObjectIcon} width={20} height={20} alt='example image' />, title: "About Prané", subline: "Prané's Logotype Panel" },
     position: { x: 20, y: 70 },
     parentNode: 'studio',
     extent: 'parent'
@@ -101,7 +107,7 @@ const initialNodes: any = [
   {
     id: 'mip',
     type: 'turbo',
-    data: { icon: <Image id='example' className='ObjectIcon' src={ExampleImage} width={20} height={20} alt='example image' />, title: "Interactive Music", subline: "Monitor Screen Left" },
+    data: { icon: <Image id='example' className='ObjectIcon' src={ObjectIcon} width={20} height={20} alt='example image' />, title: "Interactive Music", subline: "Monitor Screen Left" },
     position: { x: 20, y: 160 },
     parentNode: 'studio',
     extent: 'parent'
@@ -109,7 +115,7 @@ const initialNodes: any = [
   {
     id: 'filmscoring',
     type: 'turbo',
-    data: { icon: <Image id='example' className='ObjectIcon' src={ExampleImage} width={20} height={20} alt='example image' />, title: "Music for Films", subline: "Monitor Screen Right" },
+    data: { icon: <Image id='example' className='ObjectIcon' src={ObjectIcon} width={20} height={20} alt='example image' />, title: "Music for Films", subline: "Monitor Screen Right" },
     position: { x: 20, y: 250 },
     parentNode: 'studio',
     extent: 'parent'
@@ -117,7 +123,7 @@ const initialNodes: any = [
   {
     id: 'cap',
     type: 'turbo',
-    data: { icon: <Image id='example' className='ObjectIcon' src={ExampleImage} width={20} height={20} alt='example image' />, title: "Music Composition/Arrangement", subline: "Laptop Screen" },
+    data: { icon: <Image id='example' className='ObjectIcon' src={ObjectIcon} width={20} height={20} alt='example image' />, title: "Music Composition/Arrangement", subline: "Laptop Screen" },
     position: { x: 20, y: 340 },
     parentNode: 'studio',
     extent: 'parent'
@@ -125,7 +131,7 @@ const initialNodes: any = [
   {
     id: 'musicporfolio',
     type: 'turbo',
-    data: { icon: <Image id='example' className='ObjectIcon' src={ExampleImage} width={20} height={20} alt='example image' />, title: "Music Portfolio", subline: "TV Screen" },
+    data: { icon: <Image id='example' className='ObjectIcon' src={ObjectIcon} width={20} height={20} alt='example image' />, title: "Music Portfolio", subline: "TV Screen" },
     position: { x: 20, y: 430 },
     parentNode: 'studio',
     extent: 'parent'
@@ -133,7 +139,7 @@ const initialNodes: any = [
   {
     id: 'mipymes',
     type: 'turbo',
-    data: { icon: <Image id='example' className='ObjectIcon' src={ExampleImage} width={20} height={20} alt='example image' />, title: "Bussiness Creation", subline: "Trophy" },
+    data: { icon: <Image id='example' className='ObjectIcon' src={ObjectIcon} width={20} height={20} alt='example image' />, title: "Bussiness Creation", subline: "Trophy" },
     position: { x: 20, y: 70 },
     parentNode: 'awards',
     extent: 'parent'
@@ -141,7 +147,7 @@ const initialNodes: any = [
   {
     id: 'musiccontest',
     type: 'turbo',
-    data: { icon: <Image id='example' className='ObjectIcon' src={ExampleImage} width={20} height={20} alt='example image' />, title: "Music Composition", subline: "Trophy" },
+    data: { icon: <Image id='example' className='ObjectIcon' src={ObjectIcon} width={20} height={20} alt='example image' />, title: "Music Composition", subline: "Trophy" },
     position: { x: 20, y: 160 },
     parentNode: 'awards',
     extent: 'parent'
@@ -149,7 +155,7 @@ const initialNodes: any = [
   {
     id: 'bcrd',
     type: 'turbo',
-    data: { icon: <Image id='example' className='ObjectIcon' src={ExampleImage} width={20} height={20} alt='example image' />, title: "Payment Methods", subline: "Trophy" },
+    data: { icon: <Image id='example' className='ObjectIcon' src={ObjectIcon} width={20} height={20} alt='example image' />, title: "Payment Methods", subline: "Trophy" },
     position: { x: 20, y: 250 },
     parentNode: 'awards',
     extent: 'parent'
@@ -157,7 +163,7 @@ const initialNodes: any = [
   {
     id: 'arqtur',
     type: 'turbo',
-    data: { icon: <Image id='example' className='ObjectIcon' src={ExampleImage} width={20} height={20} alt='example image' />, title: "Architectural Design", subline: "Trophy" },
+    data: { icon: <Image id='example' className='ObjectIcon' src={ObjectIcon} width={20} height={20} alt='example image' />, title: "Architectural Design", subline: "Trophy" },
     position: { x: 20, y: 340 },
     parentNode: 'awards',
     extent: 'parent'
@@ -165,7 +171,7 @@ const initialNodes: any = [
   {
     id: 'literary',
     type: 'turbo',
-    data: { icon: <Image id='example' className='ObjectIcon' src={ExampleImage} width={20} height={20} alt='example image' />, title: "Cinematographic Script", subline: "Trophy" },
+    data: { icon: <Image id='example' className='ObjectIcon' src={ObjectIcon} width={20} height={20} alt='example image' />, title: "Cinematographic Script", subline: "Trophy" },
     position: { x: 20, y: 430 },
     parentNode: 'awards',
     extent: 'parent'
@@ -173,7 +179,7 @@ const initialNodes: any = [
   {
     id: 'neumann',
     type: 'turbo',
-    data: { icon: <Image id='example' className='ObjectIcon' src={ExampleImage} width={20} height={20} alt='example image' />, title: "Neumann's Paradise", subline: "3D Model" },
+    data: { icon: <Image id='example' className='ObjectIcon' src={ObjectIcon} width={20} height={20} alt='example image' />, title: "Neumann's Paradise", subline: "3D Model" },
     position: { x: 20, y: 70 },
     parentNode: 'lobby',
     extent: 'parent'
@@ -181,7 +187,7 @@ const initialNodes: any = [
   {
     id: 'scrum',
     type: 'turbo',
-    data: { icon: <Image id='example' className='ObjectIcon' src={ExampleImage} width={20} height={20} alt='example image' />, title: "Agile/Scrum Methodology", subline: "Group of Books" },
+    data: { icon: <Image id='example' className='ObjectIcon' src={ObjectIcon} width={20} height={20} alt='example image' />, title: "Agile/Scrum Methodology", subline: "Group of Books" },
     position: { x: 20, y: 70 },
     parentNode: 'library',
     extent: 'parent'
@@ -189,7 +195,7 @@ const initialNodes: any = [
   {
     id: 'uxtech',
     type: 'turbo',
-    data: { icon: <Image id='example' className='ObjectIcon' src={ExampleImage} width={20} height={20} alt='example image' />, title: "UX/Tech-Art Portfolio", subline: "Digital Easel" },
+    data: { icon: <Image id='example' className='ObjectIcon' src={ObjectIcon} width={20} height={20} alt='example image' />, title: "UX/Tech-Art Portfolio", subline: "Digital Easel" },
     position: { x: 20, y: 70 },
     parentNode: 'rooftop',
     extent: 'parent'
@@ -245,7 +251,7 @@ const initialNodes: any = [
   {
     id: 'xd',
     type: 'turbo',
-    data: { icon: <Image id='example' className='ObjectIcon' src={ExampleImage} width={20} height={20} alt='example image' />, title: "Adobe XD", subline: "Book" },
+    data: { icon: <Image id='example' className='ObjectIcon' src={ObjectIcon} width={20} height={20} alt='example image' />, title: "Adobe XD", subline: "Book" },
     position: { x: 20, y: 70 },
     parentNode: 'adobe',
     extent: 'parent'
@@ -253,7 +259,7 @@ const initialNodes: any = [
   {
     id: 'premiere',
     type: 'turbo',
-    data: { icon: <Image id='example' className='ObjectIcon' src={ExampleImage} width={20} height={20} alt='example image' />, title: "Adobe Premiere Pro", subline: "Book" },
+    data: { icon: <Image id='example' className='ObjectIcon' src={ObjectIcon} width={20} height={20} alt='example image' />, title: "Adobe Premiere Pro", subline: "Book" },
     position: { x: 20, y: 160 },
     parentNode: 'adobe',
     extent: 'parent'
@@ -261,7 +267,7 @@ const initialNodes: any = [
   {
     id: 'illustrator',
     type: 'turbo',
-    data: { icon: <Image id='example' className='ObjectIcon' src={ExampleImage} width={20} height={20} alt='example image' />, title: "Adobe Illustrator", subline: "Book" },
+    data: { icon: <Image id='example' className='ObjectIcon' src={ObjectIcon} width={20} height={20} alt='example image' />, title: "Adobe Illustrator", subline: "Book" },
     position: { x: 20, y: 250 },
     parentNode: 'adobe',
     extent: 'parent'
@@ -269,7 +275,7 @@ const initialNodes: any = [
   {
     id: 'indesign',
     type: 'turbo',
-    data: { icon: <Image id='example' className='ObjectIcon' src={ExampleImage} width={20} height={20} alt='example image' />, title: "Adobe InDesign", subline: "Book" },
+    data: { icon: <Image id='example' className='ObjectIcon' src={ObjectIcon} width={20} height={20} alt='example image' />, title: "Adobe InDesign", subline: "Book" },
     position: { x: 20, y: 340 },
     parentNode: 'adobe',
     extent: 'parent'
@@ -277,7 +283,7 @@ const initialNodes: any = [
   {
     id: 'photoshop',
     type: 'turbo',
-    data: { icon: <Image id='example' className='ObjectIcon' src={ExampleImage} width={20} height={20} alt='example image' />, title: "Adobe Photoshop", subline: "Book" },
+    data: { icon: <Image id='example' className='ObjectIcon' src={ObjectIcon} width={20} height={20} alt='example image' />, title: "Adobe Photoshop", subline: "Book" },
     position: { x: 20, y: 430 },
     parentNode: 'adobe',
     extent: 'parent'
@@ -285,7 +291,7 @@ const initialNodes: any = [
   {
     id: 'aftereffect',
     type: 'turbo',
-    data: { icon: <Image id='example' className='ObjectIcon' src={ExampleImage} width={20} height={20} alt='example image' />, title: "Adobe After Effects", subline: "Book" },
+    data: { icon: <Image id='example' className='ObjectIcon' src={ObjectIcon} width={20} height={20} alt='example image' />, title: "Adobe After Effects", subline: "Book" },
     position: { x: 20, y: 520 },
     parentNode: 'adobe',
     extent: 'parent'
@@ -293,7 +299,7 @@ const initialNodes: any = [
   {
     id: 'sketchapp',
     type: 'turbo',
-    data: { icon: <Image id='example' className='ObjectIcon' src={ExampleImage} width={20} height={20} alt='example image' />, title: "Sketch App", subline: "Book" },
+    data: { icon: <Image id='example' className='ObjectIcon' src={ObjectIcon} width={20} height={20} alt='example image' />, title: "Sketch App", subline: "Book" },
     position: { x: 20, y: 70 },
     parentNode: 'design',
     extent: 'parent'
@@ -301,7 +307,7 @@ const initialNodes: any = [
   {
     id: 'figma',
     type: 'turbo',
-    data: { icon: <Image id='example' className='ObjectIcon' src={ExampleImage} width={20} height={20} alt='example image' />, title: "Figma", subline: "Book" },
+    data: { icon: <Image id='example' className='ObjectIcon' src={ObjectIcon} width={20} height={20} alt='example image' />, title: "Figma", subline: "Book" },
     position: { x: 20, y: 160 },
     parentNode: 'design',
     extent: 'parent'
@@ -309,7 +315,7 @@ const initialNodes: any = [
   {
     id: 'archicad',
     type: 'turbo',
-    data: { icon: <Image id='example' className='ObjectIcon' src={ExampleImage} width={20} height={20} alt='example image' />, title: "Graphisoft Archicad", subline: "Book" },
+    data: { icon: <Image id='example' className='ObjectIcon' src={ObjectIcon} width={20} height={20} alt='example image' />, title: "Graphisoft Archicad", subline: "Book" },
     position: { x: 20, y: 70 },
     parentNode: 'cad',
     extent: 'parent'
@@ -317,7 +323,7 @@ const initialNodes: any = [
   {
     id: 'grasshopper',
     type: 'turbo',
-    data: { icon: <Image id='example' className='ObjectIcon' src={ExampleImage} width={20} height={20} alt='example image' />, title: "Grasshopper (Rhino Plugin)", subline: "Book" },
+    data: { icon: <Image id='example' className='ObjectIcon' src={ObjectIcon} width={20} height={20} alt='example image' />, title: "Grasshopper (Rhino Plugin)", subline: "Book" },
     position: { x: 20, y: 160 },
     parentNode: 'cad',
     extent: 'parent'
@@ -325,7 +331,7 @@ const initialNodes: any = [
   {
     id: 'rhino',
     type: 'turbo',
-    data: { icon: <Image id='example' className='ObjectIcon' src={ExampleImage} width={20} height={20} alt='example image' />, title: "Rhinoceros 3D", subline: "Book" },
+    data: { icon: <Image id='example' className='ObjectIcon' src={ObjectIcon} width={20} height={20} alt='example image' />, title: "Rhinoceros 3D", subline: "Book" },
     position: { x: 20, y: 250 },
     parentNode: 'cad',
     extent: 'parent'
@@ -333,7 +339,7 @@ const initialNodes: any = [
   {
     id: 'cinema4d',
     type: 'turbo',
-    data: { icon: <Image id='example' className='ObjectIcon' src={ExampleImage} width={20} height={20} alt='example image' />, title: "Maxon Cinema 4D", subline: "Book" },
+    data: { icon: <Image id='example' className='ObjectIcon' src={ObjectIcon} width={20} height={20} alt='example image' />, title: "Maxon Cinema 4D", subline: "Book" },
     position: { x: 20, y: 340 },
     parentNode: 'cad',
     extent: 'parent'
@@ -341,7 +347,7 @@ const initialNodes: any = [
   {
     id: 'blender',
     type: 'turbo',
-    data: { icon: <Image id='example' className='ObjectIcon' src={ExampleImage} width={20} height={20} alt='example image' />, title: "Blender", subline: "Book" },
+    data: { icon: <Image id='example' className='ObjectIcon' src={ObjectIcon} width={20} height={20} alt='example image' />, title: "Blender", subline: "Book" },
     position: { x: 20, y: 430 },
     parentNode: 'cad',
     extent: 'parent'
@@ -349,7 +355,7 @@ const initialNodes: any = [
   {
     id: 'houdini',
     type: 'turbo',
-    data: { icon: <Image id='example' className='ObjectIcon' src={ExampleImage} width={20} height={20} alt='example image' />, title: "Side-FX Houdini", subline: "Book" },
+    data: { icon: <Image id='example' className='ObjectIcon' src={ObjectIcon} width={20} height={20} alt='example image' />, title: "Side-FX Houdini", subline: "Book" },
     position: { x: 20, y: 520 },
     parentNode: 'cad',
     extent: 'parent'
@@ -357,7 +363,7 @@ const initialNodes: any = [
   {
     id: 'audition',
     type: 'turbo',
-    data: { icon: <Image id='example' className='ObjectIcon' src={ExampleImage} width={20} height={20} alt='example image' />, title: "Adobe Audition", subline: "Book" },
+    data: { icon: <Image id='example' className='ObjectIcon' src={ObjectIcon} width={20} height={20} alt='example image' />, title: "Adobe Audition", subline: "Book" },
     position: { x: 20, y: 70 },
     parentNode: 'daw',
     extent: 'parent'
@@ -365,7 +371,7 @@ const initialNodes: any = [
   {
     id: 'logic',
     type: 'turbo',
-    data: { icon: <Image id='example' className='ObjectIcon' src={ExampleImage} width={20} height={20} alt='example image' />, title: "Logic Pro-X", subline: "Book" },
+    data: { icon: <Image id='example' className='ObjectIcon' src={ObjectIcon} width={20} height={20} alt='example image' />, title: "Logic Pro-X", subline: "Book" },
     position: { x: 20, y: 160 },
     parentNode: 'daw',
     extent: 'parent'
@@ -373,7 +379,7 @@ const initialNodes: any = [
   {
     id: 'protools',
     type: 'turbo',
-    data: { icon: <Image id='example' className='ObjectIcon' src={ExampleImage} width={20} height={20} alt='example image' />, title: "Avid Pro-Tools", subline: "Book" },
+    data: { icon: <Image id='example' className='ObjectIcon' src={ObjectIcon} width={20} height={20} alt='example image' />, title: "Avid Pro-Tools", subline: "Book" },
     position: { x: 20, y: 250 },
     parentNode: 'daw',
     extent: 'parent'
@@ -381,7 +387,7 @@ const initialNodes: any = [
   {
     id: 'finale',
     type: 'turbo',
-    data: { icon: <Image id='example' className='ObjectIcon' src={ExampleImage} width={20} height={20} alt='example image' />, title: "Finale Music Notation", subline: "Book" },
+    data: { icon: <Image id='example' className='ObjectIcon' src={ObjectIcon} width={20} height={20} alt='example image' />, title: "Finale Music Notation", subline: "Book" },
     position: { x: 20, y: 340 },
     parentNode: 'daw',
     extent: 'parent'
@@ -389,7 +395,7 @@ const initialNodes: any = [
   {
     id: 'notion',
     type: 'turbo',
-    data: { icon: <Image id='example' className='ObjectIcon' src={ExampleImage} width={20} height={20} alt='example image' />, title: "Notion Music", subline: "Book" },
+    data: { icon: <Image id='example' className='ObjectIcon' src={ObjectIcon} width={20} height={20} alt='example image' />, title: "Notion Music", subline: "Book" },
     position: { x: 20, y: 430 },
     parentNode: 'daw',
     extent: 'parent'
@@ -397,7 +403,7 @@ const initialNodes: any = [
   {
     id: 'flstudio',
     type: 'turbo',
-    data: { icon: <Image id='example' className='ObjectIcon' src={ExampleImage} width={20} height={20} alt='example image' />, title: "FL Studio", subline: "Book" },
+    data: { icon: <Image id='example' className='ObjectIcon' src={ObjectIcon} width={20} height={20} alt='example image' />, title: "FL Studio", subline: "Book" },
     position: { x: 20, y: 520 },
     parentNode: 'daw',
     extent: 'parent'
@@ -405,7 +411,7 @@ const initialNodes: any = [
   {
     id: 'react',
     type: 'turbo',
-    data: { icon: <Image id='example' className='ObjectIcon' src={ExampleImage} width={20} height={20} alt='example image' />, title: "React Library", subline: "Book" },
+    data: { icon: <Image id='example' className='ObjectIcon' src={ObjectIcon} width={20} height={20} alt='example image' />, title: "React Library", subline: "Book" },
     position: { x: 20, y: 70 },
     parentNode: 'dev',
     extent: 'parent'
@@ -413,7 +419,7 @@ const initialNodes: any = [
   {
     id: 'javascript',
     type: 'turbo',
-    data: { icon: <Image id='example' className='ObjectIcon' src={ExampleImage} width={20} height={20} alt='example image' />, title: "Javascript", subline: "Book" },
+    data: { icon: <Image id='example' className='ObjectIcon' src={ObjectIcon} width={20} height={20} alt='example image' />, title: "Javascript", subline: "Book" },
     position: { x: 20, y: 160 },
     parentNode: 'dev',
     extent: 'parent'
@@ -421,7 +427,7 @@ const initialNodes: any = [
   {
     id: 'typescript',
     type: 'turbo',
-    data: { icon: <Image id='example' className='ObjectIcon' src={ExampleImage} width={20} height={20} alt='example image' />, title: "Typescript", subline: "Book" },
+    data: { icon: <Image id='example' className='ObjectIcon' src={ObjectIcon} width={20} height={20} alt='example image' />, title: "Typescript", subline: "Book" },
     position: { x: 20, y: 250 },
     parentNode: 'dev',
     extent: 'parent'
@@ -429,7 +435,7 @@ const initialNodes: any = [
   {
     id: 'nextjs',
     type: 'turbo',
-    data: { icon: <Image id='example' className='ObjectIcon' src={ExampleImage} width={20} height={20} alt='example image' />, title: "Next.js Framework", subline: "Book" },
+    data: { icon: <Image id='example' className='ObjectIcon' src={ObjectIcon} width={20} height={20} alt='example image' />, title: "Next.js Framework", subline: "Book" },
     position: { x: 20, y: 340 },
     parentNode: 'dev',
     extent: 'parent'
@@ -437,7 +443,7 @@ const initialNodes: any = [
   {
     id: 'threejs',
     type: 'turbo',
-    data: { icon: <Image id='example' className='ObjectIcon' src={ExampleImage} width={20} height={20} alt='example image' />, title: "Three.js Library", subline: "Book" },
+    data: { icon: <Image id='example' className='ObjectIcon' src={ObjectIcon} width={20} height={20} alt='example image' />, title: "Three.js Library", subline: "Book" },
     position: { x: 20, y: 430 },
     parentNode: 'dev',
     extent: 'parent'
@@ -445,7 +451,7 @@ const initialNodes: any = [
   {
     id: 'unity',
     type: 'turbo',
-    data: { icon: <Image id='example' className='ObjectIcon' src={ExampleImage} width={20} height={20} alt='example image' />, title: "Unity", subline: "Book" },
+    data: { icon: <Image id='example' className='ObjectIcon' src={ObjectIcon} width={20} height={20} alt='example image' />, title: "Unity", subline: "Book" },
     position: { x: 20, y: 70 },
     parentNode: 'render',
     extent: 'parent'
@@ -453,7 +459,7 @@ const initialNodes: any = [
   {
     id: 'twinmotion',
     type: 'turbo',
-    data: { icon: <Image id='example' className='ObjectIcon' src={ExampleImage} width={20} height={20} alt='example image' />, title: "Twinmotion", subline: "Book" },
+    data: { icon: <Image id='example' className='ObjectIcon' src={ObjectIcon} width={20} height={20} alt='example image' />, title: "Twinmotion", subline: "Book" },
     position: { x: 20, y: 160 },
     parentNode: 'render',
     extent: 'parent'
@@ -488,7 +494,7 @@ export const SpaceMap: React.FC<Props> = ({ onMouseOver, isOpened }) => {
 
   return (
 
-    <div className='SpaceMapWindow' style={divStyle} onMouseOver={onMouseOver} >
+    <div className='SpaceMapWindow' style={divStyle} onMouseOver={onMouseOver}>
 
       <ReactFlow
         nodes={nodes}
@@ -500,6 +506,7 @@ export const SpaceMap: React.FC<Props> = ({ onMouseOver, isOpened }) => {
         nodeTypes={nodeTypes}
         edgeTypes={edgeTypes}
         defaultEdgeOptions={defaultEdgeOptions}
+        nodesDraggable={false}
       >
         <Controls showInteractive={false} />
         <svg>

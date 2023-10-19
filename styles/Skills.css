@@ -34,7 +34,6 @@
     display: flex;
     width: 85%;
     height: 85%;
-    background: linear-gradient(90deg, #1C2434, #374C6C);
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
@@ -81,7 +80,7 @@
 }
 
 .inflatedInner {
-    background: #374C6C;
+    background: #315F8C;
 }
 
 .SkillIcon {

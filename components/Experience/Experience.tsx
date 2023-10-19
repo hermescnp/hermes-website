@@ -37,7 +37,7 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
     const pathGenerator = new PathGenerator(data);
 
     // MAIN CAMERA TARGET
-    const generalTarget = new THREE.Vector3(data[0].positionX, data[0].positionY, data[0].positionZ);
+    const generalTarget = new THREE.Vector3(data[0]?.positionX, data[0]?.positionY, data[0]?.positionZ);
 
     const refBody = useRef<HTMLDivElement>(null)
     const [renderer3d, setRenderer3d] = useState<any>();

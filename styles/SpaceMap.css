@@ -1,12 +1,14 @@
 .SpaceMapWindow {
     position: fixed;
-    top: 56px;
+    top: 65px;
     left: 0;
     bottom: 0;
     width: 100%;
-    height: calc(100% - 56px);
+    height: calc(100% - 65px);
     overflow: hidden;
-    background-color: rgba(18, 23, 34, 0.9);
+    background-color: rgba(18, 23, 34, 0.5);
+    backdrop-filter: blur(10px);
+    box-shadow: inset 0px 8px 8px -8px rgba(0, 0, 0, 0.5);
     z-index: 10;
     transition: all 0.3s ease;
     overflow: hidden;
@@ -57,7 +59,7 @@
       from -160deg at 50% 50%,
       #FFFFFF 0deg,
       #374C6C 120deg,
-      #2a8af6 240deg,
+      #315F8C 240deg,
       #FFFFFF 360deg
     );
     left: 50%;
@@ -72,7 +74,7 @@
       from -160deg at 50% 50%,
       #FFFFFF 0deg,
       #374C6C 120deg,
-      #2a8af6 240deg,
+      #315F8C 240deg,
       rgba(18, 23, 34, 0) 360deg
     );
     animation: spinner 4s linear infinite;

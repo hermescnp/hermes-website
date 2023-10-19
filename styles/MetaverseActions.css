@@ -1,0 +1,93 @@
+.MetaverseActionsBar {
+    position: fixed;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 65px;
+    width: auto;
+    top: 0px;
+    left: 50%;
+    transform: translate(-50%, -0%);
+    z-index: 11;
+}
+
+.MapButtonContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 10px;
+    width: 100%;
+    height: 100%;
+}
+
+.MapButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    border: 1px solid white;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.ActionButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    border: 1px solid white;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.MapButtonOpened {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 65px;
+    height: 65px;
+    border: 1px solid white;
+    border-radius: 0px 0px 10px 10px;
+    transition: all 0.3s ease;
+    background-color: rgba(55, 76, 108, 1);
+}
+
+.MapButtonOpened:hover {
+    background-color: rgba(35, 56, 88, 1);
+}
+
+.MapButtonOpened:hover .MapIcon {
+    opacity: 0.5;
+}
+
+.MapButton:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.MapButton:hover .MapIcon {
+    opacity: 1;
+}
+
+.MapIcon {
+    opacity: 0.5;
+    transition: all 0.3s ease;
+}
+
+.MapIconOpened {
+    opacity: 1;
+    transition: all 0.3s ease;
+}
+
+@media screen and (orientation: portrait) {
+    .MetaverseActionsBar {
+        top: 65px;
+    }
+
+    .MapButton {
+        background-color: rgba(18, 23, 34, 0.5);
+        backdrop-filter: blur(10px);
+    }
+}

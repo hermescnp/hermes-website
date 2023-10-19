@@ -2,16 +2,19 @@ import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
 import '../../styles/Navbar.css'
 import chevron from 'public/assets/SVG/Chevron.svg'
-import mapIcon from 'public/assets/SVG/space_map.svg'
 import { NavInstance } from './NavInstance'
 import NavSearchBar from './NavSearchBar'
+import { Optionsmenu } from './Optionsmenu'
 import PhantomInstance from './PhantomInstance'
-import { SpaceMap } from '../SpaceMap/SpaceMap'
 import { useExperienceContext } from '@/context/ExperienceContext'
+import ObjectIcon from 'public/assets/SVG/3DGraphics_Icon.svg'
 
 interface NavbarProps {
     isClient: boolean;
     isPortrait: boolean;
+    isMapOpened: boolean;
+    handleAboutButtonClick: () => void;
+    isSidebarOpened: boolean;
 }
 
 type PlaceHoverType = {
@@ -19,28 +22,24 @@ type PlaceHoverType = {
     isSibling: boolean | null;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ isClient, isPortrait }) => {
+export const Navbar: React.FC<NavbarProps> = ({ isClient, isPortrait, isMapOpened, handleAboutButtonClick, isSidebarOpened }) => {
     const experienceContext = useExperienceContext();
     const InstanceBackButton = isClient ? experienceContext.InstanceBackButton : () => { };
     const placehover = isClient ? experienceContext.placehover : { name: '', isSibling: null };
     const history = isClient ? experienceContext.history : () => ['main'];
     const spaceData = isClient ? experienceContext.spaceData : [];
-    const [isMapOpened, setIsMapOpened] = useState<boolean>(true);
-    const [portraitMode, setPortraitMode] = useState<boolean>(isPortrait)
+    const [portraitMode, setPortraitMode] = useState<boolean>(isPortrait);
+    const [currentInstance, setCurrentInstance] = useState<string>('main');
 
     const stopPropagation = (event: React.SyntheticEvent) => {
         event.stopPropagation();
-    }
-
-    const openSpaceMapWindow = () => {
-        setIsMapOpened(prevState => !prevState);
     }
 
     const [navInstances, setNavInstances] = useState<Array<{ instance: JSX.Element, placehover: PlaceHoverType }>>([]);
     let navInstancePlacehover = placehover?.isSibling ? placehover?.name : null;
     let navSearchBarPlaceHover = placehover?.isSibling ? null : placehover?.name;
 
-    const getLastItem = (array : any): string | null => {
+    const getLastItem = (array: any): string | null => {
         if (array.length > 0) {
             return array[array.length - 1];
         }
@@ -54,12 +53,12 @@ export const Navbar: React.FC<NavbarProps> = ({ isClient, isPortrait }) => {
             if (currentSpace.parentKey !== 'root') {
                 createNavInstances(currentSpace.parentKey);
             }
-            if (!navInstancePlacehover && isPortrait) {
+            if (isPortrait) {
                 // Only show the current instance in portrait mode
                 setNavInstances([
                     {
                         instance: <NavInstance
-                            key={currentSpace.key}
+                            instanceKey={currentSpace.key}
                             instanceName={currentSpace.name}
                             placehover={placehover?.isSibling ? navInstancePlacehover : null}
                             HandleInstanceClick={InstanceBackButton} />,
@@ -71,7 +70,7 @@ export const Navbar: React.FC<NavbarProps> = ({ isClient, isPortrait }) => {
                     ...prevNavInstances,
                     {
                         instance: <NavInstance
-                            key={currentSpace.key}
+                            instanceKey={currentSpace.key}
                             instanceName={currentSpace.name}
                             placehover={placehover?.isSibling ? navInstancePlacehover : null}
                             HandleInstanceClick={InstanceBackButton} />,
@@ -85,10 +84,10 @@ export const Navbar: React.FC<NavbarProps> = ({ isClient, isPortrait }) => {
     // Run createNavInstances once on component mount
     useEffect(() => {
         const lastHistoryItem = getLastItem(history);
+        setCurrentInstance(lastHistoryItem || 'main');
         if (lastHistoryItem) {
             setNavInstances([]); // Clear previous navigation instances
             createNavInstances(lastHistoryItem); // Create new navigation instances based on the last item in history
-            setIsMapOpened(false);
         }
     }, [history, spaceData, isPortrait]);
 
@@ -98,18 +97,16 @@ export const Navbar: React.FC<NavbarProps> = ({ isClient, isPortrait }) => {
 
     return (
         <div className="NavBar" onClick={stopPropagation}>
-            <button className="BackButton" onClick={InstanceBackButton}>
+            <button className="BackButton" onClick={isPortrait && isSidebarOpened? handleAboutButtonClick : InstanceBackButton}>
                 <Image id="backChevron" className="BackChevron" src={chevron} width={20} height={20} alt="Back" />
             </button>
-            <div className="MapButtonContainer">
-                <button className={`${isMapOpened ? 'MapButtonOpened' : 'MapButton'}`} onClick={openSpaceMapWindow}>
-                    <Image id="mapIcon" className={`${isMapOpened ? 'MapIconOpened' : 'MapIcon'}`} src={mapIcon} width={22} height={22} alt="Map" />
-                </button>
-            </div>
             <div className="Navigation">
                 {portraitMode ? (
                     // Portrait Mode
                     <>
+                        {currentInstance !== "main" ? (
+                            <Image id="objectIcon" className="ObjectIcon" src={ObjectIcon} width={15} height={15} alt="Object Icon"></Image>
+                        ) : null}
                         {navInstances.map(instanceData => instanceData.instance)}
                     </>
                 ) : (
@@ -131,7 +128,7 @@ export const Navbar: React.FC<NavbarProps> = ({ isClient, isPortrait }) => {
                     </>
                 )}
             </div>
-            <SpaceMap isOpened={isMapOpened} onMouseOver={stopPropagation} />
+            <Optionsmenu handleAboutButtonClick={handleAboutButtonClick} isSidebarOpened={isSidebarOpened} isPortrait={portraitMode} />
         </div>
     )
 }

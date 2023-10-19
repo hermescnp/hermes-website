@@ -10,6 +10,7 @@ type ExperienceContextType = {
   history: string[];
   pushToHistory: (item: string) => void;
   stepBackHistory: () => void;
+  getLastHistoryItem: () => string;
   spaceData: any[];
   loadingState: string;
   setLoadingState: React.Dispatch<React.SetStateAction<string>>;
@@ -29,19 +30,16 @@ export const ExperienceContext = createContext<ExperienceContextType | undefined
 export const ExperienceProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isClicked, setIsClicked] = useState<boolean>(false);
   const [placehover, setPlaceHover] = useState<PlaceHoverType>({ name: '', isSibling: null });
-  const [currentInstance, setCurrentInstance] = useState<string>('main');
   const [spaceData, setSpaceData] = useState([]);
   const [loadingState, setLoadingState] = useState('Loading metaverse');
   const [loadingProgress, setLoadingProgress] = useState<number>(0);
   const [startExperience, setStartExperience] = useState<boolean>(false);
-  const [history, pushToHistory, stepBackHistory, clearHistory] = useHistory();
+  const [history, pushToHistory, stepBackHistory, clearHistory, getLastHistoryItem] = useHistory();
 
   const InstanceBackButton = (event: any) => {
     event.stopPropagation();
     setIsClicked(prev => !prev);
   };
-
-  const startIntroButton = (event: any) => {}
 
   useEffect(() => {
     fetch('/models/space-map.json')
@@ -61,6 +59,7 @@ export const ExperienceProvider: React.FC<{ children: React.ReactNode }> = ({ ch
       history,
       pushToHistory,
       stepBackHistory,
+      getLastHistoryItem,
       spaceData,
       loadingState,
       setLoadingState,

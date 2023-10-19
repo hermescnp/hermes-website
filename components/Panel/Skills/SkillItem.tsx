@@ -71,7 +71,7 @@ export const SkillItem: React.FC<SkillItemProps> = ({ skill }) => {
                             strokeDasharray={circumference.toString()}
                             strokeDashoffset={offset.toString()}
                             strokeLinecap="round"
-                            style={{ stroke: 'white', strokeWidth: '4px', fill: 'none', transition: 'all 0.2s ease-out' }}
+                            style={{ stroke: 'white', strokeWidth: '2px', fill: 'none', transition: 'all 0.2s ease-out' }}
                         />
                     </svg>
                     <div className={skillItemClasses} ref={skillItemRef}>

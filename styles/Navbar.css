@@ -1,67 +1,14 @@
 .NavBar {
     display: grid;
-    grid-template-columns: 50px 50px 1fr auto;
-    position: relative;
-    height: 100%;
+    grid-template-columns: 50px 1fr auto;
+    position: absolute;
+    height: 65px;
+    width: 100%;
     top: 0px;
     left: 0px;
-}
-
-.MapButtonContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-}
-
-.MapButton {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 45px;
-    height: 45px;
-    border: 1px solid rgba(55, 76, 108, 1);
-    border-radius: 10px;
-    transition: all 0.3s ease;
-}
-
-.MapButtonOpened {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 45px;
-    height: 45px;
-    border: 1px solid rgba(55, 76, 108, 1);
-    border-radius: 10px;
-    transition: all 0.3s ease;
-    background-color: rgba(55, 76, 108, 1);
-}
-
-.MapButtonOpened:hover {
-    background-color: rgba(55, 76, 108, 0.5);
-}
-
-.MapButtonOpened:hover .MapIcon {
-    opacity: 0.5;
-}
-
-.MapButton:hover {
-    background-color: rgba(0, 0, 0, 0.5);
-}
-
-.MapButton:hover .MapIcon {
-    opacity: 1;
-}
-
-.MapIcon {
-    opacity: 0.5;
-    transition: all 0.3s ease;
-}
-
-.MapIconOpened {
-    opacity: 1;
-    transition: all 0.3s ease;
+    z-index: 10;
+    background-color: rgba(18, 23, 34, 0.5);
+    backdrop-filter: blur(10px);
 }
 
 .BackButton {
@@ -151,6 +98,13 @@
     width: 15px;
 }
 
+.ObjectIcon {
+    opacity: 0.5;
+    transition: all 0.3s ease;
+    padding-left: 10px;
+    z-index: 10;
+}
+
 .PhantomArrow {
     opacity: 0;
     height: 15px;
@@ -169,20 +123,33 @@
     font-weight: 100;
     width: auto;
     height: 100%;
-    padding: 0px 20px;
+    padding: 0px 15px;
+    transition: all 0.3s ease;
+}
+
+.MainInstanceButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    font-weight: 100;
+    width: auto;
+    height: 100%;
+    padding: 0px 15px;
+    margin-left: -5px;
     transition: all 0.3s ease;
 }
 
 .PhantomInstance {
     display: flex;
-    color: #374C6C;
+    color: #315F8C;
     justify-content: center;
     align-items: center;
     font-size: 14px;
     font-weight: 400;
     width: auto;
     height: 100%;
-    padding: 0px 20px;
+    padding: 0px 15px;
     transition: all 0.3s ease;
 }
 
@@ -244,8 +211,16 @@
     opacity: 1;
 }
 
+.NavigationInstance:hover .ObjectIcon {
+    opacity: 1;
+}
+
 .NavigationInstance:hover .InstanceButton {
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.NavigationInstance:hover .MainInstanceButton {
+    background-color: rgba(0, 0, 0, 0.3);
 }
 
 .SiblingInstance {

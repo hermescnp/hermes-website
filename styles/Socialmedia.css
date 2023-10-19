@@ -1,9 +1,8 @@
 #socialMedia {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     grid-template-rows: 50px;
-    margin-bottom: 10px;
-    margin-right: 10px;
+    width: 250px;
 }
 
 #socialMediaFooter {
@@ -20,14 +19,14 @@
 }
 
 .socialMediaIcon {
-    width: 35px;
-    height: 35px;
+    width: 32px;
+    height: 32px;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #374C6C;
+    background-color: #315F8C;
     border-radius: 50%;
-    border: solid 2px #374C6C;
+    border: solid 1px #315F8C;
     transition: all 0.3s ease;
     cursor: pointer;
 }
@@ -38,15 +37,15 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #374C6C;
+    background-color: #315F8C;
     border-radius: 50%;
     transition: all 0.3s ease;
     cursor: pointer;
 }
 
 .socialMediaIcon:hover {
-    width: 37px;
-    height: 37px;
+    width: 38px;
+    height: 38px;
     background-color: white;
 }
 
