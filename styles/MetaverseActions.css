@@ -83,16 +83,11 @@
 
 @media screen and (orientation: portrait) {
     .MetaverseActionsBar {
-        top: auto;
-        bottom: 0px;
+        top: 65px;
     }
 
     .MapButton {
         background-color: rgba(18, 23, 34, 0.5);
         backdrop-filter: blur(10px);
-    }
-
-    .MapButtonOpened {
-        border-radius: 10px 10px 0px 0px;
     }
 }

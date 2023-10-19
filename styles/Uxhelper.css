@@ -29,9 +29,10 @@
 @media screen and (orientation: portrait) {
   .ChatbotContainer {
     top: auto;
-    bottom: calc(70px + env(safe-area-inset-bottom));
-    left: 20px;
+    bottom: calc(15px + env(safe-area-inset-bottom));
+    left: 15px;
     align-items: flex-end;
+    margin-right: 15px;
   }
 
   .LoadingChatbotContainer {
