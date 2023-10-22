@@ -97,7 +97,7 @@ export const Navbar: React.FC<NavbarProps> = ({ isClient, isPortrait, isMapOpene
 
     return (
         <div className="NavBar" onClick={stopPropagation}>
-            <button className="BackButton" onClick={isPortrait && isSidebarOpened? handleAboutButtonClick : InstanceBackButton}>
+            <button className="BackButton" onClick={isPortrait && isSidebarOpened ? handleAboutButtonClick : InstanceBackButton}>
                 <Image id="backChevron" className="BackChevron" src={chevron} width={20} height={20} alt="Back" />
             </button>
             <div className="Navigation">
@@ -116,11 +116,11 @@ export const Navbar: React.FC<NavbarProps> = ({ isClient, isPortrait, isMapOpene
                         <NavInstance instanceName={"Root"} /> */}
                         {navInstances.map(instanceData => instanceData.instance)}
 
-                        {/*TODO: Implement Search Bar when the navigation allows jumping to any ramdom instance.
-                        <NavSearchBar
-                    placehover={!placehover?.isSibling ? navSearchBarPlaceHover : null}
-                    isMapOpened={isMapOpened}
-                /> */}
+                        {/* TODO: Implement Search Bar when the navigation allows jumping to any ramdom instance. */}
+                        {/* <NavSearchBar
+                            placehover={!placehover?.isSibling ? navSearchBarPlaceHover : null}
+                            isMapOpened={isMapOpened}
+                        /> */}
 
                         <PhantomInstance
                             placehover={!placehover?.isSibling ? navSearchBarPlaceHover : null}
