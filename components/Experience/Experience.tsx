@@ -47,7 +47,7 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
     const [scene] = useState(new THREE.Scene());
     const [_controls, setControls] = useState<any>();
     const [model, setModel] = useState<any>(false);
-    const { placehover, setPlaceHover, history, pushToHistory, stepBackHistory, setLoadingState, setLoadingProgress } = useExperienceContext();
+    const { placehover, setPlaceHover, history, pushToHistory, getLastHistoryItem, getPrevHistoryItem, setLoadingState, setLoadingProgress } = useExperienceContext();
     const [isIntroCompleted, setIsIntroCompleted] = useState<boolean>(false);
     const isIntroCompletedRef = useRef<boolean>(isIntroCompleted);
 
@@ -97,7 +97,6 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
         const instanceParent = instance?.parentKey;
         const current = instance?.key;
         if (instanceParent !== 'root') {
-            setPrevInstance(current);  // updating previous instance ref
             pushToHistory(instanceParent);
         }
     }, [isClicked]);
@@ -111,7 +110,8 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
         if (historyRef.current.length < history.length) { isHistoryIncreasing.current = true }
         else { isHistoryIncreasing.current = false }
         historyRef.current = history;
-        setCurrentInstance(getCurrentInstance(history));
+        setCurrentInstance(getLastHistoryItem());
+        setPrevInstance(getPrevHistoryItem());
     }, [history]);
 
     // UPDATE TRAVELING DATA
@@ -140,7 +140,6 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
         prevInstanceRef.current = prevInstance;
         const newTravelingData = getTravelingData(prevInstanceRef.current, currentInstance, data, pathGenerator);
         setTravelingData(newTravelingData);
-
     }, [currentInstance]);
 
     //  EXPERIENCE ENGINE
@@ -219,7 +218,6 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
                         const instanceParent = instance?.parentKey;
                         const current = instance?.key;
                         if (instanceParent !== 'root') {
-                            setPrevInstance(current);  // updating previous instance ref
                             pushToHistory(instanceParent);
                         }
                     } else {
@@ -233,7 +231,6 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
                                 // Single click logic here
                                 const pathName = objectSelector.getCurrentSelection();
                                 if (pathName !== 'no selections') {
-                                    setPrevInstance(instanceRef.current);
                                     pushToHistory(pathName);
                                 }
                             }

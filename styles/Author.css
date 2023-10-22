@@ -11,7 +11,7 @@
 #AuthorBar {
     display: grid;
     grid-template-columns: auto 1fr;
-    position: absolute;
+    position: fixed;
     width: auto;
     bottom: 0px;
     left: 0px;

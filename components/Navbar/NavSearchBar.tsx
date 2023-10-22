@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
 import chevron from 'public/assets/SVG/Chevron.svg'
 import searchIcon from 'public/assets/SVG/search_icon.svg'
+import { useExperienceContext } from '@/context/ExperienceContext'
 
 interface SearchBarProps {
     placehover?: string | null;
@@ -11,6 +12,7 @@ interface SearchBarProps {
 export default function NavSearchBar({ placehover, isMapOpened }: SearchBarProps) {
     const [inputValue, setInputValue] = useState(placehover || '');
     const [isFocused, setIsFocused] = useState(false);
+    const experienceContext = useExperienceContext();
 
     useEffect(() => {
         if (isFocused === false && isMapOpened === false) {
@@ -34,7 +36,7 @@ export default function NavSearchBar({ placehover, isMapOpened }: SearchBarProps
 
     const handleSubmit = () => {
         if (inputValue) {
-            console.log('Path sent');
+            experienceContext.pushToHistory(inputValue);
         }
     }
 

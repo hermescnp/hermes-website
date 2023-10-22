@@ -104,6 +104,15 @@ const App: React.FC<AppProps> = ({ children }) => {
       .catch(error => console.error('Error:', error));
   }, []);
 
+  useEffect(() => {
+    fetch('/models/space-map.json')
+    .then(response => response.json())
+    .then(data2 => {
+      experienceContext.setSpaceData(data2);
+    })
+    .catch(error => console.error('Error:', error));
+  }, []);
+
   return (
     <html lang="en">
       <body className='Layout'>
