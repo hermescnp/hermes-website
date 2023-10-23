@@ -1,6 +1,7 @@
 "use client"
 import React, { createContext, useState, useContext, useEffect } from 'react'
 import useHistory from './LeGineHooks'
+import {getDefaultTravelingData} from '@/components/Experience/InstanceTraveler'
 
 type ExperienceContextType = {
   isClicked: boolean;
@@ -20,6 +21,8 @@ type ExperienceContextType = {
   setLoadingProgress: React.Dispatch<React.SetStateAction<number>>;
   startExperience: boolean;
   setStartExperience: React.Dispatch<React.SetStateAction<boolean>>;
+  travelingData: any;
+  setTravelingData: React.Dispatch<React.SetStateAction<any>>;
 }
 
 type PlaceHoverType = {
@@ -37,6 +40,7 @@ export const ExperienceProvider: React.FC<{ children: React.ReactNode }> = ({ ch
   const [loadingProgress, setLoadingProgress] = useState<number>(0);
   const [startExperience, setStartExperience] = useState<boolean>(false);
   const [history, pushToHistory, stepBackHistory, clearHistory, getLastHistoryItem, getPrevHistoryItem] = useHistory();
+  const [travelingData, setTravelingData] = useState<any>(getDefaultTravelingData(spaceData));
 
   const InstanceBackButton = (event: any) => {
     event.stopPropagation();
@@ -61,7 +65,9 @@ export const ExperienceProvider: React.FC<{ children: React.ReactNode }> = ({ ch
       loadingProgress,
       setLoadingProgress,
       startExperience,
-      setStartExperience }}>
+      setStartExperience,
+      travelingData,
+      setTravelingData }}>
       {children}
     </ExperienceContext.Provider>
   );

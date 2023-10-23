@@ -38,6 +38,9 @@ export const LoadingPage: React.FC<LoadingScreenProps> = ({ isClient }) => {
     const handleStart = () => {
         experienceContext.setLoadingState('started');
         experienceContext.setStartExperience(true);
+        const audio = new Audio('/assets/sounds/intro_effect.mp3');
+        audio.volume = 1;
+        audio.play();
     }
 
     const stopClickPropagation = (event: React.MouseEvent<HTMLDivElement>) => {

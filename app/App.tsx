@@ -9,6 +9,7 @@ import { useExperienceContext } from '@/context/ExperienceContext'
 import { Panel } from '@/components/Panel/Panel'
 import { Tabsbar } from '@/components/Header/Tabsbar'
 import { Uxhelper } from '@/components/Uxhelper/Uxhelper'
+import { PlayTravelingSound } from '@/components/Experience/TravelingSound'
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -31,6 +32,8 @@ const App: React.FC<AppProps> = ({ children }) => {
   const [isMapOpened, setIsMapOpened] = useState<boolean>(true);
   const [isSidebarOpened, setIsSidebarOpened] = useState<boolean>(false);
   const [panelData, setPanelData] = useState([]);
+  const isExperienceStarted = experienceContext.startExperience;
+  const travelingData = experienceContext.travelingData;
 
   const panelRef = useRef<HTMLDivElement>(null);
   const sidebarRef = useRef<HTMLDivElement>(null);
@@ -129,6 +132,7 @@ const App: React.FC<AppProps> = ({ children }) => {
         </div>
         {displayLoading ? <LoadingPage isClient={isClient} /> : null}
         <Uxhelper isNotVisible={isMapOpened || isSidebarOpened && isPortraitModeRef.current}/>
+        {isExperienceStarted? <PlayTravelingSound travelingData={travelingData}/> : null}
       </body>
     </html>
   );
