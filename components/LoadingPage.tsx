@@ -38,8 +38,12 @@ export const LoadingPage: React.FC<LoadingScreenProps> = ({ isClient }) => {
     const handleStart = () => {
         experienceContext.setLoadingState('started');
         experienceContext.setStartExperience(true);
-        const audio = new Audio('/assets/sounds/intro_effect.mp3');
-        audio.volume = 1;
+        const backgroundMusic = new Audio('/assets/sounds/background_music.mp3');
+        backgroundMusic.volume = 1;
+        backgroundMusic.loop = true;
+        backgroundMusic.play();
+        const audio = new Audio('/assets/sounds/waterdrop_button.mp3');
+        audio.volume = 0.7;
         audio.play();
     }
 

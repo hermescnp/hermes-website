@@ -27,7 +27,7 @@ export const MetaverseActions: React.FC<MetaActionsProps> = ({ openSpaceMapWindo
                     <button className='ActionButton icon-disabled'>
                         <Image id="arIcon" className='MapIcon' src={arIcon} width={25} height={25} alt="Map" />
                     </button>
-                    <button className='ActionButton icon-disabled'>
+                    <button id='muteSoundButton' className='ActionButton icon-disabled'>
                         <Image id="soundIcon" className='MapIcon' src={soundIcon} width={20} height={20} alt="Map" />
                     </button>
                 </div>

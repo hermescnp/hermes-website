@@ -23,7 +23,7 @@ export const TypingEffect: React.FC<TypingEffectProps> = ({ message, typingSpeed
 
     const playSound = (src: string) => {
         const audio = new Audio(src);
-        audio.volume = 0.3;
+        audio.volume = 0.5;
         audio.play();
     }    
 

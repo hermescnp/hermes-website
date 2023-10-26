@@ -88,6 +88,9 @@ const App: React.FC<AppProps> = ({ children }) => {
 
   const openSpaceMapWindow = () => {
     setIsMapOpened(prevState => !prevState);
+    const audio = new Audio('/assets/sounds/RtoL_paper.mp3');
+    audio.volume = 1;
+    audio.play();
   }
 
   useEffect(() => {
@@ -95,7 +98,10 @@ const App: React.FC<AppProps> = ({ children }) => {
   }, []);
 
   const handleAboutButtonClick = () => {
-    setIsSidebarOpened(!isSidebarOpened);
+    setIsSidebarOpened(prevState => !prevState);
+    const audio = new Audio('/assets/sounds/LtoR_paper.mp3');
+    audio.volume = 1;
+    audio.play();
   };
 
   useEffect(() => {
