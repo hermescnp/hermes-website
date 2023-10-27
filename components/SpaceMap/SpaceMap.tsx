@@ -449,9 +449,9 @@ const initialNodes: any = [
     extent: 'parent'
   },
   {
-    id: 'unity',
+    id: 'unreal',
     type: 'turbo',
-    data: { icon: <Image id='example' className='ObjectIcon' src={ObjectIcon} width={20} height={20} alt='example image' />, title: "Unity", subline: "Book" },
+    data: { icon: <Image id='example' className='ObjectIcon' src={ObjectIcon} width={20} height={20} alt='example image' />, title: "Unreal Engine", subline: "Book" },
     position: { x: 20, y: 70 },
     parentNode: 'render',
     extent: 'parent'
@@ -489,7 +489,8 @@ export const SpaceMap: React.FC<Props> = ({ onMouseOver, isOpened }) => {
   const onConnect = useCallback((params: any) => setEdges((els) => addEdge(params, els)), []);
 
   const divStyle = {
-    height: isOpened ? 'calc(100% - 56px)' : '0%',
+    height: isOpened ? 'calc(100% - 56px)' : '1%',
+    opacity: isOpened ? 1 : 0,
   };
 
   return (

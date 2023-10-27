@@ -26,7 +26,7 @@ export const Uxhelper: React.FC<UxhelperProps> = ({ isNotVisible }) => {
     const playNewMessageSound = () => {
         const audio = new Audio('/assets/sounds/new_message.mp3');
         audio.volume = 1;
-        audio.play();
+        audio.play().catch((error) => {});
     }
 
     const addNewMessage = (newMessage: string) => {
