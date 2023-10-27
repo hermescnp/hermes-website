@@ -43,7 +43,7 @@ export const LoadingPage: React.FC<LoadingScreenProps> = ({ isClient }) => {
         backgroundMusic.loop = true;
         backgroundMusic.play();
         const audio = new Audio('/assets/sounds/waterdrop_button.mp3');
-        audio.volume = 0.5;
+        audio.volume = 0.3;
         audio.play();
     }
 
