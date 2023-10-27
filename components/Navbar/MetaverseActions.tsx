@@ -38,9 +38,7 @@ export const MetaverseActions: React.FC<MetaActionsProps> = ({ openSpaceMapWindo
                     </button>
                 </div>
             </div>
-            <div style={{ position: 'relative', width: '100%', height: '0%' }}>
-                <SpaceMap isOpened={isMapOpened} onMouseOver={stopPropagation} />
-            </div>
+            <SpaceMap isOpened={isMapOpened} onMouseOver={stopPropagation} />
         </>
     )
 }

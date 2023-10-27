@@ -23,6 +23,7 @@ export const PlayTravelingSound: React.FC<TravelingDataProps> = ({ travelingData
             }
             else if (travelingData.originInstanceLevel > 1) {
                 const sibling = new Audio('/assets/sounds/travelTo_sibling.mp3');
+                sibling.volume = 0.5;
                 sibling.play();
             }
         }

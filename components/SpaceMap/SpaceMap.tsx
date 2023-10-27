@@ -491,11 +491,13 @@ export const SpaceMap: React.FC<Props> = ({ onMouseOver, isOpened }) => {
   const divStyle = {
     height: isOpened ? 'calc(100% - 56px)' : '1%',
     opacity: isOpened ? 1 : 0,
+    PointerEvents: isOpened ? 'auto' : 'none',
+    cursor: isOpened ? 'auto' : 'none',
   };
 
   return (
 
-    <div className='SpaceMapWindow' style={divStyle} onMouseOver={onMouseOver}>
+    <div className={`SpaceMapWindow ${isOpened ? "" : "MapClosed"}`} style={divStyle} onMouseOver={onMouseOver}>
 
       <ReactFlow
         nodes={nodes}
