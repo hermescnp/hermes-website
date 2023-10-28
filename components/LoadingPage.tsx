@@ -1,3 +1,4 @@
+"use client"
 import React, { useState, useEffect } from 'react'
 import '../styles/LoadingPage.css'
 import Image from 'next/image'
