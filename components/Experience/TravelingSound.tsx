@@ -1,4 +1,3 @@
-"use client"
 import React, { useEffect } from 'react';
 
 type TravelingDataProps = {
