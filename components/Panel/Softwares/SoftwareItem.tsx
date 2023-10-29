@@ -25,12 +25,14 @@ const SoftwareItem: React.FC<SoftwareItemProps> = ({ item }) => {
             style={{ transition: 'all 0.2s ease-out' }}
         >
             <div className="SoftwareIcon">
-                <Image
-                    className={`Logotype ${hovered ? 'inflatedLogo' : ''}`}
-                    src={`/assets/${item.iconSource}`}
-                    style={{ transition: 'all 0.2s ease-out' }}
-                    alt={item.name} width={35} height={35}
-                />
+                <div style={{ position: 'relative', width: '35px', height: '35px' }}>
+                    <Image
+                        className={`Logotype ${hovered ? 'inflatedLogo' : ''}`}
+                        src={`/assets/${item.iconSource}`}
+                        style={{ transition: 'all 0.2s ease-out' }}
+                        alt={item.name} fill
+                    />
+                </div>
             </div>
             <div className="SoftwareInfo">
                 <label className="SoftwareName">

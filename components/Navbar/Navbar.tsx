@@ -98,7 +98,9 @@ export const Navbar: React.FC<NavbarProps> = ({ isClient, isPortrait, isMapOpene
     return (
         <div className="NavBar" onClick={stopPropagation}>
             <button className="BackButton" onClick={isPortrait && isSidebarOpened ? handleAboutButtonClick : InstanceBackButton}>
-                <Image id="backChevron" className="BackChevron" src={chevron} width={20} height={20} alt="Back" />
+                <div style={{ position: 'relative', width: '25px', height: '25px' }}>
+                    <Image id="backChevron" className="BackChevron" src={chevron} fill alt="Back" />
+                </div>
             </button>
             <div className="Navigation">
                 {portraitMode ? (
@@ -107,14 +109,22 @@ export const Navbar: React.FC<NavbarProps> = ({ isClient, isPortrait, isMapOpene
                         {currentInstance !== "main" ? (
                             <Image id="objectIcon" className="ObjectIcon" src={ObjectIcon} width={15} height={15} alt="Object Icon"></Image>
                         ) : null}
-                        {navInstances.map(instanceData => instanceData.instance)}
+                        {navInstances.map((instanceData, index) => (
+                            <React.Fragment key={index}>
+                                {instanceData.instance}
+                            </React.Fragment>
+                        ))}
                     </>
                 ) : (
                     // Landscape Mode
                     <>
                         {/*TODO: Implement Root Instance when LeGine becomes the Root.
                         <NavInstance instanceName={"Root"} /> */}
-                        {navInstances.map(instanceData => instanceData.instance)}
+                        {navInstances.map((instanceData, index) => (
+                            <React.Fragment key={index}>
+                                {instanceData.instance}
+                            </React.Fragment>
+                        ))}
 
                         {/* TODO: Implement Search Bar when the navigation allows jumping to any ramdom instance. */}
                         {/* <NavSearchBar

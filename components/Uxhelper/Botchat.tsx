@@ -27,6 +27,7 @@ export const Botchat: React.FC<BotchatProps> = ({ messages, chatPrinter, chatBox
               message={message}
               typingSpeed={30}
               showCursor={index === messages.length - 1}
+              isSoundOn={index === messages.length - 1}
             />
           </div>
         ))}

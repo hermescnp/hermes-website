@@ -1,6 +1,15 @@
 import { useState, useEffect } from 'react';
 
-function useHistory(): [string[], (item: string) => void, () => void, () => void, () => string, () => string] {
+type useHistoryReturnType = [
+  string[], 
+  (item: string) => void, 
+  () => void, 
+  () => void, 
+  () => string, 
+  () => string
+];
+
+export const useHistory = (): useHistoryReturnType => {
     const [history, setHistory] = useState<string[]>(['main']);
   
     const pushToHistory = (item: string) => {
@@ -43,4 +52,3 @@ function useHistory(): [string[], (item: string) => void, () => void, () => void
     return [history, pushToHistory, stepBackHistory, clearHistory, getLastHistoryItem, getPrevHistoryItem];
 }
 
-export default useHistory;

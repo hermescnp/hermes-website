@@ -9,6 +9,7 @@ import { useExperienceContext } from '@/context/ExperienceContext'
 import { Panel } from '@/components/Panel/Panel'
 import { Tabsbar } from '@/components/Header/Tabsbar'
 import { Uxhelper } from '@/components/Uxhelper/Uxhelper'
+import { PlayTravelingSound } from '@/components/Experience/TravelingSound'
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -31,6 +32,10 @@ const App: React.FC<AppProps> = ({ children }) => {
   const [isMapOpened, setIsMapOpened] = useState<boolean>(true);
   const [isSidebarOpened, setIsSidebarOpened] = useState<boolean>(false);
   const [panelData, setPanelData] = useState([]);
+  const isExperienceStarted = experienceContext.startExperience;
+  const travelingData = experienceContext.travelingData;
+  const [paperLTRSound, setPaperLTRSound] = useState<HTMLAudioElement | null>(null);
+  const [paperRTLSound, setPaperRTLSound] = useState<HTMLAudioElement | null>(null);
 
   const panelRef = useRef<HTMLDivElement>(null);
   const sidebarRef = useRef<HTMLDivElement>(null);
@@ -52,6 +57,20 @@ const App: React.FC<AppProps> = ({ children }) => {
       sectionRef.current.scrollIntoView({ behavior: 'smooth' });
     }
   };
+
+  useEffect(() => {
+    // Create audio elements when the component mounts
+    setPaperLTRSound(new Audio('/assets/sounds/LtoR_paper.mp3'));
+    setPaperRTLSound(new Audio('/assets/sounds/RtoL_paper.mp3'));
+    
+    // Cleanup audio resources when the component is unmounted
+    return () => {
+        paperLTRSound?.pause();
+        paperLTRSound?.remove();
+        paperRTLSound?.pause();
+        paperRTLSound?.remove();
+    }
+}, []);
 
   // Function to update orientation mode
   useEffect(() => {
@@ -85,6 +104,10 @@ const App: React.FC<AppProps> = ({ children }) => {
 
   const openSpaceMapWindow = () => {
     setIsMapOpened(prevState => !prevState);
+    if (paperRTLSound) {
+      paperRTLSound.volume = 1;
+      paperRTLSound.play();
+    }
   }
 
   useEffect(() => {
@@ -92,7 +115,11 @@ const App: React.FC<AppProps> = ({ children }) => {
   }, []);
 
   const handleAboutButtonClick = () => {
-    setIsSidebarOpened(!isSidebarOpened);
+    setIsSidebarOpened(prevState => !prevState);
+    if (paperLTRSound) {
+      paperLTRSound.volume = 1;
+      paperLTRSound.play();
+    }
   };
 
   useEffect(() => {
@@ -129,6 +156,7 @@ const App: React.FC<AppProps> = ({ children }) => {
         </div>
         {displayLoading ? <LoadingPage isClient={isClient} /> : null}
         <Uxhelper isNotVisible={isMapOpened || isSidebarOpened && isPortraitModeRef.current}/>
+        {isExperienceStarted? <PlayTravelingSound travelingData={travelingData}/> : null}
       </body>
     </html>
   );

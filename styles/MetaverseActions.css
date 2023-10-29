@@ -22,6 +22,7 @@
 }
 
 .MapButton {
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -33,6 +34,7 @@
 }
 
 .ActionButton {
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -44,6 +46,7 @@
 }
 
 .MapButtonOpened {
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -59,7 +62,7 @@
     background-color: rgba(35, 56, 88, 1);
 }
 
-.MapButtonOpened:hover .MapIcon {
+.MapButtonOpened:hover.MapIcon {
     opacity: 0.5;
 }
 
@@ -67,7 +70,7 @@
     background-color: rgba(0, 0, 0, 0.5);
 }
 
-.MapButton:hover .MapIcon {
+.MapButton:hover.MapIcon {
     opacity: 1;
 }
 

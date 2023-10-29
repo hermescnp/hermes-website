@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
 import '../../styles/MetaverseActions.css'
 import mapIcon from 'public/assets/SVG/space_map.svg'
-import soundIcon from 'public/assets/SVG/sound_icon.svg'
+import searchIcon from 'public/assets/SVG/search_icon.svg'
 import arIcon from 'public/assets/SVG/augmented_reality_icon.svg'
 import { SpaceMap } from '../SpaceMap/SpaceMap'
 
@@ -22,13 +22,19 @@ export const MetaverseActions: React.FC<MetaActionsProps> = ({ openSpaceMapWindo
             <div className="MetaverseActionsBar" onClick={stopPropagation}>
                 <div className="MapButtonContainer">
                     <button className={`${isMapOpened ? 'MapButtonOpened' : 'MapButton'}`} onClick={openSpaceMapWindow}>
-                        <Image id="mapIcon" className={`${isMapOpened ? 'MapIconOpened' : 'MapIcon'}`} src={mapIcon} width={22} height={22} alt="Map" />
+                        <div style={{ position: 'relative', width: '25px', height: '25px' }}>
+                            <Image id="mapIcon" className={`${isMapOpened ? 'MapIconOpened' : 'MapIcon'}`} src={mapIcon} fill alt="Map" />
+                        </div>
                     </button>
                     <button className='ActionButton icon-disabled'>
-                        <Image id="arIcon" className='MapIcon' src={arIcon} width={25} height={25} alt="Map" />
+                        <div style={{ position: 'relative', width: '30px', height: '30px' }}>
+                            <Image id="arIcon" className='MapIcon' src={arIcon} fill alt="Map" />
+                        </div>
                     </button>
-                    <button className='ActionButton icon-disabled'>
-                        <Image id="soundIcon" className='MapIcon' src={soundIcon} width={20} height={20} alt="Map" />
+                    <button id='searchButton' className='ActionButton icon-disabled' >
+                        <div style={{ position: 'relative', width: '32px', height: '32px' }}>
+                            <Image id="soundIcon" className='MapIcon' src={searchIcon} fill alt="Map" />
+                        </div>
                     </button>
                 </div>
             </div>

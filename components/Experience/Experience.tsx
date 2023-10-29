@@ -11,11 +11,11 @@ import Renderer3d from './Renderer3d'
 import Renderer2d from './Renderer2d'
 import Camera from './Camera'
 import Controls from './Controls'
-import getModel from './Model';
+import getModel from './Model'
 import PathGenerator from './PathGenerator'
 import Zonification from './Zonification'
-import ObjectSelector from './ObjectSelector';
-import { useExperienceContext } from '@/context/ExperienceContext';
+import ObjectSelector from './ObjectSelector'
+import { useExperienceContext } from '@/context/ExperienceContext'
 import { LerpEngine, lerpControls } from './LerpEngine'
 import { getCurrentInstance, isInstanceSibling } from './InstanceAnalyzer'
 import {getTravelingData, getDefaultTravelingData} from './InstanceTraveler'
@@ -47,7 +47,7 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
     const [scene] = useState(new THREE.Scene());
     const [_controls, setControls] = useState<any>();
     const [model, setModel] = useState<any>(false);
-    const { placehover, setPlaceHover, history, pushToHistory, getLastHistoryItem, getPrevHistoryItem, setLoadingState, setLoadingProgress } = useExperienceContext();
+    const { placehover, setPlaceHover, history, pushToHistory, getLastHistoryItem, getPrevHistoryItem, setLoadingState, setLoadingProgress, travelingData, setTravelingData } = useExperienceContext();
     const [isIntroCompleted, setIsIntroCompleted] = useState<boolean>(false);
     const isIntroCompletedRef = useRef<boolean>(isIntroCompleted);
 
@@ -58,8 +58,6 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
     const [prevInstance, setPrevInstance] = useState<string>('intro');
     const prevInstanceRef = useRef<string>(prevInstance);
     const isHistoryIncreasing = useRef<boolean>(true);
-    
-    const [travelingData, setTravelingData] = useState<any>(getDefaultTravelingData(data));
     const travelingDataRef = useRef<any>(travelingData);
 
     // RESPONSIVE HOOKS
