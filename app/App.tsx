@@ -10,6 +10,7 @@ import { Panel } from '@/components/Panel/Panel'
 import { Tabsbar } from '@/components/Header/Tabsbar'
 import { Uxhelper } from '@/components/Uxhelper/Uxhelper'
 import { PlayTravelingSound } from '@/components/Experience/TravelingSound'
+import { useAudioPlayer } from '@/context/LeGineHooks'
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -34,6 +35,8 @@ const App: React.FC<AppProps> = ({ children }) => {
   const [panelData, setPanelData] = useState([]);
   const isExperienceStarted = experienceContext.startExperience;
   const travelingData = experienceContext.travelingData;
+  const playPaperLTRSound = useAudioPlayer('/assets/sounds/LtoR_paper.mp3');
+  const playPaperRTLSound = useAudioPlayer('/assets/sounds/RtoL_paper.mp3');
 
   const panelRef = useRef<HTMLDivElement>(null);
   const sidebarRef = useRef<HTMLDivElement>(null);
@@ -88,9 +91,7 @@ const App: React.FC<AppProps> = ({ children }) => {
 
   const openSpaceMapWindow = () => {
     setIsMapOpened(prevState => !prevState);
-    const audio = new Audio('/assets/sounds/RtoL_paper.mp3');
-    audio.volume = 1;
-    audio.play();
+    playPaperRTLSound();
   }
 
   useEffect(() => {
@@ -99,9 +100,7 @@ const App: React.FC<AppProps> = ({ children }) => {
 
   const handleAboutButtonClick = () => {
     setIsSidebarOpened(prevState => !prevState);
-    const audio = new Audio('/assets/sounds/LtoR_paper.mp3');
-    audio.volume = 1;
-    audio.play();
+    playPaperLTRSound();
   };
 
   useEffect(() => {

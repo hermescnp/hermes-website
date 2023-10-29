@@ -9,25 +9,36 @@ type TravelingDataProps = {
 };
 
 export const PlayTravelingSound: React.FC<TravelingDataProps> = ({ travelingData }) => {
-
     useEffect(() => {
+        let audio: HTMLAudioElement | null = null; // Declare an audio variable
+
         if (travelingData) {
-            if (travelingData.navigationAxis === null) {
-                if (travelingData.isNavDescending) {
-                    const child = new Audio('/assets/sounds/travelTo_child.mp3');
-                    child.play();
-                } else {
-                    const parent = new Audio('/assets/sounds/travelTo_parent.mp3');
-                    parent.play();
+            const soundPath = travelingData.navigationAxis === null
+                ? travelingData.isNavDescending
+                    ? '/assets/sounds/travelTo_child.mp3'
+                    : '/assets/sounds/travelTo_parent.mp3'
+                : travelingData.originInstanceLevel > 1
+                    ? '/assets/sounds/travelTo_sibling.mp3'
+                    : '';
+
+            if (soundPath) {
+                audio = new Audio(soundPath);
+                if (audio) {
+                    audio.volume = travelingData.originInstanceLevel > 1 ? 0.7 : 1; // Adjust volume based on condition
+                    audio.play().catch(error => console.error("Audio play failed", error));
                 }
             }
-            else if (travelingData.originInstanceLevel > 1) {
-                const sibling = new Audio('/assets/sounds/travelTo_sibling.mp3');
-                sibling.volume = 0.7;
-                sibling.play();
-            }
         }
+
+        // Cleanup function to stop and remove the audio when the component unmounts or travelingData changes
+        return () => {
+            if (audio) {
+                audio.pause();
+                audio.remove();
+                audio = null;
+            }
+        };
     }, [travelingData]);
 
-    return null;
-}
+    return null; // This component doesn't render anything
+};

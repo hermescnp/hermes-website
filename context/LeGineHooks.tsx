@@ -1,6 +1,15 @@
 import { useState, useEffect } from 'react';
 
-function useHistory(): [string[], (item: string) => void, () => void, () => void, () => string, () => string] {
+type useHistoryReturnType = [
+  string[], 
+  (item: string) => void, 
+  () => void, 
+  () => void, 
+  () => string, 
+  () => string
+];
+
+export const useHistory = (): useHistoryReturnType => {
     const [history, setHistory] = useState<string[]>(['main']);
   
     const pushToHistory = (item: string) => {
@@ -43,4 +52,28 @@ function useHistory(): [string[], (item: string) => void, () => void, () => void
     return [history, pushToHistory, stepBackHistory, clearHistory, getLastHistoryItem, getPrevHistoryItem];
 }
 
-export default useHistory;
+export const useAudioPlayer = (src : string, volume = 1.0) => {
+  const [audio] = useState(() => new Audio(src));
+
+  useEffect(() => {
+    // Set the volume when the audio object is created
+    audio.volume = volume;
+  }, [audio, volume]);
+
+  useEffect(() => {
+    // Cleanup function to stop and remove the audio when the component unmounts
+    return () => {
+      audio.pause();
+      audio.remove();
+    };
+  }, [audio]);
+
+  const play = () => {
+    if (audio) {
+      audio.play().catch((error) => console.error('Audio play failed', error));
+    }
+  };
+
+  return play;
+}
+

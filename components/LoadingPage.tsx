@@ -16,6 +16,23 @@ export const LoadingPage: React.FC<LoadingScreenProps> = ({ isClient }) => {
     const [isExperienceStarted, setIsExperienceStarted] = useState<boolean>(false);
     const [loadingStateList, setLoadingStateList] = useState<string[]>([]);
 
+    const [backgroundMusic, setBackgroundMusic] = useState<HTMLAudioElement | null>(null);
+    const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
+
+    useEffect(() => {
+        // Create audio elements when the component mounts
+        setBackgroundMusic(new Audio('/assets/sounds/background_music.mp3'));
+        setAudio(new Audio('/assets/sounds/waterdrop_button.mp3'));
+        
+        // Cleanup audio resources when the component is unmounted
+        return () => {
+            backgroundMusic?.pause();
+            backgroundMusic?.remove();
+            audio?.pause();
+            audio?.remove();
+        }
+    }, []);
+
     // Test if model is ready
     useEffect(() => {
         if ( loadingState === 'Office loaded' ) {
@@ -38,13 +55,17 @@ export const LoadingPage: React.FC<LoadingScreenProps> = ({ isClient }) => {
     const handleStart = () => {
         experienceContext.setLoadingState('started');
         experienceContext.setStartExperience(true);
-        const backgroundMusic = new Audio('/assets/sounds/background_music.mp3');
-        backgroundMusic.volume = 1;
-        backgroundMusic.loop = true;
-        backgroundMusic.play();
-        const audio = new Audio('/assets/sounds/waterdrop_button.mp3');
-        audio.volume = 0.3;
-        audio.play();
+        
+        if (backgroundMusic) {
+            backgroundMusic.volume = 1;
+            backgroundMusic.loop = true;
+            backgroundMusic.play();
+        }
+        
+        if (audio) {
+            audio.volume = 0.3;
+            audio.play();
+        }
     }
 
     const stopClickPropagation = (event: React.MouseEvent<HTMLDivElement>) => {

@@ -1,7 +1,7 @@
 "use client"
 import React, { createContext, useState, useContext, useEffect } from 'react'
-import useHistory from './LeGineHooks'
-import {getDefaultTravelingData} from '@/components/Experience/InstanceTraveler'
+import { useHistory } from './LeGineHooks'
+import { getDefaultTravelingData } from '@/components/Experience/InstanceTraveler'
 
 type ExperienceContextType = {
   isClicked: boolean;
