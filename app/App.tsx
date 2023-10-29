@@ -10,7 +10,6 @@ import { Panel } from '@/components/Panel/Panel'
 import { Tabsbar } from '@/components/Header/Tabsbar'
 import { Uxhelper } from '@/components/Uxhelper/Uxhelper'
 import { PlayTravelingSound } from '@/components/Experience/TravelingSound'
-import { useAudioPlayer } from '@/context/LeGineHooks'
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -35,8 +34,8 @@ const App: React.FC<AppProps> = ({ children }) => {
   const [panelData, setPanelData] = useState([]);
   const isExperienceStarted = experienceContext.startExperience;
   const travelingData = experienceContext.travelingData;
-  const playPaperLTRSound = useAudioPlayer('/assets/sounds/LtoR_paper.mp3');
-  const playPaperRTLSound = useAudioPlayer('/assets/sounds/RtoL_paper.mp3');
+  const [paperLTRSound, setPaperLTRSound] = useState<HTMLAudioElement | null>(null);
+  const [paperRTLSound, setPaperRTLSound] = useState<HTMLAudioElement | null>(null);
 
   const panelRef = useRef<HTMLDivElement>(null);
   const sidebarRef = useRef<HTMLDivElement>(null);
@@ -58,6 +57,20 @@ const App: React.FC<AppProps> = ({ children }) => {
       sectionRef.current.scrollIntoView({ behavior: 'smooth' });
     }
   };
+
+  useEffect(() => {
+    // Create audio elements when the component mounts
+    setPaperLTRSound(new Audio('/assets/sounds/LtoR_paper.mp3'));
+    setPaperRTLSound(new Audio('/assets/sounds/RtoL_paper.mp3'));
+    
+    // Cleanup audio resources when the component is unmounted
+    return () => {
+        paperLTRSound?.pause();
+        paperLTRSound?.remove();
+        paperRTLSound?.pause();
+        paperRTLSound?.remove();
+    }
+}, []);
 
   // Function to update orientation mode
   useEffect(() => {
@@ -91,7 +104,10 @@ const App: React.FC<AppProps> = ({ children }) => {
 
   const openSpaceMapWindow = () => {
     setIsMapOpened(prevState => !prevState);
-    playPaperRTLSound();
+    if (paperRTLSound) {
+      paperRTLSound.volume = 1;
+      paperRTLSound.play();
+    }
   }
 
   useEffect(() => {
@@ -100,7 +116,10 @@ const App: React.FC<AppProps> = ({ children }) => {
 
   const handleAboutButtonClick = () => {
     setIsSidebarOpened(prevState => !prevState);
-    playPaperLTRSound();
+    if (paperLTRSound) {
+      paperLTRSound.volume = 1;
+      paperLTRSound.play();
+    }
   };
 
   useEffect(() => {

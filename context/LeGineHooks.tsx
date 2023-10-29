@@ -1,4 +1,3 @@
-"use client"
 import { useState, useEffect } from 'react';
 
 type useHistoryReturnType = [
@@ -51,30 +50,5 @@ export const useHistory = (): useHistoryReturnType => {
     }
   
     return [history, pushToHistory, stepBackHistory, clearHistory, getLastHistoryItem, getPrevHistoryItem];
-}
-
-export const useAudioPlayer = (src : string, volume = 1.0) => {
-  const [audio] = useState(() => new Audio(src));
-
-  useEffect(() => {
-    // Set the volume when the audio object is created
-    audio.volume = volume;
-  }, [audio, volume]);
-
-  useEffect(() => {
-    // Cleanup function to stop and remove the audio when the component unmounts
-    return () => {
-      audio.pause();
-      audio.remove();
-    };
-  }, [audio]);
-
-  const play = () => {
-    if (audio) {
-      audio.play().catch((error) => console.error('Audio play failed', error));
-    }
-  };
-
-  return play;
 }
 
