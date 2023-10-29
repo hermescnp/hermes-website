@@ -1,3 +1,4 @@
+"use client"
 import React, { useState, useEffect } from 'react'
 import '../styles/LoadingPage.css'
 import Image from 'next/image'
@@ -55,7 +56,7 @@ export const LoadingPage: React.FC<LoadingScreenProps> = ({ isClient }) => {
     const handleStart = () => {
         experienceContext.setLoadingState('started');
         experienceContext.setStartExperience(true);
-        
+
         if (backgroundMusic) {
             backgroundMusic.volume = 1;
             backgroundMusic.loop = true;
