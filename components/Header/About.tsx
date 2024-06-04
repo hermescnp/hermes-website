@@ -15,10 +15,12 @@ export const About = () => {
             
             <Image className="AuthorImage" src={authorImg} width={70} height={70} alt="Fotografía del autor" />
 
-            <p id="biography">Experienced in 2D and 3D digital graphics generation, specially NURBS-based and Procedural Design. Focused on the development of Art-tech products like Apps, Video-Games, Webs, Interactive simulations and Prototypes. More than 7 years of design experience as UX/UI, 3D modeling, rendering and systems documentation. Good at intermediation between Dev-team and Artists, providing mathematical stuff, fast and clear conceptual sketching and explanatory diagrams for a clearer communication.
+            <p id="biography">With over 7 years of experience in UX/UI development, 3D modeling, and rendering, I specialize in technical art focused on virtual reality and artificial intelligence. 
+            My expertise includes creating art-tech products like video games, interactive simulations, and tools development. 
+            I excel in bridging the gap between development teams and artists, providing mathematical solutions and clear conceptual sketching for better communication.
                 <br />
                 <br />
-                Polymath artist, useful in work environments where holistic intelligence and versatility are necessary.</p>
+                As a versatile polymath artist, I thrive in environments that demand holistic intelligence and adaptability.</p>
         </div>
     )
 }

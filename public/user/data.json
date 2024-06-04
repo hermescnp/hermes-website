@@ -97,8 +97,17 @@
     },
     {
         "category": "Work Experience",
-        "name": "Digital Visualization Professor",
-        "description": "Teaching courses on computer graphics, rendering process and post-production techniques at UNPHU (university).",
+        "name": "Technical Artist",
+        "description": "Enhancing the visual quality and user experience of a simulation project. Designing and implementing both the graphical user interface (GUI) and the game environment at SynchroVerse.",
+        "startDate": 2024,
+        "endDate": "Present",
+        "isVisible": true,
+        "type": "background"  
+    },
+    {
+        "category": "Work Experience",
+        "name": "Virtual Reality and Digital Visualization Professor",
+        "description": "Teaching courses on computer graphics, rendering process and post-production techniques for VR/AR and ArqViz at UNPHU (university).",
         "startDate": 2023,
         "endDate": "Present",
         "isVisible": true,
@@ -107,7 +116,7 @@
     {
         "category": "Work Experience",
         "name": "UX Sub-Manager (User Experience Design)",
-        "description": "UX Designer for Business App Team in Banco Popular Dominicano.",
+        "description": "UX Designer for Business App Team and Chatbot Project at Banco Popular Dominicano.",
         "startDate": 2021,
         "endDate": "Present",
         "isVisible": true,
@@ -341,7 +350,7 @@
     {
         "name": "Unreal Engine",
         "description": "Game Development",
-        "skillLevel": 30,
+        "skillLevel": 60,
         "iconSource": "PNG/unreal_engine_icon.png",
         "isVisible": true,
         "type": "software",
