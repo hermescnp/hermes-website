@@ -350,12 +350,12 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
                     currentControls.maxDistance *= 2;
                     currentControls.minDistance *= 2;
                 }
-                controls.maxDistance = currentControls.maxDistance;
-                controls.minDistance = currentControls.minDistance;
-                controls.maxAzimuthAngle = currentControls.maxAzimuthAngle;
-                controls.minAzimuthAngle = currentControls.minAzimuthAngle;
-                controls.maxPolarAngle = Math.PI / currentControls.maxPolarAngle;
-                controls.minPolarAngle = Math.PI / currentControls.minPolarAngle;
+                controls.maxDistance = currentControls?.maxDistance;
+                controls.minDistance = currentControls?.minDistance;
+                controls.maxAzimuthAngle = currentControls?.maxAzimuthAngle;
+                controls.minAzimuthAngle = currentControls?.minAzimuthAngle;
+                controls.maxPolarAngle = Math.PI / currentControls?.maxPolarAngle;
+                controls.minPolarAngle = Math.PI / currentControls?.minPolarAngle;
 
                 if (travelingDataRef.current.navigationAxis === 'vertical') {
                     currentVerticalSiblingAxis?.getPointAt(lerpYProgress, targetPosition);
