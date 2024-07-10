@@ -347,17 +347,35 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
                 currentControls = lerpControls(prevControls, nextControls, historyProgress, isHistoryIncreasing.current);
 
                 if (isPortraitRef.current) {
-                    currentControls.maxDistance *= 2;
-                    currentControls.minDistance *= 2;
+                    if (currentControls.maxDistance !== undefined) {
+                        currentControls.maxDistance *= 2;
+                    }
+                    if (currentControls.minDistance !== undefined) {
+                        currentControls.minDistance *= 2;
+                    }
                 }
+                
                 if (controls) {
-                    controls.maxDistance = currentControls?.maxDistance;
-                    controls.minDistance = currentControls?.minDistance;
-                    controls.maxAzimuthAngle = currentControls?.maxAzimuthAngle;
-                    controls.minAzimuthAngle = currentControls?.minAzimuthAngle;
-                    controls.maxPolarAngle = Math.PI / currentControls?.maxPolarAngle;
-                    controls.minPolarAngle = Math.PI / currentControls?.minPolarAngle;
+                    if (currentControls?.maxDistance !== undefined) {
+                        controls.maxDistance = currentControls.maxDistance;
+                    }
+                    if (currentControls?.minDistance !== undefined) {
+                        controls.minDistance = currentControls.minDistance;
+                    }
+                    if (currentControls?.maxAzimuthAngle !== undefined) {
+                        controls.maxAzimuthAngle = currentControls.maxAzimuthAngle;
+                    }
+                    if (currentControls?.minAzimuthAngle !== undefined) {
+                        controls.minAzimuthAngle = currentControls.minAzimuthAngle;
+                    }
+                    if (currentControls?.maxPolarAngle !== undefined) {
+                        controls.maxPolarAngle = Math.PI / currentControls.maxPolarAngle;
+                    }
+                    if (currentControls?.minPolarAngle !== undefined) {
+                        controls.minPolarAngle = Math.PI / currentControls.minPolarAngle;
+                    }
                 }
+                
 
                 if (travelingDataRef.current.navigationAxis === 'vertical') {
                     currentVerticalSiblingAxis?.getPointAt(lerpYProgress, targetPosition);
