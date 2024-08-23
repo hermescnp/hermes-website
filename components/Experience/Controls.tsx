@@ -13,12 +13,12 @@ export default function Controls(camera : any, target : any, renderer : any, dat
     controls.rotateSpeed = 0.40;
     controls.enablePan = false;
     controls.target = target?.position;
-    controls.maxDistance = data[0]?.maxDistance;
-    controls.minDistance = data[0]?.mixDistance;
-    controls.maxAzimuthAngle = data[0]?.maxAzimuthAngle;
-    controls.minAzimuthAngle = data[0]?.minAzimuthAngle;
-    controls.maxPolarAngle = Math.PI/data[0]?.maxPolarAngle;
-    controls.minPolarAngle = Math.PI/data[0]?.minPolarAngle;
+    controls.maxDistance = data[0]?.maxDistance ?? 28;
+    controls.minDistance = data[0]?.minDistance ?? 18;
+    controls.maxAzimuthAngle = data[0]?.maxAzimuthAngle ?? 0;
+    controls.minAzimuthAngle = data[0]?.minAzimuthAngle ?? -1.60;
+    controls.maxPolarAngle = Math.PI/data[0]?.maxPolarAngle ?? Math.PI/2.40;
+    controls.minPolarAngle = Math.PI/data[0]?.minPolarAngle ?? Math.PI/3.10;
     controls.autoRotate = true;
     controls.autoRotateSpeed = 0.2;
 
