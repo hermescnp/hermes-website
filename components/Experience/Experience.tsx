@@ -47,7 +47,7 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
     const [scene] = useState(new THREE.Scene());
     const [_controls, setControls] = useState<any>();
     const [model, setModel] = useState<any>(false);
-    const { placehover, setPlaceHover, history, pushToHistory, getLastHistoryItem, getPrevHistoryItem, setLoadingState, setLoadingProgress, travelingData, setTravelingData } = useExperienceContext();
+    const { placehover, setPlaceHover, history, pushToHistory, getLastHistoryItem, getPrevHistoryItem, setLoadingState, setLoadingProgress, travelingData, setTravelingData, loadingState } = useExperienceContext();
     const [isIntroCompleted, setIsIntroCompleted] = useState<boolean>(false);
     const isIntroCompletedRef = useRef<boolean>(isIntroCompleted);
 
@@ -67,6 +67,9 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
     // POSITION HOOKS
     const [zones, setZones] = useState<any>([]);  // Declare zones state
     const zonesRef = useRef(zones);  // Declare zones ref
+
+    // LOADING STATE REF
+    const loadingStateRef = useRef<string>(loadingState);
 
     // HANDLE WINDOW RESIZE
     const handleWindowResize = useCallback(() => {
@@ -132,6 +135,11 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
         isPortraitRef.current = isPortrait;
     }, [isPortrait])
 
+    // UPDATE LOADING STATE REF
+    useEffect(() => {
+        loadingStateRef.current = loadingState;
+    }, [loadingState]);
+
     // CALL INSTANCE TRAVELER
     useEffect(() => {
         instanceRef.current = currentInstance;
@@ -148,7 +156,6 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
             const scW = container.clientWidth;
             const scH = container.clientHeight;
             const aspect = scW / scH;
-
 
             // RENDER SETTINGS
             const renderer2d = Renderer2d(scW, scH, scene);
@@ -270,6 +277,12 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
 
             const animate = () => {
                 req = requestAnimationFrame(animate);
+
+                // Check if the loading state is 'Office loaded' using ref
+                if (!['started', 'Office loaded'].includes(loadingStateRef.current)) {
+                    return; // If not in the desired states, skip the rendering logic
+                }                
+
                 frame = frame <= 100 ? frame + 1 : frame;
 
                 // IS SELECTED?
@@ -425,7 +438,7 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
                 renderer3d.dispose();
             }
         };
-    }, []);
+    }, []); // Removed loadingState from dependency array
 
     useEffect(() => {
         window.addEventListener('resize', handleWindowResize, false);
