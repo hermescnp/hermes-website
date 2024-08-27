@@ -1,10 +1,10 @@
-// app/layout.tsx (or app/page.tsx depending on your project structure)
-import Head from 'next/head';
-import './globals.css';
-import { ExperienceProvider } from '@/context/ExperienceContext';
-import App from './App';
+// app/layout.tsx
+import App from './App'
+import './globals.css'
+import { ExperienceProvider } from '@/context/ExperienceContext'
+import { ReactNode } from 'react'
 
-// Define metadata using the metadata API
+// Define metadata using the metadata API in Next.js 13+
 export const metadata = {
   title: "Hermes Science's Lab",
   description: 'UX/Technical Artist | Professional Musician Portfolio',
@@ -15,7 +15,7 @@ export const metadata = {
     siteName: "Hermes Science's Lab",
     images: [
       {
-        url: "/assets/CoverPhotographyWeb.jpeg", // Ensure the path is correct and accessible
+        url: "/assets/CoverPhotographyWeb.jpeg",
         width: 1200,
         height: 630,
         alt: "Hermes Science's Lab Cover Image",
@@ -32,23 +32,29 @@ export const metadata = {
     description: 'UX/Technical Artist | Professional Musician Portfolio',
     images: [
       {
-        url: "/assets/CoverPhotographyWeb.jpeg", // Ensure the path is correct and accessible
+        url: "/assets/CoverPhotographyWeb.jpeg",
         alt: "Hermes Science's Lab Cover Image",
       },
     ],
   },
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <ExperienceProvider>
-      <Head>
+    <html lang="en">
+      <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="shortcut icon" href="/assets/favicon.ico" />
-        <meta name="robots" content="index, follow" />
-        <meta name="theme-color" content="#000000" />
-      </Head>
-      <App>{children}</App>
-    </ExperienceProvider>
+        <link rel="icon" href="/assets/favicon-32x32.png" sizes="32x32" />
+        <link rel="icon" href="/assets/favicon-16x16.png" sizes="16x16" />
+        <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+        <link rel="manifest" href="/assets/site.webmanifest" />
+      </head>
+      <body>
+        <ExperienceProvider>
+          <App>{children}</App>
+        </ExperienceProvider>
+      </body>
+    </html>
   );
 }

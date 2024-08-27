@@ -15,7 +15,9 @@
 }
 
 .LoadingPage.Invisible {
+    transition: all 1s ease;
     opacity: 0;
+    pointer-events: none;
 }
 
 .OfficeLogo {
@@ -28,12 +30,18 @@
 .OfficeLogo.Inflated {
     width: 400px;
     height: 400px;
+    opacity: 0;
 }
 
 .LoadingBar {
     width: 100%;
     height: 5px;
     display: flex;
+    transition: all 1s ease;
+}
+
+.LoadingBar.Hidden {
+    height: 0px;
 }
 
 .LoadingProgress {
@@ -56,6 +64,12 @@ progress::-webkit-progress-bar {
 .LoadingText {
     margin: 30px;
     font-weight: 100;
+    transition: all 0.3s ease;
+    opacity: 1;
+}
+
+.LoadingText.Hidden {
+    opacity: 0;
 }
 
 .StartButton {
@@ -64,7 +78,9 @@ progress::-webkit-progress-bar {
     color: #315F8C;
     border: solid 2px #315F8C;
     border-radius: 25px;
-    transition: all 0.3s ease;
+    transition: opacity 0.3s ease;
+    transition: transform 2s ease;
+    transform: translateY(0) scale(1);
     opacity: 0;
 }
 
@@ -76,6 +92,11 @@ progress::-webkit-progress-bar {
 .StartButton:hover {
     color: white;
     border-color: white;
+}
+
+.StartButton.MoveOut {
+    /* State styles for when the experience starts */
+    transform: translateY(100vh) scale(2);
 }
 
 @media screen and (orientation: portrait) {

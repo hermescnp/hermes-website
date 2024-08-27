@@ -89,7 +89,12 @@ const App: React.FC<AppProps> = ({ children }) => {
 
   useEffect(() => {
     if (loadingState === 'started') {
-      setTimeout(() => { setDisplayLoading(false) }, 2000)
+      // Wait for 2 seconds before hiding the loading screen
+      const timer = setTimeout(() => {
+        setDisplayLoading(false);
+      }, 2000); // 2-second delay
+
+      return () => clearTimeout(timer); // Cleanup timer on component unmount or if loadingState changes
     }
   }, [loadingState]);
 
