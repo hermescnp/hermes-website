@@ -397,7 +397,9 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
                     currentHorizontalSiblingAxis?.getPointAt(lerpZProgress, targetPosition);
 
                 } else {
-                    currentPath.getPointAt(lerpXProgress, targetPosition);
+                    if (currentPath) {
+                        currentPath.getPointAt(lerpXProgress, targetPosition);
+                    }
                     if (lerpXProgress >= 0.999) {
                         lerpXProgress = 1;
                     }
