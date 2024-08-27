@@ -399,6 +399,7 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
                 } else {
                     if (currentPath) {
                         currentPath.getPointAt(lerpXProgress, targetPosition);
+                        console.log('updated')
                     }
                     if (lerpXProgress >= 0.999) {
                         lerpXProgress = 1;
