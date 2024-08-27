@@ -39,7 +39,7 @@ export const Uxhelper: React.FC<UxhelperProps> = ({ isNotVisible }) => {
                 }
                 return prevMessages; // return unchanged if the new message is a duplicate of the last 7
             });
-        }, 1000);
+        }, 2000);
     };
 
     return (
