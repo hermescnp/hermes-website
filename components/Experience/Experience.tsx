@@ -279,7 +279,7 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
                 req = requestAnimationFrame(animate);
 
                 // Check if the loading state is 'Office loaded' using ref
-                if (!['started', 'Office loaded'].includes(loadingStateRef.current)) {
+                if (!['started', 'Running Engine'].includes(loadingStateRef.current)) {
                     return; // If not in the desired states, skip the rendering logic
                 }                
 
@@ -399,7 +399,6 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
                 } else {
                     if (currentPath) {
                         currentPath.getPointAt(lerpXProgress, targetPosition);
-                        console.log('updated')
                     }
                     if (lerpXProgress >= 0.999) {
                         lerpXProgress = 1;
@@ -433,7 +432,10 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
             }
 
             // START ANIMATION
-            req = requestAnimationFrame(animate);
+            setTimeout(()=>{
+                setLoadingState('Running Engine');
+                req = requestAnimationFrame(animate);
+            }, 2000)
 
             return () => {
                 console.log('unmount');
@@ -441,7 +443,7 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
                 renderer3d.dispose();
             }
         };
-    }, []); // Removed loadingState from dependency array
+    }, []);
 
     useEffect(() => {
         window.addEventListener('resize', handleWindowResize, false);

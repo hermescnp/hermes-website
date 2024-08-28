@@ -42,7 +42,7 @@ export const LoadingPage: React.FC<LoadingScreenProps> = ({ isClient }) => {
         if (loadingState === 'Office loaded') {
             setTimeout(() => {
                 setIsReady(true);
-            }, 1000)
+            }, 2000)
         }
         if (loadingState === 'started') {
             setIsExperienceStarted(true);
@@ -85,7 +85,7 @@ export const LoadingPage: React.FC<LoadingScreenProps> = ({ isClient }) => {
         <div className={`${fadeOutBackground ? 'LoadingPage Invisible' : 'LoadingPage'}`} onClick={stopClickPropagation}>
             <Image id="officeLogo" className={isExperienceStarted ? 'OfficeLogo Inflated' : 'OfficeLogo'} src={logo} width={200} height={200} alt="Logo" />
             <div className={isExperienceStarted ? 'LoadingBar Hidden' : 'LoadingBar'}>
-                <progress className='LoadingProgress' value={(loadingProgress / 2) + (loadingStateList.length * 10)} max="100"></progress>
+                <progress className='LoadingProgress' value={(loadingProgress / 2) + (loadingStateList.length * 8.5)} max="100"></progress>
             </div>
             <div className={isExperienceStarted ? 'LoadingText Hidden' : 'LoadingText'}>{`${isReady ? 'The office is ready!' : loadingState + '...'}`}</div>
             <button
