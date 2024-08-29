@@ -149,8 +149,13 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
         console.log('7.1- instanceRef.current = currentInstance');
         prevInstanceRef.current = prevInstance;
         console.log('7.2- prevInstanceRef.current = prevInstance;');
+        console.log("prevInstanceRef.current:", prevInstanceRef.current);
+        console.log("currentInstance:", currentInstance);
+        console.log("data:", data);
+        console.log("pathGenerator:", pathGenerator);
         const newTravelingData = getTravelingData(prevInstanceRef.current, currentInstance, data, pathGenerator);
         console.log('7.3- getTravelingData');
+        console.log("newTravelingData:", newTravelingData);
         setTravelingData(newTravelingData);
         console.log('8- Call Instance Traveller');
     }, [currentInstance]);
