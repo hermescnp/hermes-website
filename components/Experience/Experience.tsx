@@ -433,7 +433,10 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
             }
 
             // START ANIMATION
-            req = requestAnimationFrame(animate);
+            if (travelingDataRef.current) {
+                setLoadingState('Starting Engine');
+                req = requestAnimationFrame(animate);
+            }
 
             return () => {
                 console.log('unmount');
