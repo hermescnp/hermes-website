@@ -100,11 +100,8 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
         if (instanceParent !== 'root') {
             pushToHistory(instanceParent);
         }
+        console.log('1- Handle Button Click');
     }, [isClicked]);
-
-    useEffect(() => {
-        if (experienceContext.startExperience === true) { }
-    }, [experienceContext.startExperience]);
 
     // UPDATE CURRENT INSTANCE
     useEffect(() => {
@@ -113,31 +110,37 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
         historyRef.current = history;
         setCurrentInstance(getLastHistoryItem());
         setPrevInstance(getPrevHistoryItem());
+        console.log('2- Update Current Instance');
     }, [history]);
 
     // UPDATE TRAVELING DATA
     useEffect(() => {
         travelingDataRef.current = travelingData;
+        console.log('3- Update Traveling Data');
     }, [travelingData]);
 
     // UPDATE ZONES
     useEffect(() => {
         zonesRef.current = zones;
+        console.log('4- Update Zones');
     }, [zones]);
 
     // UPDATE INTRO STATE
     useEffect(() => {
         isIntroCompletedRef.current = isIntroCompleted;
+        console.log('5- Update Intro State');
     }, [isIntroCompleted]);
 
     // UPDATE PORTRAIT / LANDSCAPE STATE
     useEffect(() => {
         isPortraitRef.current = isPortrait;
+        console.log('6- Update Portrait/Landscape state');
     }, [isPortrait])
 
     // UPDATE LOADING STATE REF
     useEffect(() => {
         loadingStateRef.current = loadingState;
+        console.log('7- Update Loading State Ref');
     }, [loadingState]);
 
     // CALL INSTANCE TRAVELER
@@ -146,6 +149,7 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
         prevInstanceRef.current = prevInstance;
         const newTravelingData = getTravelingData(prevInstanceRef.current, currentInstance, data, pathGenerator);
         setTravelingData(newTravelingData);
+        console.log('8- Call Instance Traveller');
     }, [currentInstance]);
 
     //  EXPERIENCE ENGINE
@@ -433,12 +437,11 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
             }
 
             // START ANIMATION
-            if (travelingDataRef.current.travelingPath) {
-                console.log(travelingDataRef.current.travelingPath);
-                console.log(travelingDataRef.current.travelingPath.getPointAt(0.5));
+            if (travelingDataRef.current) {
                 setLoadingState('Starting Engine');
                 req = requestAnimationFrame(animate);
             }
+            console.log('9- Experience Engine');
 
             return () => {
                 console.log('unmount');
@@ -446,10 +449,11 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
                 renderer3d.dispose();
             }
         };
-    }, []); // Removed loadingState from dependency array
+    }, []);
 
     useEffect(() => {
         window.addEventListener('resize', handleWindowResize, false);
+        console.log('10- Handle Windows Rezise');
 
         return () => {
             window.removeEventListener('resize', handleWindowResize, false);
