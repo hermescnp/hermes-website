@@ -433,7 +433,9 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
             }
 
             // START ANIMATION
-            if (travelingDataRef.current) {
+            if (travelingDataRef.current.travelingPath) {
+                console.log(travelingDataRef.current.travelingPath);
+                console.log(travelingDataRef.current.travelingPath.getPointAt(0.5));
                 setLoadingState('Starting Engine');
                 req = requestAnimationFrame(animate);
             }
