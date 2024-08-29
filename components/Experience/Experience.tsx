@@ -402,7 +402,7 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
                 } else if (travelingDataRef.current.navigationAxis === 'horizontal') {
                     currentHorizontalSiblingAxis?.getPointAt(lerpZProgress, targetPosition);
 
-                } else if (travelingDataRef.current.navigationAxis === 'x') {
+                } else {
                     if (currentPath) {
                         currentPath.getPointAt(lerpXProgress, targetPosition);
                         console.log('updated')
