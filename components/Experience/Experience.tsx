@@ -404,25 +404,27 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
 
                 } else if (travelingDataRef.current.navigationAxis === 'default') {
                     try {
-                        // Attempt to call the function and assign its result
-                        let result = currentPath?.getPointAt(lerpXProgress, targetPosition);
-                        
-                        // Check if result is valid; if not, set a default value to targetPosition
-                        if (!result) {
-                            targetPosition = generalTarget;
-                            console.warn('getPointAt returned falsy, setting default target Position');
+                        // Check if the currentPath and required parameters are defined before calling getPointAt
+                        if (currentPath && lerpXProgress !== undefined && targetPosition) {
+                            let result = currentPath.getPointAt(lerpXProgress, targetPosition);
+                
+                            // If the result is not valid, log and use a default target position
+                            if (!result || !result.isVector3) {
+                                console.warn('getPointAt returned an invalid result, setting default target position');
+                                targetPosition.set(generalTarget.x, generalTarget.y, generalTarget.z);
+                            } else {
+                                targetPosition.copy(result);
+                            }
                         } else {
-                            targetPosition = result;
+                            console.warn('Invalid inputs for getPointAt, using default target position');
+                            targetPosition.set(generalTarget.x, generalTarget.y, generalTarget.z);
                         }
                     } catch (error) {
-                        // Handle any errors that occur within getPointAt or elsewhere in the try block
+                        // Catch and log errors to prevent app crash
                         console.error('Error in getPointAt:', error);
-                        
-                        // Set a default target position when an error occurs
-                        targetPosition = generalTarget;
+                        // Set a default target position to avoid undefined values
+                        targetPosition.set(generalTarget.x, generalTarget.y, generalTarget.z);
                     }
-                
-                    console.log('updated');
                 
                     if (lerpXProgress >= 0.999) {
                         lerpXProgress = 1;
@@ -431,7 +433,7 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
                     if (lerpXProgress <= 0.001) {
                         lerpXProgress = 0;
                     }
-                };
+                }                
 
                 objectTarget.position.copy(targetPosition);
 
