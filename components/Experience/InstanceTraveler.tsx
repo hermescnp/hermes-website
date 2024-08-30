@@ -87,7 +87,7 @@ export function getDefaultTravelingData(data: any): TravelingDataType {
     }
 
     return {
-        navigationAxis: 'x',
+        navigationAxis: 'default',
         isNavDescending: true,
         travelingPath: path,
         destinationSiblingAxis: {

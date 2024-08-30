@@ -18,7 +18,7 @@ import ObjectSelector from './ObjectSelector'
 import { useExperienceContext } from '@/context/ExperienceContext'
 import { LerpEngine, lerpControls } from './LerpEngine'
 import { getCurrentInstance, isInstanceSibling } from './InstanceAnalyzer'
-import {getTravelingData, getDefaultTravelingData} from './InstanceTraveler'
+import { getTravelingData, getDefaultTravelingData } from './InstanceTraveler'
 
 // Camera Positions
 const generalPosition = new THREE.Vector3(-11.0, 6.0, 11.0);
@@ -102,10 +102,6 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
         }
     }, [isClicked]);
 
-    useEffect(() => {
-        if (experienceContext.startExperience === true) { }
-    }, [experienceContext.startExperience]);
-
     // UPDATE CURRENT INSTANCE
     useEffect(() => {
         if (historyRef.current.length < history.length) { isHistoryIncreasing.current = true }
@@ -144,9 +140,11 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
     useEffect(() => {
         instanceRef.current = currentInstance;
         prevInstanceRef.current = prevInstance;
-        const newTravelingData = getTravelingData(prevInstanceRef.current, currentInstance, data, pathGenerator);
-        setTravelingData(newTravelingData);
-    }, [currentInstance]);
+        if (Array.isArray(data) && data.length > 0) {
+            const newTravelingData = getTravelingData(prevInstanceRef.current, currentInstance, data, pathGenerator);
+            setTravelingData(newTravelingData);
+        }
+    }, [currentInstance, experienceContext.spaceData]);
 
     //  EXPERIENCE ENGINE
     useEffect(() => {
@@ -281,7 +279,7 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
                 // Check if the loading state is 'Office loaded' using ref
                 if (!['started', 'Office loaded'].includes(loadingStateRef.current)) {
                     return; // If not in the desired states, skip the rendering logic
-                }                
+                }
 
                 frame = frame <= 100 ? frame + 1 : frame;
 
@@ -346,7 +344,7 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
                 currentHorizontalSiblingAxis = travelingDataRef.current.destinationSiblingAxis.horizontalPath;
                 if (currentPath !== prevFramePath) {
                     lerpXProgress = travelingDataRef.current.isNavDescending ? 0 : 1;
-                    historyProgress = isHistoryIncreasing? 0 : 1;
+                    historyProgress = isHistoryIncreasing ? 0 : 1;
                 } else {
                     lerpXProgress = lerpX.current - Math.floor(lerpX.current);
                     historyProgress = lerpHistory.current - Math.floor(lerpHistory.current);
@@ -367,7 +365,7 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
                         currentControls.minDistance *= 2;
                     }
                 }
-                
+
                 if (controls) {
                     if (currentControls?.maxDistance !== undefined) {
                         controls.maxDistance = currentControls.maxDistance;
@@ -388,7 +386,7 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
                         controls.minPolarAngle = Math.PI / currentControls.minPolarAngle;
                     }
                 }
-                
+
 
                 if (travelingDataRef.current.navigationAxis === 'vertical') {
                     currentVerticalSiblingAxis?.getPointAt(lerpYProgress, targetPosition);
@@ -396,18 +394,46 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
                 } else if (travelingDataRef.current.navigationAxis === 'horizontal') {
                     currentHorizontalSiblingAxis?.getPointAt(lerpZProgress, targetPosition);
 
-                } else {
-                    if (currentPath) {
-                        currentPath.getPointAt(lerpXProgress, targetPosition);
-                        console.log('updated')
+                } else if (travelingDataRef.current.navigationAxis === 'default') {
+                    try {
+                        // Ensure all necessary inputs are defined before calling getPointAt
+                        if (
+                            currentPath &&
+                            lerpXProgress !== undefined &&
+                            targetPosition &&
+                            typeof currentPath.getPointAt === 'function'
+                        ) {
+                            let result = currentPath.getPointAt(lerpXProgress, targetPosition);
+
+                            // Check if the result is a valid Vector3
+                            if (!result || !(result instanceof THREE.Vector3)) {
+                                console.warn('getPointAt returned an invalid result, setting default target position');
+                                targetPosition.set(generalTarget.x, generalTarget.y, generalTarget.z);
+                            } else {
+                                targetPosition.copy(result);
+                            }
+                        } else {
+                            // Log an error if inputs are not valid
+                            console.warn('Invalid inputs for getPointAt, using default target position');
+                            targetPosition.set(generalTarget.x, generalTarget.y, generalTarget.z);
+                        }
+                    } catch (error) {
+                        // Handle any errors from the library function
+                        console.error('Error in getPointAt:', error);
+
+                        // Provide a default value to prevent further issues
+                        targetPosition.set(generalTarget.x, generalTarget.y, generalTarget.z);
                     }
+
+                    // Ensure lerpXProgress is within the correct bounds
                     if (lerpXProgress >= 0.999) {
                         lerpXProgress = 1;
                     }
+
                     if (lerpXProgress <= 0.001) {
                         lerpXProgress = 0;
                     }
-                };
+                }
 
                 objectTarget.position.copy(targetPosition);
 
@@ -433,7 +459,7 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
             }
 
             // START ANIMATION
-            if (travelingDataRef.current) {
+            if (travelingData) {
                 setLoadingState('Starting Engine');
                 req = requestAnimationFrame(animate);
             }
@@ -444,11 +470,10 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
                 renderer3d.dispose();
             }
         };
-    }, []); // Removed loadingState from dependency array
+    }, []);
 
     useEffect(() => {
         window.addEventListener('resize', handleWindowResize, false);
-
         return () => {
             window.removeEventListener('resize', handleWindowResize, false);
         }
