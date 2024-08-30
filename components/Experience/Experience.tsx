@@ -403,20 +403,31 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
                     currentHorizontalSiblingAxis?.getPointAt(lerpZProgress, targetPosition);
 
                 } else if (travelingDataRef.current.navigationAxis === 'default') {
-                    let result = currentPath?.getPointAt(lerpXProgress, targetPosition);
-
-                    // Check if result is valid; if not, set a default value to targetPosition
-                    if (!result) {
+                    try {
+                        // Attempt to call the function and assign its result
+                        let result = currentPath?.getPointAt(lerpXProgress, targetPosition);
+                        
+                        // Check if result is valid; if not, set a default value to targetPosition
+                        if (!result) {
+                            targetPosition = generalTarget;
+                            console.warn('getPointAt returned falsy, setting default target Position');
+                        } else {
+                            targetPosition = result;
+                        }
+                    } catch (error) {
+                        // Handle any errors that occur within getPointAt or elsewhere in the try block
+                        console.error('Error in getPointAt:', error);
+                        
+                        // Set a default target position when an error occurs
                         targetPosition = generalTarget;
-                        console.warn('getPointAt failed, setting default targetPosition');
-                    } else {
-                        targetPosition = result;
                     }
-
+                
+                    console.log('updated');
+                
                     if (lerpXProgress >= 0.999) {
                         lerpXProgress = 1;
                     }
-
+                
                     if (lerpXProgress <= 0.001) {
                         lerpXProgress = 0;
                     }
