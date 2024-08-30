@@ -100,7 +100,6 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
         if (instanceParent !== 'root') {
             pushToHistory(instanceParent);
         }
-        console.log('1- Handle Button Click');
     }, [isClicked]);
 
     // UPDATE CURRENT INSTANCE
@@ -110,37 +109,31 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
         historyRef.current = history;
         setCurrentInstance(getLastHistoryItem());
         setPrevInstance(getPrevHistoryItem());
-        console.log('2- Update Current Instance');
     }, [history]);
 
     // UPDATE TRAVELING DATA
     useEffect(() => {
         travelingDataRef.current = travelingData;
-        console.log('3- Update Traveling Data');
     }, [travelingData]);
 
     // UPDATE ZONES
     useEffect(() => {
         zonesRef.current = zones;
-        console.log('4- Update Zones');
     }, [zones]);
 
     // UPDATE INTRO STATE
     useEffect(() => {
         isIntroCompletedRef.current = isIntroCompleted;
-        console.log('5- Update Intro State');
     }, [isIntroCompleted]);
 
     // UPDATE PORTRAIT / LANDSCAPE STATE
     useEffect(() => {
         isPortraitRef.current = isPortrait;
-        console.log('6- Update Portrait/Landscape state');
     }, [isPortrait])
 
     // UPDATE LOADING STATE REF
     useEffect(() => {
         loadingStateRef.current = loadingState;
-        console.log('7- Update Loading State Ref');
     }, [loadingState]);
 
     // CALL INSTANCE TRAVELER
@@ -151,7 +144,6 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
             const newTravelingData = getTravelingData(prevInstanceRef.current, currentInstance, data, pathGenerator);
             setTravelingData(newTravelingData);
         }
-        console.log('8- Call Instance Traveller');
     }, [currentInstance, experienceContext.spaceData]);
 
     //  EXPERIENCE ENGINE
@@ -428,16 +420,10 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
                     } catch (error) {
                         // Handle any errors from the library function
                         console.error('Error in getPointAt:', error);
-                        console.log('Current Path:', currentPath);
-                        console.log('Lerp X Progress:', lerpXProgress);
-                        console.log('Target Position:', targetPosition);
-                        console.log('Traveling Data:', travelingDataRef.current);
 
                         // Provide a default value to prevent further issues
                         targetPosition.set(generalTarget.x, generalTarget.y, generalTarget.z);
                     }
-
-                    console.log('updated');
 
                     // Ensure lerpXProgress is within the correct bounds
                     if (lerpXProgress >= 0.999) {
@@ -477,7 +463,6 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
                 setLoadingState('Starting Engine');
                 req = requestAnimationFrame(animate);
             }
-            console.log('9- Experience Engine');
 
             return () => {
                 console.log('unmount');
@@ -489,8 +474,6 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
 
     useEffect(() => {
         window.addEventListener('resize', handleWindowResize, false);
-        console.log('10- Handle Windows Rezise');
-
         return () => {
             window.removeEventListener('resize', handleWindowResize, false);
         }
