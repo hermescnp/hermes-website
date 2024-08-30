@@ -34,7 +34,7 @@ type SiblingSequence = {
     isLoop: boolean
 }
 
-type OrientationType = "vertical" | "horizontal";
+type OrientationType = "vertical" | "horizontal" | "default";
 
 export function calculateSiblingSequence(instanceKey: string, orientation: OrientationType, data: any[], previousInstanceKey?: string): SiblingSequence {
     const instanceData = data.find(item => item.key === instanceKey);
@@ -145,9 +145,9 @@ export function calculateNearestWayTo(current: string, previous: string, data: a
     const verticalIndex = verticalSequence.orderedSiblings.indexOf(current);
     const horizontalIndex = horizontalSequence.orderedSiblings.indexOf(current);
 
-    // If the current instance isn't in either sequence, return null.
+    // If the current instance isn't in either sequence, return default.
     if (verticalIndex === -1 && horizontalIndex === -1) {
-        return null;
+        return "default";
     }
 
     // If the current instance is only in one of the sequences, return that orientation.
