@@ -404,36 +404,50 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
 
                 } else if (travelingDataRef.current.navigationAxis === 'default') {
                     try {
-                        // Check if the currentPath and required parameters are defined before calling getPointAt
-                        if (currentPath && lerpXProgress !== undefined && targetPosition) {
+                        // Ensure all necessary inputs are defined before calling getPointAt
+                        if (
+                            currentPath &&
+                            lerpXProgress !== undefined &&
+                            targetPosition &&
+                            typeof currentPath.getPointAt === 'function'
+                        ) {
                             let result = currentPath.getPointAt(lerpXProgress, targetPosition);
-                
-                            // If the result is not valid, log and use a default target position
-                            if (!result || !result.isVector3) {
+
+                            // Check if the result is a valid Vector3
+                            if (!result || !(result instanceof THREE.Vector3)) {
                                 console.warn('getPointAt returned an invalid result, setting default target position');
                                 targetPosition.set(generalTarget.x, generalTarget.y, generalTarget.z);
                             } else {
                                 targetPosition.copy(result);
                             }
                         } else {
+                            // Log an error if inputs are not valid
                             console.warn('Invalid inputs for getPointAt, using default target position');
                             targetPosition.set(generalTarget.x, generalTarget.y, generalTarget.z);
                         }
                     } catch (error) {
-                        // Catch and log errors to prevent app crash
+                        // Handle any errors from the library function
                         console.error('Error in getPointAt:', error);
-                        // Set a default target position to avoid undefined values
+                        console.log('Current Path:', currentPath);
+                        console.log('Lerp X Progress:', lerpXProgress);
+                        console.log('Target Position:', targetPosition);
+                        console.log('Traveling Data:', travelingDataRef.current);
+
+                        // Provide a default value to prevent further issues
                         targetPosition.set(generalTarget.x, generalTarget.y, generalTarget.z);
                     }
-                
+
+                    console.log('updated');
+
+                    // Ensure lerpXProgress is within the correct bounds
                     if (lerpXProgress >= 0.999) {
                         lerpXProgress = 1;
                     }
-                
+
                     if (lerpXProgress <= 0.001) {
                         lerpXProgress = 0;
                     }
-                }                
+                }
 
                 objectTarget.position.copy(targetPosition);
 
