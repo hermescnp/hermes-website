@@ -18,7 +18,7 @@ import ObjectSelector from './ObjectSelector'
 import { useExperienceContext } from '@/context/ExperienceContext'
 import { LerpEngine, lerpControls } from './LerpEngine'
 import { getCurrentInstance, isInstanceSibling } from './InstanceAnalyzer'
-import {getTravelingData, getDefaultTravelingData} from './InstanceTraveler'
+import { getTravelingData, getDefaultTravelingData } from './InstanceTraveler'
 
 // Camera Positions
 const generalPosition = new THREE.Vector3(-11.0, 6.0, 11.0);
@@ -287,7 +287,7 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
                 // Check if the loading state is 'Office loaded' using ref
                 if (!['started', 'Office loaded'].includes(loadingStateRef.current)) {
                     return; // If not in the desired states, skip the rendering logic
-                }                
+                }
 
                 frame = frame <= 100 ? frame + 1 : frame;
 
@@ -352,7 +352,7 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
                 currentHorizontalSiblingAxis = travelingDataRef.current.destinationSiblingAxis.horizontalPath;
                 if (currentPath !== prevFramePath) {
                     lerpXProgress = travelingDataRef.current.isNavDescending ? 0 : 1;
-                    historyProgress = isHistoryIncreasing? 0 : 1;
+                    historyProgress = isHistoryIncreasing ? 0 : 1;
                 } else {
                     lerpXProgress = lerpX.current - Math.floor(lerpX.current);
                     historyProgress = lerpHistory.current - Math.floor(lerpHistory.current);
@@ -373,7 +373,7 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
                         currentControls.minDistance *= 2;
                     }
                 }
-                
+
                 if (controls) {
                     if (currentControls?.maxDistance !== undefined) {
                         controls.maxDistance = currentControls.maxDistance;
@@ -394,7 +394,7 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
                         controls.minPolarAngle = Math.PI / currentControls.minPolarAngle;
                     }
                 }
-                
+
 
                 if (travelingDataRef.current.navigationAxis === 'vertical') {
                     currentVerticalSiblingAxis?.getPointAt(lerpYProgress, targetPosition);
@@ -402,12 +402,21 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
                 } else if (travelingDataRef.current.navigationAxis === 'horizontal') {
                     currentHorizontalSiblingAxis?.getPointAt(lerpZProgress, targetPosition);
 
-                } else if (travelingDataRef.current.navigationAxis === 'default'){
-                    currentPath?.getPointAt(lerpXProgress, targetPosition);
-                    console.log('updated');
+                } else if (travelingDataRef.current.navigationAxis === 'default') {
+                    let result = currentPath?.getPointAt(lerpXProgress, targetPosition);
+
+                    // Check if result is valid; if not, set a default value to targetPosition
+                    if (!result) {
+                        targetPosition = generalTarget;
+                        console.warn('getPointAt failed, setting default targetPosition');
+                    } else {
+                        targetPosition = result;
+                    }
+
                     if (lerpXProgress >= 0.999) {
                         lerpXProgress = 1;
                     }
+
                     if (lerpXProgress <= 0.001) {
                         lerpXProgress = 0;
                     }
