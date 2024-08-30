@@ -1,7 +1,7 @@
 "use client"
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
-import { Author } from '@/components/Header/Author'
+import { Author } from '@/components/Header/Author';
 import { useExperienceContext } from '@/context/ExperienceContext';
 
 const Experience = dynamic(() => import('../components/Experience/Experience'), {
@@ -14,11 +14,11 @@ const getLastItem = (array: any): string | null => {
     return array[array.length - 1];
   }
   return null;
-}
+};
 
 export default function Home() {
-  const { isClicked } = useExperienceContext();
   const experienceContext = useExperienceContext();
+  const { isClicked, spaceData } = experienceContext; // Destructure spaceData from context
   const history = experienceContext.history;
   const [currentInstance, setCurrentInstance] = useState<string>('main');
 
@@ -29,11 +29,15 @@ export default function Home() {
     }
   }, [history]);
 
+  // Conditionally render the Experience component only if spaceData is available
   return (
     <div className="Page">
-      <Experience isClicked={isClicked} />
-      <Author isVisible={currentInstance === 'main'}/>
+      {spaceData ? (  // Check if spaceData is loaded before rendering Experience
+        <Experience isClicked={isClicked} />
+      ) : (
+        <p>Loading space data...</p> // Fallback content while waiting for spaceData
+      )}
+      <Author isVisible={currentInstance === 'main'} />
     </div>
   );
 }
-
