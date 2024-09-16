@@ -96,7 +96,6 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
     useEffect(() => {
         const instance = data.find((item: any) => item.key === instanceRef.current);
         const instanceParent = instance?.parentKey;
-        const current = instance?.key;
         if (instanceParent !== 'root') {
             pushToHistory(instanceParent);
         }
@@ -104,8 +103,11 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
 
     // UPDATE CURRENT INSTANCE
     useEffect(() => {
-        if (historyRef.current.length < history.length) { isHistoryIncreasing.current = true }
-        else { isHistoryIncreasing.current = false }
+        if (historyRef.current.length < history.length) {
+            isHistoryIncreasing.current = true
+        } else {
+            isHistoryIncreasing.current = false
+        }
         historyRef.current = history;
         setCurrentInstance(getLastHistoryItem());
         setPrevInstance(getPrevHistoryItem());
@@ -144,7 +146,7 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
             const newTravelingData = getTravelingData(prevInstanceRef.current, currentInstance, data, pathGenerator);
             setTravelingData(newTravelingData);
         }
-    }, [currentInstance, experienceContext.spaceData]);
+    }, [currentInstance, data]);
 
     //  EXPERIENCE ENGINE
     useEffect(() => {
@@ -193,6 +195,8 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
             let mouseDownTimeout: any;
             let clickCount = 0;
             let lastClickTime = 0;
+            let clickedSelection: string | null = null;
+
 
             window.addEventListener('mousedown', () => {
                 isMousePressed = true;
@@ -214,34 +218,35 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
             window.addEventListener('click', () => {
                 const currentTime = Date.now();
                 if (!isMousePressed && !isLongClick) {
+                    const currentSelection = objectSelector.getCurrentSelection();
+                    clickedSelection = currentSelection; // Store the clicked selection
+            
                     if (currentTime - lastClickTime <= doubleClickThreshold) {
                         // Double click logic here
                         clickCount = 0; // Reset the click count
                         const instance = data.find((item: any) => item.key === instanceRef.current);
                         const instanceParent = instance?.parentKey;
-                        const current = instance?.key;
                         if (instanceParent !== 'root') {
                             pushToHistory(instanceParent);
                         }
                     } else {
                         clickCount++;
                     }
-
+            
                     if (clickCount === 1) {
                         lastClickTime = currentTime;
                         setTimeout(() => {
                             if (clickCount === 1) {
                                 // Single click logic here
-                                const pathName = objectSelector.getCurrentSelection();
-                                if (pathName !== 'no selections') {
-                                    pushToHistory(pathName);
+                                if (clickedSelection !== 'no selections' && clickedSelection !== null) {
+                                    pushToHistory(clickedSelection);
                                 }
                             }
                             clickCount = 0; // Reset the click count
-                        }, doubleClickThreshold + 50); // A slight delay to allow for double click detection
+                        }, doubleClickThreshold + 50); // Slight delay for double-click detection
                     }
                 }
-            });
+            });            
 
             // CONTROLS
             const objectTarget = new THREE.Object3D();
@@ -387,62 +392,40 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
                     }
                 }
 
+                // Ensure progress values are within [0, 1]
+                lerpXProgress = THREE.MathUtils.clamp(lerpXProgress, 0, 1);
+                lerpYProgress = THREE.MathUtils.clamp(lerpYProgress, 0, 1);
+                lerpZProgress = THREE.MathUtils.clamp(lerpZProgress, 0, 1);
+                historyProgress = THREE.MathUtils.clamp(historyProgress, 0, 1);
 
-                if (travelingDataRef.current.navigationAxis === 'vertical') {
-                    currentVerticalSiblingAxis?.getPointAt(lerpYProgress, targetPosition);
-
-                } else if (travelingDataRef.current.navigationAxis === 'horizontal') {
-                    currentHorizontalSiblingAxis?.getPointAt(lerpZProgress, targetPosition);
-
-                } else if (travelingDataRef.current.navigationAxis === 'default') {
-                    try {
-                        // Ensure all necessary inputs are defined before calling getPointAt
-                        if (
-                            currentPath &&
-                            lerpXProgress !== undefined &&
-                            targetPosition &&
-                            typeof currentPath.getPointAt === 'function'
-                        ) {
+                // Update targetPosition based on navigationAxis
+                try {
+                    if (travelingDataRef.current.navigationAxis === 'vertical' && currentVerticalSiblingAxis) {
+                        currentVerticalSiblingAxis.getPointAt(lerpYProgress, targetPosition);
+                    } else if (travelingDataRef.current.navigationAxis === 'horizontal' && currentHorizontalSiblingAxis) {
+                        currentHorizontalSiblingAxis.getPointAt(lerpZProgress, targetPosition);
+                    } else if (travelingDataRef.current.navigationAxis === 'default' && currentPath) {
+                        if (typeof currentPath.getPointAt === 'function') {
                             let result = currentPath.getPointAt(lerpXProgress, targetPosition);
-
-                            // Check if the result is a valid Vector3
-                            if (!result || !(result instanceof THREE.Vector3)) {
-                                console.warn('getPointAt returned an invalid result, setting default target position');
-                                targetPosition.set(generalTarget.x, generalTarget.y, generalTarget.z);
-                            } else {
+                            if (result && result instanceof THREE.Vector3) {
                                 targetPosition.copy(result);
+                            } else {
+                                console.warn('getPointAt returned an invalid result');
+                                targetPosition.copy(objectTarget.position);
                             }
                         } else {
-                            // Log an error if inputs are not valid
-                            console.warn('Invalid inputs for getPointAt, using default target position');
-                            targetPosition.set(generalTarget.x, generalTarget.y, generalTarget.z);
+                            console.warn('currentPath.getPointAt is not a function');
+                            targetPosition.copy(objectTarget.position);
                         }
-                    } catch (error) {
-                        // Handle any errors from the library function
-                        console.error('Error in getPointAt:', error);
-
-                        // Provide a default value to prevent further issues
-                        targetPosition.set(generalTarget.x, generalTarget.y, generalTarget.z);
+                    } else {
+                        targetPosition.copy(objectTarget.position);
                     }
-
-                    // Ensure lerpXProgress is within the correct bounds
-                    if (lerpXProgress >= 0.999) {
-                        lerpXProgress = 1;
-                    }
-
-                    if (lerpXProgress <= 0.001) {
-                        lerpXProgress = 0;
-                    }
+                } catch (error) {
+                    console.error('Error in getPointAt:', error);
+                    targetPosition.copy(objectTarget.position);
                 }
 
                 objectTarget.position.copy(targetPosition);
-
-                if (historyProgress >= 0.999) {
-                    historyProgress = 1;
-                }
-                if (historyProgress <= 0.001) {
-                    historyProgress = 0;
-                }
 
                 // UPDATE CONTROLS
                 controls.update();
@@ -470,7 +453,7 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
                 renderer3d.dispose();
             }
         };
-    }, []);
+    }, [data]);
 
     useEffect(() => {
         window.addEventListener('resize', handleWindowResize, false);
