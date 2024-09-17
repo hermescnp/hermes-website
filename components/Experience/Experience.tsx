@@ -1,24 +1,24 @@
-"use client"
-import React, { use, useCallback, useEffect, useRef, useState } from 'react'
-import { RenderView } from './styles'
-import '../../styles/Experience.css'
+"use client";
+import React, { use, useCallback, useEffect, useRef, useState } from 'react';
+import { RenderView } from './styles';
+import '../../styles/Experience.css';
 
-import * as THREE from 'three'
-import setBackground from './Background'
+import * as THREE from 'three';
+import setBackground from './Background';
 import gsap from 'gsap';
 
-import Renderer3d from './Renderer3d'
-import Renderer2d from './Renderer2d'
-import Camera from './Camera'
-import Controls from './Controls'
-import getModel from './Model'
-import PathGenerator from './PathGenerator'
-import Zonification from './Zonification'
-import ObjectSelector from './ObjectSelector'
-import { useExperienceContext } from '@/context/ExperienceContext'
-import { LerpEngine, lerpControls } from './LerpEngine'
-import { getCurrentInstance, isInstanceSibling } from './InstanceAnalyzer'
-import { getTravelingData, getDefaultTravelingData } from './InstanceTraveler'
+import Renderer3d from './Renderer3d';
+import Renderer2d from './Renderer2d'; // This is likely using CSS2DRenderer
+import Camera from './Camera';
+import Controls from './Controls';
+import getModel from './Model';
+import PathGenerator from './PathGenerator';
+import Zonification from './Zonification';
+import ObjectSelector from './ObjectSelector';
+import { useExperienceContext } from '@/context/ExperienceContext';
+import { LerpEngine, lerpControls } from './LerpEngine';
+import { getCurrentInstance, isInstanceSibling } from './InstanceAnalyzer';
+import { getTravelingData, getDefaultTravelingData } from './InstanceTraveler';
 
 // Camera Positions
 const generalPosition = new THREE.Vector3(-11.0, 6.0, 11.0);
@@ -39,7 +39,7 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
     // MAIN CAMERA TARGET
     const generalTarget = new THREE.Vector3(data[0]?.positionX, data[0]?.positionY, data[0]?.positionZ);
 
-    const refBody = useRef<HTMLDivElement>(null)
+    const refBody = useRef<HTMLDivElement>(null);
     const [renderer3d, setRenderer3d] = useState<any>();
     const [renderer2d, setRenderer2d] = useState<any>();
     const [_camera, setCamera] = useState<any>();
@@ -71,6 +71,9 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
     // LOADING STATE REF
     const loadingStateRef = useRef<string>(loadingState);
 
+    // ERROR HANDLING
+    const [needsReset, setNeedsReset] = useState(0);
+
     // HANDLE WINDOW RESIZE
     const handleWindowResize = useCallback(() => {
         const { current: container } = refBody;
@@ -85,9 +88,9 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
             _camera.aspect = aspect;
             _camera.updateProjectionMatrix();
             if (aspect < 1) {
-                setIsPortrait(true)
+                setIsPortrait(true);
             } else {
-                setIsPortrait(false)
+                setIsPortrait(false);
             }
         }
     }, [renderer3d]);
@@ -104,9 +107,9 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
     // UPDATE CURRENT INSTANCE
     useEffect(() => {
         if (historyRef.current.length < history.length) {
-            isHistoryIncreasing.current = true
+            isHistoryIncreasing.current = true;
         } else {
-            isHistoryIncreasing.current = false
+            isHistoryIncreasing.current = false;
         }
         historyRef.current = history;
         setCurrentInstance(getLastHistoryItem());
@@ -131,7 +134,7 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
     // UPDATE PORTRAIT / LANDSCAPE STATE
     useEffect(() => {
         isPortraitRef.current = isPortrait;
-    }, [isPortrait])
+    }, [isPortrait]);
 
     // UPDATE LOADING STATE REF
     useEffect(() => {
@@ -158,7 +161,7 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
             const aspect = scW / scH;
 
             // RENDER SETTINGS
-            const renderer2d = Renderer2d(scW, scH, scene);
+            const renderer2d = Renderer2d(scW, scH, scene); // Likely CSS2DRenderer
             const renderer3d = Renderer3d(scW, scH);
             container.appendChild(renderer2d.domElement);
             container.appendChild(renderer3d.domElement);
@@ -167,9 +170,9 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
 
             const camera = Camera(generalPosition, target, aspect);
             if (aspect < 1) {
-                setIsPortrait(true)
+                setIsPortrait(true);
             } else {
-                setIsPortrait(false)
+                setIsPortrait(false);
             }
             setCamera(camera);
 
@@ -197,7 +200,6 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
             let lastClickTime = 0;
             let clickedSelection: string | null = null;
 
-
             window.addEventListener('mousedown', () => {
                 isMousePressed = true;
                 isLongClick = false;
@@ -220,7 +222,7 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
                 if (!isMousePressed && !isLongClick) {
                     const currentSelection = objectSelector.getCurrentSelection();
                     clickedSelection = currentSelection; // Store the clicked selection
-            
+
                     if (currentTime - lastClickTime <= doubleClickThreshold) {
                         // Double click logic here
                         clickCount = 0; // Reset the click count
@@ -232,7 +234,7 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
                     } else {
                         clickCount++;
                     }
-            
+
                     if (clickCount === 1) {
                         lastClickTime = currentTime;
                         setTimeout(() => {
@@ -246,7 +248,7 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
                         }, doubleClickThreshold + 50); // Slight delay for double-click detection
                     }
                 }
-            });            
+            });
 
             // CONTROLS
             const objectTarget = new THREE.Object3D();
@@ -279,167 +281,184 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
             let unchangedFrames = 0;
 
             const animate = () => {
-                req = requestAnimationFrame(animate);
+                try {
+                    req = requestAnimationFrame(animate);
 
-                // Check if the loading state is 'Office loaded' using ref
-                if (!['started', 'Office loaded'].includes(loadingStateRef.current)) {
-                    return; // If not in the desired states, skip the rendering logic
-                }
+                    // Check if the loading state is 'Office loaded' using ref
+                    if (!['started', 'Office loaded'].includes(loadingStateRef.current)) {
+                        return; // If not in the desired states, skip the rendering logic
+                    }
 
-                frame = frame <= 100 ? frame + 1 : frame;
+                    frame = frame <= 100 ? frame + 1 : frame;
 
-                // IS SELECTED?
-                if (zonesRef.current && zonesRef.current.length > 0) {
-                    objectSelector.update(zonesRef.current, camera, instanceRef.current, data);
-                    const currentSelection = objectSelector.getCurrentSelection();
-                    if (placehover.name !== currentSelection && isLongClick === false) {
-                        if (currentSelection === 'no selections') {
-                            setPlaceHover({ name: '', isSibling: null });
-                        } else {
-                            const selectedObject = data.find(obj => obj.key === currentSelection);
-                            const isSibling = isInstanceSibling(selectedObject.key, instanceRef.current, data);
-                            if (selectedObject) {
-                                setPlaceHover({ name: selectedObject.name, isSibling: isSibling });
+                    // IS SELECTED?
+                    if (zonesRef.current && zonesRef.current.length > 0) {
+                        objectSelector.update(zonesRef.current, camera, instanceRef.current, data);
+                        const currentSelection = objectSelector.getCurrentSelection();
+                        if (placehover.name !== currentSelection && isLongClick === false) {
+                            if (currentSelection === 'no selections') {
+                                setPlaceHover({ name: '', isSibling: null });
+                            } else {
+                                const selectedObject = data.find(obj => obj.key === currentSelection);
+                                const isSibling = isInstanceSibling(selectedObject.key, instanceRef.current, data);
+                                if (selectedObject) {
+                                    setPlaceHover({ name: selectedObject.name, isSibling: isSibling });
+                                }
                             }
                         }
                     }
-                }
 
-                // Compare current position with previous position
-                if (camera.position.x.toFixed(3) === prevCameraPosition.x.toFixed(3)
-                    && camera.position.z.toFixed(3) === prevCameraPosition.z.toFixed(3)) {
-                    unchangedFrames++;
-                } else {
-                    unchangedFrames = 0;
-                }
-
-                // LERPING
-                lerpX.current = gsap.utils.interpolate(
-                    lerpX.current,
-                    lerpX.target,
-                    lerpX.ease
-                );
-                lerpY.current = gsap.utils.interpolate(
-                    lerpY.current,
-                    lerpY.target,
-                    lerpY.ease
-                );
-                lerpZ.current = gsap.utils.interpolate(
-                    lerpZ.current,
-                    lerpZ.target,
-                    lerpZ.ease
-                );
-                lerpHistory.current = gsap.utils.interpolate(
-                    lerpHistory.current,
-                    lerpHistory.target,
-                    lerpHistory.ease
-                );
-
-                lerpX.target = travelingDataRef.current.originInstanceLevel - 1;
-                lerpY.target = travelingDataRef.current.destinationInstanceSiblingPosition.x;
-                lerpZ.target = travelingDataRef.current.destinationInstanceSiblingPosition.y;
-                lerpHistory.target = historyRef.current.length - 1;
-
-                // GLITCH DETECTION
-                prevCameraPosition.copy(camera.position);
-
-                prevFramePath = currentPath;
-                currentPath = travelingDataRef.current.travelingPath;
-                currentVerticalSiblingAxis = travelingDataRef.current.destinationSiblingAxis.verticalPath;
-                currentHorizontalSiblingAxis = travelingDataRef.current.destinationSiblingAxis.horizontalPath;
-                if (currentPath !== prevFramePath) {
-                    lerpXProgress = travelingDataRef.current.isNavDescending ? 0 : 1;
-                    historyProgress = isHistoryIncreasing ? 0 : 1;
-                } else {
-                    lerpXProgress = lerpX.current - Math.floor(lerpX.current);
-                    historyProgress = lerpHistory.current - Math.floor(lerpHistory.current);
-                }
-                lerpYProgress = lerpY.current;
-                lerpZProgress = lerpZ.current;
-
-                // LERP BETWEEN CONTROLS
-                prevControls = travelingDataRef.current.originControls;
-                nextControls = travelingDataRef.current.destinationControls;
-                currentControls = lerpControls(prevControls, nextControls, historyProgress, isHistoryIncreasing.current);
-
-                if (isPortraitRef.current) {
-                    if (currentControls.maxDistance !== undefined) {
-                        currentControls.maxDistance *= 2;
+                    // Compare current position with previous position
+                    if (camera.position.x.toFixed(3) === prevCameraPosition.x.toFixed(3)
+                        && camera.position.z.toFixed(3) === prevCameraPosition.z.toFixed(3)) {
+                        unchangedFrames++;
+                    } else {
+                        unchangedFrames = 0;
                     }
-                    if (currentControls.minDistance !== undefined) {
-                        currentControls.minDistance *= 2;
-                    }
-                }
 
-                if (controls) {
-                    if (currentControls?.maxDistance !== undefined) {
-                        controls.maxDistance = currentControls.maxDistance;
-                    }
-                    if (currentControls?.minDistance !== undefined) {
-                        controls.minDistance = currentControls.minDistance;
-                    }
-                    if (currentControls?.maxAzimuthAngle !== undefined) {
-                        controls.maxAzimuthAngle = currentControls.maxAzimuthAngle;
-                    }
-                    if (currentControls?.minAzimuthAngle !== undefined) {
-                        controls.minAzimuthAngle = currentControls.minAzimuthAngle;
-                    }
-                    if (currentControls?.maxPolarAngle !== undefined) {
-                        controls.maxPolarAngle = Math.PI / currentControls.maxPolarAngle;
-                    }
-                    if (currentControls?.minPolarAngle !== undefined) {
-                        controls.minPolarAngle = Math.PI / currentControls.minPolarAngle;
-                    }
-                }
+                    // LERPING
+                    lerpX.current = gsap.utils.interpolate(
+                        lerpX.current,
+                        lerpX.target,
+                        lerpX.ease
+                    );
+                    lerpY.current = gsap.utils.interpolate(
+                        lerpY.current,
+                        lerpY.target,
+                        lerpY.ease
+                    );
+                    lerpZ.current = gsap.utils.interpolate(
+                        lerpZ.current,
+                        lerpZ.target,
+                        lerpZ.ease
+                    );
+                    lerpHistory.current = gsap.utils.interpolate(
+                        lerpHistory.current,
+                        lerpHistory.target,
+                        lerpHistory.ease
+                    );
 
-                // Ensure progress values are within [0, 1]
-                lerpXProgress = THREE.MathUtils.clamp(lerpXProgress, 0, 1);
-                lerpYProgress = THREE.MathUtils.clamp(lerpYProgress, 0, 1);
-                lerpZProgress = THREE.MathUtils.clamp(lerpZProgress, 0, 1);
-                historyProgress = THREE.MathUtils.clamp(historyProgress, 0, 1);
+                    lerpX.target = travelingDataRef.current.originInstanceLevel - 1;
+                    lerpY.target = travelingDataRef.current.destinationInstanceSiblingPosition.x;
+                    lerpZ.target = travelingDataRef.current.destinationInstanceSiblingPosition.y;
+                    lerpHistory.target = historyRef.current.length - 1;
 
-                // Update targetPosition based on navigationAxis
-                try {
-                    if (travelingDataRef.current.navigationAxis === 'vertical' && currentVerticalSiblingAxis) {
-                        currentVerticalSiblingAxis.getPointAt(lerpYProgress, targetPosition);
-                    } else if (travelingDataRef.current.navigationAxis === 'horizontal' && currentHorizontalSiblingAxis) {
-                        currentHorizontalSiblingAxis.getPointAt(lerpZProgress, targetPosition);
-                    } else if (travelingDataRef.current.navigationAxis === 'default' && currentPath) {
-                        if (typeof currentPath.getPointAt === 'function') {
-                            let result = currentPath.getPointAt(lerpXProgress, targetPosition);
-                            if (result && result instanceof THREE.Vector3) {
-                                targetPosition.copy(result);
+                    // GLITCH DETECTION
+                    prevCameraPosition.copy(camera.position);
+
+                    prevFramePath = currentPath;
+                    currentPath = travelingDataRef.current.travelingPath;
+                    currentVerticalSiblingAxis = travelingDataRef.current.destinationSiblingAxis.verticalPath;
+                    currentHorizontalSiblingAxis = travelingDataRef.current.destinationSiblingAxis.horizontalPath;
+                    if (currentPath !== prevFramePath) {
+                        lerpXProgress = travelingDataRef.current.isNavDescending ? 0 : 1;
+                        historyProgress = isHistoryIncreasing ? 0 : 1;
+                    } else {
+                        lerpXProgress = lerpX.current - Math.floor(lerpX.current);
+                        historyProgress = lerpHistory.current - Math.floor(lerpHistory.current);
+                    }
+                    lerpYProgress = lerpY.current;
+                    lerpZProgress = lerpZ.current;
+
+                    // LERP BETWEEN CONTROLS
+                    prevControls = travelingDataRef.current.originControls;
+                    nextControls = travelingDataRef.current.destinationControls;
+                    currentControls = lerpControls(prevControls, nextControls, historyProgress, isHistoryIncreasing.current);
+
+                    if (isPortraitRef.current) {
+                        if (currentControls.maxDistance !== undefined) {
+                            currentControls.maxDistance *= 2;
+                        }
+                        if (currentControls.minDistance !== undefined) {
+                            currentControls.minDistance *= 2;
+                        }
+                    }
+
+                    if (controls) {
+                        if (currentControls?.maxDistance !== undefined) {
+                            controls.maxDistance = currentControls.maxDistance;
+                        }
+                        if (currentControls?.minDistance !== undefined) {
+                            controls.minDistance = currentControls.minDistance;
+                        }
+                        if (currentControls?.maxAzimuthAngle !== undefined) {
+                            controls.maxAzimuthAngle = currentControls.maxAzimuthAngle;
+                        }
+                        if (currentControls?.minAzimuthAngle !== undefined) {
+                            controls.minAzimuthAngle = currentControls.minAzimuthAngle;
+                        }
+                        if (currentControls?.maxPolarAngle !== undefined) {
+                            controls.maxPolarAngle = Math.PI / currentControls.maxPolarAngle;
+                        }
+                        if (currentControls?.minPolarAngle !== undefined) {
+                            controls.minPolarAngle = Math.PI / currentControls.minPolarAngle;
+                        }
+                    }
+
+                    // Ensure progress values are within [0, 1]
+                    lerpXProgress = THREE.MathUtils.clamp(lerpXProgress, 0, 1);
+                    lerpYProgress = THREE.MathUtils.clamp(lerpYProgress, 0, 1);
+                    lerpZProgress = THREE.MathUtils.clamp(lerpZProgress, 0, 1);
+                    historyProgress = THREE.MathUtils.clamp(historyProgress, 0, 1);
+
+                    // Update targetPosition based on navigationAxis
+                    try {
+                        if (travelingDataRef.current.navigationAxis === 'vertical' && currentVerticalSiblingAxis) {
+                            currentVerticalSiblingAxis.getPointAt(lerpYProgress, targetPosition);
+                        } else if (travelingDataRef.current.navigationAxis === 'horizontal' && currentHorizontalSiblingAxis) {
+                            currentHorizontalSiblingAxis.getPointAt(lerpZProgress, targetPosition);
+                        } else if (travelingDataRef.current.navigationAxis === 'default' && currentPath) {
+                            if (typeof currentPath.getPointAt === 'function') {
+                                let result = currentPath.getPointAt(lerpXProgress, targetPosition);
+                                if (result && result instanceof THREE.Vector3) {
+                                    targetPosition.copy(result);
+                                } else {
+                                    console.warn('getPointAt returned an invalid result');
+                                    targetPosition.copy(objectTarget.position);
+                                }
                             } else {
-                                console.warn('getPointAt returned an invalid result');
+                                console.warn('currentPath.getPointAt is not a function');
                                 targetPosition.copy(objectTarget.position);
                             }
                         } else {
-                            console.warn('currentPath.getPointAt is not a function');
                             targetPosition.copy(objectTarget.position);
                         }
-                    } else {
+                    } catch (error) {
+                        console.error('Error in getPointAt:', error);
                         targetPosition.copy(objectTarget.position);
                     }
+
+                    objectTarget.position.copy(targetPosition);
+
+                    // UPDATE CONTROLS
+                    controls.update();
+
+                    // If the position hasn't changed significantly for a certain number of frames, invert the rotation
+                    if (unchangedFrames > 30) {
+                        controls.autoRotateSpeed *= -1;
+                        unchangedFrames = 0;
+                    }
+
+                    // RENDER ALL
+                    renderer3d.render(scene, camera);
+                    renderer2d.render(scene, camera);
                 } catch (error) {
-                    console.error('Error in getPointAt:', error);
-                    targetPosition.copy(objectTarget.position);
+                    console.error('Error in animate function:', error);
+                    cancelAnimationFrame(req);
+                    if (renderer3d) {
+                        renderer3d.dispose();
+                        setRenderer3d(null);
+                    }
+                    if (renderer2d) {
+                        // Remove the DOM element from the container
+                        if (renderer2d.domElement && renderer2d.domElement.parentNode) {
+                            renderer2d.domElement.parentNode.removeChild(renderer2d.domElement);
+                        }
+                        setRenderer2d(null);
+                    }
+                    setNeedsReset(prev => prev + 1);
                 }
-
-                objectTarget.position.copy(targetPosition);
-
-                // UPDATE CONTROLS
-                controls.update();
-
-                // If the position hasn't changed significantly for a certain number of frames, invert the rotation
-                if (unchangedFrames > 30) {
-                    controls.autoRotateSpeed *= -1;
-                    unchangedFrames = 0;
-                }
-
-                // RENDER ALL
-                renderer3d.render(scene, camera);
-                renderer2d.render(scene, camera);
-            }
+            };
 
             // START ANIMATION
             if (travelingData) {
@@ -450,21 +469,30 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
             return () => {
                 console.log('unmount');
                 cancelAnimationFrame(req);
-                renderer3d.dispose();
-            }
-        };
-    }, [data]);
+                if (renderer3d) {
+                    renderer3d.dispose();
+                    setRenderer3d(null);
+                }
+                if (renderer2d) {
+                    if (renderer2d.domElement && renderer2d.domElement.parentNode) {
+                        renderer2d.domElement.parentNode.removeChild(renderer2d.domElement);
+                    }
+                    setRenderer2d(null);
+                }
+            };
+        }
+    }, [data, needsReset]);
 
     useEffect(() => {
         window.addEventListener('resize', handleWindowResize, false);
         return () => {
             window.removeEventListener('resize', handleWindowResize, false);
-        }
-    }, [renderer3d, handleWindowResize])
+        };
+    }, [renderer3d, handleWindowResize]);
 
     return (
         <RenderView ref={refBody} />
-    )
-}
+    );
+};
 
-export default Experience
+export default Experience;
