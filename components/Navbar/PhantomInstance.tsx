@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
-import chevron from 'public/assets/SVG/Phantom_Chevron.svg'
-import searchIcon from 'public/assets/SVG/search_icon.svg'
 
 interface SearchBarProps {
     placehover?: string | null;
@@ -48,7 +46,7 @@ export default function PhantomInstance({ placehover, isMapOpened }: SearchBarPr
 
     return (
         <div className="NavigationInstance">
-            <Image id="arrow" className={`PhantomArrow ${active}`} src={chevron} width={15} height={15} alt="Arrow"></Image>
+            <Image id="arrow" className={`PhantomArrow ${active}`} src={'public/assets/SVG/Chevron.svg'} width={15} height={15} alt="Arrow"></Image>
             <div className={`PhantomInstance`}>{inputValue}</div>
         </div>
     )

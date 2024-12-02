@@ -2,13 +2,6 @@ html {
   scroll-behavior: smooth;
 }
 
-.Layout {
-  position: fixed;
-  background-color: rgba(18, 23, 34, 1);
-  top: 0;
-  left: 0;
-}
-
 body {
   font-family: 'Inter', sans-serif;
   font-weight: 100;

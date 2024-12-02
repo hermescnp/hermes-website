@@ -1,8 +1,6 @@
 import React, { CSSProperties, RefObject } from "react";
 import Image from "next/image"
 import '../../styles/About.css'
-import chevron from 'public/assets/SVG/Chevron.svg'
-import authorImg from 'public/assets/HermesPrane.jpg'
 
 export const About = () => {
 
@@ -13,7 +11,7 @@ export const About = () => {
                 <p>UX/Technical Artist | Professional Musician</p>
             </div>
             
-            <Image className="AuthorImage" src={authorImg} width={70} height={70} alt="Fotografía del autor" />
+            <Image className="AuthorImage" src={'/assets/PNG/HermesPhotography.png'} width={70} height={70} alt="Fotografía del autor" />
 
             <p id="biography">With over 7 years of experience in UX/UI development, 3D modeling, and rendering, I specialize in technical art focused on virtual reality and artificial intelligence. 
             My expertise includes creating art-tech products like video games, interactive simulations, and tools development. 
