@@ -15,13 +15,18 @@ export default function Camera({ position, target, aspect }: { position: THREE.V
 
     perspectiveCamera.position.copy(position);
     perspectiveCamera.lookAt(target);
+    perspectiveCamera.updateProjectionMatrix();
 
     set({ camera: perspectiveCamera });
 
     return () => {
       // Clean up if necessary
     };
-  }, [position, target, aspect, set]);
+  }, [position, aspect, set]);
+
+  useEffect(() => {
+    camera.lookAt(target);
+  }, [target, camera]);
 
   return null;
 }
