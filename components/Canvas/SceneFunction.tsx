@@ -3,6 +3,10 @@ import React, { useRef, useState, useEffect } from "react"
 import { useFrame, useThree } from "@react-three/fiber"
 import { OrbitControls, Html } from "@react-three/drei"
 import { OrbitControls as OrbitControlsImpl } from "three-stdlib"
+import { Zones } from "../Experience/Zonification"
+import { useExperienceContext } from "@/context/ExperienceContext"
+import useSceneHandlers from "./SceneHandlers"
+
 import * as THREE from "three"
 
 import SceneModel from "./SceneModel"
@@ -16,6 +20,10 @@ type SceneProps = {
 
 export default function Scene({ data }: SceneProps) {
 
+  const { placehover, setPlaceHover, history, pushToHistory, getLastHistoryItem, getPrevHistoryItem, setLoadingState, setLoadingProgress, travelingData, setTravelingData, loadingState } = useExperienceContext()
+  const [currentInstance, setCurrentInstance] = useState<string>('main');
+  const [prevInstance, setPrevInstance] = useState<string>('intro');
+  const { onZonePointerDown, onZonePointerUp, onZoneClick, onZoneHover, onZonePointerOut } = useSceneHandlers()
   const orbitRef = useRef<OrbitControlsImpl>(null)
   const [isPortrait, setIsPortrait] = useState(false)
   const [distances, setDistances] = useState({
@@ -23,6 +31,18 @@ export default function Scene({ data }: SceneProps) {
     max: data[0]?.maxDistance,
   })
 
+  // UPDATE CURRENT INSTANCE
+  useEffect(() => {
+    setCurrentInstance(getLastHistoryItem());
+    setPrevInstance(getPrevHistoryItem());
+  }, [history]);
+
+  // CALL INSTANCE TRAVELER
+  useEffect(() => {
+    console.log('currentInstance: ', currentInstance);
+  }, [currentInstance]);
+
+  // HANDLE RESIZE
   useEffect(() => {
     function handleResize() {
       if (typeof window === "undefined") return
@@ -49,7 +69,6 @@ export default function Scene({ data }: SceneProps) {
     }
   }, [isPortrait, data])
 
-  const position = new THREE.Vector3(-13.0, 7.0, 13.0)
   const generalTarget = new THREE.Vector3(
     data[0]?.positionX,
     data[0]?.positionY,
@@ -77,7 +96,6 @@ export default function Scene({ data }: SceneProps) {
 
   return (
     <>
-      <Camera position={position} target={generalTarget} aspect={aspect} />
       <OrbitControls
         ref={orbitRef}
         target={generalTarget}
@@ -99,7 +117,7 @@ export default function Scene({ data }: SceneProps) {
       />
       <Background_R3F />
       <SceneModel />
-      
+
       {/* 2D Overlays in 3D space */}
       <Html center position={[1.63, 4.55, -0.59]} zIndexRange={[0, 0]}>
         <img src={bloomEffect.src} style={{ width: "150px", opacity: 0.7 }} />
@@ -110,6 +128,16 @@ export default function Scene({ data }: SceneProps) {
       <Html center position={[0.51, 4.18, -1.29]} zIndexRange={[0, 0]}>
         <img src={bloomEffect.src} style={{ width: "150px", opacity: 0.7 }} />
       </Html>
+
+      <Zones
+        data={data}
+        onZonePointerDown={onZonePointerDown}
+        onZonePointerUp={onZonePointerUp}
+        onZoneClick={onZoneClick}
+        onZoneHover={onZoneHover}
+        onZonePointerOut={onZonePointerOut}
+        currentInstance={currentInstance}
+      />
     </>
   )
 }

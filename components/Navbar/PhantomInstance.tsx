@@ -46,7 +46,7 @@ export default function PhantomInstance({ placehover, isMapOpened }: SearchBarPr
 
     return (
         <div className="NavigationInstance">
-            <Image id="arrow" className={`PhantomArrow ${active}`} src={'public/assets/SVG/Chevron.svg'} width={15} height={15} alt="Arrow"></Image>
+            <Image id="arrow" className={`PhantomArrow ${active}`} src={'/assets/SVG/Chevron.svg'} width={15} height={15} alt="Arrow"></Image>
             <div className={`PhantomInstance`}>{inputValue}</div>
         </div>
     )
