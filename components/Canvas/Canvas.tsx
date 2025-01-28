@@ -19,6 +19,7 @@ export default function CanvasComponent() {
                 shadowMapEnabled: false,
                 shadowMapType: THREE.PCFSoftShadowMap,
                 preserveDrawingBuffer: false,
+                powerPreference: "high-performance",
             }}
             onCreated={({ scene }) => {
                 const color = new THREE.Color(0x1e2332)

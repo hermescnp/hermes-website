@@ -1,13 +1,14 @@
 "use client"
 import React, { useRef, useState, useEffect } from "react"
 import { useFrame, useThree } from "@react-three/fiber"
-import { OrbitControls } from "@react-three/drei"
+import { OrbitControls, Html } from "@react-three/drei"
 import { OrbitControls as OrbitControlsImpl } from "three-stdlib"
 import * as THREE from "three"
 
 import SceneModel from "./SceneModel"
 import Camera from "../Experience/Camera_R3F"
 import Background_R3F from "../Experience/Background_R3F"
+import bloomEffect from '../../public/assets/PNG/bloom-effect.png'
 
 type SceneProps = {
   data: any[]
@@ -98,6 +99,17 @@ export default function Scene({ data }: SceneProps) {
       />
       <Background_R3F />
       <SceneModel />
+      
+      {/* 2D Overlays in 3D space */}
+      <Html center position={[1.63, 4.55, -0.59]} zIndexRange={[0, 0]}>
+        <img src={bloomEffect.src} style={{ width: "150px", opacity: 0.7 }} />
+      </Html>
+      <Html center position={[0.67, 3.91, -2.62]} zIndexRange={[0, 0]}>
+        <img src={bloomEffect.src} style={{ width: "150px", opacity: 0.7 }} />
+      </Html>
+      <Html center position={[0.51, 4.18, -1.29]} zIndexRange={[0, 0]}>
+        <img src={bloomEffect.src} style={{ width: "150px", opacity: 0.7 }} />
+      </Html>
     </>
   )
 }
