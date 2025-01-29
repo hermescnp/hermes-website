@@ -5,6 +5,7 @@ import * as THREE from "three"
 
 type ZoneData = {
   key: string
+  name: string
   parentKey: string
   width: number
   height: number

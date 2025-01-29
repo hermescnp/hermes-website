@@ -59,7 +59,7 @@
         "width": 1.50,
         "height": 2.20,
         "depth": 2.00,
-        "maxDistance": 5.00,
+        "maxDistance": 6.00,
         "minDistance": 5.00,
         "maxAzimuthAngle": -0.40,
         "minAzimuthAngle": -1.70,

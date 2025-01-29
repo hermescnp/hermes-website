@@ -6,11 +6,8 @@ import { OrbitControls as OrbitControlsImpl } from "three-stdlib"
 import { Zones } from "../Experience/Zonification"
 import { useExperienceContext } from "@/context/ExperienceContext"
 import useSceneHandlers from "./SceneHandlers"
-
 import * as THREE from "three"
-
 import SceneModel from "./SceneModel"
-import Camera from "../Experience/Camera_R3F"
 import Background_R3F from "../Experience/Background_R3F"
 import bloomEffect from '../../public/assets/PNG/bloom-effect.png'
 
@@ -20,15 +17,24 @@ type SceneProps = {
 
 export default function Scene({ data }: SceneProps) {
 
-  const { placehover, setPlaceHover, history, pushToHistory, getLastHistoryItem, getPrevHistoryItem, setLoadingState, setLoadingProgress, travelingData, setTravelingData, loadingState } = useExperienceContext()
+  const { history, getLastHistoryItem, getPrevHistoryItem } = useExperienceContext()
   const [currentInstance, setCurrentInstance] = useState<string>('main');
   const [prevInstance, setPrevInstance] = useState<string>('intro');
   const { onZonePointerDown, onZonePointerUp, onZoneClick, onZoneHover, onZonePointerOut } = useSceneHandlers()
   const orbitRef = useRef<OrbitControlsImpl>(null)
   const [isPortrait, setIsPortrait] = useState(false)
-  const [distances, setDistances] = useState({
-    min: data[0]?.minDistance,
-    max: data[0]?.maxDistance,
+  const desiredInstance = useRef({
+    target: new THREE.Vector3(
+      data[0].positionX,
+      data[0].positionY,
+      data[0].positionZ
+    ),
+    minDistance: data[0].minDistance,
+    maxDistance: data[0].maxDistance,
+    minAzimuthAngle: data[0].minAzimuthAngle,
+    maxAzimuthAngle: data[0].maxAzimuthAngle,
+    minPolarAngle: data[0].minPolarAngle,
+    maxPolarAngle: data[0].maxPolarAngle
   })
 
   // UPDATE CURRENT INSTANCE
@@ -39,8 +45,63 @@ export default function Scene({ data }: SceneProps) {
 
   // CALL INSTANCE TRAVELER
   useEffect(() => {
-    console.log('currentInstance: ', currentInstance);
-  }, [currentInstance]);
+    const found = data.find((item) => item.key === currentInstance)
+    if (!found) return
+
+    desiredInstance.current.target.set(
+      found.positionX,
+      found.positionY,
+      found.positionZ
+    )
+    desiredInstance.current.minDistance = found.minDistance
+    desiredInstance.current.maxDistance = found.maxDistance
+    desiredInstance.current.minAzimuthAngle = found.minAzimuthAngle
+    desiredInstance.current.maxAzimuthAngle = found.maxAzimuthAngle
+    desiredInstance.current.minPolarAngle = found.minPolarAngle
+    desiredInstance.current.maxPolarAngle = found.maxPolarAngle
+    console.log('maxDistance', found.maxDistance)
+  }, [currentInstance, data])
+
+  useFrame(() => {
+    if (!orbitRef.current) return
+    const controls = orbitRef.current
+    const lerpFactor = 0.05
+
+    // Lerp target vector
+    controls.target.lerp(desiredInstance.current.target, lerpFactor)
+
+    controls.minDistance = THREE.MathUtils.lerp(
+      controls.minDistance,
+      desiredInstance.current.minDistance,
+      lerpFactor
+    )
+    controls.maxDistance = THREE.MathUtils.lerp(
+      controls.maxDistance,
+      desiredInstance.current.maxDistance,
+      lerpFactor
+    )
+    controls.minAzimuthAngle = THREE.MathUtils.lerp(
+      controls.minAzimuthAngle,
+      desiredInstance.current.minAzimuthAngle,
+      lerpFactor
+    )
+    controls.maxAzimuthAngle = THREE.MathUtils.lerp(
+      controls.maxAzimuthAngle,
+      desiredInstance.current.maxAzimuthAngle,
+      lerpFactor
+    )
+    controls.minPolarAngle = THREE.MathUtils.lerp(
+      controls.minPolarAngle,
+      Math.PI / desiredInstance.current.minPolarAngle,
+      lerpFactor
+    )
+    controls.maxPolarAngle = THREE.MathUtils.lerp(
+      controls.maxPolarAngle,
+      Math.PI / desiredInstance.current.maxPolarAngle,
+      lerpFactor
+    )
+    controls.update()
+  })
 
   // HANDLE RESIZE
   useEffect(() => {
@@ -55,31 +116,7 @@ export default function Scene({ data }: SceneProps) {
     return () => window.removeEventListener("resize", handleResize)
   }, [])
 
-  useEffect(() => {
-    if (isPortrait) {
-      setDistances({
-        min: data[0]?.minDistance * 2,
-        max: data[0]?.maxDistance * 2,
-      })
-    } else {
-      setDistances({
-        min: data[0]?.minDistance,
-        max: data[0]?.maxDistance,
-      })
-    }
-  }, [isPortrait, data])
-
-  const generalTarget = new THREE.Vector3(
-    data[0]?.positionX,
-    data[0]?.positionY,
-    data[0]?.positionZ
-  )
-
-  const aspect =
-    typeof window !== "undefined"
-      ? window.innerWidth / window.innerHeight
-      : 1
-
+  // AUTO ROTATE
   useFrame(() => {
     if (!orbitRef.current) return
     const controls = orbitRef.current
@@ -98,7 +135,6 @@ export default function Scene({ data }: SceneProps) {
     <>
       <OrbitControls
         ref={orbitRef}
-        target={generalTarget}
         autoRotate
         autoRotateSpeed={0.2}
         enableDamping
@@ -108,12 +144,12 @@ export default function Scene({ data }: SceneProps) {
         enableRotate
         rotateSpeed={0.4}
         enablePan={false}
-        maxDistance={distances.max}
-        minDistance={distances.min}
-        maxAzimuthAngle={data[0]?.maxAzimuthAngle}
-        minAzimuthAngle={data[0]?.minAzimuthAngle}
-        maxPolarAngle={Math.PI / data[0]?.maxPolarAngle}
-        minPolarAngle={Math.PI / data[0]?.minPolarAngle}
+        maxDistance={28}
+        minDistance={18}
+        maxAzimuthAngle={ 0}
+        minAzimuthAngle={-1.60}
+        maxPolarAngle={Math.PI/2.40}
+        minPolarAngle={Math.PI/3.10}
       />
       <Background_R3F />
       <SceneModel />

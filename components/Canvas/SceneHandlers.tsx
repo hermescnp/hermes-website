@@ -5,6 +5,7 @@ import { ThreeEvent } from "@react-three/fiber"
 
 export interface ZoneData {
   key: string
+  name: string
   parentKey: string
   width: number
   height: number
@@ -20,20 +21,23 @@ export default function useSceneHandlers() {
   // Tracks if the mouse is currently pressed and whether a "long click" has occurred
   const [isMousePressed, setIsMousePressed] = useState(false)
   const [isLongClick, setIsLongClick] = useState(false)
+  const [clickCount, setClickCount] = useState(0)
   
-  // Timers and thresholds
+  // Add position tracking
+  const clickStartPos = useRef({ x: 0, y: 0 })
   const clickTimer = useRef<NodeJS.Timeout | null>(null)
   const longClickTimer = useRef<NodeJS.Timeout | null>(null)
   const doubleClickThreshold = 300  // ms for detecting double-click
   const longClickThreshold = 500    // ms for detecting long-click
-
-  // We use this clickCount to help detect single vs. double clicks
-  const [clickCount, setClickCount] = useState(0)
+  const dragThreshold = 5 // pixels of movement to consider it a drag
 
   const onZonePointerDown = useCallback((zone: ZoneData, e: ThreeEvent<PointerEvent>) => {
     e.stopPropagation()
     setIsMousePressed(true)
     setIsLongClick(false)
+    
+    // Store initial click position
+    clickStartPos.current = { x: e.clientX, y: e.clientY }
 
     // Start long click timer
     longClickTimer.current = setTimeout(() => {
@@ -58,35 +62,37 @@ export default function useSceneHandlers() {
 
   const onZoneClick = useCallback((zone: ZoneData, e: ThreeEvent<MouseEvent>) => {
       e.stopPropagation()
-      
-      // If mouse is pressed or we are in a long click, we skip the single/double click logic
-      if (isMousePressed || isLongClick) return
 
-      setClickCount(prevClickCount => {
-        const newCount = prevClickCount + 1
+      // Calculate movement distance
+      const deltaX = Math.abs(e.clientX - clickStartPos.current.x)
+      const deltaY = Math.abs(e.clientY - clickStartPos.current.y)
+      const isDrag = deltaX > dragThreshold || deltaY > dragThreshold
 
-        if (newCount === 1) {
-          // Schedule a timer to detect a possible second click
-          clickTimer.current = setTimeout(() => {
-            // If no second click arrives, it's a single click
-            pushToHistory(zone.key)
-            setClickCount(0) // Reset
-          }, doubleClickThreshold)
-        } else if (newCount === 2) {
-          // Double click detected
-          if (clickTimer.current) {
-            clearTimeout(clickTimer.current)
-            clickTimer.current = null
-          }
-          // Push the parentKey to history on double click
-          if (zone.parentKey !== "root") {
-            pushToHistory(zone.parentKey)
-          }
-          return 0 // Reset clickCount
+      // If it was a drag, don't process as a click
+      if (isDrag) {
+        setClickCount(0)
+        return
+      }
+
+      if (clickTimer.current) {
+        // This is a double click
+        clearTimeout(clickTimer.current)
+        clickTimer.current = null
+        setClickCount(0)
+        
+        // Navigate to parent on double click
+        if (zone.parentKey !== "root") {
+          pushToHistory(zone.parentKey)
         }
-
-        return newCount
-      })
+      } else {
+        // This is a single click
+        setClickCount(prev => prev + 1)
+        clickTimer.current = setTimeout(() => {
+          pushToHistory(zone.key)
+          clickTimer.current = null
+          setClickCount(0)
+        }, doubleClickThreshold)
+      }
     },
     [isMousePressed, isLongClick, pushToHistory]
   )
@@ -94,7 +100,7 @@ export default function useSceneHandlers() {
   const onZoneHover = useCallback((zone: ZoneData, e: ThreeEvent<PointerEvent>) => {
     setPlaceHover(prev => {
         if (prev.name !== zone.key || prev.isSibling !== false) {
-          return { name: zone.key, isSibling: false }
+          return { name: zone.name, isSibling: false }
         }
         return prev
       })
