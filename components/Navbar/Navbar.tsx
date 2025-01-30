@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
 import '../../styles/Navbar.css'
-import chevron from 'public/assets/SVG/Chevron.svg'
 import { NavInstance } from './NavInstance'
 import NavSearchBar from './NavSearchBar'
 import { Optionsmenu } from './Optionsmenu'
 import PhantomInstance from './PhantomInstance'
 import { useExperienceContext } from '@/context/ExperienceContext'
-import ObjectIcon from 'public/assets/SVG/3DGraphics_Icon.svg'
 
 interface NavbarProps {
     isClient: boolean;
@@ -99,7 +97,7 @@ export const Navbar: React.FC<NavbarProps> = ({ isClient, isPortrait, isMapOpene
         <div className="NavBar" onClick={stopPropagation}>
             <button className="BackButton" onClick={isPortrait && isSidebarOpened ? handleAboutButtonClick : InstanceBackButton}>
                 <div style={{ position: 'relative', width: '25px', height: '25px' }}>
-                    <Image id="backChevron" className="BackChevron" src={chevron} fill alt="Back" />
+                    <Image id="backChevron" className="BackChevron" src={'/assets/SVG/Chevron.svg'} fill alt="Back" />
                 </div>
             </button>
             <div className="Navigation">
@@ -107,7 +105,7 @@ export const Navbar: React.FC<NavbarProps> = ({ isClient, isPortrait, isMapOpene
                     // Portrait Mode
                     <>
                         {currentInstance !== "main" ? (
-                            <Image id="objectIcon" className="ObjectIcon" src={ObjectIcon} width={15} height={15} alt="Object Icon"></Image>
+                            <Image id="objectIcon" className="ObjectIcon" src={'/assets/SVG/3DGraphics_Icon.svg'} width={15} height={15} alt="Object Icon"></Image>
                         ) : null}
                         {navInstances.map((instanceData, index) => (
                             <React.Fragment key={index}>

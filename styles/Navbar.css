@@ -109,10 +109,11 @@
     opacity: 0;
     height: 15px;
     width: 15px;
+    transform: rotate(180deg);
 }
 
 .PhantomArrow--active {
-    opacity: 1;
+    opacity: 0.5;
 }   
 
 .InstanceButton {

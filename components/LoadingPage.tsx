@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from 'react'
 import '../styles/LoadingPage.css'
 import Image from 'next/image'
-import logo from 'public/assets/SVG/office_logo.svg'
 import { useExperienceContext } from '@/context/ExperienceContext'
 
 interface LoadingScreenProps {
@@ -83,7 +82,7 @@ export const LoadingPage: React.FC<LoadingScreenProps> = ({ isClient }) => {
 
     return (
         <div className={`${fadeOutBackground ? 'LoadingPage Invisible' : 'LoadingPage'}`} onClick={stopClickPropagation}>
-            <Image id="officeLogo" className={isExperienceStarted ? 'OfficeLogo Inflated' : 'OfficeLogo'} src={logo} width={200} height={200} alt="Logo" />
+            <Image id="officeLogo" className={isExperienceStarted ? 'OfficeLogo Inflated' : 'OfficeLogo'} src={'/assets/SVG/office_logo.svg'} width={200} height={200} alt="Logo" />
             <div className={isExperienceStarted ? 'LoadingBar Hidden' : 'LoadingBar'}>
                 <progress className='LoadingProgress' value={(loadingProgress / 2) + (loadingStateList.length * 10)} max="100"></progress>
             </div>

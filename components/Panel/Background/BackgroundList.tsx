@@ -1,8 +1,7 @@
-import React, { useState, useRef, forwardRef, Ref } from 'react';
-import Image from 'next/image';
-import '../../../styles/Background.css';
-import chevron from 'public/assets/SVG/Chevron.svg';
-import BackgroundItem from './BackgroundItem';
+import React, { useState, useRef, forwardRef, Ref } from 'react'
+import Image from 'next/image'
+import '../../../styles/Background.css'
+import BackgroundItem from './BackgroundItem'
 
 interface BackgroundItemType {
   category: string;
@@ -73,12 +72,12 @@ const BackgroundList = forwardRef<HTMLDivElement, BackgroundListProps>(({ items 
             {isExpanded ? (
               <div className="AccordionTittle" id={`${category} Tittle`} onClick={() => collapse(category, index)} style={{ transition: 'all 0.5s ease-out 0s' }} onMouseEnter={() => setHoveredCategory(category)} onMouseLeave={() => setHoveredCategory(null)}>
                 <h4>{category}</h4>
-                <Image className="SeeLess" src={chevron} width={20} height={20} alt="See Less" />
+                <Image className="SeeLess" src={'public/assets/SVG/Chevron.svg'} width={20} height={20} alt="See Less" />
               </div>
             ) : (
               <div ref={(el) => accordionTittleRefs.current[index] = el} className="AccordionTittle" id={`${category} Tittle`} onClick={() => expand(category, index)} style={{ transition: 'all 0.5s ease-out 0s' }} onMouseEnter={() => setHoveredCategory(category)} onMouseLeave={() => setHoveredCategory(null)}>
                 <h4>{category}</h4>
-                <Image className="SeeMore" src={chevron} width={20} height={20} alt="See More" />
+                <Image className="SeeMore" src={'public/assets/SVG/Chevron.svg'} width={20} height={20} alt="See More" />
               </div>
             )}
             <ul className="BackgroundData" id={category}>

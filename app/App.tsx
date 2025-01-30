@@ -147,7 +147,7 @@ const App: React.FC<AppProps> = ({ children }) => {
 
   return (
     <html lang="en">
-      <body className='Layout'>
+      <body>
         <Navbar isClient={isClient} isPortrait={isPortraitModeRef.current} isMapOpened={isMapOpened} handleAboutButtonClick={handleAboutButtonClick} isSidebarOpened={isSidebarOpened} />
 
         <MetaverseActions openSpaceMapWindow={openSpaceMapWindow} isMapOpened={isMapOpened} />

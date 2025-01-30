@@ -1,3 +1,4 @@
+/*
 "use client"
 import React, { use, useCallback, useEffect, useRef, useState } from 'react'
 import { RenderView } from './styles'
@@ -468,3 +469,4 @@ const Experience: React.FC<ExperienceProps> = ({ isClicked }) => {
 }
 
 export default Experience
+*/
