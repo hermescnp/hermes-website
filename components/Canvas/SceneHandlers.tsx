@@ -16,12 +16,7 @@ export interface ZoneData {
 }
 
 export default function useSceneHandlers() {
-  const { pushToHistory, placehover, setPlaceHover } = useExperienceContext()
-
-  // Tracks if the mouse is currently pressed and whether a "long click" has occurred
-  const [isMousePressed, setIsMousePressed] = useState(false)
-  const [isLongClick, setIsLongClick] = useState(false)
-  const [clickCount, setClickCount] = useState(0)
+  const { pushToHistory, setPlaceHover, getPrevHistoryItem } = useExperienceContext()
   
   // Add position tracking
   const clickStartPos = useRef({ x: 0, y: 0 })
@@ -33,22 +28,19 @@ export default function useSceneHandlers() {
 
   const onZonePointerDown = useCallback((zone: ZoneData, e: ThreeEvent<PointerEvent>) => {
     e.stopPropagation()
-    setIsMousePressed(true)
-    setIsLongClick(false)
-    
+
     // Store initial click position
     clickStartPos.current = { x: e.clientX, y: e.clientY }
 
     // Start long click timer
     longClickTimer.current = setTimeout(() => {
-      setIsLongClick(true)
+
       setPlaceHover({ name: '', isSibling: false });
     }, longClickThreshold)
   }, [longClickThreshold])
 
   const onZonePointerUp = useCallback((zone: ZoneData, e: ThreeEvent<PointerEvent>) => {
     e.stopPropagation()
-    setIsMousePressed(false)
 
     if (longClickTimer.current) {
       clearTimeout(longClickTimer.current)
@@ -56,7 +48,7 @@ export default function useSceneHandlers() {
     }
     // After a short delay, mark this as no longer a long-click.
     setTimeout(() => {
-      setIsLongClick(false)
+
     }, 100)
   }, [])
 
@@ -70,7 +62,6 @@ export default function useSceneHandlers() {
 
       // If it was a drag, don't process as a click
       if (isDrag) {
-        setClickCount(0)
         return
       }
 
@@ -78,23 +69,18 @@ export default function useSceneHandlers() {
         // This is a double click
         clearTimeout(clickTimer.current)
         clickTimer.current = null
-        setClickCount(0)
         
         // Navigate to parent on double click
-        if (zone.parentKey !== "root") {
-          pushToHistory(zone.parentKey)
-        }
+        pushToHistory(getPrevHistoryItem())
       } else {
         // This is a single click
-        setClickCount(prev => prev + 1)
         clickTimer.current = setTimeout(() => {
           pushToHistory(zone.key)
           clickTimer.current = null
-          setClickCount(0)
         }, doubleClickThreshold)
       }
     },
-    [isMousePressed, isLongClick, pushToHistory]
+    [pushToHistory, getPrevHistoryItem]
   )
 
   const onZoneHover = useCallback((zone: ZoneData, e: ThreeEvent<PointerEvent>) => {

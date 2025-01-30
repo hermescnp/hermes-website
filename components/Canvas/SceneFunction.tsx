@@ -1,5 +1,5 @@
 "use client"
-import React, { useRef, useState, useEffect } from "react"
+import React, { useRef, useState, useEffect, useMemo } from "react"
 import { useFrame, useThree } from "@react-three/fiber"
 import { OrbitControls, Html } from "@react-three/drei"
 import { OrbitControls as OrbitControlsImpl } from "three-stdlib"
@@ -10,16 +10,41 @@ import * as THREE from "three"
 import SceneModel from "./SceneModel"
 import Background_R3F from "../Experience/Background_R3F"
 import bloomEffect from '../../public/assets/PNG/bloom-effect.png'
+import { isInstanceSibling } from "@/components/Experience/InstanceAnalyzer"
 
-type SceneProps = {
-  data: any[]
+type ZoneData = {
+  key: string
+  name: string
+  parentKey: string
+  width: number
+  height: number
+  depth: number
+  positionX: number
+  positionY: number
+  positionZ: number
+  // any other zone properties
 }
 
-export default function Scene({ data }: SceneProps) {
+type SceneProps = {
+  data: any[],
+  currentInstance: string
+}
 
-  const { history, getLastHistoryItem, getPrevHistoryItem } = useExperienceContext()
-  const [currentInstance, setCurrentInstance] = useState<string>('main');
-  const [prevInstance, setPrevInstance] = useState<string>('intro');
+function isZoneSelectable(zoneKey: string, currentInstance: string, data: ZoneData[]) {
+  if (zoneKey === currentInstance) return false
+  const zone = data.find((z) => z.key === zoneKey)
+  if (!zone) return false
+
+  // Is it a sibling? (Same parent as current instance)
+  const isSibling = isInstanceSibling(zoneKey, currentInstance, data)
+  // Is it a direct child of the current instance?
+  const isChild = zone.parentKey === currentInstance
+
+  return isSibling || isChild
+}
+
+export default function Scene({ data, currentInstance }: SceneProps) {
+
   const { onZonePointerDown, onZonePointerUp, onZoneClick, onZoneHover, onZonePointerOut } = useSceneHandlers()
   const orbitRef = useRef<OrbitControlsImpl>(null)
   const [isPortrait, setIsPortrait] = useState(false)
@@ -37,12 +62,6 @@ export default function Scene({ data }: SceneProps) {
     maxPolarAngle: data[0].maxPolarAngle
   })
 
-  // UPDATE CURRENT INSTANCE
-  useEffect(() => {
-    setCurrentInstance(getLastHistoryItem());
-    setPrevInstance(getPrevHistoryItem());
-  }, [history]);
-
   // CALL INSTANCE TRAVELER
   useEffect(() => {
     const found = data.find((item) => item.key === currentInstance)
@@ -59,7 +78,6 @@ export default function Scene({ data }: SceneProps) {
     desiredInstance.current.maxAzimuthAngle = found.maxAzimuthAngle
     desiredInstance.current.minPolarAngle = found.minPolarAngle
     desiredInstance.current.maxPolarAngle = found.maxPolarAngle
-    console.log('maxDistance', found.maxDistance)
   }, [currentInstance, data])
 
   useFrame(() => {
@@ -124,19 +142,23 @@ export default function Scene({ data }: SceneProps) {
     const angle = controls.getAzimuthalAngle()
     const epsilon = 0.01
 
-    if (angle <= data[0]?.minAzimuthAngle + epsilon) {
+    if (angle <= controls.minAzimuthAngle + epsilon) {
       controls.autoRotateSpeed = -Math.abs(controls.autoRotateSpeed)
-    } else if (angle >= data[0]?.maxAzimuthAngle - epsilon) {
+    } else if (angle >= controls.maxAzimuthAngle - epsilon) {
       controls.autoRotateSpeed = Math.abs(controls.autoRotateSpeed)
     }
   })
 
+  const filteredZones = data.filter((zone) =>
+    isZoneSelectable(zone.key, currentInstance, data)
+  )
+
   return (
-    <>
+    <group>
       <OrbitControls
         ref={orbitRef}
         autoRotate
-        autoRotateSpeed={0.2}
+        autoRotateSpeed={0.1}
         enableDamping
         dampingFactor={0.08}
         enableZoom
@@ -166,7 +188,7 @@ export default function Scene({ data }: SceneProps) {
       </Html>
 
       <Zones
-        data={data}
+        data={filteredZones}
         onZonePointerDown={onZonePointerDown}
         onZonePointerUp={onZonePointerUp}
         onZoneClick={onZoneClick}
@@ -174,6 +196,6 @@ export default function Scene({ data }: SceneProps) {
         onZonePointerOut={onZonePointerOut}
         currentInstance={currentInstance}
       />
-    </>
+    </group>
   )
 }

@@ -1,19 +1,38 @@
 // Canvas.tsx
 "use client"
-import React from "react"
+import React, { useCallback, useRef, useEffect, useState } from "react"
 import { Canvas } from "@react-three/fiber"
 import * as THREE from "three"
 import { useExperienceContext } from "@/context/ExperienceContext"
 import Scene from "./SceneFunction"
 import Camera from "../Experience/Camera_R3F"
+import { findParentKey } from "@/components/Experience/InstanceAnalyzer"
 
 export default function CanvasComponent() {
-    const { spaceData } = useExperienceContext()
+    const { spaceData, pushToHistory, getLastHistoryItem, history } = useExperienceContext()
+    const [currentInstance, setCurrentInstance] = useState<string>('main');
+
+    // UPDATE CURRENT INSTANCE
+    useEffect(() => {
+        setCurrentInstance(getLastHistoryItem());
+    }, [history]);
+
+    // Define camera position and target
     const position = new THREE.Vector3(-13.0, 7.0, 13.0)
     const generalTarget = new THREE.Vector3(
-        spaceData[0]?.positionX,
-        spaceData[0]?.positionY,
-        spaceData[0]?.positionZ
+        spaceData[0]?.positionX || 0,
+        spaceData[0]?.positionY || 0,
+        spaceData[0]?.positionZ || 0
+    )
+
+    // **Updated Handler for Double-Click Events**
+    const handleDoubleClick = useCallback(
+        (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => { // Changed to HTMLDivElement
+            e.preventDefault() // Prevent any default browser behavior
+            // Navigate to the main instance
+            pushToHistory('main')
+        },
+        [pushToHistory]
     )
 
     return (
@@ -33,6 +52,7 @@ export default function CanvasComponent() {
                 scene.fog = new THREE.Fog(color, 50, 70)
                 scene.background = null
             }}
+            onDoubleClick={handleDoubleClick}
         >
             <Camera
                 position={position}
@@ -42,7 +62,7 @@ export default function CanvasComponent() {
 
             <ambientLight color="#ffe175" intensity={0.2} />
 
-            <Scene data={spaceData} />
+            <Scene data={spaceData} currentInstance={currentInstance} />
         </Canvas>
     )
 }
