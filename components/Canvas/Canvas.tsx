@@ -6,16 +6,15 @@ import * as THREE from "three"
 import { useExperienceContext } from "@/context/ExperienceContext"
 import Scene from "./SceneFunction"
 import Camera from "../Experience/Camera_R3F"
-import { findParentKey } from "@/components/Experience/InstanceAnalyzer"
 
 export default function CanvasComponent() {
-    const { spaceData, pushToHistory, getLastHistoryItem, history } = useExperienceContext()
-    const [currentInstance, setCurrentInstance] = useState<string>('main');
+    const { spaceData, pushToHistory, getLastHistoryItem, history, setPlaceHover } = useExperienceContext()
+    const [currentInstance, setCurrentInstance] = useState<string>('main')
 
     // UPDATE CURRENT INSTANCE
     useEffect(() => {
         setCurrentInstance(getLastHistoryItem());
-    }, [history]);
+    }, [history])
 
     // Define camera position and target
     const position = new THREE.Vector3(-13.0, 7.0, 13.0)
@@ -31,6 +30,8 @@ export default function CanvasComponent() {
             e.preventDefault() // Prevent any default browser behavior
             // Navigate to the main instance
             pushToHistory('main')
+            // Clear the placehover
+            setPlaceHover({ name: '', isChild: false, isParent: false });
         },
         [pushToHistory]
     )
@@ -46,6 +47,7 @@ export default function CanvasComponent() {
                 shadowMapType: THREE.PCFSoftShadowMap,
                 preserveDrawingBuffer: false,
                 powerPreference: "high-performance",
+                logarithmicDepthBuffer: true,
             }}
             onCreated={({ scene }) => {
                 const color = new THREE.Color(0x1e2332)

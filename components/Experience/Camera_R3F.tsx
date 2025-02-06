@@ -10,7 +10,7 @@ export default function Camera({ position, target, aspect }: { position: THREE.V
       25,
       aspect,
       0.01,
-      1000
+      100
     );
 
     perspectiveCamera.position.copy(position);

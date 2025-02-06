@@ -13,14 +13,15 @@
         "width": 0,
         "height": 0,
         "depth": 0,
-        "maxDistance": 28.00,
+        "maxDistance": 24.00,
         "minDistance": 18.00,
         "maxAzimuthAngle": 0.00,
         "minAzimuthAngle": -1.60,
         "maxPolarAngle": 2.00,
         "minPolarAngle": 3.50,
         "isLocked": false,
-        "contentPath": null
+        "documentation": "# Hermes's Science Lab\n\n![Hermes Science Lab](/user-sources/Hermes_Science_Lab_doc-img1.svg)\n\nHermes's Science Lab is a cutting-edge, WebGL-powered digital playground meticulously crafted by **Hermes Concepción**. Designed as a welcoming portal for virtual guests, this interactive website not only invites you to explore its dynamic 3D environments but also serves as a living portfolio showcasing Hermes's professional expertise in several innovative fields.\n\n## Project Demostrations\n\n- **Virtual and Augmented Reality (VR/AR):**  \n  Dive into immersive experiences that blend the digital and physical worlds, demonstrating state-of-the-art techniques in spatial computing.\n\n- **3D Interactive Experiences:**  \n  Engage with stunning, real-time rendered scenes that push the boundaries of interactivity and visual storytelling.\n\n- **Creative Web Development:**  \n  Experience the seamless fusion of art and technology, where cutting-edge code meets imaginative design to create captivating online journeys.\n\n- **User Experience (UX) and Interface Design (UI):**  \n  Discover thoughtfully crafted interactions and interfaces that prioritize intuitive navigation and a delightful user journey.\n\nHermes's Science Lab is more than just a website; it’s an experimental space where advanced technology and creative design converge. Whether you're a tech enthusiast, a design aficionado, or a prospective client looking for innovative digital solutions, this lab provides a firsthand look at the future of interactive web experiences. Step inside and witness the next evolution of digital creativity, where every click reveals a new dimension of professional artistry and technological prowess."
+
     },
     {
         "key": "intro",
@@ -43,13 +44,13 @@
         "maxPolarAngle": 2.40,
         "minPolarAngle": 3.10,
         "isLocked": false,
-        "contentPath": null
+        "documentation": null
     },
     {
         "key": "studio",
         "isSubSpace": true,
         "name": "Prané Music Studio",
-        "description": "music workspace",
+        "description": "musical workspace",
         "parentKey": "main",
         "nearestVerticalSibling": "root",
         "nearestHorizontalSibling": "awards",
@@ -66,7 +67,7 @@
         "maxPolarAngle": 2.10,
         "minPolarAngle": 3.00,
         "isLocked": false,
-        "contentPath": null
+        "documentation": null
     },
     {
         "key": "awards",
@@ -89,7 +90,7 @@
         "maxPolarAngle": 2.30,
         "minPolarAngle": 5.00,
         "isLocked": false,
-        "contentPath": null
+        "documentation": null
     },
     {
         "key": "lobby",
@@ -112,12 +113,12 @@
         "maxPolarAngle": 2.00,
         "minPolarAngle": 3.00,
         "isLocked": false,
-        "contentPath": null
+        "documentation": null
     },
     {
         "key": "library",
         "isSubSpace": true,
-        "name": "Softwares Library",
+        "name": "Software Library",
         "description": "bookshelf",
         "parentKey": "main",
         "nearestVerticalSibling": "stairs",
@@ -135,7 +136,7 @@
         "maxPolarAngle": 2.10,
         "minPolarAngle": 3.00,
         "isLocked": false,
-        "contentPath": null
+        "documentation": null
     },
     {
         "key": "wall",
@@ -158,13 +159,13 @@
         "maxPolarAngle": 2.30,
         "minPolarAngle": 5.00,
         "isLocked": false,
-        "contentPath": null
+        "documentation": null
     },
     {
-        "key": "certificates",
+        "key": "corner",
         "isSubSpace": true,
         "name": "Background Zone",
-        "description": "corner wall",
+        "description": "wall corner",
         "parentKey": "main",
         "nearestVerticalSibling": "root",
         "nearestHorizontalSibling": "wall",
@@ -181,7 +182,7 @@
         "maxPolarAngle": 2.30,
         "minPolarAngle": 5.00,
         "isLocked": false,
-        "contentPath": null
+        "documentation": null
     },
     {
         "key": "stairs",
@@ -204,7 +205,7 @@
         "maxPolarAngle": 2.00,
         "minPolarAngle": 3.00,
         "isLocked": false,
-        "contentPath": null
+        "documentation": null
     },
     {
         "key": "rooftop",
@@ -227,7 +228,7 @@
         "maxPolarAngle": 2.00,
         "minPolarAngle": 3.00,
         "isLocked": false,
-        "contentPath": null
+        "documentation": null
     },
     {
         "key": "musicportfolio",
@@ -250,7 +251,7 @@
         "maxPolarAngle": 1.90,
         "minPolarAngle": 1.90,
         "isLocked": false,
-        "contentPath": null
+        "documentation": null
     },
     {
         "key": "aboutprane",
@@ -273,7 +274,7 @@
         "maxPolarAngle": 2.10,
         "minPolarAngle": 3.00,
         "isLocked": false,
-        "contentPath": null
+        "documentation": null
     },
     {
         "key": "nodes",
@@ -296,7 +297,7 @@
         "maxPolarAngle": 1.90,
         "minPolarAngle": 1.90,
         "isLocked": false,
-        "contentPath": null
+        "documentation": null
     },
     {
         "key": "filmscore",
@@ -319,7 +320,7 @@
         "maxPolarAngle": 1.90,
         "minPolarAngle": 1.90,
         "isLocked": false,
-        "contentPath": null
+        "documentation": null
     },
     {
         "key": "webgl",
@@ -342,7 +343,7 @@
         "maxPolarAngle": 2.10,
         "minPolarAngle": 3.00,
         "isLocked": false,
-        "contentPath": null
+        "documentation": null
     },
     {
         "key": "mipymes",
@@ -365,7 +366,7 @@
         "maxPolarAngle": 2.10,
         "minPolarAngle": 3.00,
         "isLocked": false,
-        "contentPath": null
+        "documentation": null
     },
     {
         "key": "musiccontest",
@@ -388,7 +389,7 @@
         "maxPolarAngle": 2.10,
         "minPolarAngle": 3.00,
         "isLocked": false,
-        "contentPath": null
+        "documentation": null
     },
     {
         "key": "bcrd",
@@ -411,7 +412,7 @@
         "maxPolarAngle": 2.10,
         "minPolarAngle": 3.00,
         "isLocked": false,
-        "contentPath": null
+        "documentation": null
     },
     {
         "key": "arqtur",
@@ -434,7 +435,7 @@
         "maxPolarAngle": 2.10,
         "minPolarAngle": 3.00,
         "isLocked": false,
-        "contentPath": null
+        "documentation": null
     },
     {
         "key": "literary",
@@ -457,7 +458,7 @@
         "maxPolarAngle": 2.10,
         "minPolarAngle": 3.00,
         "isLocked": false,
-        "contentPath": null
+        "documentation": null
     },
     {
         "key": "lifeguard",
@@ -480,7 +481,7 @@
         "maxPolarAngle": 2.30,
         "minPolarAngle": 5.00,
         "isLocked": false,
-        "contentPath": null
+        "documentation": null
     },
     {
         "key": "prototype",
@@ -503,7 +504,7 @@
         "maxPolarAngle": 2.10,
         "minPolarAngle": 5.00,
         "isLocked": false,
-        "contentPath": null
+        "documentation": null
     },
     {
         "key": "architecturedegree",
@@ -526,7 +527,7 @@
         "maxPolarAngle": 2.30,
         "minPolarAngle": 5.00,
         "isLocked": false,
-        "contentPath": null
+        "documentation": null
     },
     {
         "key": "musicdegree",
@@ -549,7 +550,7 @@
         "maxPolarAngle": 2.30,
         "minPolarAngle": 5.00,
         "isLocked": false,
-        "contentPath": null
+        "documentation": null
     },
     {
         "key": "guitar",
@@ -572,12 +573,12 @@
         "maxPolarAngle": 2.30,
         "minPolarAngle": 5.00,
         "isLocked": false,
-        "contentPath": null
+        "documentation": null
     },
     {
         "key": "neumann",
         "isSubSpace": false,
-        "name": "Neumann's Paradise Project",
+        "name": "Neumann's Paradise Prototype",
         "description": "3D model",
         "parentKey": "lobby",
         "nearestVerticalSibling": "root",
@@ -595,7 +596,7 @@
         "maxPolarAngle": 2.00,
         "minPolarAngle": 2.00,
         "isLocked": false,
-        "contentPath": null
+        "documentation": null
     },
     {
         "key": "scrum",
@@ -618,7 +619,7 @@
         "maxPolarAngle": 2.10,
         "minPolarAngle": 3.00,
         "isLocked": false,
-        "contentPath": null
+        "documentation": null
     },
     {
         "key": "adobe",
@@ -641,7 +642,7 @@
         "maxPolarAngle": 2.10,
         "minPolarAngle": 3.00,
         "isLocked": false,
-        "contentPath": null
+        "documentation": null
     },
     {
         "key": "design",
@@ -664,7 +665,7 @@
         "maxPolarAngle": 2.10,
         "minPolarAngle": 3.00,
         "isLocked": false,
-        "contentPath": null
+        "documentation": null
     },
     {
         "key": "cad",
@@ -687,7 +688,7 @@
         "maxPolarAngle": 2.10,
         "minPolarAngle": 3.00,
         "isLocked": false,
-        "contentPath": null
+        "documentation": null
     },
     {
         "key": "daw",
@@ -710,7 +711,7 @@
         "maxPolarAngle": 2.10,
         "minPolarAngle": 3.00,
         "isLocked": false,
-        "contentPath": null
+        "documentation": null
     },
     {
         "key": "dev",
@@ -733,7 +734,7 @@
         "maxPolarAngle": 2.10,
         "minPolarAngle": 3.00,
         "isLocked": false,
-        "contentPath": null
+        "documentation": null
     },
     {
         "key": "render",
@@ -756,7 +757,7 @@
         "maxPolarAngle": 1.80,
         "minPolarAngle": 3.30,
         "isLocked": false,
-        "contentPath": null
+        "documentation": null
     },
     {
         "key": "uxtech",
@@ -779,6 +780,6 @@
         "maxPolarAngle": 2.00,
         "minPolarAngle": 3.00,
         "isLocked": false,
-        "contentPath": null
+        "documentation": null
     }
 ]

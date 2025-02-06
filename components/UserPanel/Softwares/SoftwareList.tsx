@@ -57,7 +57,7 @@ const SoftwareList = forwardRef<HTMLDivElement, SoftwareListProps>(({ items }, r
             <div className="SeeMoreButtonSoftwareContainer">
                 <button className="SeeMoreButtonSoftware" onClick={handleClick}>
                     <p id="aboutMeText">{showAll ? 'See Less' : 'See More'}</p>
-                    <Image id="AboutMeChevron" className={expanded ? "SeeLess" : "SeeMore"} src={'public/assets/SVG/Chevron.svg'} width={20} height={20} alt="See More" />
+                    <Image id="AboutMeChevron" className={expanded ? "SeeLess" : "SeeMore"} src={'/assets/SVG/Chevron.svg'} width={20} height={20} alt="See More" />
                 </button>
             </div>
         </section>

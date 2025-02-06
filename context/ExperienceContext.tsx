@@ -4,8 +4,6 @@ import { useHistory } from './LeGineHooks'
 import { getDefaultTravelingData } from '@/components/Experience/InstanceTraveler'
 
 type ExperienceContextType = {
-  isClicked: boolean;
-  InstanceBackButton: (vent: any) => void;
   placehover: PlaceHoverType;
   setPlaceHover: React.Dispatch<React.SetStateAction<PlaceHoverType>>;
   history: string[];
@@ -15,6 +13,8 @@ type ExperienceContextType = {
   getPrevHistoryItem: () => string;
   spaceData: any[];
   setSpaceData: React.Dispatch<React.SetStateAction<any[]>>;
+  userData: any[];
+  setUserData: React.Dispatch<React.SetStateAction<any[]>>;
   loadingState: string;
   setLoadingState: React.Dispatch<React.SetStateAction<string>>;
   loadingProgress: number;
@@ -23,34 +23,43 @@ type ExperienceContextType = {
   setStartExperience: React.Dispatch<React.SetStateAction<boolean>>;
   travelingData: any;
   setTravelingData: React.Dispatch<React.SetStateAction<any>>;
+  isInfoPanelExpanded: boolean;
+  setIsInfoPanelExpanded: React.Dispatch<React.SetStateAction<boolean>>;
+  isUserPanelExpanded: boolean;
+  setIsUserPanelExpanded: React.Dispatch<React.SetStateAction<boolean>>;
+  isSearchBarActive: boolean;
+  setIsSearchBarActive: React.Dispatch<React.SetStateAction<boolean>>;
+  toggleFreeze: boolean;
+  setToggleFreeze: React.Dispatch<React.SetStateAction<boolean>>;
+  currentDocumentation: string;
+  setCurrentDocumentation: React.Dispatch<React.SetStateAction<string>>;
 }
 
 type PlaceHoverType = {
   name: string | null;
-  isSibling: boolean | null;
+  isChild: boolean | null;
+  isParent: boolean | null;
 }
 
 export const ExperienceContext = createContext<ExperienceContextType | undefined>(undefined);
 
 export const ExperienceProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [isClicked, setIsClicked] = useState<boolean>(false);
-  const [placehover, setPlaceHover] = useState<PlaceHoverType>({ name: '', isSibling: null });
+  const [placehover, setPlaceHover] = useState<PlaceHoverType>({ name: '', isChild: null, isParent: null });
   const [spaceData, setSpaceData] = useState<any[]>([]);
+  const [userData, setUserData] = useState<any[]>([]);
   const [loadingState, setLoadingState] = useState('Loading metaverse');
   const [loadingProgress, setLoadingProgress] = useState<number>(0);
   const [startExperience, setStartExperience] = useState<boolean>(false);
   const [history, pushToHistory, stepBackHistory, clearHistory, getLastHistoryItem, getPrevHistoryItem] = useHistory();
   const [travelingData, setTravelingData] = useState<any>(getDefaultTravelingData(spaceData));
-
-  const InstanceBackButton = (event: any) => {
-    event.stopPropagation();
-    setIsClicked(prev => !prev);
-  };
+  const [isInfoPanelExpanded, setIsInfoPanelExpanded] = useState<boolean>(false);
+  const [isUserPanelExpanded, setIsUserPanelExpanded] = useState<boolean>(false);
+  const [isSearchBarActive, setIsSearchBarActive] = useState<boolean>(false);
+  const [toggleFreeze, setToggleFreeze] = useState(false);
+  const [currentDocumentation, setCurrentDocumentation] = useState<string>(spaceData[0]?.documentation);
 
   return (
     <ExperienceContext.Provider value={{
-      isClicked,
-      InstanceBackButton,
       placehover,
       setPlaceHover,
       history,
@@ -60,6 +69,8 @@ export const ExperienceProvider: React.FC<{ children: React.ReactNode }> = ({ ch
       getPrevHistoryItem,
       spaceData,
       setSpaceData,
+      userData,
+      setUserData,
       loadingState,
       setLoadingState,
       loadingProgress,
@@ -67,7 +78,18 @@ export const ExperienceProvider: React.FC<{ children: React.ReactNode }> = ({ ch
       startExperience,
       setStartExperience,
       travelingData,
-      setTravelingData }}>
+      setTravelingData,
+      isInfoPanelExpanded,
+      setIsInfoPanelExpanded,
+      isUserPanelExpanded,
+      setIsUserPanelExpanded,
+      isSearchBarActive,
+      setIsSearchBarActive,
+      toggleFreeze,
+      setToggleFreeze,
+      currentDocumentation,
+      setCurrentDocumentation
+      }}>
       {children}
     </ExperienceContext.Provider>
   );

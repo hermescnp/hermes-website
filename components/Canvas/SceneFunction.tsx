@@ -1,5 +1,5 @@
 "use client"
-import React, { useRef, useState, useEffect, useMemo } from "react"
+import React, { useRef, useState, useEffect, useMemo, use } from "react"
 import { useFrame, useThree } from "@react-three/fiber"
 import { OrbitControls, Html } from "@react-three/drei"
 import { OrbitControls as OrbitControlsImpl } from "three-stdlib"
@@ -11,6 +11,7 @@ import SceneModel from "./SceneModel"
 import Background_R3F from "../Experience/Background_R3F"
 import bloomEffect from '../../public/assets/PNG/bloom-effect.png'
 import { isInstanceSibling } from "@/components/Experience/InstanceAnalyzer"
+import '../../styles/Canvas.css'
 
 type ZoneData = {
   key: string
@@ -22,7 +23,6 @@ type ZoneData = {
   positionX: number
   positionY: number
   positionZ: number
-  // any other zone properties
 }
 
 type SceneProps = {
@@ -61,6 +61,7 @@ export default function Scene({ data, currentInstance }: SceneProps) {
     minPolarAngle: data[0].minPolarAngle,
     maxPolarAngle: data[0].maxPolarAngle
   })
+  const originalDistances = useRef({ minDistance: data[0].minDistance, maxDistance: data[0].maxDistance })
 
   // CALL INSTANCE TRAVELER
   useEffect(() => {
@@ -78,6 +79,8 @@ export default function Scene({ data, currentInstance }: SceneProps) {
     desiredInstance.current.maxAzimuthAngle = found.maxAzimuthAngle
     desiredInstance.current.minPolarAngle = found.minPolarAngle
     desiredInstance.current.maxPolarAngle = found.maxPolarAngle
+    originalDistances.current.minDistance = found.minDistance
+    originalDistances.current.maxDistance = found.maxDistance
   }, [currentInstance, data])
 
   useFrame(() => {
@@ -153,6 +156,18 @@ export default function Scene({ data, currentInstance }: SceneProps) {
     isZoneSelectable(zone.key, currentInstance, data)
   )
 
+  //HANDLE RESPONSIVENESS
+  useEffect(() => {
+    const { minDistance, maxDistance } = originalDistances.current
+    if (isPortrait) {
+      desiredInstance.current.minDistance = minDistance * 2
+      desiredInstance.current.maxDistance = maxDistance * 2
+    } else {
+      desiredInstance.current.minDistance = minDistance
+      desiredInstance.current.maxDistance = maxDistance
+    }
+  }, [isPortrait])
+
   return (
     <group>
       <OrbitControls
@@ -177,13 +192,13 @@ export default function Scene({ data, currentInstance }: SceneProps) {
       <SceneModel />
 
       {/* 2D Overlays in 3D space */}
-      <Html center position={[1.63, 4.55, -0.59]} zIndexRange={[0, 0]}>
+      <Html center position={[1.63, 4.55, -0.59]} zIndexRange={[0, 0]} style={{ pointerEvents: "none" }}>
         <img src={bloomEffect.src} style={{ width: "150px", opacity: 0.7 }} />
       </Html>
-      <Html center position={[0.67, 3.91, -2.62]} zIndexRange={[0, 0]}>
+      <Html center position={[0.67, 3.91, -2.62]} zIndexRange={[0, 0]} style={{ pointerEvents: "none" }}>
         <img src={bloomEffect.src} style={{ width: "150px", opacity: 0.7 }} />
       </Html>
-      <Html center position={[0.51, 4.18, -1.29]} zIndexRange={[0, 0]}>
+      <Html center position={[0.51, 4.18, -1.29]} zIndexRange={[0, 0]} style={{ pointerEvents: "none" }}>
         <img src={bloomEffect.src} style={{ width: "150px", opacity: 0.7 }} />
       </Html>
 

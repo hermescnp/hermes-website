@@ -35,7 +35,7 @@ export default function useSceneHandlers() {
     // Start long click timer
     longClickTimer.current = setTimeout(() => {
 
-      setPlaceHover({ name: '', isSibling: false });
+      setPlaceHover({ name: '', isChild: true });
     }, longClickThreshold)
   }, [longClickThreshold])
 
@@ -69,13 +69,11 @@ export default function useSceneHandlers() {
         // This is a double click
         clearTimeout(clickTimer.current)
         clickTimer.current = null
-        
-        // Navigate to parent on double click
-        pushToHistory(getPrevHistoryItem())
       } else {
         // This is a single click
         clickTimer.current = setTimeout(() => {
           pushToHistory(zone.key)
+          setPlaceHover({ name: '', isChild: false });
           clickTimer.current = null
         }, doubleClickThreshold)
       }
@@ -84,16 +82,11 @@ export default function useSceneHandlers() {
   )
 
   const onZoneHover = useCallback((zone: ZoneData, e: ThreeEvent<PointerEvent>) => {
-    setPlaceHover(prev => {
-        if (prev.name !== zone.key || prev.isSibling !== false) {
-          return { name: zone.name, isSibling: false }
-        }
-        return prev
-      })
+    setPlaceHover({name: zone.name, isChild: e.object.userData.isChild})
   }, [setPlaceHover])
   
   const onZonePointerOut = useCallback((zone: ZoneData, e: ThreeEvent<PointerEvent>) => {
-    setPlaceHover({ name: '', isSibling: false })
+    setPlaceHover({ name: '', isChild: false })
   }, [])
   
   return {

@@ -1,6 +1,9 @@
 {
     "id": "id number",
     "name": "Hermes's Office",
+    "owner": "Hermes Concepción",
+    "ownerAlias": "Hermes",
+    "ownerEmail": "hermes.cnp@gmail.com",
     "moc": "moc name string",
     "mapData": "file url",
     "mocData": "file url",

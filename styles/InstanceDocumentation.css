@@ -1,0 +1,120 @@
+.DocumentContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    padding: 15px;
+}
+
+/* General Markdown Styling */
+.markdown-body {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    color: white;
+    max-width: 800px;
+    margin: auto;
+}
+
+/* Headings */
+.markdown-body h1 {
+    font-size: 24px;
+    color: #68DBFF;
+    border-bottom: 0.5px solid #777;
+    padding-bottom: 5px;
+    margin-bottom: 15px;
+}
+
+.markdown-body h2 {
+    font-size: 20px;
+    color: #68DBFF;
+    border-bottom: 0.5px solid #777;
+    padding-bottom: 4px;
+    margin-top: 20px;
+}
+
+.markdown-body h3 {
+    font-size: 16px;
+    color: #555;
+    margin-top: 15px;
+}
+
+/* Paragraphs */
+.markdown-body p {
+    font-size: 14px;
+    margin: 10px 0;
+    font-weight: 300;
+    color: #ddd;
+}
+
+/* Lists */
+.markdown-body ul li {
+    background-color: rgba(20, 24, 35, 0.4);
+    padding: 5px 15px;
+    margin: 7px 0px;
+    border-radius: 10px;
+}
+
+/* Links */
+.markdown-body a {
+    color: #68DBFF;
+    text-decoration: none;
+}
+
+.markdown-body a:hover {
+    text-decoration: underline;
+}
+
+/* Code Blocks */
+.markdown-body pre {
+    background-color: #2d2d2d;
+    color: #f8f8f2;
+    padding: 10px;
+    border-radius: 5px;
+    overflow-x: auto;
+    font-size: 14px;
+}
+
+.markdown-body code {
+    font-family: 'Courier New', monospace;
+    background: #eef;
+    padding: 2px 5px;
+    border-radius: 3px;
+}
+
+/* Blockquote */
+.markdown-body blockquote {
+    margin: 10px 0;
+    padding: 10px 15px;
+    border-left: 5px solid #68DBFF;
+    background: #f5f5f5;
+    color: #555;
+}
+
+/* Tables */
+.markdown-body table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+.markdown-body th,
+.markdown-body td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.markdown-body th {
+    background-color: #f3f3f3;
+    font-weight: bold;
+}
+
+/* Images */
+.markdown-body img {
+    max-width: 100%;
+    border-radius: 10px;
+    display: block;
+    margin: 20px 0px;
+}

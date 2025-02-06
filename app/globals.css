@@ -112,10 +112,6 @@ picture {
   pointer-events: none;
 } 
 
-img {
-  width: 50px;
-}
-
 ul {
   list-style: none;
   padding: 0;

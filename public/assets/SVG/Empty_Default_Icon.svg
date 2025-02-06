@@ -1,0 +1,45 @@
+<svg width="379" height="337" viewBox="0 0 379 337" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M1 110.5V226.5L189.5 335.5V328L7 222.5V114L1 110.5Z" stroke="white"/>
+<path d="M378 110V226L189 335V327.5L371.984 222V113.5L378 110Z" stroke="white"/>
+<path d="M7 114L1 110.5L189.5 1L378 110.5L372 114L189.5 8.5L7 114Z" stroke="white"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M189.752 115.568L189.5 115.421L189.248 115.568L6.74805 222.068L7.25206 222.932L189.5 116.579L227.15 138.55L228.058 137.922L189.752 115.568ZM243.218 146.769L242.222 147.345L371.748 222.932L372.252 222.068L243.218 146.769Z" fill="white"/>
+<path d="M189.5 9V116" stroke="white"/>
+<path d="M108 262L93 253" stroke="white"/>
+<path d="M108 224L93 215" stroke="white"/>
+<path d="M130 212L115 203" stroke="white"/>
+<path d="M137 245L122 236" stroke="white"/>
+<path d="M137 207L122 198" stroke="white"/>
+<path d="M149 200L134 191" stroke="white"/>
+<path d="M161 194L146 185" stroke="white"/>
+<path d="M172 187L157 178" stroke="white"/>
+<path d="M180 183L165 174" stroke="white"/>
+<path d="M204 173L189 164" stroke="white"/>
+<path d="M180 220L165 211" stroke="white"/>
+<path d="M164 230L149 221" stroke="white"/>
+<path d="M152 229L137 220" stroke="white"/>
+<path d="M211 173L196 164" stroke="white"/>
+<path d="M211 165L196 156" stroke="white"/>
+<path d="M237 150L222 141" stroke="white"/>
+<path d="M220 198L205 189" stroke="white"/>
+<path d="M250 180L235 171" stroke="white"/>
+<path d="M250 165L235 156" stroke="white"/>
+<path d="M241 153L236 150" stroke="white"/>
+<path d="M241 148L226 139" stroke="white"/>
+<path d="M249 143L234 134" stroke="white"/>
+<path d="M261 136L246 127" stroke="white"/>
+<path d="M268 132L253 123" stroke="white"/>
+<path d="M93 253V215L115.5 203" stroke="white"/>
+<path d="M165 182.5V174C178 166 185.5 162 190 164.5" stroke="white"/>
+<path d="M122 207V198L134.5 191M122 223.5V230.5" stroke="white"/>
+<path d="M157 178L146 185L142.5 196" stroke="white"/>
+<path d="M205 189L205 169" stroke="white"/>
+<path d="M196 164V156L222 141" stroke="white"/>
+<path d="M226 143.5V139L234 134" stroke="white"/>
+<path d="M253 123L246 127L241.5 138.5" stroke="white"/>
+<path d="M130 212V219.025L116.717 226.463V233.074L128.755 226.876V234.314L116.717 240.926V249.19L130 241.752V249.19L108 262V224.397L130 212Z" fill="#689DAF" stroke="white"/>
+<path d="M137 207.156V245L145.547 239.763V215.794L152.058 229.369L157.349 226.489L163.453 205.922V229.78L172 224.433V187L160.198 193.993L154.907 212.915L148.802 200.163L137 207.156Z" fill="#689DAF" stroke="white"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M180 220V182.438L196.851 172.944C198.906 171.706 203.427 171.293 205.071 174.183C206.639 176.938 205.812 182.639 205.521 184.649C205.506 184.746 205.493 184.835 205.482 184.915C205.071 187.804 201.537 196.142 189.042 201.425V214.634L180 220ZM189.042 184.915V194.821C196.887 190.882 196.871 188.071 196.853 184.952C196.852 184.803 196.851 184.653 196.851 184.502C196.851 181.86 194.659 182.025 193.563 182.438L189.042 184.915Z" fill="#689DAF" stroke="white"/>
+<path d="M219.387 167.793V198L229.032 192.388V162.828L237 158.276V150L211 164.483V172.759L219.387 167.793Z" fill="#689DAF" stroke="white"/>
+<path d="M249.723 164.276V180L258.862 174.621V160.138L268 137.793V132L260.938 136.138L255.123 153.103L248.892 143.172L241 147.724V152.69L249.723 164.276Z" fill="#689DAF" stroke="white"/>
+<path d="M235 171V159.5" stroke="white"/>
+</svg>

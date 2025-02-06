@@ -1,35 +1,35 @@
-import React, { useState, useEffect } from 'react'
-import Image from 'next/image'
+import React, { useState, useEffect, useRef } from 'react'
 import { useExperienceContext } from '@/context/ExperienceContext'
 
-interface SearchBarProps {
-    placehover?: string | null;
-    isMapOpened: boolean;
-}
-
-export default function NavSearchBar({ placehover, isMapOpened }: SearchBarProps) {
-    const [inputValue, setInputValue] = useState(placehover || '');
-    const [isFocused, setIsFocused] = useState(false);
+export default function NavSearchBar() {
+    const [inputValue, setInputValue] = useState('');
     const experienceContext = useExperienceContext();
-
-    useEffect(() => {
-        if (isFocused === false && isMapOpened === false) {
-            setInputValue(placehover || '');
-        }
-    }, [placehover]);
+    const { isSearchBarActive, setIsSearchBarActive, toggleFreeze, setToggleFreeze, } = useExperienceContext();
+    const instanceInput = useRef<HTMLInputElement>(null);
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
         const trimmedValue = value.replace(/^ +/g, ''); // Remove leading spaces
         setInputValue(trimmedValue);
-    }    
-
-    const handleFocus = () => {
-        setIsFocused(true);
     }
 
+    useEffect(() => {
+        if (isSearchBarActive) {
+            instanceInput.current?.focus()
+        } else {
+            setInputValue('')
+            instanceInput.current?.blur()
+        }
+    }, [isSearchBarActive])
+
     const handleBlur = () => {
-        setIsFocused(false);
+        if (!toggleFreeze) {
+            setIsSearchBarActive(false);
+            setToggleFreeze(true);
+            setTimeout(() => {
+                setToggleFreeze(false);
+            }, 500);
+        }
     }
 
     const handleSubmit = () => {
@@ -45,22 +45,18 @@ export default function NavSearchBar({ placehover, isMapOpened }: SearchBarProps
     }
 
     return (
-        <div className="NavSearchBar">
-            <Image id="arrow" className="Arrow" src={'public/assets/SVG/Chevron.svg'} width={15} height={15} alt="Arrow"></Image>
-            <div className={`SearchBar ${isFocused ? 'SearchBar--focused' : ''}`}>
-                <input 
-                    type="text" 
-                    placeholder='Search Places or Objects' 
-                    className="InstanceInput" 
-                    value={inputValue} 
+        <div className={'searchbar-container' + (!isSearchBarActive ? ' invisible' : '')}>
+            <div className={'SearchBar' + (!isSearchBarActive ? ' searchbar-collapsed' : '')}>
+                <input
+                    ref={instanceInput}
+                    type="text"
+                    placeholder='Search Places or Objects'
+                    className="InstanceInput"
+                    value={inputValue}
                     onChange={handleInputChange}
-                    onFocus={handleFocus} 
-                    onBlur={handleBlur} 
+                    onBlur={handleBlur}
                     onKeyDown={handleKeyDown}
                 />
-                <div className="SearchIconContainer" onClick={handleSubmit}>
-                    <Image id="searchIcon" className={`SearchIcon ${inputValue ? 'SearchIcon--enabled' : ''}`} src={'/assets/SVG/search_icon.svg'} width={20} height={20} alt="Search"></Image>
-                </div>
             </div>
         </div>
     )
