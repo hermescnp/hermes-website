@@ -37,7 +37,8 @@
 
 .markdown-body h3 {
     font-size: 16px;
-    color: #555;
+    font-weight: 300;
+    color: #68DBFF;
     margin-top: 15px;
 }
 

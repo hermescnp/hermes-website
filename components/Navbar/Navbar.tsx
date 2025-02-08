@@ -42,6 +42,7 @@ export const Navbar: React.FC<NavbarProps> = ({
     const [slideUpInstance, setSlideUpInstance] = useState<boolean>(false);
     const [slideDownInstance, setSlideDownInstance] = useState<boolean>(false);
     const [smoothSlide, setSmoothSlide] = useState<boolean>(true);
+    const [isTraveling, setIsTraveling] = useState<boolean>(false);
 
     useEffect(() => {
         if (placehover.name) {
@@ -62,6 +63,10 @@ export const Navbar: React.FC<NavbarProps> = ({
             setSmoothSlide(true);
         }, 100);
         setCurrentDocumentation(spaceData?.find(item => item.key === currentInstance)?.documentation || '');
+        setIsTraveling(true);
+        setTimeout(() => {
+            setIsTraveling(false);
+        }, 2000);
     }, [currentInstance])
 
     useEffect(() => {
@@ -90,7 +95,9 @@ export const Navbar: React.FC<NavbarProps> = ({
     return (
         <div className={"navbar-wrapper" + (isInfoPanelExpanded ? ' navbar-wrapper--expanded' : '')}>
             <div className={'Navbar-background-border' + (isInfoPanelExpanded ? ' Navbar-background-border--hidden' : '')}>
-                <div className='Navbar-background'></div>
+                <div className='Navbar-background'>
+                    <div className={'shimmer-background' + (isTraveling ? ' --on' : ' --off')}></div>
+                </div>
             </div>
             <div className="NavBar" onClick={stopPropagation}>
                 <button
