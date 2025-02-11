@@ -11,12 +11,20 @@
     border-top: solid 0.5px rgba(178, 178, 178, 1);
 }
 
+.UserBar:hover {
+    background: rgba(33, 43, 63, 0.5);
+}
+
 .UserBar:hover .user-icon {
     opacity: 1;
 }
 
 .UserBar:hover .view-more-arrow {
     opacity: 1;
+}
+
+.userbar-wrapper:hover .userbar-background {
+    background: #141823;
 }
 
 .userbar-background-border {

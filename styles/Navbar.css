@@ -1,3 +1,28 @@
+.navbar-wrapper {
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 50px 1fr 30px;
+    position: fixed;
+    align-items: center;
+    height: 50px;
+    width: 400px;
+    top: 15px;
+    right: 15px;
+    z-index: 10;
+    box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.25);
+    border: solid 0.5px rgba(178, 178, 178, 1);
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    background: rgba(33, 43, 63, 0.5);
+    backdrop-filter: blur(30px);
+    margin-left: auto;
+    overflow: hidden;
+}
+
+.navbar-wrapper--expanded {
+    height: calc(100% - 95px);
+}
+
 .NavBar {
     display: grid;
     grid-template-columns: 50px 1fr auto;
@@ -63,6 +88,10 @@
     margin: 1px;
 }
 
+.Instance--hovered {
+    background-color: #141823;
+}
+
 .shimmer-background {
     position: absolute;
     align-items: center;
@@ -87,31 +116,6 @@
     0% {left:-100%}
 
     100% {left:100%}
-}
-
-.navbar-wrapper {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: 50px 1fr 30px;
-    position: fixed;
-    align-items: center;
-    height: 50px;
-    width: 400px;
-    top: 15px;
-    right: 15px;
-    z-index: 10;
-    box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.25);
-    border: solid 0.5px rgba(178, 178, 178, 1);
-    border-radius: 25px;
-    transition: all 0.3s ease;
-    background: rgba(33, 43, 63, 0.5);
-    backdrop-filter: blur(30px);
-    margin-left: auto;
-    overflow: hidden;
-}
-
-.navbar-wrapper--expanded {
-    height: calc(100% - 95px);
 }
 
 #infoPanelContent {
@@ -158,24 +162,23 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 50px;
-    height: 50px;
+    width: 48px;
+    height: 48px;
+    margin: 1px;
     transition: all 0.3s ease;
     border-radius: 50%;
     opacity: 0.5;
+    cursor: pointer;
 }
 
 .BackToParent:hover {
-    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 1;
+    background-color: #141823;
 }
 
 .disabled-no-parent {
     opacity: 0.2;
-    background-color: rgba(0, 0, 0, 0);
-}
-
-.disabled-no-parent:hover {
-    background-color: rgba(0, 0, 0, 0);
+    pointer-events: none;
 }
 
 .BackChevron {
@@ -244,10 +247,10 @@
 
 .NavigationInstance {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     text-align: center;
-    width: auto;
+    width: 100%;
     height: 100%;
     transition: all 0.3s ease;
 }
@@ -260,11 +263,11 @@
 
 .InstanceButton {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     font-size: 14px;
     font-weight: 400;
-    width: auto;
+    width: 100%;
     height: 100%;
     padding: 0px 10px;
     margin-left: -2px;
@@ -282,58 +285,6 @@
     height: 100%;
     padding: 0px 10px;
     transition: all 0.3s ease;
-}
-
-.searchbar-container {
-    display: flex;
-    justify-content: flex-end;
-    position: absolute;
-    height: calc(100% - 2px);
-    width: calc(100% - 2px);
-    grid-row: 1 / 1;
-    overflow: hidden;
-    transition: all 0.2s ease;
-}
-
-.SearchBar {
-    display: flex;
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    border-radius: 25px;
-    overflow: hidden;
-    background-color: #141823;
-    opacity: 1;
-    transition: all 0.3s ease;
-}
-
-.searchbar-collapsed {
-    width: 50px;
-}
-
-.SearchBar--focused {
-    border-color: rgba(255, 255, 255, 1);
-}
-
-.InstanceInput {
-    width: 398px;
-    height: 100%;
-    margin-left: 25px;
-    border: none;
-    padding: 0px;
-    font-size: 14px;
-    font-weight: 100;
-    background-color: transparent;
-    color: white;
-}
-
-.InstanceInput:focus {
-    outline: none;
-}
-
-.SearchIcon--enabled {
-    opacity: 1;
-    cursor: pointer;
 }
 
 .ObjectIcon-blinking {

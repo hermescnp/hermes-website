@@ -3,14 +3,13 @@ import './globals.css'
 import React, { useState, useEffect, useRef } from 'react'
 import { Inter } from 'next/font/google'
 import { Navbar } from '@/components/Navbar/Navbar'
-import { MetaverseActions } from '@/components/Navbar/MetaverseActions'
 import { LoadingPage } from '@/components/LoadingPage'
 import { useExperienceContext } from '@/context/ExperienceContext'
-import { UserPanel } from '@/components/UserPanel/UserPanel'
-import { Tabsbar } from '@/components/Header/Tabsbar'
 import { Uxhelper } from '@/components/Uxhelper/Uxhelper'
 import { PlayTravelingSound } from '@/components/Experience/TravelingSound'
 import { Userbar } from '@/components/Navbar/Userbar'
+import Searchbar from '@/components/Navbar/Searchbar'
+import CustomCursor from '@/components/Canvas/Cursor'
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -31,8 +30,7 @@ const App: React.FC<AppProps> = ({ children }) => {
   const [isPortraitMode, setIsPortraitMode] = useState<boolean>(false);
   const isPortraitModeRef = useRef<boolean>(isPortraitMode);
   const [isMapOpened, setIsMapOpened] = useState<boolean>(true);
-  const isExperienceStarted = experienceContext.startExperience;
-  const travelingData = experienceContext.travelingData;
+  const { startExperience, isSearchBarActive } = useExperienceContext();
   const [paperLTRSound, setPaperLTRSound] = useState<HTMLAudioElement | null>(null);
   const [paperRTLSound, setPaperRTLSound] = useState<HTMLAudioElement | null>(null);
 
@@ -86,10 +84,6 @@ const App: React.FC<AppProps> = ({ children }) => {
   }, [isPortraitMode]);
 
   useEffect(() => {
-    setIsMapOpened(false);
-  }, []);
-
-  useEffect(() => {
     fetch('/user/data.json')
       .then(response => response.json())
       .then(data => {
@@ -110,12 +104,14 @@ const App: React.FC<AppProps> = ({ children }) => {
   return (
     <html lang="en">
       <body>
+        <CustomCursor />
         <Navbar isClient={isClient} />
+        <Searchbar />
         <Userbar />
         <div className={inter.className}>{children}</div>
         {displayLoading ? <LoadingPage isClient={isClient} /> : null}
         <Uxhelper isNotVisible={isMapOpened && isPortraitModeRef.current}/>
-        {isExperienceStarted? <PlayTravelingSound travelingData={travelingData}/> : null}
+        {startExperience? <PlayTravelingSound/> : null}
       </body>
     </html>
   );

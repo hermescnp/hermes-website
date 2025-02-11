@@ -43,13 +43,15 @@ export function Zones({
       {data.map((zone) => {
         // 2. Decide if it's a child or (by elimination) a sibling
         const isChild = zone.parentKey === currentInstance
+        const key = zone.key
+        const name = zone.name
 
         return (
           <mesh
             key={zone.key}
             position={[zone.positionX, zone.positionY, zone.positionZ]}
             // 3. Store a single boolean flag for child-vs-sibling
-            userData={{ isChild }}
+            userData={{ key, name, isChild }}
             onPointerDown={(e) => {
               e.stopPropagation()
               onZonePointerDown?.(zone, e)

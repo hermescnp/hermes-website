@@ -29,13 +29,10 @@ type ExperienceContextType = {
   setIsUserPanelExpanded: React.Dispatch<React.SetStateAction<boolean>>;
   isSearchBarActive: boolean;
   setIsSearchBarActive: React.Dispatch<React.SetStateAction<boolean>>;
-  toggleFreeze: boolean;
-  setToggleFreeze: React.Dispatch<React.SetStateAction<boolean>>;
-  currentDocumentation: string;
-  setCurrentDocumentation: React.Dispatch<React.SetStateAction<string>>;
 }
 
 type PlaceHoverType = {
+  key: string | null;
   name: string | null;
   isChild: boolean | null;
   isParent: boolean | null;
@@ -44,7 +41,7 @@ type PlaceHoverType = {
 export const ExperienceContext = createContext<ExperienceContextType | undefined>(undefined);
 
 export const ExperienceProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [placehover, setPlaceHover] = useState<PlaceHoverType>({ name: '', isChild: null, isParent: null });
+  const [placehover, setPlaceHover] = useState<PlaceHoverType>({ key: '', name: '', isChild: null, isParent: null });
   const [spaceData, setSpaceData] = useState<any[]>([]);
   const [userData, setUserData] = useState<any[]>([]);
   const [loadingState, setLoadingState] = useState('Loading metaverse');
@@ -55,8 +52,6 @@ export const ExperienceProvider: React.FC<{ children: React.ReactNode }> = ({ ch
   const [isInfoPanelExpanded, setIsInfoPanelExpanded] = useState<boolean>(false);
   const [isUserPanelExpanded, setIsUserPanelExpanded] = useState<boolean>(false);
   const [isSearchBarActive, setIsSearchBarActive] = useState<boolean>(false);
-  const [toggleFreeze, setToggleFreeze] = useState(false);
-  const [currentDocumentation, setCurrentDocumentation] = useState<string>(spaceData[0]?.documentation);
 
   return (
     <ExperienceContext.Provider value={{
@@ -85,10 +80,6 @@ export const ExperienceProvider: React.FC<{ children: React.ReactNode }> = ({ ch
       setIsUserPanelExpanded,
       isSearchBarActive,
       setIsSearchBarActive,
-      toggleFreeze,
-      setToggleFreeze,
-      currentDocumentation,
-      setCurrentDocumentation
       }}>
       {children}
     </ExperienceContext.Provider>

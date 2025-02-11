@@ -1,45 +1,40 @@
 "use client"
-import React, { useEffect } from 'react';
+import React, { useEffect } from 'react'
+import { useExperienceContext } from '@/context/ExperienceContext'
+import { isInstanceDescendant, isInstanceSibling } from '@/components/Experience/InstanceAnalyzer'
 
-type TravelingDataProps = {
-    travelingData: {
-        navigationAxis: string;
-        isNavDescending?: boolean;
-        originInstanceLevel: number;
-    } | null;
-};
+export const PlayTravelingSound: React.FC = () => {
+    const { getLastHistoryItem, history, getPrevHistoryItem, spaceData } = useExperienceContext();
 
-export const PlayTravelingSound: React.FC<TravelingDataProps> = ({ travelingData }) => {
     useEffect(() => {
-        let audio: HTMLAudioElement | null = null; // Declare an audio variable
+        const isNavigationDescending = isInstanceDescendant(getLastHistoryItem(), getPrevHistoryItem(), spaceData);
+        const isParallelNavigation = isInstanceSibling(getLastHistoryItem(), getPrevHistoryItem(), spaceData)
+        let soundPath = ''
+        let audio: HTMLAudioElement | null = null
 
-        if (travelingData) {
-            const soundPath = travelingData.navigationAxis === null
-                ? travelingData.isNavDescending
-                    ? '/assets/sounds/travelTo_child.mp3'
-                    : '/assets/sounds/travelTo_parent.mp3'
-                : travelingData.originInstanceLevel > 1
-                    ? '/assets/sounds/travelTo_sibling.mp3'
-                    : '';
-
-            if (soundPath) {
-                audio = new Audio(soundPath);
-                if (audio) {
-                    audio.volume = travelingData.originInstanceLevel > 1 ? 0.7 : 1; // Adjust volume based on condition
-                    audio.play().catch(error => console.error("Audio play failed", error));
-                }
+        if (isNavigationDescending) {
+            soundPath = '/assets/sounds/travelTo_child.mp3'
+        } else if (isParallelNavigation) {
+            soundPath = '/assets/sounds/travelTo_sibling.mp3'
+        } else {
+            soundPath = '/assets/sounds/travelTo_parent.mp3'
+        }
+        if (soundPath) {
+            audio = new Audio(soundPath);
+            if (audio) {
+                audio.volume = 1;
+                audio.play().catch(error => console.error("Audio play failed", error));
             }
         }
-
         // Cleanup function to stop and remove the audio when the component unmounts or travelingData changes
         return () => {
             if (audio) {
-                audio.pause();
-                audio.remove();
-                audio = null;
+                audio.pause()
+                audio.remove()
+                audio = null
             }
         };
-    }, [travelingData]);
+    }, [history])
 
-    return null; // This component doesn't render anything
+    return null
 };

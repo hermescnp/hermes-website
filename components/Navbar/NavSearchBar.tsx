@@ -4,7 +4,7 @@ import { useExperienceContext } from '@/context/ExperienceContext'
 export default function NavSearchBar() {
     const [inputValue, setInputValue] = useState('');
     const experienceContext = useExperienceContext();
-    const { isSearchBarActive, setIsSearchBarActive, toggleFreeze, setToggleFreeze, } = useExperienceContext();
+    const { isSearchBarActive, setIsSearchBarActive } = useExperienceContext();
     const instanceInput = useRef<HTMLInputElement>(null);
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -23,13 +23,9 @@ export default function NavSearchBar() {
     }, [isSearchBarActive])
 
     const handleBlur = () => {
-        if (!toggleFreeze) {
+        setTimeout(() => {
             setIsSearchBarActive(false);
-            setToggleFreeze(true);
-            setTimeout(() => {
-                setToggleFreeze(false);
-            }, 500);
-        }
+        }, 500);
     }
 
     const handleSubmit = () => {
@@ -46,7 +42,7 @@ export default function NavSearchBar() {
 
     return (
         <div className={'searchbar-container' + (!isSearchBarActive ? ' invisible' : '')}>
-            <div className={'SearchBar' + (!isSearchBarActive ? ' searchbar-collapsed' : '')}>
+            <div className={'SearchBar' + (!isSearchBarActive ? ' searchbar-collapsed' : '') + ' show-results'}>
                 <input
                     ref={instanceInput}
                     type="text"

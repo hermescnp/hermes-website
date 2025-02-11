@@ -20,14 +20,7 @@ export const Uxhelper: React.FC<UxhelperProps> = ({ isNotVisible }) => {
         if (chatBoxRef.current) {
             chatBoxRef.current.scrollTop = 999999; // a large number to ensure it's at the bottom
         }
-        playNewMessageSound();
     }, [messages]);
-
-    const playNewMessageSound = () => {
-        const audio = new Audio('/assets/sounds/new_message.mp3');
-        audio.volume = 1;
-        audio.play().catch((error) => {});
-    }
 
     const addNewMessage = (newMessage: string) => {
         setTimeout(() => {

@@ -31,7 +31,7 @@ export default function CanvasComponent() {
             // Navigate to the main instance
             pushToHistory('main')
             // Clear the placehover
-            setPlaceHover({ name: '', isChild: false, isParent: false });
+            setPlaceHover({ key:'', name: '', isChild: false, isParent: false });
         },
         [pushToHistory]
     )
@@ -61,9 +61,7 @@ export default function CanvasComponent() {
                 target={generalTarget}
                 aspect={window.innerWidth / window.innerHeight}
             />
-
             <ambientLight color="#ffe175" intensity={0.2} />
-
             <Scene data={spaceData} currentInstance={currentInstance} />
         </Canvas>
     )

@@ -76,7 +76,7 @@ export const MessageProvider: React.FC<MessageProviderProps> = ({ chatPrint }) =
         }
         if (history.length === 3 && getLastHistoryItem() !== 'main') {
             setTimeout(() => {
-                chatPrint("You can go back to the previous room by double tapping the screen, or by clicking the back button on the top left corner.");
+                chatPrint("You can go back to the previous room by double tapping the screen, or by clicking the back button on the navigation bar.");
             }, 10000);
         }
     }, [history]);
