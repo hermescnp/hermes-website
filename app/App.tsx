@@ -110,7 +110,7 @@ const App: React.FC<AppProps> = ({ children }) => {
         <Userbar />
         <div className={inter.className}>{children}</div>
         {displayLoading ? <LoadingPage isClient={isClient} /> : null}
-        <Uxhelper isNotVisible={isMapOpened && isPortraitModeRef.current}/>
+        <Uxhelper />
         {startExperience? <PlayTravelingSound/> : null}
       </body>
     </html>

@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react'
 import { TypingEffect } from '@/components/Uxhelper/TypingEffect'
 import { MessageProvider } from '@/components/Uxhelper/MessageProvider'
+import { useExperienceContext } from '@/context/ExperienceContext'
 import '@/styles/Botchat.css'
 
 interface BotchatProps {

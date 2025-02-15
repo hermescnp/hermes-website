@@ -5,10 +5,10 @@ import styles from '../../styles/Cursor.module.css';
 const CustomCursor: React.FC = () => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const { placehover } = useExperienceContext();
-  const [targeting, setTargeting] = useState(false);
+  const { isCursorTargeting, setIsCursorTargeting } = useExperienceContext();
 
   useEffect(() => {
-    setTargeting(!!placehover?.name);
+    setIsCursorTargeting(!!placehover?.name);
   }, [placehover]);
 
   useEffect(() => {
@@ -23,7 +23,7 @@ const CustomCursor: React.FC = () => {
 
   return (
     <div
-      className={`${styles.cursor} ${targeting ? styles.targeting : ''}`}
+      className={`${styles.cursor} ${isCursorTargeting ? styles.targeting : ''}`}
       style={{ left: `${position.x}px`, top: `${position.y}px` }}
     />
   );

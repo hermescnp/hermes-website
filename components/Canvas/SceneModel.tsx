@@ -98,7 +98,6 @@ const SceneModel: React.FC = () => {
 
     // Add the model to the Three.js scene.
     threeScene.add(scene);
-    console.log(scene);
 
     // Cleanup on unmount.
     return () => {

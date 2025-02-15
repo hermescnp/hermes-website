@@ -18,6 +18,7 @@ export const LoadingPage: React.FC<LoadingScreenProps> = ({ isClient }) => {
     const [blink, setBlink] = useState<boolean>(false)
     const [backgroundMusic, setBackgroundMusic] = useState<HTMLAudioElement | null>(null)
     const [audio, setAudio] = useState<HTMLAudioElement | null>(null)
+    const { isCursorTargeting, setIsCursorTargeting } = useExperienceContext();
 
     // New state to handle background opacity
     const [fadeOutBackground, setFadeOutBackground] = useState<boolean>(false);
@@ -76,6 +77,13 @@ export const LoadingPage: React.FC<LoadingScreenProps> = ({ isClient }) => {
         }, 1000);
     }
 
+    const handleStartMouseOver = () => {
+        setIsCursorTargeting(true);
+    }
+    const handleStartMouseLeave = () => {
+        setIsCursorTargeting(false);
+    }
+
     const playHoverStartButtonSound = () => {
         const audio = new Audio('/assets/sounds/switch_effect.mp3');
         audio.volume = 0.3;
@@ -99,6 +107,8 @@ export const LoadingPage: React.FC<LoadingScreenProps> = ({ isClient }) => {
                 <button
                     className={'StartButton'}
                     onClick={handleStart} onMouseEnter={playHoverStartButtonSound}
+                    onMouseOver={handleStartMouseOver}
+                    onMouseLeave={handleStartMouseLeave}
                 >
                     START EXPERIENCE
                 </button>

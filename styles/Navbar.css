@@ -99,7 +99,7 @@
     width: 100%;
     background: linear-gradient(90deg, rgba(33, 43, 63, 0), #315F8C, rgba(33, 43, 63, 0));
     border: solid 0px rgba(178, 178, 178, 1);
-    margin: 1px;
+    margin: 0px;
     animation: 3s shimmer linear infinite;
     transition: opacity 1s ease-in-out;
 }
@@ -120,6 +120,8 @@
 
 #infoPanelContent {
     grid-row: 2;
+    display: flex;
+    width: 100%;
 }
 
 #hideInfoPanel {
@@ -294,4 +296,23 @@
 
 .blink {
     opacity: 0.5;
+}
+
+@media screen and (orientation: portrait) {
+    .navbar-wrapper {
+        width: calc(100% - 30px);
+        height: 50px;
+    }
+
+    .navbar-wrapper--expanded {
+        height: calc(100% - 95px);
+    }
+
+    .NavBar {
+        grid-template-columns: 50px 1fr auto;
+    }
+
+    .InstanceNavigator {
+        grid-template-rows: 50px 50px 50px;
+    }
 }

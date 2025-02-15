@@ -29,6 +29,10 @@ type ExperienceContextType = {
   setIsUserPanelExpanded: React.Dispatch<React.SetStateAction<boolean>>;
   isSearchBarActive: boolean;
   setIsSearchBarActive: React.Dispatch<React.SetStateAction<boolean>>;
+  isPortraitMode: boolean;
+  setIsPortraitMode: React.Dispatch<React.SetStateAction<boolean>>;
+  isCursorTargeting: boolean;
+  setIsCursorTargeting: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 type PlaceHoverType = {
@@ -52,6 +56,8 @@ export const ExperienceProvider: React.FC<{ children: React.ReactNode }> = ({ ch
   const [isInfoPanelExpanded, setIsInfoPanelExpanded] = useState<boolean>(false);
   const [isUserPanelExpanded, setIsUserPanelExpanded] = useState<boolean>(false);
   const [isSearchBarActive, setIsSearchBarActive] = useState<boolean>(false);
+  const [isPortraitMode, setIsPortraitMode] = useState<boolean>(false);
+  const [isCursorTargeting, setIsCursorTargeting] = useState(false);
 
   return (
     <ExperienceContext.Provider value={{
@@ -80,6 +86,10 @@ export const ExperienceProvider: React.FC<{ children: React.ReactNode }> = ({ ch
       setIsUserPanelExpanded,
       isSearchBarActive,
       setIsSearchBarActive,
+      isPortraitMode,
+      setIsPortraitMode,
+      isCursorTargeting,
+      setIsCursorTargeting,
       }}>
       {children}
     </ExperienceContext.Provider>

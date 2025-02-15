@@ -4,12 +4,18 @@
   left: 15px;
   z-index: 21;
   transition: all 0.5s ease;
-  display: grid;
-  grid-template-columns: auto 1fr;
+  display: flex;
+  flex-direction: row;
   align-items: flex-start;
   overflow: visible;
   column-gap: 10px;
   margin-right: 25px;
+  pointer-events: none;
+}
+
+.hide-bot {
+  opacity: 0;
+  overflow: hidden;
 }
 
 .LoadingChatbotContainer {
@@ -28,10 +34,11 @@
 
 @media screen and (orientation: portrait) {
   .ChatbotContainer {
+    flex-direction: column-reverse;
     top: auto;
     bottom: calc(15px + env(safe-area-inset-bottom));
     left: 15px;
-    align-items: flex-end;
+    align-items: flex-start;
     margin-right: 15px;
   }
 

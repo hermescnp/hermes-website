@@ -113,7 +113,22 @@ export const Navbar: React.FC<NavbarProps> = ({
             setSmoothSlide(true);
         }, 100);
         setIsTraveling(true);
-    }, [currentInstance])
+
+        // Prevent panel from auto-opening too soon or for 'main' instance
+        if (!currentInstance.key || currentInstance.key === 'main') {
+            return;
+        }
+
+        // Check if current instance has any children
+        const instanceHasChild = spaceData?.some(
+            (item) => item.parentKey === currentInstance.key
+        );
+        if (!instanceHasChild) {
+            setTimeout(() => {
+                setIsInfoPanelExpanded(true);
+            }, 2000);
+        }
+    }, [currentInstance, spaceData])
 
     useEffect(() => {
         if (isTraveling) {
@@ -134,19 +149,19 @@ export const Navbar: React.FC<NavbarProps> = ({
                 parentName: (spaceData?.find(item => item.key === newLastHistoryItemParent)?.name || '')
             }
         )
-        setCurrentDocumentation(spaceData?.find(item => item.key === newLastHistoryItem)?.documentation || '');
-        setParentPlaceHover({ key: newLastHistoryItemParent, name: (spaceData?.find(item => item.key === newLastHistoryItemParent)?.name || ''), isChild: null, isParent: true });
+        setCurrentDocumentation(spaceData?.find(item => item.key === newLastHistoryItem)?.documentation || '')
+        setParentPlaceHover({ key: newLastHistoryItemParent, name: (spaceData?.find(item => item.key === newLastHistoryItemParent)?.name || ''), isChild: null, isParent: true })
     }, [history, spaceData])
 
 
     useEffect(() => {
         if (isInfoPanelExpanded) {
-            setCurrentDocumentation(spaceData?.find(item => item.key === currentInstance.key)?.documentation || '');
+            setCurrentDocumentation(spaceData?.find(item => item.key === currentInstance.key)?.documentation || '')
         }
     }, [isInfoPanelExpanded])
 
     const handleSearchButtonClick = () => {
-        setIsSearchBarActive(true);
+        setIsSearchBarActive(true)
     }
 
     const handleInfoButtonClick = () => {
@@ -157,10 +172,10 @@ export const Navbar: React.FC<NavbarProps> = ({
     }
 
     const handleInstanceNameEnter = () => {
-        setIsHoveringNavbar(true);
+        setIsHoveringNavbar(true)
     }
     const handleInstanceNameLeave = () => {
-        setIsHoveringNavbar(false);
+        setIsHoveringNavbar(false)
     }
 
     const playInstanceFocusSound = () => {

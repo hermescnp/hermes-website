@@ -11,6 +11,7 @@ import SceneModel from "./SceneModel"
 import Background_R3F from "../Experience/Background_R3F"
 import bloomEffect from '../../public/assets/PNG/bloom-effect.png'
 import { isInstanceSibling } from "@/components/Experience/InstanceAnalyzer"
+import HologramEffect from "./HologramEffect"
 import '../../styles/Canvas.css'
 
 type ZoneData = {
@@ -46,8 +47,9 @@ function isZoneSelectable(zoneKey: string, currentInstance: string, data: ZoneDa
 export default function Scene({ data, currentInstance }: SceneProps) {
 
   const { onZonePointerDown, onZonePointerUp, onZoneClick, onZoneHover, onZonePointerOut } = useSceneHandlers()
+  const { startExperience, isPortraitMode, setIsPortraitMode } = useExperienceContext()
   const orbitRef = useRef<OrbitControlsImpl>(null)
-  const [isPortrait, setIsPortrait] = useState(false)
+  const [autoRotate, setAutoRotate] = useState(false)
   const desiredInstance = useRef({
     target: new THREE.Vector3(
       data[0].positionX,
@@ -128,7 +130,7 @@ export default function Scene({ data, currentInstance }: SceneProps) {
   useEffect(() => {
     function handleResize() {
       if (typeof window === "undefined") return
-      setIsPortrait(window.innerHeight > window.innerWidth)
+      setIsPortraitMode(window.innerHeight > window.innerWidth)
     }
     // Check on mount:
     handleResize()
@@ -141,7 +143,6 @@ export default function Scene({ data, currentInstance }: SceneProps) {
   useFrame(() => {
     if (!orbitRef.current) return
     const controls = orbitRef.current
-
     const angle = controls.getAzimuthalAngle()
     const epsilon = 0.01
 
@@ -156,23 +157,30 @@ export default function Scene({ data, currentInstance }: SceneProps) {
     isZoneSelectable(zone.key, currentInstance, data)
   )
 
+  // START AUTOROTATION
+  useEffect(() => {
+    if (startExperience) {
+      setAutoRotate(true)
+    }
+  }, [startExperience])
+
   //HANDLE RESPONSIVENESS
   useEffect(() => {
     const { minDistance, maxDistance } = originalDistances.current
-    if (isPortrait) {
+    if (isPortraitMode) {
       desiredInstance.current.minDistance = minDistance * 2
       desiredInstance.current.maxDistance = maxDistance * 2
     } else {
       desiredInstance.current.minDistance = minDistance
       desiredInstance.current.maxDistance = maxDistance
     }
-  }, [isPortrait])
+  }, [isPortraitMode])
 
   return (
     <group>
       <OrbitControls
         ref={orbitRef}
-        autoRotate
+        autoRotate = {autoRotate}
         autoRotateSpeed={0.1}
         enableDamping
         dampingFactor={0.08}
@@ -190,6 +198,7 @@ export default function Scene({ data, currentInstance }: SceneProps) {
       />
       <Background_R3F />
       <SceneModel />
+      <HologramEffect />
 
       {/* 2D Overlays in 3D space */}
       <Html center position={[1.63, 4.55, -0.59]} zIndexRange={[0, 0]} style={{ pointerEvents: "none" }}>
