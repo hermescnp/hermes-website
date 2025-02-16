@@ -102,12 +102,12 @@
 
 .markdown-body th,
 .markdown-body td {
-    border: 1px solid #ddd;
+    border: 0.5px solid #ddd;
     padding: 8px;
 }
 
 .markdown-body th {
-    background-color: #f3f3f3;
+    background-color: rgba(20, 24, 35, 0.4);
     font-weight: bold;
 }
 

@@ -123,7 +123,12 @@ export const Navbar: React.FC<NavbarProps> = ({
         const instanceHasChild = spaceData?.some(
             (item) => item.parentKey === currentInstance.key
         );
-        if (!instanceHasChild) {
+        
+        // Check if current instance has documentation to show
+        const currentInstanceData = spaceData?.find(item => item.key === currentInstance.key);
+        const hasDocumentation = currentInstanceData?.documentation && currentInstanceData.documentation.trim() !== '';
+
+        if (!instanceHasChild && hasDocumentation) {
             setTimeout(() => {
                 setIsInfoPanelExpanded(true);
             }, 2000);

@@ -33,6 +33,9 @@ type ExperienceContextType = {
   setIsPortraitMode: React.Dispatch<React.SetStateAction<boolean>>;
   isCursorTargeting: boolean;
   setIsCursorTargeting: React.Dispatch<React.SetStateAction<boolean>>;
+  backgroundMusic: HTMLAudioElement | null;
+  setBackgroundMusic: React.Dispatch<React.SetStateAction<HTMLAudioElement | null>>;
+  pauseBackgroundMusic: () => void;
 }
 
 type PlaceHoverType = {
@@ -58,6 +61,14 @@ export const ExperienceProvider: React.FC<{ children: React.ReactNode }> = ({ ch
   const [isSearchBarActive, setIsSearchBarActive] = useState<boolean>(false);
   const [isPortraitMode, setIsPortraitMode] = useState<boolean>(false);
   const [isCursorTargeting, setIsCursorTargeting] = useState(false);
+  const [backgroundMusic, setBackgroundMusic] = useState<HTMLAudioElement | null>(null);
+
+  // NEW: helper to pause background music directly.
+  const pauseBackgroundMusic = () => {
+    if (backgroundMusic) {
+      backgroundMusic.pause();
+    }
+  };
 
   return (
     <ExperienceContext.Provider value={{
@@ -90,7 +101,10 @@ export const ExperienceProvider: React.FC<{ children: React.ReactNode }> = ({ ch
       setIsPortraitMode,
       isCursorTargeting,
       setIsCursorTargeting,
-      }}>
+      backgroundMusic,
+      setBackgroundMusic,
+      pauseBackgroundMusic, // NEW added function
+    }}>
       {children}
     </ExperienceContext.Provider>
   );

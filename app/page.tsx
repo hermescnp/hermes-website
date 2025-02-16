@@ -18,7 +18,7 @@ const getLastItem = (array: any): string | null => {
 
 export default function Home() {
   const experienceContext = useExperienceContext();
-  const { isClicked, spaceData } = experienceContext; // Destructure spaceData from context
+  const { spaceData } = experienceContext; // Destructure spaceData from context
   const history = experienceContext.history;
   const [currentInstance, setCurrentInstance] = useState<string>('main');
 

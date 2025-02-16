@@ -15,20 +15,16 @@ export const LoadingPage: React.FC<LoadingScreenProps> = ({ isClient }) => {
     const [isReady, setIsReady] = useState<boolean>(false)
     const [isExperienceStarted, setIsExperienceStarted] = useState<boolean>(false)
     const [loadingStateList, setLoadingStateList] = useState<string[]>([])
-    const [blink, setBlink] = useState<boolean>(false)
-    const [backgroundMusic, setBackgroundMusic] = useState<HTMLAudioElement | null>(null)
     const [audio, setAudio] = useState<HTMLAudioElement | null>(null)
-    const { isCursorTargeting, setIsCursorTargeting } = useExperienceContext();
-
-    // New state to handle background opacity
+    const { isCursorTargeting, setIsCursorTargeting, backgroundMusic, setBackgroundMusic } = useExperienceContext();
     const [fadeOutBackground, setFadeOutBackground] = useState<boolean>(false);
 
     useEffect(() => {
-        // Create audio elements when the component mounts
+        // Create audio elements when the component mounts using context.
         setBackgroundMusic(new Audio('/assets/sounds/background_music.mp3'));
         setAudio(new Audio('/assets/sounds/waterdrop_button.mp3'));
 
-        // Cleanup audio resources when the component is unmounted
+        // Cleanup audio resources when the component is unmounted.
         return () => {
             backgroundMusic?.pause();
             backgroundMusic?.remove();
@@ -36,6 +32,16 @@ export const LoadingPage: React.FC<LoadingScreenProps> = ({ isClient }) => {
             audio?.remove();
         }
     }, []);
+
+    useEffect(() => {
+        const handleYoutubePlaying = () => {
+          if (backgroundMusic) {
+            backgroundMusic.pause();
+          }
+        };
+        window.addEventListener('youtubePlaying', handleYoutubePlaying);
+        return () => window.removeEventListener('youtubePlaying', handleYoutubePlaying);
+      }, [backgroundMusic]);      
 
     // Test if model is ready
     useEffect(() => {
@@ -62,7 +68,7 @@ export const LoadingPage: React.FC<LoadingScreenProps> = ({ isClient }) => {
 
         if (backgroundMusic) {
             backgroundMusic.volume = 1;
-            backgroundMusic.loop = true;
+            backgroundMusic.loop = false;
             backgroundMusic.play();
         }
 

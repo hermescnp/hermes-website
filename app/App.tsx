@@ -33,6 +33,7 @@ const App: React.FC<AppProps> = ({ children }) => {
   const { startExperience, isSearchBarActive } = useExperienceContext();
   const [paperLTRSound, setPaperLTRSound] = useState<HTMLAudioElement | null>(null);
   const [paperRTLSound, setPaperRTLSound] = useState<HTMLAudioElement | null>(null);
+  const [showCursor, setShowCursor] = useState<boolean>(false);
 
   useEffect(() => {
     // Create audio elements when the component mounts
@@ -101,10 +102,15 @@ const App: React.FC<AppProps> = ({ children }) => {
     .catch(error => console.error('Error:', error));
   }, []);
 
+  useEffect(() => {
+    const pointerFine = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    setShowCursor(pointerFine);
+  }, []);
+
   return (
     <html lang="en">
       <body>
-        <CustomCursor />
+        { showCursor && <CustomCursor /> }
         <Navbar isClient={isClient} />
         <Searchbar />
         <Userbar />
