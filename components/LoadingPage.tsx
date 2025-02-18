@@ -107,8 +107,9 @@ export const LoadingPage: React.FC<LoadingScreenProps> = ({ isClient }) => {
     return (
         <div className={`${fadeOutBackground ? 'LoadingPage Invisible' : 'LoadingPage'}`} onClick={stopClickPropagation}>
             <Image id="officeLogo" className={isExperienceStarted ? 'OfficeLogo Inflated' : 'OfficeLogo'} src={'/assets/SVG/office_logo.svg'} width={200} height={200} alt="Logo" />
-            <div className={isExperienceStarted ? 'LoadingBar Hidden' : 'LoadingBar'}>
-                <progress className='LoadingProgress' value={(loadingProgress / 2) + (loadingStateList.length * 10)} max="100"></progress>
+            <div className={(isExperienceStarted ? 'LoadingBar Hidden' : 'LoadingBar')}>
+                {isReady ? <div className='loading-progress-completed' ></div>
+                : <progress className='LoadingProgress' value={(loadingProgress / 2) + (loadingStateList.length * 10)} max="100"></progress>}
             </div>
             <div className={isExperienceStarted ? 'LoadingText Hidden' : 'LoadingText'}>{`${isReady ? 'The office is ready!' : loadingState + '...'}`}</div>
             <div className={'start-button-wrapper' + (isReady ? ' visible' : '') + (isExperienceStarted ? ' MoveOut' : '')}>

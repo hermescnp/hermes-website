@@ -49,13 +49,24 @@ progress {
     -webkit-appearance: none;
     appearance: none;
     width: 100%;
-    height: 5px;
+    height: 2px;
 }
 
 progress::-webkit-progress-bar {
     height: 2px;
     background-color: #141823;
     border-radius: 0px;
+}
+
+.loading-progress-completed {
+    background: linear-gradient(90deg,
+            #1F3356 0%,
+            #315F8C 25%,
+            #68DBFF 75%,
+            #FFFFFF 100%);
+    border-radius: 0px;
+    height: 2px;
+    width: 100%;
 }
 
 progress::-webkit-progress-value {
