@@ -41,6 +41,9 @@ type SceneProps = {
 }
 
 export default function Scene({ data, currentInstance }: SceneProps) {
+  // Guard clause to ensure data has at least one element
+  if (!data || data.length === 0) return null;
+
   const { onZonePointerDown, onZonePointerUp, onZoneClick, onZoneHover, onZonePointerOut } = useSceneHandlers()
   const { startExperience, isPortraitMode, setIsPortraitMode } = useExperienceContext()
   const orbitRef = useRef<OrbitControlsImpl>(null)

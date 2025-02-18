@@ -107,17 +107,6 @@ const App: React.FC<AppProps> = ({ children }) => {
     setShowCursor(pointerFine);
   }, []);
 
-  // Wait for spaceData before rendering the app
-  if (!experienceContext.spaceData) {
-    return (
-      <html lang="en">
-        <body>
-          <LoadingPage isClient={isClient} />
-        </body>
-      </html>
-    );
-  }
-
   return (
     <html lang="en">
       <body>
