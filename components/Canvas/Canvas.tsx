@@ -19,9 +19,9 @@ export default function CanvasComponent() {
     // Define camera position and target
     const position = new THREE.Vector3(-13.0, 7.0, 13.0)
     const generalTarget = new THREE.Vector3(
-        spaceData[0]?.positionX || 0,
-        spaceData[0]?.positionY || 0,
-        spaceData[0]?.positionZ || 0
+        spaceData?.[0]?.positionX ?? 0,
+        spaceData?.[0]?.positionY ?? 0,
+        spaceData?.[0]?.positionZ ?? 0
     )
 
     // **Updated Handler for Double-Click Events**

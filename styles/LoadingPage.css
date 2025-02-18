@@ -198,4 +198,8 @@ progress::-moz-progress-bar {
     .LoadingPage {
         padding-top: 60px;
     }
+    /* Fix progress bar height for mobile portrait mode */
+    progress::-webkit-progress-bar {
+         height: 2px;
+    }
 }
