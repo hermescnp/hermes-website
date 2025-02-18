@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+/* import React, { useState, useEffect, useRef } from 'react'
 import { useExperienceContext } from '@/context/ExperienceContext'
 
 export default function NavSearchBar() {
@@ -57,3 +57,4 @@ export default function NavSearchBar() {
         </div>
     )
 }
+ */

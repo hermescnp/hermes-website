@@ -1,6 +1,6 @@
 "use client"
-import React, { useRef, useState, useEffect, useMemo, use } from "react"
-import { useFrame, useThree } from "@react-three/fiber"
+import React, { useRef, useState, useEffect } from "react"
+import { useFrame } from "@react-three/fiber"
 import { OrbitControls, Html } from "@react-three/drei"
 import { OrbitControls as OrbitControlsImpl } from "three-stdlib"
 import { Zones } from "../Experience/Zonification"
@@ -10,7 +10,6 @@ import * as THREE from "three"
 import SceneModel from "./SceneModel"
 import Background_R3F from "../Experience/Background_R3F"
 import bloomEffect from '../../public/assets/PNG/bloom-effect.png'
-import { isInstanceSibling } from "@/components/Experience/InstanceAnalyzer"
 import HologramEffect from "./HologramEffect"
 import '../../styles/Canvas.css'
 
@@ -18,34 +17,30 @@ type ZoneData = {
   key: string
   name: string
   parentKey: string
+  nearestTopSibling: string | null
+  nearestRightSibling: string | null
+  nearestBottomSibling: string | null
+  nearestLeftSibling: string | null
   width: number
   height: number
   depth: number
   positionX: number
   positionY: number
   positionZ: number
+  minDistance: number
+  maxDistance: number
+  minAzimuthAngle: number
+  maxAzimuthAngle: number
+  minPolarAngle: number
+  maxPolarAngle: number
 }
 
 type SceneProps = {
-  data: any[],
+  data: ZoneData[]
   currentInstance: string
 }
 
-function isZoneSelectable(zoneKey: string, currentInstance: string, data: ZoneData[]) {
-  if (zoneKey === currentInstance) return false
-  const zone = data.find((z) => z.key === zoneKey)
-  if (!zone) return false
-
-  // Is it a sibling? (Same parent as current instance)
-  const isSibling = isInstanceSibling(zoneKey, currentInstance, data)
-  // Is it a direct child of the current instance?
-  const isChild = zone.parentKey === currentInstance
-
-  return isSibling || isChild
-}
-
 export default function Scene({ data, currentInstance }: SceneProps) {
-
   const { onZonePointerDown, onZonePointerUp, onZoneClick, onZoneHover, onZonePointerOut } = useSceneHandlers()
   const { startExperience, isPortraitMode, setIsPortraitMode } = useExperienceContext()
   const orbitRef = useRef<OrbitControlsImpl>(null)
@@ -90,9 +85,7 @@ export default function Scene({ data, currentInstance }: SceneProps) {
     const controls = orbitRef.current
     const lerpFactor = 0.05
 
-    // Lerp target vector
     controls.target.lerp(desiredInstance.current.target, lerpFactor)
-
     controls.minDistance = THREE.MathUtils.lerp(
       controls.minDistance,
       desiredInstance.current.minDistance,
@@ -132,9 +125,7 @@ export default function Scene({ data, currentInstance }: SceneProps) {
       if (typeof window === "undefined") return
       setIsPortraitMode(window.innerHeight > window.innerWidth)
     }
-    // Check on mount:
     handleResize()
-    // Listen for resize events:
     window.addEventListener("resize", handleResize)
     return () => window.removeEventListener("resize", handleResize)
   }, [])
@@ -145,17 +136,12 @@ export default function Scene({ data, currentInstance }: SceneProps) {
     const controls = orbitRef.current
     const angle = controls.getAzimuthalAngle()
     const epsilon = 0.01
-
     if (angle <= controls.minAzimuthAngle + epsilon) {
       controls.autoRotateSpeed = -Math.abs(controls.autoRotateSpeed)
     } else if (angle >= controls.maxAzimuthAngle - epsilon) {
       controls.autoRotateSpeed = Math.abs(controls.autoRotateSpeed)
     }
   })
-
-  const filteredZones = data.filter((zone) =>
-    isZoneSelectable(zone.key, currentInstance, data)
-  )
 
   // START AUTOROTATION
   useEffect(() => {
@@ -164,7 +150,7 @@ export default function Scene({ data, currentInstance }: SceneProps) {
     }
   }, [startExperience])
 
-  //HANDLE RESPONSIVENESS
+  // HANDLE RESPONSIVENESS
   useEffect(() => {
     const { minDistance, maxDistance } = originalDistances.current
     if (isPortraitMode) {
@@ -180,7 +166,7 @@ export default function Scene({ data, currentInstance }: SceneProps) {
     <group>
       <OrbitControls
         ref={orbitRef}
-        autoRotate = {autoRotate}
+        autoRotate={autoRotate}
         autoRotateSpeed={0.1}
         enableDamping
         dampingFactor={0.08}
@@ -191,10 +177,10 @@ export default function Scene({ data, currentInstance }: SceneProps) {
         enablePan={false}
         maxDistance={28}
         minDistance={18}
-        maxAzimuthAngle={ 0}
+        maxAzimuthAngle={0}
         minAzimuthAngle={-1.60}
-        maxPolarAngle={Math.PI/2.40}
-        minPolarAngle={Math.PI/3.10}
+        maxPolarAngle={Math.PI / 2.40}
+        minPolarAngle={Math.PI / 3.10}
       />
       <Background_R3F />
       <SceneModel />
@@ -212,13 +198,13 @@ export default function Scene({ data, currentInstance }: SceneProps) {
       </Html>
 
       <Zones
-        data={filteredZones}
+        data={data} // pass full data instead of filtered data
+        currentInstance={currentInstance}
         onZonePointerDown={onZonePointerDown}
         onZonePointerUp={onZonePointerUp}
         onZoneClick={onZoneClick}
         onZoneHover={onZoneHover}
-        onZonePointerOut={onZonePointerOut}
-        currentInstance={currentInstance}
+        onZonePointerLeave={onZonePointerOut}
       />
     </group>
   )

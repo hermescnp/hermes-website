@@ -1,7 +1,6 @@
 "use client"
 import React, { createContext, useState, useContext, useEffect } from 'react'
 import { useHistory } from './LeGineHooks'
-import { getDefaultTravelingData } from '@/components/Experience/InstanceTraveler'
 
 type ExperienceContextType = {
   placehover: PlaceHoverType;
@@ -21,8 +20,6 @@ type ExperienceContextType = {
   setLoadingProgress: React.Dispatch<React.SetStateAction<number>>;
   startExperience: boolean;
   setStartExperience: React.Dispatch<React.SetStateAction<boolean>>;
-  travelingData: any;
-  setTravelingData: React.Dispatch<React.SetStateAction<any>>;
   isInfoPanelExpanded: boolean;
   setIsInfoPanelExpanded: React.Dispatch<React.SetStateAction<boolean>>;
   isUserPanelExpanded: boolean;
@@ -41,21 +38,18 @@ type ExperienceContextType = {
 type PlaceHoverType = {
   key: string | null;
   name: string | null;
-  isChild: boolean | null;
-  isParent: boolean | null;
 }
 
 export const ExperienceContext = createContext<ExperienceContextType | undefined>(undefined);
 
 export const ExperienceProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [placehover, setPlaceHover] = useState<PlaceHoverType>({ key: '', name: '', isChild: null, isParent: null });
+  const [placehover, setPlaceHover] = useState<PlaceHoverType>({ key: '', name: '' });
   const [spaceData, setSpaceData] = useState<any[]>([]);
   const [userData, setUserData] = useState<any[]>([]);
   const [loadingState, setLoadingState] = useState('Loading metaverse');
   const [loadingProgress, setLoadingProgress] = useState<number>(0);
   const [startExperience, setStartExperience] = useState<boolean>(false);
   const [history, pushToHistory, stepBackHistory, clearHistory, getLastHistoryItem, getPrevHistoryItem] = useHistory();
-  const [travelingData, setTravelingData] = useState<any>(getDefaultTravelingData(spaceData));
   const [isInfoPanelExpanded, setIsInfoPanelExpanded] = useState<boolean>(false);
   const [isUserPanelExpanded, setIsUserPanelExpanded] = useState<boolean>(false);
   const [isSearchBarActive, setIsSearchBarActive] = useState<boolean>(false);
@@ -89,8 +83,6 @@ export const ExperienceProvider: React.FC<{ children: React.ReactNode }> = ({ ch
       setLoadingProgress,
       startExperience,
       setStartExperience,
-      travelingData,
-      setTravelingData,
       isInfoPanelExpanded,
       setIsInfoPanelExpanded,
       isUserPanelExpanded,

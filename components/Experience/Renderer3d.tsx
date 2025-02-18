@@ -1,4 +1,4 @@
-import React, { useEffect} from 'react'
+/* import React, { useEffect} from 'react'
 import * as THREE from 'three'
 
 export default function Renderer3d(scW : number, scH : number) {
@@ -24,3 +24,4 @@ export default function Renderer3d(scW : number, scH : number) {
     renderer
   )
 }
+ */

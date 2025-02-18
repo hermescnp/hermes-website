@@ -1,4 +1,4 @@
-import React, { useState, useEffect, use } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
 import '../../styles/Navbar.css'
 import { NavInstance } from './NavInstance'
@@ -14,8 +14,6 @@ interface NavbarProps {
 interface PlaceHoverType {
     key: string | null;
     name: string | null;
-    isChild: boolean | null;
-    isParent: boolean | null;
 }
 
 interface currentInstanceType {
@@ -61,7 +59,8 @@ export const Navbar: React.FC<NavbarProps> = ({
     const [isHoveringNavbar, setIsHoveringNavbar] = useState<boolean>(false);
     const [paperLTRSound, setPaperLTRSound] = useState<HTMLAudioElement | null>(null);
     const [paperRTLSound, setPaperRTLSound] = useState<HTMLAudioElement | null>(null);
-    const [parentPlaceHover, setParentPlaceHover] = useState<PlaceHoverType>({ key: currentInstance.parentKey, name: currentInstance.parentName, isChild: null, isParent: true });
+    const [parentPlaceHover, setParentPlaceHover] = useState<PlaceHoverType>({ key: currentInstance.parentKey, name: currentInstance.parentName });
+    const soundCooldownRef = useRef(false) // new ref for sound cooldown
 
     useEffect(() => {
         // Create audio elements when the component mounts
@@ -96,7 +95,6 @@ export const Navbar: React.FC<NavbarProps> = ({
     useEffect(() => {
         if (placehover.name) {
             setSlideUpInstance(true);
-            playInstanceFocusSound();
         } else {
             setSlideUpInstance(false);
         }
@@ -106,6 +104,14 @@ export const Navbar: React.FC<NavbarProps> = ({
         pushToHistory(currentInstance.parentKey);
         setSlideDownInstance(false);
     }
+
+    useEffect(() => {
+        setTimeout(() => {
+            if (slideUpInstance) {
+                playInstanceFocusSound();
+            }
+        }, 100);
+    }, [slideUpInstance])
 
     useEffect(() => {
         setSmoothSlide(false);
@@ -155,7 +161,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             }
         )
         setCurrentDocumentation(spaceData?.find(item => item.key === newLastHistoryItem)?.documentation || '')
-        setParentPlaceHover({ key: newLastHistoryItemParent, name: (spaceData?.find(item => item.key === newLastHistoryItemParent)?.name || ''), isChild: null, isParent: true })
+        setParentPlaceHover({ key: newLastHistoryItemParent, name: (spaceData?.find(item => item.key === newLastHistoryItemParent)?.name || '') })
     }, [history, spaceData])
 
 
@@ -184,11 +190,17 @@ export const Navbar: React.FC<NavbarProps> = ({
     }
 
     const playInstanceFocusSound = () => {
+        if (soundCooldownRef.current) return; // exit if cooldown is active
         const audio = new Audio('/assets/sounds/switch_effect.mp3');
         audio.volume = 0.3;
         audio.playbackRate = 3;
         audio.preservesPitch = false;
         audio.play().catch((error) => { });
+        soundCooldownRef.current = true;
+        // Set a cooldown of 500ms - adjust as needed
+        setTimeout(() => {
+            soundCooldownRef.current = false;
+        }, 500);
     }
 
     return (

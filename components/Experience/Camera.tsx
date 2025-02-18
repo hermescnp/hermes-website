@@ -1,4 +1,4 @@
-import React from 'react'
+/* import React from 'react'
 import { Vector3 } from 'three';
 import * as THREE from 'three'
 
@@ -18,3 +18,4 @@ export default function Camera(position: Vector3, target: Vector3, aspect: numbe
     camera
   )
 }
+ */

@@ -1,4 +1,4 @@
-import React from 'react'
+/* import React from 'react'
 import * as THREE from 'three'
 
 export default class PathGenerator {
@@ -62,3 +62,4 @@ export default class PathGenerator {
   }
 
 }
+ */

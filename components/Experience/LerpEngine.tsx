@@ -1,4 +1,4 @@
-import * as THREE from 'three'
+/* import * as THREE from 'three'
 
 export class LerpEngine {
     current: number;
@@ -47,3 +47,4 @@ let currentControls = {
 
 return currentControls;
 }
+ */

@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+/* import styled from 'styled-components'
 
 export const RenderView = styled.div`
     position: relative;
@@ -11,4 +11,4 @@ export const RenderView = styled.div`
     margin: 0;
     top: 0;
     left: 0;
-`;
+`; */

@@ -1,4 +1,4 @@
-import React from 'react'
+/* import React from 'react'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
@@ -25,4 +25,4 @@ export default function Controls(camera : any, target : any, renderer : any, dat
   return (
     controls
   )
-}
+} */

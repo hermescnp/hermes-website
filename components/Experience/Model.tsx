@@ -1,4 +1,4 @@
-import React from 'react'
+/* import React from 'react'
 import * as THREE from 'three'
 import Resources from './Resources'
 import assets from '../../public/experience-assets'
@@ -56,3 +56,4 @@ export default function getModel(scene : any, setLoadingState : any, setLoadingP
         console.error('Error loading assets:', error);
       });
 }
+ */

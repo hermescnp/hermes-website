@@ -67,7 +67,9 @@ const Searchbar: React.FC = () => {
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') {
-            pushToHistory(resultList[0].key);
+            if (resultList.length > 0) {
+                pushToHistory(resultList[0].key);
+            }
             setIsSearchBarActive(false);
         }
     }

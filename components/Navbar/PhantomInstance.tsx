@@ -6,9 +6,8 @@ interface SearchBarProps {
 }
 
 type PlaceHoverType = {
+    key: string | null;
     name: string | null;
-    isChild: boolean | null;
-    isParent: boolean | null;
 }
 
 export default function PhantomInstance({ placehover }: SearchBarProps) {

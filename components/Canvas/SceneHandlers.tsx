@@ -22,8 +22,10 @@ export default function useSceneHandlers() {
   const clickStartPos = useRef({ x: 0, y: 0 })
   const clickTimer = useRef<NodeJS.Timeout | null>(null)
   const longClickTimer = useRef<NodeJS.Timeout | null>(null)
+  const hoverTimer = useRef<NodeJS.Timeout | null>(null)
   const doubleClickThreshold = 300  // ms for detecting double-click
   const longClickThreshold = 500    // ms for detecting long-click
+  const hoverDelay = 200            // ms delay for hover
   const dragThreshold = 5 // pixels of movement to consider it a drag
 
   const onZonePointerDown = useCallback((zone: ZoneData, e: ThreeEvent<PointerEvent>) => {
@@ -34,10 +36,9 @@ export default function useSceneHandlers() {
 
     // Start long click timer
     longClickTimer.current = setTimeout(() => {
-
-      setPlaceHover({ key:'', name: '', isChild: true, isParent: false });
+      setPlaceHover({ key:'', name: '' });
     }, longClickThreshold)
-  }, [longClickThreshold])
+  }, [longClickThreshold, setPlaceHover])
 
   const onZonePointerUp = useCallback((zone: ZoneData, e: ThreeEvent<PointerEvent>) => {
     e.stopPropagation()
@@ -73,21 +74,36 @@ export default function useSceneHandlers() {
         // This is a single click
         clickTimer.current = setTimeout(() => {
           pushToHistory(zone.key)
-          setPlaceHover({ key:'', name: '', isChild: false, isParent: false });
+          setPlaceHover({ key:'', name: '' });
           clickTimer.current = null
         }, doubleClickThreshold)
       }
     },
-    [pushToHistory, getPrevHistoryItem]
+    [pushToHistory, getPrevHistoryItem, setPlaceHover]
   )
 
   const onZoneHover = useCallback((zone: ZoneData, e: ThreeEvent<PointerEvent>) => {
-    setPlaceHover({key: zone.key, name: zone.name, isChild: e.object.userData.isChild, isParent: e.object.userData.isParent})
-  }, [setPlaceHover])
+    // Clear any pending hover timeout
+    if (hoverTimer.current) {
+      clearTimeout(hoverTimer.current)
+    }
+    // Start new hover timeout
+    hoverTimer.current = setTimeout(() => {
+      setPlaceHover({
+        key: zone.key,
+        name: zone.name,
+      })
+    }, hoverDelay)
+  }, [setPlaceHover, hoverDelay])
   
   const onZonePointerOut = useCallback((zone: ZoneData, e: ThreeEvent<PointerEvent>) => {
-    setPlaceHover({ key:'', name: '', isChild: false, isParent: false })
-  }, [])
+    // Clear hover timer if exists
+    if (hoverTimer.current) {
+      clearTimeout(hoverTimer.current)
+      hoverTimer.current = null
+    }
+    setPlaceHover({ key:'', name: '' })
+  }, [setPlaceHover])
   
   return {
     onZonePointerDown,
