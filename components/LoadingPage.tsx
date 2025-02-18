@@ -84,7 +84,9 @@ export const LoadingPage: React.FC<LoadingScreenProps> = ({ isClient }) => {
     }
 
     const handleStartMouseOver = () => {
-        setIsCursorTargeting(true);
+        if (loadingState === 'Office loaded') {
+            setIsCursorTargeting(true);
+        }
     }
     const handleStartMouseLeave = () => {
         setIsCursorTargeting(false);

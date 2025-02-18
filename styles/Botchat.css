@@ -7,6 +7,7 @@
     max-height: 150px;
     padding-top: 30px;
     transition: all 0.3s ease;
+    transition: opacity 1s ease;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
@@ -15,6 +16,16 @@
     -webkit-mask-image: linear-gradient(to bottom, transparent, black 50%, black);
     mask-image: linear-gradient(to bottom, transparent, black 10%, black);
     flex-shrink: 0;
+}
+
+.hide-chatBox {
+    opacity: 0;
+    transition: opacity 1s ease;
+}
+
+.show-chatBox {
+    opacity: 1;
+    transition: opacity 1s ease;
 }
 
 .messageBubble {

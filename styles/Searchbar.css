@@ -142,3 +142,9 @@
     font-size: 14px;
     font-weight: 300;
 }
+
+@media screen and (orientation: portrait) {
+    .searchbar-results-wrapper {
+        width: calc(100% - 30px);
+    }
+}

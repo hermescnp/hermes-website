@@ -43,7 +43,9 @@ export const Uxhelper: React.FC = () => {
     return (
         <div className={(startExperience ? 'ChatbotContainer' : 'LoadingChatbotContainer') + (hiddenChatBot ? ' invisible' : '')}>
             <Botface chatPrint={addNewMessage} />
+            {(!isPortraitMode || !startExperience) && 
             <Botchat messages={messages} chatPrinter={addNewMessage} chatBoxRef={chatBoxRef} isExperienceStarted={startExperience} />
+            }
         </div>
     )
 }

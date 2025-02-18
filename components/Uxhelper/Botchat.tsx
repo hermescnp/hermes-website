@@ -12,12 +12,28 @@ interface BotchatProps {
 }
 
 export const Botchat: React.FC<BotchatProps> = ({ messages, chatPrinter, chatBoxRef, isExperienceStarted}) => {
-
   const lastMessageRef = useRef<HTMLDivElement | null>(null);
+  const [isBotActive, setIsBotActive] = useState<boolean>(true);
+
+  useEffect(() => {
+    // Set isBotActive each time a new message is added
+    if (isExperienceStarted) {
+      setIsBotActive(true);
+    }
+
+    // Set isBotActive to false if the last message have more than 10 seconds
+    const timer = setTimeout(() => {
+      if (lastMessageRef.current) {
+        if (isExperienceStarted) {
+        setIsBotActive(false);
+        }
+      }
+    }, 20000);
+  }, [messages]);
 
   return (
     <>
-      <div id='chatBox' ref={chatBoxRef}>
+      <div id='chatBox' ref={chatBoxRef} className={isBotActive ? 'show-chatBox' : 'hide-chatBox'}>
         {messages.map((message, index) => (
           <div
             key={index}
