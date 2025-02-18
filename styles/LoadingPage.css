@@ -199,6 +199,9 @@ progress::-moz-progress-bar {
         padding-top: 60px;
     }
     /* Fix progress bar height for mobile portrait mode */
+    progress {
+         height: 2px;
+    }
     progress::-webkit-progress-bar {
          height: 2px;
     }
