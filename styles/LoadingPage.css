@@ -205,4 +205,11 @@ progress::-moz-progress-bar {
     progress::-webkit-progress-bar {
          height: 2px;
     }
+    /* Fix the progress value height for mobile portrait mode */
+    progress::-webkit-progress-value {
+         height: 2px;
+    }
+    .start-button-wrapper::after {
+         opacity: 0;
+    }
 }
