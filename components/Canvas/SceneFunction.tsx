@@ -87,16 +87,17 @@ export default function Scene({ data, currentInstance }: SceneProps) {
     if (!orbitRef.current) return
     const controls = orbitRef.current
     const lerpFactor = 0.05
+    const distanceFactor = isPortraitMode ? 2 : 1
 
     controls.target.lerp(desiredInstance.current.target, lerpFactor)
     controls.minDistance = THREE.MathUtils.lerp(
       controls.minDistance,
-      desiredInstance.current.minDistance,
+      desiredInstance.current.minDistance * distanceFactor,
       lerpFactor
     )
     controls.maxDistance = THREE.MathUtils.lerp(
       controls.maxDistance,
-      desiredInstance.current.maxDistance,
+      desiredInstance.current.maxDistance * distanceFactor,
       lerpFactor
     )
     controls.minAzimuthAngle = THREE.MathUtils.lerp(
@@ -152,18 +153,6 @@ export default function Scene({ data, currentInstance }: SceneProps) {
       setAutoRotate(true)
     }
   }, [startExperience])
-
-  // HANDLE RESPONSIVENESS
-  useEffect(() => {
-    const { minDistance, maxDistance } = originalDistances.current
-    if (isPortraitMode) {
-      desiredInstance.current.minDistance = minDistance * 2
-      desiredInstance.current.maxDistance = maxDistance * 2
-    } else {
-      desiredInstance.current.minDistance = minDistance
-      desiredInstance.current.maxDistance = maxDistance
-    }
-  }, [isPortraitMode])
 
   return (
     <group>
