@@ -7,7 +7,7 @@ interface MessageProviderProps {
 
 export const MessageProvider: React.FC<MessageProviderProps> = ({ chatPrint }) => {
     const experienceContext = useExperienceContext();
-    const isExperienceStarted = experienceContext.startExperience;
+    const { startExperience, isPortraitMode } = experienceContext;
     const loadingState = experienceContext.loadingState;
     const history = experienceContext.history;
     const getLastHistoryItem = experienceContext.getLastHistoryItem;
@@ -21,7 +21,7 @@ export const MessageProvider: React.FC<MessageProviderProps> = ({ chatPrint }) =
 
     useEffect(() => {
         timeoutRef10s.current = setTimeout(() => {
-            if (!isExperienceStarted) {
+            if (!startExperience) {
                 if (loadingState === 'Office loaded') {
                     chatPrint("We are ready! Just click on the start button.");
                     setAppLoadedBefore30s(true);
@@ -32,15 +32,15 @@ export const MessageProvider: React.FC<MessageProviderProps> = ({ chatPrint }) =
         }, 10000);
 
         timeoutRef20s.current = setTimeout(() => {
-            if (!isExperienceStarted && loadingState === 'Office loaded') {
+            if (!startExperience && loadingState === 'Office loaded') {
                 chatPrint("Are you there? I'll be here for you anytime you decide to start. Take your time.");
             }
         }, 20000);
 
         timeoutRef30s.current = setTimeout(() => {
-            if (!isExperienceStarted && loadingState !== 'Office loaded' && !appLoadedBefore30s) {
+            if (!startExperience && loadingState !== 'Office loaded' && !appLoadedBefore30s) {
                 chatPrint("Oh, I'm sorry this is taking some time... I swear it's not my fault, it's just the internet connection.");
-            } else if (!isExperienceStarted && loadingState === 'Office loaded' && !appLoadedBefore30s) {
+            } else if (!startExperience && loadingState === 'Office loaded' && !appLoadedBefore30s) {
                 chatPrint("Finally! now we can begin with the experience. Just click the start button.");
             }
         }, 30000);
@@ -50,17 +50,17 @@ export const MessageProvider: React.FC<MessageProviderProps> = ({ chatPrint }) =
             if (timeoutRef20s.current) clearTimeout(timeoutRef20s.current);
             if (timeoutRef30s.current) clearTimeout(timeoutRef30s.current);
         };
-    }, [isExperienceStarted, loadingState, appLoadedBefore30s]);
+    }, [startExperience, loadingState, appLoadedBefore30s]);
 
     useEffect(() => {
-        if (isExperienceStarted) {
+        if (startExperience && !isPortraitMode) {
             if (timeoutRef10s.current) clearTimeout(timeoutRef10s.current);
             if (timeoutRef20s.current) clearTimeout(timeoutRef20s.current);
             if (timeoutRef30s.current) clearTimeout(timeoutRef30s.current);
 
             chatPrint("Welcome! Feel free to touch any area of the room. It was made for you to explore. You can also drag the screen to rotate the view.");
         }
-    }, [isExperienceStarted]);
+    }, [startExperience]);
 
     useEffect(() => {
         const lastHistoryItem = getLastHistoryItem();
@@ -76,7 +76,7 @@ export const MessageProvider: React.FC<MessageProviderProps> = ({ chatPrint }) =
         }
         if (history.length === 3 && getLastHistoryItem() !== 'main') {
             setTimeout(() => {
-                chatPrint("You can go back to the previous room by double tapping the screen, or by clicking the back button on the top left corner.");
+                chatPrint("You can go back to the previous room by double tapping the screen, or by clicking the back button on the navigation bar.");
             }, 10000);
         }
     }, [history]);

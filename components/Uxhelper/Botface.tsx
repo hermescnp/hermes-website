@@ -1,5 +1,5 @@
 import React, { useState, useEffect, MouseEvent } from 'react';
-import '../../styles/Botface.css'; 
+import '../../styles/Botface.css';
 
 interface Position {
   x: number;
@@ -19,7 +19,7 @@ const Botface: React.FC<BotfaceProps> = ({ chatPrint }) => {
   let movementTimeout: ReturnType<typeof setTimeout>;
 
   useEffect(() => {
-    const handleMouseMove = (event: globalThis.MouseEvent) => {  
+    const handleMouseMove = (event: globalThis.MouseEvent) => {
       const eyeContainer = document.querySelector('.eye-container');
       if (!eyeContainer) return;
 
@@ -46,7 +46,7 @@ const Botface: React.FC<BotfaceProps> = ({ chatPrint }) => {
     };
 
     document.addEventListener('mousemove', handleMouseMove);
-    
+
     return () => {
       document.removeEventListener('mousemove', handleMouseMove);
       if (movementTimeout) clearTimeout(movementTimeout);
@@ -59,9 +59,11 @@ const Botface: React.FC<BotfaceProps> = ({ chatPrint }) => {
   };
 
   return (
-    <div className="eye-container" onClick={handleBotClick}>
-      <Eye pupilPosition={pupilPosition} />
-      <Eye pupilPosition={pupilPosition} />
+    <div className="face-wrapper">
+      <div className="eye-container" onClick={handleBotClick}>
+        <Eye pupilPosition={pupilPosition} />
+        <Eye pupilPosition={pupilPosition} />
+      </div>
     </div>
   );
 };

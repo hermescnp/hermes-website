@@ -1,4 +1,4 @@
-import React from 'react'
+/* import React from 'react'
 
 export default function InstanceControls(key: string, data: any) {
     // Ensure data is an array
@@ -43,3 +43,4 @@ export default function InstanceControls(key: string, data: any) {
 
     return instanceControls;
 }
+ */

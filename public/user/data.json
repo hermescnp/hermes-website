@@ -296,7 +296,7 @@
     {
         "name": "HTML / CSS / JavaScript",
         "description": "Web Dev",
-        "skillLevel": 70,
+        "skillLevel": 90,
         "iconSource": "PNG/Webpack_Icon.png",
         "isVisible": true,
         "type": "software",
@@ -305,7 +305,7 @@
     {
         "name": "Typescript",
         "description": "Software Development",
-        "skillLevel": 55,
+        "skillLevel": 75,
         "iconSource": "PNG/Typescript_Icon.png",
         "isVisible": true,
         "type": "software",
@@ -314,7 +314,7 @@
     {
         "name": "React.js",
         "description": "Front-end Develop",
-        "skillLevel": 50,
+        "skillLevel": 80,
         "iconSource": "PNG/React_Icon.png",
         "isVisible": true,
         "type": "software",
@@ -323,7 +323,7 @@
     {
         "name": "Three.js",
         "description": "Game Develop / Front-end",
-        "skillLevel": 75,
+        "skillLevel": 90,
         "iconSource": "PNG/Threejs_Icon.png",
         "isVisible": true,
         "type": "software",
@@ -350,7 +350,7 @@
     {
         "name": "Unreal Engine",
         "description": "Game Development",
-        "skillLevel": 60,
+        "skillLevel": 70,
         "iconSource": "PNG/unreal_engine_icon.png",
         "isVisible": true,
         "type": "software",

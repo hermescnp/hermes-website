@@ -1,7 +1,7 @@
 import React from 'react'
 import * as THREE from 'three';
 
-function findParentKey(data: any, key: string) {
+export function findParentKey(data: any, key: string) {
     for (let i = 0; i < data.length; i++) {
         if (data[i].key === key) {
             return data[i].parentKey;

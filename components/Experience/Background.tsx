@@ -1,4 +1,4 @@
-import React from 'react'
+/* import React from 'react'
 import * as THREE from 'three'
 import { RGBELoader } from "three/examples/jsm/loaders/RGBELoader";
 
@@ -23,3 +23,4 @@ export default function setBackground(scene: any) {
         }
     );
 }
+ */

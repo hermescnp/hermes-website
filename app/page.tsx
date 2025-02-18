@@ -4,7 +4,7 @@ import dynamic from 'next/dynamic';
 import { Author } from '@/components/Header/Author';
 import { useExperienceContext } from '@/context/ExperienceContext';
 
-const Experience = dynamic(() => import('../components/Experience/Experience'), {
+const CanvasComponent = dynamic(() => import('../components/Canvas/Canvas'), {
   ssr: false,
   loading: () => <p>loading...</p>
 });
@@ -18,7 +18,7 @@ const getLastItem = (array: any): string | null => {
 
 export default function Home() {
   const experienceContext = useExperienceContext();
-  const { isClicked, spaceData } = experienceContext; // Destructure spaceData from context
+  const { spaceData } = experienceContext; // Destructure spaceData from context
   const history = experienceContext.history;
   const [currentInstance, setCurrentInstance] = useState<string>('main');
 
@@ -29,11 +29,11 @@ export default function Home() {
     }
   }, [history]);
 
-  // Conditionally render the Experience component only if spaceData is available
+  // Conditionally render the CanvasComponent only if spaceData is available
   return (
     <div className="Page">
-      {spaceData ? (  // Check if spaceData is loaded before rendering Experience
-        <Experience isClicked={isClicked} />
+      {spaceData ? (  // Check if spaceData is loaded before rendering CanvasComponent
+        <CanvasComponent />
       ) : (
         <p>Loading space data...</p> // Fallback content while waiting for spaceData
       )}

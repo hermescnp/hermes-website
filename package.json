@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@react-three/drei": "^9.117.3",
+    "@react-three/fiber": "^8.17.10",
     "@types/node": "20.1.5",
     "@types/react": "18.2.6",
     "@types/react-dom": "18.2.4",
@@ -17,7 +19,8 @@
     "eslint": "8.40.0",
     "eslint-config-next": "13.4.2",
     "gsap": "^3.11.5",
-    "next": "13.4.2",
+    "marked": "^15.0.6",
+    "next": "14.2.0",
     "postcss": "8.4.23",
     "react": "18.2.0",
     "react-dom": "18.2.0",
@@ -28,8 +31,8 @@
     "typescript": "5.0.4"
   },
   "devDependencies": {
-    "@types/three": "^0.152.0",
+    "@types/three": "^0.152.1",
     "framer-motion": "^10.12.12",
-    "three": "^0.152.2"
+    "three": "^0.170.0"
   }
 }

@@ -4,30 +4,28 @@ import Botface from '@/components/Uxhelper/Botface';
 import { Botchat } from '@/components/Uxhelper/Botchat';
 import { useExperienceContext } from '@/context/ExperienceContext';
 
-interface UxhelperProps {
-    isNotVisible: boolean;
-}
-
-export const Uxhelper: React.FC<UxhelperProps> = ({ isNotVisible }) => {
-    const isExperienceStarted = useExperienceContext().startExperience;
+export const Uxhelper: React.FC = () => {
+    const { startExperience, isInfoPanelExpanded, isUserPanelExpanded, isPortraitMode } = useExperienceContext();
     const [messages, setMessages] = useState<string[]>([
         "Hi! This is the Hermes's Science Lab, I'm here to assist you in your experience through this metaverse."
     ]);
 
     const chatBoxRef = useRef<HTMLDivElement | null>(null);
+    const [hiddenChatBot, setHideChatBot] = useState<boolean>(false);
 
     useEffect(() => {
         if (chatBoxRef.current) {
             chatBoxRef.current.scrollTop = 999999; // a large number to ensure it's at the bottom
         }
-        playNewMessageSound();
     }, [messages]);
 
-    const playNewMessageSound = () => {
-        const audio = new Audio('/assets/sounds/new_message.mp3');
-        audio.volume = 1;
-        audio.play().catch((error) => {});
-    }
+    useEffect(() => {
+        if (isPortraitMode && (isUserPanelExpanded || isInfoPanelExpanded)) {
+          setHideChatBot(true);
+        } else {
+          setHideChatBot(false);
+        }
+      }, [isPortraitMode, isUserPanelExpanded, isInfoPanelExpanded]);
 
     const addNewMessage = (newMessage: string) => {
         setTimeout(() => {
@@ -43,9 +41,11 @@ export const Uxhelper: React.FC<UxhelperProps> = ({ isNotVisible }) => {
     };
 
     return (
-        <div className={`${isExperienceStarted ? 'ChatbotContainer' : 'LoadingChatbotContainer'} ${isNotVisible ? 'invisible' : ''}`}>
+        <div className={(startExperience ? 'ChatbotContainer' : 'LoadingChatbotContainer') + (hiddenChatBot ? ' invisible' : '')}>
             <Botface chatPrint={addNewMessage} />
-            <Botchat messages={messages} chatPrinter={addNewMessage} chatBoxRef={chatBoxRef} isExperienceStarted={isExperienceStarted} />
+            {(!isPortraitMode || !startExperience) && 
+            <Botchat messages={messages} chatPrinter={addNewMessage} chatBoxRef={chatBoxRef} isExperienceStarted={startExperience} />
+            }
         </div>
     )
 }

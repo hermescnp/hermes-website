@@ -1,14 +1,150 @@
+.navbar-wrapper {
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 50px 1fr 30px;
+    position: fixed;
+    align-items: center;
+    height: 50px;
+    width: 400px;
+    top: 15px;
+    right: 15px;
+    z-index: 10;
+    box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.25);
+    border: solid 0.5px rgba(178, 178, 178, 1);
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    background: rgba(33, 43, 63, 0.5);
+    backdrop-filter: blur(30px);
+    margin-left: auto;
+    overflow: hidden;
+}
+
+.navbar-wrapper--expanded {
+    height: calc(100% - 95px);
+}
+
 .NavBar {
     display: grid;
     grid-template-columns: 50px 1fr auto;
-    position: absolute;
-    height: 65px;
+    position: relative;
+    height: 100%;
     width: 100%;
-    top: 0px;
-    left: 0px;
-    z-index: 10;
-    background-color: rgba(18, 23, 34, 0.5);
-    backdrop-filter: blur(10px);
+    border-radius: inherit;
+    overflow: hidden;
+    grid-row: 1;
+}
+
+@property --angle {
+    syntax: "<angle>";
+    initial-value: 0deg;
+    inherits: false;
+}
+
+@property --offset {
+    syntax: "<length>";
+    initial-value: 0px;
+    inherits: false;
+}
+
+.Navbar-background-border {
+    position: absolute;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    background: conic-gradient(from var(--angle) at 50% 50%,
+            #FFFFFF 0deg,
+            #1F3356 90deg,
+            #68DBFF 180deg,
+            #1F3356 270deg,
+            #FFFFFF 360deg);
+    border-radius: inherit;
+    grid-row: 1 / 3;
+    opacity: 1;
+    animation: 10s spin linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        --angle: 0deg;
+    }
+
+    100% {
+        --angle: 360deg;
+    }
+}
+
+.Navbar-background-border--hidden {
+    opacity: 0;
+}
+
+.Navbar-background {
+    position: absolute;
+    align-items: center;
+    height: calc(100% - 2px);
+    width: calc(100% - 2px);
+    background: rgba(33, 43, 63, 1);
+    border-radius: inherit;
+    border: solid 0px rgba(178, 178, 178, 1);
+    margin: 1px;
+}
+
+.Instance--hovered {
+    background-color: #141823;
+}
+
+.shimmer-background {
+    position: absolute;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(90deg, rgba(33, 43, 63, 0), #315F8C, rgba(33, 43, 63, 0));
+    border: solid 0px rgba(178, 178, 178, 1);
+    margin: 0px;
+    animation: 3s shimmer linear infinite;
+    transition: opacity 1s ease-in-out;
+}
+
+.--on {
+    opacity: 1;
+}
+
+.--off {
+    opacity: 0;
+}
+
+@keyframes shimmer {
+    0% {left:-100%}
+
+    100% {left:100%}
+}
+
+#infoPanelContent {
+    grid-row: 2;
+    display: flex;
+    width: 100%;
+}
+
+#hideInfoPanel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-top: solid 0.5px rgba(178, 178, 178, 1);
+    border-radius: 0px;
+    grid-row: 3;
+}
+
+#hideInfoPanel:hover {
+    background: rgba(33, 43, 63, 0.5);
+}
+
+#hideInfoPanel:hover .view-more-arrow {
+    opacity: 1;
+}
+
+.grid-cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .BackButton {
@@ -24,6 +160,29 @@
     background-color: rgba(0, 0, 0, 0.5);
 }
 
+.BackToParent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 48px;
+    height: 48px;
+    margin: 1px;
+    transition: all 0.3s ease;
+    border-radius: 50%;
+    opacity: 0.5;
+    cursor: pointer;
+}
+
+.BackToParent:hover {
+    opacity: 1;
+    background-color: #141823;
+}
+
+.disabled-no-parent {
+    opacity: 0.2;
+    pointer-events: none;
+}
+
 .BackChevron {
     opacity: 0.5;
     transition: all 0.3s ease;
@@ -33,14 +192,38 @@
     opacity: 1;
 }
 
-.Navigation {
-    display: flex;
-    flex-direction: row;
+.InstanceNavigator {
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 50px 50px 50px;
     justify-content: flex-start;
     align-items: center;
     width: 100%;
     height: 100%;
-    overflow: hidden;
+    overflow: visible;
+    transform: translateY(-50px);
+    transition: all 0.2s ease;
+}
+
+.slide-up {
+    transform: translateY(-100px);
+}
+
+.slide-down {
+    transform: translateY(0px);
+}
+
+.no-anim {
+    transition: none !important;
+  }
+
+.InstanceNavigator-cell {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    transition: all 0.3s ease;
 }
 
 .RootInstance {
@@ -65,164 +248,71 @@
 }
 
 .NavigationInstance {
-    display: grid;
-    grid-template-columns: auto auto;
-    justify-content: center;
+    display: flex;
+    justify-content: flex-start;
     align-items: center;
     text-align: center;
-    width: auto;
+    width: 100%;
     height: 100%;
     transition: all 0.3s ease;
 }
 
-.NavSearchBar {
-    display: grid;
-    grid-template-columns: auto auto;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    width: auto;
-    height: 100%;
-    transition: all 0.3s ease;
-}
-
-.NavSearchBar:hover .Arrow {
-    opacity: 1;
-}
-
-.Arrow {
+.InstanceIcon {
     opacity: 0.5;
     transition: all 0.3s ease;
-    transform: rotate(180deg);
-    height: 15px;
-    width: 15px;
-}
-
-.ObjectIcon {
-    opacity: 0.5;
-    transition: all 0.3s ease;
-    padding-left: 10px;
     z-index: 10;
 }
 
-.PhantomArrow {
-    opacity: 0;
-    height: 15px;
-    width: 15px;
-}
-
-.PhantomArrow--active {
-    opacity: 1;
-}   
-
 .InstanceButton {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     font-size: 14px;
-    font-weight: 100;
-    width: auto;
+    font-weight: 400;
+    width: 100%;
     height: 100%;
-    padding: 0px 15px;
-    transition: all 0.3s ease;
-}
-
-.MainInstanceButton {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 14px;
-    font-weight: 100;
-    width: auto;
-    height: 100%;
-    padding: 0px 15px;
-    margin-left: -5px;
+    padding: 0px 10px;
+    margin-left: -2px;
     transition: all 0.3s ease;
 }
 
 .PhantomInstance {
     display: flex;
-    color: #315F8C;
+    color: #68DBFF;
     justify-content: center;
     align-items: center;
     font-size: 14px;
     font-weight: 400;
     width: auto;
     height: 100%;
-    padding: 0px 15px;
+    padding: 0px 10px;
     transition: all 0.3s ease;
 }
 
-.SearchBar {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    height: 36px;
-    width: 250px;
-    vertical-align: middle;
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    border-radius: 50px;
-    padding-left: 15px;
-    margin: 0px 10px;
+.ObjectIcon-blinking {
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
 }
 
-.SearchBar--focused {
-    border-color: rgba(255, 255, 255, 1);
-}
-
-.InstanceInput {
-    width: 100%;
-    height: 100%;
-    border: none;
-    padding: 0px;
-    border-radius: 50px;
-    font-size: 14px;
-    font-weight: 100;
-    background-color: transparent;
-    color: white;
-}
-
-.InstanceInput:focus {
-    outline: none;
-}
-
-.SearchIconContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-}
-
-.SearchIcon {
-    padding: 5px;
-    height: 95%;
-    width: 95%;
-    box-sizing: border-box;
+.blink {
     opacity: 0.5;
-    transition: all 0.3s ease;
 }
 
-.SearchIcon--enabled {
-    opacity: 1;
-    cursor: pointer;
-}
+@media screen and (orientation: portrait) {
+    .navbar-wrapper {
+        width: calc(100% - 30px);
+        height: 50px;
+    }
 
-.NavigationInstance:hover .Arrow {
-    opacity: 1;
-}
+    .navbar-wrapper--expanded {
+        height: calc(100% - 95px);
+    }
 
-.NavigationInstance:hover .ObjectIcon {
-    opacity: 1;
-}
+    .NavBar {
+        grid-template-columns: 50px 1fr auto;
+    }
 
-.NavigationInstance:hover .InstanceButton {
-    background-color: rgba(0, 0, 0, 0.3);
-}
-
-.NavigationInstance:hover .MainInstanceButton {
-    background-color: rgba(0, 0, 0, 0.3);
-}
-
-.SiblingInstance {
-    color: blue;
+    .InstanceNavigator {
+        grid-template-rows: 50px 50px 50px;
+    }
 }

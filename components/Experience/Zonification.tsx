@@ -1,44 +1,85 @@
-"use client";
-import * as THREE from 'three';
+"use client"
+import React from "react"
+import { ThreeEvent } from "@react-three/fiber"
 
-export default class Zonification {
-  scene: THREE.Scene;
-  zones: THREE.Mesh[] = [];
-
-  constructor(scene: THREE.Scene, data: any[]) {
-    this.scene = scene;
-    if (data && Array.isArray(data) && data.length > 0) {
-      this.generateZones(data);
-    }    
-  }
-
-generateZones = (data: any) => {
-  // Generate Zones
-  for (const zone of data) {
-    const material = new THREE.MeshBasicMaterial({
-      color: 0x00aaff,
-      transparent: true,
-      opacity: 0.5,
-      // Switch this property TRUE to view the zones
-      visible: false
-    });
-
-    // Make visible only the zones with an especific parents
-    // if (zone.parentKey === 'certificates') {material.visible = true}
-
-    const zoneMesh = new THREE.Mesh(
-      new THREE.BoxGeometry(zone.width, zone.height, zone.depth),
-      material
-    );
-    zoneMesh.position.set(zone.positionX, zone.positionY, zone.positionZ);
-    zoneMesh.name = zone.key;
-    zoneMesh.userData.parentKey = zone.parentKey;
-    this.scene.add(zoneMesh);
-    this.zones.push(zoneMesh);
-  }
+type ZoneData = {
+  key: string
+  name: string
+  parentKey: string
+  width: number
+  height: number
+  depth: number
+  positionX: number
+  positionY: number
+  positionZ: number
+  nearestTopSibling?: string | null
+  nearestRightSibling?: string | null
+  nearestForwardSibling?: string | null
+  nearestBottomSibling?: string | null
+  nearestLeftSibling?: string | null
+  nearestBackwardSibling?: string | null
 }
 
-  getZones = (): THREE.Mesh[] => {
-    return this.zones;
-  }
+type ZonePointerHandler = (zone: ZoneData, event: ThreeEvent<PointerEvent>) => void
+type ZoneMouseHandler = (zone: ZoneData, event: ThreeEvent<MouseEvent>) => void
+
+interface ZonesProps {
+  data: ZoneData[]
+  currentInstance: string
+  onZonePointerDown?: ZonePointerHandler
+  onZonePointerUp?: ZonePointerHandler
+  onZoneClick?: ZoneMouseHandler
+  onZoneHover?: ZonePointerHandler
+  onZonePointerLeave?: ZonePointerHandler
+}
+
+export function Zones({
+  data,
+  currentInstance,
+  onZonePointerDown,
+  onZonePointerUp,
+  onZoneClick,
+  onZoneHover,
+  onZonePointerLeave,
+}: ZonesProps) {
+  // Compute sibling keys from the current instance
+  const currentZone = data.find((z) => z.key === currentInstance)
+  const siblingKeys = currentZone
+    ? [
+        currentZone.nearestTopSibling,
+        currentZone.nearestRightSibling,
+        currentZone.nearestForwardSibling,
+        currentZone.nearestBottomSibling,
+        currentZone.nearestLeftSibling,
+        currentZone.nearestBackwardSibling,
+      ].filter((key): key is string => key !== null && key !== undefined)
+    : []
+    
+  return (
+    <>
+      {data.map((zone) => {
+        const isInteractive = zone.parentKey === currentInstance || siblingKeys.includes(zone.key)
+        return (
+          <mesh
+            key={zone.key}
+            position={[zone.positionX, zone.positionY, zone.positionZ]}
+            userData={{ key: zone.key, name: zone.name }}
+            onPointerDown={isInteractive ? (e) => { e.stopPropagation(); onZonePointerDown?.(zone, e) } : undefined}
+            onPointerUp={isInteractive ? (e) => { e.stopPropagation(); onZonePointerUp?.(zone, e) } : undefined}
+            onClick={isInteractive ? (e) => { e.stopPropagation(); onZoneClick?.(zone, e) } : undefined}
+            onPointerEnter={isInteractive ? (e) => { e.stopPropagation(); onZoneHover?.(zone, e) } : undefined}
+            onPointerLeave={isInteractive ? (e) => { e.stopPropagation(); onZonePointerLeave?.(zone, e) } : undefined}
+          >
+            <boxGeometry args={[zone.width, zone.height, zone.depth]} />
+            <meshBasicMaterial
+              color={0x00aaff}
+              transparent={true}
+              opacity={0.5}
+              visible={false}
+            />
+          </mesh>
+        )
+      })}
+    </>
+  )
 }

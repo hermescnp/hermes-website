@@ -1,1 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17.3 19.98"><defs><style>.cls-1{fill:#fff;}</style></defs><title>3DGraphics_Icon</title><g id="Layer_2" data-name="Layer 2"><g id="Layer_1-2" data-name="Layer 1"><path class="cls-1" d="M8.65,0,0,5V15l8.65,5,8.65-5V5Zm7.08,5.24L8.65,8.62,1.57,5.24,8.65,1.15ZM1,6.08l7.15,3.4v9.06L1,14.41ZM9.15,18.54V9.48l7.15-3.4v8.33Z"/></g></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17.3 19.98">
+  <defs>
+    <style>.cls-1{fill:#fff;}</style>
+  </defs>
+  <title>3DGraphics_Icon</title>
+  <g id="Layer_2" data-name="Layer 2">
+    <g id="Layer_1-2" data-name="Layer 1">
+      <path class="cls-1" d="M8.65,0,0,5V15l8.65,5,8.65-5V5Zm7.08,5.24L8.65,8.62,1.57,5.24,8.65,1.15ZM1,6.08l7.15,3.4v9.06L1,14.41ZM9.15,18.54V9.48l7.15-3.4v8.33Z"/>
+    </g>
+  </g>
+</svg>

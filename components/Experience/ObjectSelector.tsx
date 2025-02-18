@@ -1,4 +1,4 @@
-import React from 'react'
+/* import React from 'react'
 import * as THREE from 'three'
 import { calculateInstanceLevel, calculateSiblingSequence, getInstancePosition, isInstanceDescendant, isInstanceSibling, calculateNearestWayTo, isUniqueChildInstance } from './InstanceAnalyzer'
 
@@ -59,3 +59,4 @@ export default class ObjectSelector {
         return (this.selection)
     }
 }
+ */

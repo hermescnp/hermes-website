@@ -3,13 +3,13 @@ import './globals.css'
 import React, { useState, useEffect, useRef } from 'react'
 import { Inter } from 'next/font/google'
 import { Navbar } from '@/components/Navbar/Navbar'
-import { MetaverseActions } from '@/components/Navbar/MetaverseActions'
 import { LoadingPage } from '@/components/LoadingPage'
 import { useExperienceContext } from '@/context/ExperienceContext'
-import { Panel } from '@/components/Panel/Panel'
-import { Tabsbar } from '@/components/Header/Tabsbar'
 import { Uxhelper } from '@/components/Uxhelper/Uxhelper'
 import { PlayTravelingSound } from '@/components/Experience/TravelingSound'
+import { Userbar } from '@/components/Navbar/Userbar'
+import Searchbar from '@/components/Navbar/Searchbar'
+import CustomCursor from '@/components/Canvas/Cursor'
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -30,33 +30,10 @@ const App: React.FC<AppProps> = ({ children }) => {
   const [isPortraitMode, setIsPortraitMode] = useState<boolean>(false);
   const isPortraitModeRef = useRef<boolean>(isPortraitMode);
   const [isMapOpened, setIsMapOpened] = useState<boolean>(true);
-  const [isSidebarOpened, setIsSidebarOpened] = useState<boolean>(false);
-  const [panelData, setPanelData] = useState([]);
-  const isExperienceStarted = experienceContext.startExperience;
-  const travelingData = experienceContext.travelingData;
+  const { startExperience, isSearchBarActive } = useExperienceContext();
   const [paperLTRSound, setPaperLTRSound] = useState<HTMLAudioElement | null>(null);
   const [paperRTLSound, setPaperRTLSound] = useState<HTMLAudioElement | null>(null);
-
-  const panelRef = useRef<HTMLDivElement>(null);
-  const sidebarRef = useRef<HTMLDivElement>(null);
-
-  // Create refs for each section
-  const skillRef = useRef<HTMLDivElement>(null);
-  const backgroundRef = useRef<HTMLDivElement>(null);
-  const softwareRef = useRef<HTMLDivElement>(null);
-
-  const handleSidebarClick = (event: React.MouseEvent<HTMLDivElement>) => {
-    event.stopPropagation();
-  };
-
-  const handleRefClick = (sectionId: string) => {
-    const sectionRef = sectionId === "SkillSection" ? skillRef :
-      sectionId === "FormationBackground" ? backgroundRef :
-        softwareRef;
-    if (sectionRef.current) {
-      sectionRef.current.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
+  const [showCursor, setShowCursor] = useState<boolean>(false);
 
   useEffect(() => {
     // Create audio elements when the component mounts
@@ -107,31 +84,11 @@ const App: React.FC<AppProps> = ({ children }) => {
     isPortraitModeRef.current = isPortraitMode;
   }, [isPortraitMode]);
 
-  const openSpaceMapWindow = () => {
-    setIsMapOpened(prevState => !prevState);
-    if (paperRTLSound) {
-      paperRTLSound.volume = 1;
-      paperRTLSound.play();
-    }
-  }
-
-  useEffect(() => {
-    setIsMapOpened(false);
-  }, []);
-
-  const handleAboutButtonClick = () => {
-    setIsSidebarOpened(prevState => !prevState);
-    if (paperLTRSound) {
-      paperLTRSound.volume = 1;
-      paperLTRSound.play();
-    }
-  };
-
   useEffect(() => {
     fetch('/user/data.json')
       .then(response => response.json())
       .then(data => {
-        setPanelData(data);
+        experienceContext.setUserData(data);
       })
       .catch(error => console.error('Error:', error));
   }, []);
@@ -145,23 +102,22 @@ const App: React.FC<AppProps> = ({ children }) => {
     .catch(error => console.error('Error:', error));
   }, []);
 
+  useEffect(() => {
+    const pointerFine = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    setShowCursor(pointerFine);
+  }, []);
+
   return (
     <html lang="en">
-      <body className='Layout'>
-        <Navbar isClient={isClient} isPortrait={isPortraitModeRef.current} isMapOpened={isMapOpened} handleAboutButtonClick={handleAboutButtonClick} isSidebarOpened={isSidebarOpened} />
-
-        <MetaverseActions openSpaceMapWindow={openSpaceMapWindow} isMapOpened={isMapOpened} />
-
+      <body>
+        { showCursor && <CustomCursor /> }
+        <Navbar isClient={isClient} />
+        <Searchbar />
+        <Userbar />
         <div className={inter.className}>{children}</div>
-
-        <div ref={sidebarRef} className={`sideBar${isSidebarOpened ? '' : ' hidden'}`} onClick={handleSidebarClick}>
-          <Tabsbar
-            handleRefClick={handleRefClick} />
-          <Panel data={panelData} ref={panelRef} skillRef={skillRef} backgroundRef={backgroundRef} softwareRef={softwareRef} />
-        </div>
         {displayLoading ? <LoadingPage isClient={isClient} /> : null}
-        <Uxhelper isNotVisible={isMapOpened || isSidebarOpened && isPortraitModeRef.current}/>
-        {isExperienceStarted? <PlayTravelingSound travelingData={travelingData}/> : null}
+        <Uxhelper />
+        {startExperience? <PlayTravelingSound/> : null}
       </body>
     </html>
   );

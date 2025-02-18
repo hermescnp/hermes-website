@@ -1,8 +1,7 @@
-import React, { useState, forwardRef, useRef, useEffect } from "react";
-import '../../../styles/Softwares.css';
-import SoftwareItem from "./SoftwareItem";
-import Image from "next/image";
-import chevron from 'public/assets/SVG/Chevron.svg';
+import React, { useState, forwardRef, useRef, useEffect } from "react"
+import '../../../styles/Softwares.css'
+import SoftwareItem from "./SoftwareItem"
+import Image from "next/image"
 
 interface SoftwareItemType {
     name: string;
@@ -58,7 +57,7 @@ const SoftwareList = forwardRef<HTMLDivElement, SoftwareListProps>(({ items }, r
             <div className="SeeMoreButtonSoftwareContainer">
                 <button className="SeeMoreButtonSoftware" onClick={handleClick}>
                     <p id="aboutMeText">{showAll ? 'See Less' : 'See More'}</p>
-                    <Image id="AboutMeChevron" className={expanded ? "SeeLess" : "SeeMore"} src={chevron} width={20} height={20} alt="See More" />
+                    <Image id="AboutMeChevron" className={expanded ? "SeeLess" : "SeeMore"} src={'/assets/SVG/Chevron.svg'} width={20} height={20} alt="See More" />
                 </button>
             </div>
         </section>

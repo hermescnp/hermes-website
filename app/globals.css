@@ -2,13 +2,6 @@ html {
   scroll-behavior: smooth;
 }
 
-.Layout {
-  position: fixed;
-  background-color: rgba(18, 23, 34, 1);
-  top: 0;
-  left: 0;
-}
-
 body {
   font-family: 'Inter', sans-serif;
   font-weight: 100;
@@ -18,9 +11,6 @@ body {
   padding: 0;
   margin: 0;
   overflow: hidden;
-}
-
-body, canvas {
   user-select: none; /* Standard syntax */
   -webkit-user-select: none; /* Safari */
   -moz-user-select: none; /* Firefox */
@@ -63,9 +53,7 @@ body, canvas {
   height: calc(100% - 100px);
 }
 
-.renderView {
-  width: 100%;
-  height: 100%;
+Canvas {
   margin: 0;
   padding: 0;
   top: 0;
@@ -122,11 +110,8 @@ picture {
 .invisible {
   opacity: 0;
   pointer-events: none;
+  transition: opacity 0.5s;
 } 
-
-img {
-  width: 50px;
-}
 
 ul {
   list-style: none;
