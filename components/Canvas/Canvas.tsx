@@ -31,7 +31,7 @@ export default function CanvasComponent() {
             // Navigate to the main instance
             pushToHistory('main')
             // Clear the placehover
-            setPlaceHover({ key:'', name: '', isChild: false, isParent: false });
+            setPlaceHover({ key:'', name: '' });
         },
         [pushToHistory]
     )
