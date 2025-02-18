@@ -18,8 +18,10 @@ export default function CanvasComponent() {
 
     // Define camera position and target
     const position = new THREE.Vector3(-13.0, 7.0, 13.0)
-    // Create a fallback for spaceData[0]
-    const primaryData = (spaceData && spaceData.length > 0) ? spaceData[0] : { positionX: 0, positionY: 0, positionZ: 0 }
+    // Safely retrieve the primaryData ensuring positionX exists; fallback if not valid
+    const primaryData = (spaceData?.[0]?.positionX !== undefined)
+        ? spaceData[0]
+        : { positionX: 0, positionY: 0, positionZ: 0 }
     const generalTarget = new THREE.Vector3(
         primaryData.positionX,
         primaryData.positionY,
