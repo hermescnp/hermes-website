@@ -87,7 +87,7 @@ export default function Scene({ data, currentInstance }: SceneProps) {
     if (!orbitRef.current) return
     const controls = orbitRef.current
     const lerpFactor = 0.05
-    const distanceFactor = isPortraitMode ? 2 : 1
+    const distanceFactor = isPortraitMode ? 1.5 : 1
 
     controls.target.lerp(desiredInstance.current.target, lerpFactor)
     controls.minDistance = THREE.MathUtils.lerp(
