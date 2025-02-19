@@ -2,6 +2,7 @@
 "use client"
 import React, { useCallback, useRef, useEffect, useState } from "react"
 import { Canvas } from "@react-three/fiber"
+import { EffectComposer, HueSaturation, BrightnessContrast } from "@react-three/postprocessing"
 import * as THREE from "three"
 import { useExperienceContext } from "@/context/ExperienceContext"
 import Scene from "./SceneFunction"
@@ -35,7 +36,7 @@ export default function CanvasComponent() {
             // Navigate to the main instance
             pushToHistory('main')
             // Clear the placehover
-            setPlaceHover({ key:'', name: '' });
+            setPlaceHover({ key: '', name: '' });
         },
         [pushToHistory]
     )
@@ -46,7 +47,7 @@ export default function CanvasComponent() {
             gl={{
                 antialias: true,
                 toneMapping: THREE.LinearToneMapping,
-                toneMappingExposure: 1.0,
+                toneMappingExposure: 1.2,
                 shadowMapEnabled: false,
                 shadowMapType: THREE.PCFSoftShadowMap,
                 preserveDrawingBuffer: false,
@@ -65,8 +66,11 @@ export default function CanvasComponent() {
                 target={generalTarget}
                 aspect={window.innerWidth / window.innerHeight}
             />
-            <ambientLight color="#ffe175" intensity={0.2} />
+            <ambientLight color="#fff" intensity={0.2} />
             <Scene data={spaceData} currentInstance={currentInstance} />
+            <EffectComposer>
+                <HueSaturation saturation={0.05} hue={-0.05} />
+            </EffectComposer>
         </Canvas>
     )
 }

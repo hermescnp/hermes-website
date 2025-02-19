@@ -11,9 +11,6 @@ const Background_R3F = () => {
         color.set(0x1e2332);
         scene.fog = new THREE.Fog(color, 50, 70);
 
-        const ambientLight = new THREE.AmbientLight('#ffe175', 0.2);
-        scene.add(ambientLight);
-
         const hdrEquirect = new RGBELoader();
         hdrEquirect.load(
             '/textures/night-environment.hdr', (hdri) => {
