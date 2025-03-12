@@ -15,7 +15,7 @@ export const metadata = {
     siteName: "Hermes Science's Lab",
     images: [
       {
-        url: "/assets/CoverPhotographyWeb.jpeg",
+        url: "/assets/CoverPhotographyWeb.png",
         width: 1200,
         height: 630,
         alt: "Hermes Science's Lab Cover Image",
@@ -32,7 +32,7 @@ export const metadata = {
     description: 'UX/Technical Artist | Professional Musician Portfolio',
     images: [
       {
-        url: "/assets/CoverPhotographyWeb.jpeg",
+        url: "/assets/CoverPhotographyWeb.png",
         alt: "Hermes Science's Lab Cover Image",
       },
     ],
