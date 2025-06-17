@@ -64,7 +64,7 @@
       from -160deg at 50% 50%,
       #FFFFFF 0deg,
       #374C6C 120deg,
-      #315F8C 240deg,
+      #0A5E95 240deg,
       #FFFFFF 360deg
     );
     left: 50%;
@@ -79,7 +79,7 @@
       from -160deg at 50% 50%,
       #FFFFFF 0deg,
       #374C6C 120deg,
-      #315F8C 240deg,
+      #0A5E95 240deg,
       rgba(18, 23, 34, 0) 360deg
     );
     animation: spinner 4s linear infinite;

@@ -55,7 +55,7 @@ export default function CanvasComponent() {
                 logarithmicDepthBuffer: true,
             }}
             onCreated={({ scene }) => {
-                const color = new THREE.Color(0x1e2332)
+                const color = new THREE.Color(0x0B1E33)
                 scene.fog = new THREE.Fog(color, 50, 70)
                 scene.background = null
             }}
@@ -69,7 +69,7 @@ export default function CanvasComponent() {
             <ambientLight color="#fff" intensity={0.2} />
             <Scene data={spaceData} currentInstance={currentInstance} />
             <EffectComposer>
-                <HueSaturation saturation={0.05} hue={-0.05} />
+                <HueSaturation saturation={0.1} hue={-0.1} />
             </EffectComposer>
         </Canvas>
     )

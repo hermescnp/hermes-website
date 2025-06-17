@@ -25,7 +25,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(145deg, #315F8C, #315F8C);
+    background: linear-gradient(145deg, #0A5E95, #0A5E95);
     border-radius: 50%;
     transition: all 0.1s ease;
     cursor: pointer;
@@ -38,7 +38,7 @@
     justify-content: center;
     align-items: center;
     border-radius: 50%;
-    border: solid 1px #315F8C;
+    border: solid 1px #0A5E95;
     transition: all 0.1s ease;
     cursor: pointer;
 }
@@ -52,8 +52,8 @@
 .socialMediaIconFooter:hover {
     width: 42px;
     height: 42px;
-    background: linear-gradient(145deg, #68DBFF, #315F8C);
-    border: solid 1px #315F8C;
+    background: linear-gradient(145deg, #68DBFF, #0A5E95);
+    border: solid 1px #0A5E95;
 }
 
 .MediaIcon {

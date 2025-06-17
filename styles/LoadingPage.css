@@ -4,7 +4,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: radial-gradient(circle, #28415E 0%, #1F2331 50%, #121722 80%);
+    background: radial-gradient(circle, #172E49 0%, #0B1E33 50%, #0A1727 80%);
     z-index: 20;
     display: flex;
     flex-direction: column;
@@ -26,7 +26,10 @@
     padding-right: 50px;
     overflow: visible;
     transition: all 1s ease;
-    filter: drop-shadow(0px 0px 30px rgba(49, 95, 140, 1));
+    filter:
+    drop-shadow(0 0 20px rgba(104, 219, 255, 0.2))
+    drop-shadow(0 0 50px rgba(104, 219, 255, 0.2))
+    drop-shadow(0 0 70px rgba(104, 219, 255, 0.2));
 }
 
 .OfficeLogo.Inflated {
@@ -55,14 +58,14 @@ progress {
 
 progress::-webkit-progress-bar {
     height: 2px;
-    background-color: #141823;
+    background-color: #0A1727;
     border-radius: 0px;
 }
 
 .loading-progress-completed {
     background: linear-gradient(90deg,
-            #1F3356 0%,
-            #315F8C 25%,
+            #172E49 0%,
+            #0A5E95 25%,
             #68DBFF 75%,
             #FFFFFF 100%);
     border-radius: 0px;
@@ -72,8 +75,8 @@ progress::-webkit-progress-bar {
 
 progress::-webkit-progress-value {
     background: linear-gradient(90deg,
-            #1F3356 0%,
-            #315F8C 25%,
+            #172E49 0%,
+            #0A5E95 25%,
             #68DBFF 75%,
             #FFFFFF 100%);
     border-radius: 0px;
@@ -106,9 +109,9 @@ progress::-moz-progress-bar {
     /* The conic gradient creates the colored border effect */
     background: conic-gradient(from var(--angle) at 50% 50%,
             #FFFFFF 0deg,
-            #1F3356 90deg,
+            #172E49 90deg,
             #68DBFF 180deg,
-            #1F3356 270deg,
+            #172E49 270deg,
             #FFFFFF 360deg);
     border-radius: 25px;
     transition: all 1s ease;
@@ -127,7 +130,7 @@ progress::-moz-progress-bar {
     /* leave a small gap for the border effect */
     height: calc(100% - 2px);
     color: rgba(255, 255, 255, 0.7);
-    background-color: rgba(33, 43, 63, 1);
+    background-color: rgba(11, 30, 51, 1);
     border-radius: inherit;
     /* Combine transitions into one property */
     transition: opacity 0.3s ease, transform 2s ease;
@@ -146,11 +149,11 @@ progress::-moz-progress-bar {
     bottom: -1px;
     /* Use the same gradient as the border */
     background: conic-gradient(from var(--angle) at 50% 50%,
-            #FFFFFF 0deg,
-            #1F3356 90deg,
+            #0A5E95 0deg,
+            #172E49 90deg,
             #68DBFF 180deg,
-            #1F3356 270deg,
-            #FFFFFF 360deg);
+            #172E49 270deg,
+            #0A5E95 360deg);
     /* Apply the blur to create a glowing effect */
     filter: blur(15px);
     z-index: 20;
@@ -166,7 +169,7 @@ progress::-moz-progress-bar {
 }
 
 .StartButton:hover {
-    background-color: #141823;
+    background-color: #0A1727;
     color: rgba(255, 255, 255, 1);
 }
 

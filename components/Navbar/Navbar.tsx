@@ -39,14 +39,16 @@ export const Navbar: React.FC<NavbarProps> = ({
         setIsUserPanelExpanded,
         isSearchBarActive,
         setIsSearchBarActive,
+        isChatbotExpanded,
+        isPortraitMode
     } = useExperienceContext()
     const stopPropagation = (event: React.SyntheticEvent) => {
         event.stopPropagation();
     }
     const [currentInstance, setCurrentInstance] = useState<currentInstanceType>(
         {
-            key: 'main', 
-            name:(spaceData?.find(item => item.key === 'main')?.name),
+            key: 'main',
+            name: (spaceData?.find(item => item.key === 'main')?.name),
             parentKey: 'root',
             parentName: 'root'
         }
@@ -129,7 +131,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         const instanceHasChild = spaceData?.some(
             (item) => item.parentKey === currentInstance.key
         );
-        
+
         // Check if current instance has documentation to show
         const currentInstanceData = spaceData?.find(item => item.key === currentInstance.key);
         const hasDocumentation = currentInstanceData?.documentation && currentInstanceData.documentation.trim() !== '';
@@ -154,8 +156,8 @@ export const Navbar: React.FC<NavbarProps> = ({
         const newLastHistoryItemParent = spaceData?.find(item => item.key === newLastHistoryItem)?.parentKey || ''
         setCurrentInstance(
             {
-                key: newLastHistoryItem, 
-                name:(spaceData?.find(item => item.key === newLastHistoryItem)?.name || ''),
+                key: newLastHistoryItem,
+                name: (spaceData?.find(item => item.key === newLastHistoryItem)?.name || ''),
                 parentKey: newLastHistoryItemParent,
                 parentName: (spaceData?.find(item => item.key === newLastHistoryItemParent)?.name || '')
             }
@@ -204,7 +206,7 @@ export const Navbar: React.FC<NavbarProps> = ({
     }
 
     return (
-        <div className={"navbar-wrapper" + (isInfoPanelExpanded ? ' navbar-wrapper--expanded' : '')}>
+        <div className={"navbar-wrapper" + (isInfoPanelExpanded ? ' navbar-wrapper--expanded' : '') + (isChatbotExpanded && isPortraitMode ? ' invisible' : '')}>
             <div className={'Navbar-background-border' + (isInfoPanelExpanded ? ' Navbar-background-border--hidden' : '')}>
                 <div className={'Navbar-background' + (isHoveringNavbar ? ' Instance--hovered' : '')}>
                     <div className={'shimmer-background' + (isTraveling ? ' --on' : ' --off')}></div>
