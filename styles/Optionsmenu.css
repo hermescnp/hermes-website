@@ -49,7 +49,7 @@
     width: 47px;
     height: 47px;
     opacity: 1;
-    background-color: #141823;
+    background-color: #0A1727;
     border: solid 1px rgba(255, 255, 255, 1);
 }
 
@@ -65,7 +65,7 @@
 }
 
 .option-active {
-    background-color: #315F8C;
+    background-color: #0A5E95;
     border: solid 1px rgba(104, 219, 255, 1);
 }
 
@@ -98,7 +98,7 @@
 }
 
 .sidebarOpenedButton {
-    background-color: #315F8C;
+    background-color: #0A5E95;
 }
 
 .sidebarClosedButton {
@@ -117,4 +117,8 @@
 
 #searchButton {
     z-index: 15;
+}
+
+.sendButton {
+    padding-left: 5px;
 }

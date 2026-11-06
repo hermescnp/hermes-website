@@ -5,7 +5,7 @@ import { useExperienceContext } from '@/context/ExperienceContext'
 import { UserPanel } from '@/components/UserPanel/UserPanel'
 
 export const Userbar: React.FC = () => {
-    const { userData, isInfoPanelExpanded, setIsInfoPanelExpanded, isUserPanelExpanded, setIsUserPanelExpanded } = useExperienceContext()
+    const { userData, isInfoPanelExpanded, setIsInfoPanelExpanded, isUserPanelExpanded, setIsUserPanelExpanded, isChatbotExpanded, isPortraitMode } = useExperienceContext()
     const handleUserButtonClick = () => {
         if (isInfoPanelExpanded) {
             setIsInfoPanelExpanded(false);
@@ -20,7 +20,7 @@ export const Userbar: React.FC = () => {
     const softwareRef = useRef<HTMLDivElement>(null)
 
     return (
-        <div className={"userbar-wrapper" + (isUserPanelExpanded ? ' userbar-wrapper--expanded' : '')}>
+        <div className={"userbar-wrapper" + (isUserPanelExpanded ? ' userbar-wrapper--expanded' : '') + (isChatbotExpanded && isPortraitMode ? ' invisible' : '')}>
             <div className={'userbar-background-border' + (isUserPanelExpanded ? ' userbar-background-border--hidden' : '')}>
                 <div className='userbar-background'></div>
             </div>

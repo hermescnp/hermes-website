@@ -4,18 +4,92 @@
   left: 15px;
   z-index: 21;
   transition: all 0.5s ease;
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: 1fr 50px;
   overflow: visible;
   column-gap: 10px;
-  margin-right: 25px;
-  pointer-events: none;
+  width: 400px;
+  transition: all 0.2s ease;
+  background: rgba(23, 46, 73, 0);
+  opacity: 1;
 }
 
-.hide-bot {
+.ChatbotContainer--expanded {
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  z-index: 21;
+  transition: all 0.5s ease;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: 1fr 50px;
+  overflow: visible;
+  column-gap: 0px;
+  width: 400px;
+  transition: all 0.2s ease;
+  height: calc(100% - 30px);
+  border-radius: 25px;
+}
+
+/* Panel surface lives on a pseudo-element so it can grow out of the bot face
+   with clip-path, since the container height itself can't animate from auto. */
+.ChatbotContainer::before,
+.ChatbotContainer--expanded::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: rgba(23, 46, 73, 0.5);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.25);
+  border: solid 0.5px rgba(178, 178, 178, 1);
+  border-radius: 25px;
+}
+
+.ChatbotContainer::before {
   opacity: 0;
-  overflow: hidden;
+  clip-path: inset(0 calc(100% - 60px) calc(100% - 60px) 0 round 30px);
+  transition:
+    clip-path 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.25s ease 0.1s;
+}
+
+.ChatbotContainer--expanded::before {
+  opacity: 1;
+  clip-path: inset(-24px round 49px);
+  transition:
+    clip-path 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.2s ease;
+}
+
+.ChatbotContainer--expanded .chatbotInputBar {
+  animation: chatPanelContentIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both;
+}
+
+@keyframes chatPanelContentIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ChatbotContainer::before,
+  .ChatbotContainer--expanded::before {
+    transition: opacity 0.2s ease;
+  }
+
+  .ChatbotContainer--expanded .chatbotInputBar {
+    animation: none;
+  }
 }
 
 .LoadingChatbotContainer {
@@ -25,6 +99,7 @@
   z-index: 21;
   display: grid;
   grid-template-columns: auto 1fr;
+  grid-template-rows: 1fr auto;
   align-items: flex-start;
   overflow: visible;
   transition: all 0.5s ease;
@@ -32,18 +107,60 @@
   margin-right: 25px;
 }
 
+.chatbotInputBar {
+  display: grid;
+  grid-template-columns: 50px auto 50px;
+  position: relative;
+  height: 100%;
+  width: auto;
+  border-radius: inherit;
+  overflow: hidden;
+  grid-row: 2;
+  grid-column: span 2;
+  transition: all 0.2s ease;
+  border-top: solid 0.5px rgba(178, 178, 178, 1);
+}
+
+.chatbotInput--focused {
+  background-color: #0A1727;
+}
+
+.sendButton:disabled {
+  opacity: 0.2;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.hide-chat-panel-button {
+  display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 48px;
+    height: 48px;
+    margin: 1px;
+    transition: all 0.3s ease;
+    border-radius: 50%;
+    opacity: 0.5;
+    cursor: pointer;
+}
+
+.hide-chat-panel-button:hover {
+  opacity: 1;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
 @media screen and (orientation: portrait) {
   .ChatbotContainer {
-    flex-direction: column-reverse;
     top: auto;
     bottom: calc(15px + env(safe-area-inset-bottom));
     left: 15px;
-    align-items: flex-start;
-    margin-right: 15px;
+    grid-template-rows: 1fr 0px;
+    grid-template-columns: auto 0px;
+    width: 64px;
+    height: 64px;
   }
 
-  .LoadingChatbotContainer {
-    top: 20px;
-    left: 20px;
+  .ChatbotContainer--expanded {
+    width: calc(100% - 30px);
   }
 }

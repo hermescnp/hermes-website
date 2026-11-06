@@ -1,6 +1,6 @@
 [
     {
-        "category": "Visual Skills",
+        "category": "Art-Tech Skills",
         "skillName": "Hand-Draw",
         "skillLevel": 70,
         "iconSource": "HandDraw_Icon.svg",
@@ -8,15 +8,15 @@
         "type": "skill"
     },
     {
-        "category": "Visual Skills",
-        "skillName": "Conceptual Analysis",
+        "category": "Art-Tech Skills",
+        "skillName": "System Architecture",
         "skillLevel": 95,
         "iconSource": "space_map.svg",
         "isVisible": true,
         "type": "skill"  
     },
     {
-        "category": "Visual Skills",
+        "category": "Art-Tech Skills",
         "skillName": "2D Graphics",
         "skillLevel": 90,
         "iconSource": "2DGraphics_Icon.svg",
@@ -24,7 +24,7 @@
         "type": "skill"  
     },
     {
-        "category": "Visual Skills",
+        "category": "Art-Tech Skills",
         "skillName": "3D Graphics",
         "skillLevel": 75,
         "iconSource": "3DGraphics_Icon.svg",
@@ -32,7 +32,7 @@
         "type": "skill"  
     },
     {
-        "category": "Visual Skills",
+        "category": "Art-Tech Skills",
         "skillName": "Procedural Programming",
         "skillLevel": 78,
         "iconSource": "ProceduralProgramming_Icon.svg",
@@ -40,15 +40,15 @@
         "type": "skill"
     },
     {
-        "category": "Visual Skills",
-        "skillName": "UX/UI Prototyping",
+        "category": "Art-Tech Skills",
+        "skillName": "UX/UI Prototype",
         "skillLevel": 65,
         "iconSource": "UXUIPrototyping_Icon.svg",
         "isVisible": true,
         "type": "skill"  
     },
     {
-        "category": "Visual Skills",
+        "category": "Art-Tech Skills",
         "skillName": "Applied Mathematics",
         "skillLevel": 62,
         "iconSource": "AppliedMathematics2.svg",
@@ -56,10 +56,10 @@
         "type": "skill"  
     },
     {
-        "category": "Visual Skills",
-        "skillName": "Creative Web Front-end",
-        "skillLevel": 55,
-        "iconSource": "Illustration_Icon.svg",
+        "category": "Art-Tech Skills",
+        "skillName": "Sound Edition & Production",
+        "skillLevel": 90,
+        "iconSource": "SoundEdition_Icon.svg",
         "isVisible": true,
         "type": "skill"  
     },
@@ -81,14 +81,6 @@
     },
     {
         "category": "Musical Skills",
-        "skillName": "Sound Edition & Production",
-        "skillLevel": 90,
-        "iconSource": "SoundEdition_Icon.svg",
-        "isVisible": true,
-        "type": "skill"  
-    },
-    {
-        "category": "Musical Skills",
         "skillName": "Songwriting",
         "skillLevel": 95,
         "iconSource": "SongWriting_Icon.svg",
@@ -97,8 +89,26 @@
     },
     {
         "category": "Work Experience",
-        "name": "Technical Artist",
-        "description": "Enhancing the visual quality and user experience of a simulation project. Designing and implementing both the graphical user interface (GUI) and the game environment at SynchroVerse.",
+        "name": "Lead Agentic AI Architect",
+        "description": "Design and architecture of autonomous multi-agent systems at YUYAY (USA): how agents perceive context, plan actions, collaborate and learn. Custom business tools, workflow automation and AI-powered business strategy with LangChain, LangGraph, Langflow and N8N.",
+        "startDate": 2025,
+        "endDate": "Present",
+        "isVisible": true,
+        "type": "background"  
+    },
+    {
+        "category": "Work Experience",
+        "name": "Artificial Intelligence Strategies Coordinator",
+        "description": "Overseeing AI initiatives at UNPHU University, combining AI with Virtual Reality, Data Science and RPA. Coordinating academic programs, research projects and educational XR experience design.",
+        "startDate": 2025,
+        "endDate": "Present",
+        "isVisible": true,
+        "type": "background"  
+    },
+    {
+        "category": "Work Experience",
+        "name": "Virtual Reality Professor",
+        "description": "Teaching immersive systems creation, space simulation design and AR / VR / XR / MR at UNPHU (university).",
         "startDate": 2024,
         "endDate": "Present",
         "isVisible": true,
@@ -106,19 +116,28 @@
     },
     {
         "category": "Work Experience",
-        "name": "Virtual Reality and Digital Visualization Professor",
-        "description": "Teaching courses on computer graphics, rendering process and post-production techniques for VR/AR and ArqViz at UNPHU (university).",
+        "name": "Technical Artist (Simulations/Game Development)",
+        "description": "Enhancing the visual quality and user experience of AI-powered simulation projects at Synchroverse. GUI design, environment design, concept art solutions and graphics optimization.",
+        "startDate": 2024,
+        "endDate": 2025,
+        "isVisible": true,
+        "type": "background"  
+    },
+    {
+        "category": "Work Experience",
+        "name": "Digital Visualization Professor",
+        "description": "Teaching computer graphics, rendering process, post processing and OpenGL basics at UNPHU (university).",
         "startDate": 2023,
-        "endDate": "Present",
+        "endDate": 2025,
         "isVisible": true,
         "type": "background"  
     },
     {
         "category": "Work Experience",
         "name": "UX Sub-Manager (User Experience Design)",
-        "description": "UX Designer for Business App Team and Chatbot Project at Banco Popular Dominicano.",
+        "description": "AI conversational design for the chatbot project at Popular Bank of Dominican Republic: chatbot interface UX, conversational prompt engineering and tools for conversational diagrams and text analysis. UX design for the business app \"BIZ\", the servicing and claims system, and the API web portal for developers.",
         "startDate": 2021,
-        "endDate": "Present",
+        "endDate": 2025,
         "isVisible": true,
         "type": "background"  
     },
@@ -128,7 +147,7 @@
         "description": "Team manager for visual art production at Pyhex Work. Conceptual designer and artist recluiter.",
         "startDate": 2020,
         "endDate": 2020,
-        "isVisible": true,
+        "isVisible": false,
         "type": "background"  
     },
     {
@@ -137,31 +156,31 @@
         "description": "Work for Hire for Globusiness 360, Kaba Consulting, Emobit, Mufic Pest Control, Kleio Technology, Legine App.",
         "startDate": 2018,
         "endDate": 2019,
-        "isVisible": true,
+        "isVisible": false,
         "type": "background"  
     },
     {
         "category": "Main Academic Formation",
         "name": "Master's Degree in Computer Games and Programming Skills",
-        "description": "Degree by TECH Technological University.",
+        "description": "Degree by TECH Technological University. Focused on technical art, artificial intelligence, game environment design and simulation systems.",
         "startDate": 2022,
-        "endDate": 2023,
+        "endDate": 2024,
         "isVisible": true,
         "type": "background"  
     },
     {
         "category": "Main Academic Formation",
-        "name": "Bachelors Degree of Architecture (Focused in Technology)",
-        "description": "Degree by Universidad Iberoamericana (UNIBE), Dominican Republic.",
-        "startDate": 2012,
-        "endDate": 2022,
+        "name": "Bachelor's Degree of Contemporary Music (Focused in Business)",
+        "description": "Degree by Universidad Nacional Pedro Henríquez Ureña (UNPHU), Dominican Republic. Focused on music business and production. Includes masterclasses by Danny Elfman (Music for Film) and Hans Zimmer (Film Scoring).",
+        "startDate": 2016,
+        "endDate": 2021,
         "isVisible": true,
         "type": "background"  
     },
     {
         "category": "Main Academic Formation",
         "name": "Music Production Interchange",
-        "description": "Interchange year in Escuela de Música de Buenos Aires, Argentina.",
+        "description": "Educational interchange semester at Escuela de Música de Buenos Aires (EMBA), Argentina, focused on music production. Includes a masterclass by Pat Metheny on jazz improvisation.",
         "startDate": 2020,
         "endDate": 2020,
         "isVisible": true,
@@ -169,10 +188,10 @@
     },
     {
         "category": "Main Academic Formation",
-        "name": "Bachelors Degree of Contemporary Music (Focused in Bussiness)",
-        "description": "Degree by Universidad Nacional Pedro Henríquez Ureña (UNPHU), Dominican Republic.",
-        "startDate": 2016,
-        "endDate": 2021,
+        "name": "Bachelor's Degree of Architecture (Focused in Technology)",
+        "description": "Degree by Universidad Iberoamericana (UNIBE), Dominican Republic. Focused on technology, parametric/procedural design and digital 3D space representation. Includes the ARQTUR Caribe 2015 workshop, the Academic Table on Semiotics in XXI Century Design and a masterclass by Elía Zenghelis.",
+        "startDate": 2012,
+        "endDate": 2016,
         "isVisible": true,
         "type": "background"  
     },
@@ -182,13 +201,49 @@
         "description": "Degree by Instituto Técnico Salesiano (ITESA), Dominican Republic.",
         "startDate": 2008,
         "endDate": 2012,
+        "isVisible": false,
+        "type": "background"  
+    },
+    {
+        "category": "Complementary Education",
+        "name": "French Language",
+        "description": "Full-time learning experience at Yves-Thériault Center, the largest French language centre in Quebec.",
+        "startDate": 2026,
+        "endDate": 2026,
         "isVisible": true,
         "type": "background"  
     },
     {
         "category": "Complementary Education",
-        "name": "Google Dev-Fest 2023",
-        "description": "Multiple conferences with Google experts about new developer tools, Artificial Intelligence (AI), User Experience (UX), and more.",
+        "name": "IBM RAG and Agentic AI Professional Certificate",
+        "description": "Real-world AI with RAG and agentic AI, and tools to streamline automation (LangChain / Langflow). Online certificate by Coursera.",
+        "startDate": 2025,
+        "endDate": 2025,
+        "isVisible": true,
+        "type": "background"  
+    },
+    {
+        "category": "Complementary Education",
+        "name": "Expert Level Course in Programming Languages for Video Games",
+        "description": "Object-oriented programming, math for game development and WebGL games development. Course by TECH Technological University.",
+        "startDate": 2024,
+        "endDate": 2024,
+        "isVisible": true,
+        "type": "background"  
+    },
+    {
+        "category": "Complementary Education",
+        "name": "Google DevFest Santo Domingo 2023",
+        "description": "Conferences by Google Developer Groups about new developer tools, Artificial Intelligence (AI), User Experience (UX) and DevOps.",
+        "startDate": 2023,
+        "endDate": 2023,
+        "isVisible": true,
+        "type": "background"  
+    },
+    {
+        "category": "Complementary Education",
+        "name": "Three.js Journey Course: WebGL Development",
+        "description": "Essential programming in TypeScript/JavaScript for interactive 3D WebGL websites.",
         "startDate": 2023,
         "endDate": 2023,
         "isVisible": true,
@@ -197,7 +252,7 @@
     {
         "category": "Complementary Education",
         "name": "Agile Project Management: Scrum Methodology Workshop",
-        "description": "36 theoretical-practical hours about Agile maagement philosophy focused on Scrum Framework.",
+        "description": "36 theoretical-practical hours focused on Agile management philosophy and the Scrum Framework.",
         "startDate": 2022,
         "endDate": 2022,
         "isVisible": true,
@@ -209,7 +264,7 @@
         "description": "Essential Programming in JavaScript for interactive websites. Online course by Domestika.com.",
         "startDate": 2019,
         "endDate": 2019,
-        "isVisible": true,
+        "isVisible": false,
         "type": "background"  
     },
     {
@@ -218,7 +273,7 @@
         "description": "48 theoretical-practical hours about Web Develop. Online course by Domestika.com.",
         "startDate": 2018,
         "endDate": 2018,
-        "isVisible": true,
+        "isVisible": false,
         "type": "background"  
     },
     {
@@ -227,7 +282,7 @@
         "description": "Workshop on Identity in island architecture. (3 days experience)",
         "startDate": 2015,
         "endDate": 2015,
-        "isVisible": true,
+        "isVisible": false,
         "type": "background"  
     },
     {
@@ -236,7 +291,7 @@
         "description": "15 hous about Design semiotics. Certified by Universidad Iberoamericana (UNIBE).",
         "startDate": 2014,
         "endDate": 2014,
-        "isVisible": true,
+        "isVisible": false,
         "type": "background"  
     },
     {
@@ -245,7 +300,7 @@
         "description": "About architectural representation.",
         "startDate": 2014,
         "endDate": 2014,
-        "isVisible": true,
+        "isVisible": false,
         "type": "background"  
     },
     {
@@ -260,7 +315,7 @@
     {
         "category": "Awards & Honours",
         "name": "Second Place - Innovation and Business Creation Contest",
-        "description": "Contest 5.0 by UNPHU emprende (with art project: “Prané”)",
+        "description": "Contest 5.0 by UNPHU Emprende & Mipymes Center (with art project: “Prané”)",
         "startDate": 2017,
         "endDate": 2017,
         "isVisible": true,
@@ -272,13 +327,13 @@
         "description": "Coast Guard booth creation Contest by ARQ-TUR Caribe.",
         "startDate": 2015,
         "endDate": 2015,
-        "isVisible": true,
+        "isVisible": false,
         "type": "background"  
     },
     {
         "category": "Awards & Honours",
         "name": "First Place - Literary Contest",
-        "description": "7th UNIBE 2013 Literary Contest: Category of Cinematographic Script",
+        "description": "7th UNIBE 2013 Literary Contest: Category of Cinematographic Script (storytelling, character generation and creative writing).",
         "startDate": 2013,
         "endDate": 2013,
         "isVisible": true,
@@ -290,31 +345,22 @@
         "description": "Music Composition Contest by M-Gallery",
         "startDate": 2012,
         "endDate": 2012,
-        "isVisible": true,
+        "isVisible": false,
         "type": "background"  
     },
     {
-        "name": "HTML / CSS / JavaScript",
-        "description": "Web Dev",
-        "skillLevel": 90,
-        "iconSource": "PNG/Webpack_Icon.png",
+        "name": "LangChain / LangGraph",
+        "description": "Agentic AI Dev",
+        "skillLevel": 93,
+        "iconSource": "SVG/LangChain_Icon.svg",
         "isVisible": true,
         "type": "software",
         "isImportant": true
     },
     {
-        "name": "Typescript",
-        "description": "Software Development",
-        "skillLevel": 75,
-        "iconSource": "PNG/Typescript_Icon.png",
-        "isVisible": true,
-        "type": "software",
-        "isImportant": true
-    },
-    {
-        "name": "React.js",
-        "description": "Front-end Develop",
-        "skillLevel": 80,
+        "name": "React.js + Next.js",
+        "description": "Front-end Dev",
+        "skillLevel": 95,
         "iconSource": "PNG/React_Icon.png",
         "isVisible": true,
         "type": "software",
@@ -322,36 +368,72 @@
     },
     {
         "name": "Three.js",
-        "description": "Game Develop / Front-end",
-        "skillLevel": 90,
+        "description": "3D Web Development",
+        "skillLevel": 98,
         "iconSource": "PNG/Threejs_Icon.png",
         "isVisible": true,
         "type": "software",
         "isImportant": true
     },
     {
-        "name": "Figma",
-        "description": "UX/UI Design",
+        "name": "Unreal Engine",
+        "description": "C++ / Blueprints",
+        "skillLevel": 65,
+        "iconSource": "PNG/unreal_engine_icon.png",
+        "isVisible": true,
+        "type": "software",
+        "isImportant": true
+    },
+    {
+        "name": "TypeScript / JavaScript",
+        "description": "Programming",
         "skillLevel": 80,
+        "iconSource": "PNG/Typescript_Icon.png",
+        "isVisible": true,
+        "type": "software",
+        "isImportant": true
+    },
+    {
+        "name": "Figma",
+        "description": "UX/UI Design & Prototype",
+        "skillLevel": 85,
         "iconSource": "PNG/Figma_Icon.png",
         "isVisible": true,
         "type": "software",
-        "isImportant": false
+        "isImportant": true
     },
     {
-        "name": "Next.js",
-        "description": "Front-end Framework",
-        "skillLevel": 50,
-        "iconSource": "PNG/Nextjs_Icon.png",
+        "name": "Python",
+        "description": "Tools Dev",
+        "skillLevel": 70,
+        "iconSource": "SVG/Python_Icon.svg",
         "isVisible": true,
         "type": "software",
-        "isImportant": false
+        "isImportant": true
     },
     {
-        "name": "Unreal Engine",
-        "description": "Game Development",
-        "skillLevel": 70,
-        "iconSource": "PNG/unreal_engine_icon.png",
+        "name": "Cursor",
+        "description": "Vibe-Coding / Vibe-Engineering",
+        "skillLevel": 90,
+        "iconSource": "SVG/Cursor_Icon.svg",
+        "isVisible": true,
+        "type": "software",
+        "isImportant": true
+    },
+    {
+        "name": "HTML / CSS",
+        "description": "Web Structure Foundations",
+        "skillLevel": 95,
+        "iconSource": "SVG/HTML5_Icon.svg",
+        "isVisible": true,
+        "type": "software",
+        "isImportant": true
+    },
+    {
+        "name": "Agile / Scrum",
+        "description": "Methodology",
+        "skillLevel": 80,
+        "iconSource": "SVG/Agile_Icon.svg",
         "isVisible": true,
         "type": "software",
         "isImportant": true

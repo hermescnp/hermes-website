@@ -68,7 +68,7 @@ const BackgroundList = forwardRef<HTMLDivElement, BackgroundListProps>(({ items 
         const isHovered = hoveredCategory === category;
 
         return (
-          <div key={index} className="AccordionContent" id={`${category} Category`} style={{ maxHeight: isExpanded ? '1000px' : '70px', height: categoryHeights[index] + 'px', transition: 'all 0.5s ease-out 0s' }}>
+          <div key={index} className="AccordionContent" id={`${category} Category`} style={{ maxHeight: isExpanded ? '2000px' : '70px', height: categoryHeights[index] + 'px', transition: 'all 0.5s ease-out 0s' }}>
             {isExpanded ? (
               <div className="AccordionTittle" id={`${category} Tittle`} onClick={() => collapse(category, index)} style={{ transition: 'all 0.5s ease-out 0s' }} onMouseEnter={() => setHoveredCategory(category)} onMouseLeave={() => setHoveredCategory(null)}>
                 <h4>{category}</h4>

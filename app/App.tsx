@@ -1,6 +1,7 @@
 "use client"
 import './globals.css'
 import React, { useState, useEffect, useRef } from 'react'
+import { usePathname } from 'next/navigation'
 import { Inter } from 'next/font/google'
 import { Navbar } from '@/components/Navbar/Navbar'
 import { LoadingPage } from '@/components/LoadingPage'
@@ -15,7 +16,7 @@ const inter = Inter({ subsets: ['latin'] });
 
 export const metadata = {
   title: "Hermes's Virtual Office",
-  description: 'UX/Technical Artist | Professional Musician Portfolio',
+  description: 'Agentic AI Architect | UX Designer | Technical Artist Portfolio',
 }
 
 interface AppProps {
@@ -23,6 +24,8 @@ interface AppProps {
 }
 
 const App: React.FC<AppProps> = ({ children }) => {
+  const pathname = usePathname();
+  const isPortfolioPage = pathname === '/portfolio';
   const [isClient, setIsClient] = useState<boolean>(false);
   const experienceContext = useExperienceContext();
   const loadingState = isClient ? experienceContext.loadingState : '';
@@ -111,12 +114,12 @@ const App: React.FC<AppProps> = ({ children }) => {
     <html lang="en">
       <body>
         { showCursor && <CustomCursor /> }
-        <Navbar isClient={isClient} />
-        <Searchbar />
+        {!isPortfolioPage && <Navbar isClient={isClient} />}
+        {!isPortfolioPage && <Searchbar />}
         <Userbar />
         <div className={inter.className}>{children}</div>
-        {displayLoading ? <LoadingPage isClient={isClient} /> : null}
-        <Uxhelper />
+        {displayLoading && !isPortfolioPage ? <LoadingPage isClient={isClient} /> : null}
+        {!isPortfolioPage && <Uxhelper />}
         {startExperience? <PlayTravelingSound/> : null}
       </body>
     </html>

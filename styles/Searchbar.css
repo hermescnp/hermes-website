@@ -14,7 +14,7 @@
     border: solid 0.5px rgba(178, 178, 178, 0.5);
     border-radius: 25px;
     transition: all 0.3s ease;
-    background: #141823;
+    background: #0A1727;
     backdrop-filter: blur(30px);
     margin-left: auto;
     overflow: hidden;
@@ -54,7 +54,7 @@
     width: 100%;
     border-radius: 25px;
     overflow: hidden;
-    background-color: #141823;
+    background-color: #0A1727;
     opacity: 1;
     transition: all 0.3s ease;
 }

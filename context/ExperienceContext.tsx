@@ -24,6 +24,8 @@ type ExperienceContextType = {
   setIsInfoPanelExpanded: React.Dispatch<React.SetStateAction<boolean>>;
   isUserPanelExpanded: boolean;
   setIsUserPanelExpanded: React.Dispatch<React.SetStateAction<boolean>>;
+  isChatbotExpanded: boolean;
+  setIsChatbotExpanded: React.Dispatch<React.SetStateAction<boolean>>;
   isSearchBarActive: boolean;
   setIsSearchBarActive: React.Dispatch<React.SetStateAction<boolean>>;
   isPortraitMode: boolean;
@@ -52,6 +54,7 @@ export const ExperienceProvider: React.FC<{ children: React.ReactNode }> = ({ ch
   const [history, pushToHistory, stepBackHistory, clearHistory, getLastHistoryItem, getPrevHistoryItem] = useHistory();
   const [isInfoPanelExpanded, setIsInfoPanelExpanded] = useState<boolean>(false);
   const [isUserPanelExpanded, setIsUserPanelExpanded] = useState<boolean>(false);
+  const [isChatbotExpanded, setIsChatbotExpanded] = useState<boolean>(false);
   const [isSearchBarActive, setIsSearchBarActive] = useState<boolean>(false);
   const [isPortraitMode, setIsPortraitMode] = useState<boolean>(false);
   const [isCursorTargeting, setIsCursorTargeting] = useState(false);
@@ -87,6 +90,8 @@ export const ExperienceProvider: React.FC<{ children: React.ReactNode }> = ({ ch
       setIsInfoPanelExpanded,
       isUserPanelExpanded,
       setIsUserPanelExpanded,
+      isChatbotExpanded,
+      setIsChatbotExpanded,
       isSearchBarActive,
       setIsSearchBarActive,
       isPortraitMode,
