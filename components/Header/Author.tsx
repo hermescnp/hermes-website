@@ -15,7 +15,7 @@ export const Author: React.FC<AuthorProps> = ({ isVisible }) => {
       </picture> */}
       <div className="AuthorInfo">
         <h2>Hermes Concepción</h2>
-        <p>UX/Technical Artist | Professional Musician</p>
+        <p>Agentic AI Architect | UX Designer | Technical Artist</p>
       </div>
     </div>
   )

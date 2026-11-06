@@ -7,10 +7,10 @@ import { ReactNode } from 'react'
 // Define metadata using the metadata API in Next.js 13+
 export const metadata = {
   title: "Hermes Science's Lab",
-  description: 'UX/Technical Artist | Professional Musician Portfolio',
+  description: 'Agentic AI Architect | UX Designer | Technical Artist Portfolio',
   openGraph: {
     title: "Hermes Science's Lab",
-    description: 'UX/Technical Artist | Professional Musician Portfolio',
+    description: 'Agentic AI Architect | UX Designer | Technical Artist Portfolio',
     url: "https://hermes.science",
     siteName: "Hermes Science's Lab",
     images: [
@@ -29,7 +29,7 @@ export const metadata = {
     site: "@YourTwitterHandle",
     creator: "@CreatorTwitterHandle",
     title: "Hermes Science's Lab",
-    description: 'UX/Technical Artist | Professional Musician Portfolio',
+    description: 'Agentic AI Architect | UX Designer | Technical Artist Portfolio',
     images: [
       {
         url: "/assets/CoverPhotographyWeb.png",

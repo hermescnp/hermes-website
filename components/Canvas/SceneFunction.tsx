@@ -11,6 +11,7 @@ import SceneModel from "./SceneModel"
 import Background_R3F from "../Experience/Background_R3F"
 import bloomEffect from '../../public/assets/PNG/bloom-effect.png'
 import HologramEffect from "./HologramEffect"
+import EaselPortfolio from "./EaselPortfolio"
 import '../../styles/Canvas.css'
 
 type ZoneData = {
@@ -188,6 +189,8 @@ export default function Scene({ data, currentInstance }: SceneProps) {
       <Html center position={[0.51, 4.18, -1.29]} zIndexRange={[0, 0]} style={{ pointerEvents: "none" }}>
         <img src={bloomEffect.src} style={{ width: "150px", opacity: 0.7 }} />
       </Html>
+
+      <EaselPortfolio active={currentInstance === "uxtech"} />
 
       <Zones
         data={data} // pass full data instead of filtered data

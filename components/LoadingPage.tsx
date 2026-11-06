@@ -2,7 +2,9 @@
 import React, { useState, useEffect } from 'react'
 import '../styles/LoadingPage.css'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useExperienceContext } from '@/context/ExperienceContext'
+import { WEBGL_UNAVAILABLE } from '@/components/Canvas/WebGLGuard'
 
 interface LoadingScreenProps {
     isClient: boolean;
@@ -111,7 +113,16 @@ export const LoadingPage: React.FC<LoadingScreenProps> = ({ isClient }) => {
                 {isReady ? <div className='loading-progress-completed' ></div>
                 : <progress className='LoadingProgress' value={(loadingProgress / 2) + (loadingStateList.length * 10)} max="100"></progress>}
             </div>
-            <div className={isExperienceStarted ? 'LoadingText Hidden' : 'LoadingText'}>{`${isReady ? 'The office is ready!' : loadingState + '...'}`}</div>
+            <div className={isExperienceStarted ? 'LoadingText Hidden' : 'LoadingText'}>{isReady ? 'The office is ready!' : loadingState === WEBGL_UNAVAILABLE ? loadingState : `${loadingState}...`}</div>
+            {loadingState === WEBGL_UNAVAILABLE && (
+                <div className="LoadingFallback">
+                    <p>Your browser refused to create a 3D context. Close other 3D tabs or turn on hardware acceleration, then try again.</p>
+                    <div className="LoadingFallbackActions">
+                        <button type="button" className="LoadingFallbackButton" onClick={() => window.location.reload()}>Try again</button>
+                        <Link className="LoadingFallbackButton" href="/portfolio">View portfolio</Link>
+                    </div>
+                </div>
+            )}
             <div className={'start-button-wrapper' + (isReady ? ' visible' : '') + (isExperienceStarted ? ' MoveOut' : '')}>
                 <button
                     className={'StartButton'}

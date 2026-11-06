@@ -9,6 +9,8 @@ import type { BotMessage } from 'Types'
 // Directly refer to the message sound
 const messageSound: string = '/assets/sounds/switch_effect.mp3';
 
+const IS_CHAT_AVAILABLE = false;
+
 const playSound = (src: string) => {
     const audio = new Audio(src);
     audio.volume = 0.5;
@@ -154,6 +156,7 @@ export const Uxhelper: React.FC = () => {
     }
 
     const handleTalkButton = () => {
+        if (!IS_CHAT_AVAILABLE) return
         setIsChatbotExpanded(true)
         handleFocus()
     }
@@ -164,9 +167,14 @@ export const Uxhelper: React.FC = () => {
             <div id='chatContent' className={(isBotActive ? 'show-chatBox' : 'hide-chatBox') + (isChatbotExpanded ? ' content--expanded' : ' content--collapsed') + ((isPortraitMode && startExperience && !isChatbotExpanded) ? ' invisible' : '')} ref={chatContentRef}>
                 <Botchat messages={messages} chatPrinter={addNewMessage} chatBoxRef={chatBoxRef} />
                 <div id='chatOptions' className={startExperience ? '' : ' invisible'}>
-                    <button className={'ask-button' + (isChatbotExpanded ? ' invisible' : '')} onClick={handleTalkButton}>
+                    <button
+                        className={'ask-button' + (IS_CHAT_AVAILABLE ? '' : ' ask-button--unavailable') + (isChatbotExpanded ? ' invisible' : '')}
+                        onClick={handleTalkButton}
+                        aria-disabled={!IS_CHAT_AVAILABLE}
+                        title={IS_CHAT_AVAILABLE ? undefined : 'Upcoming functionality'}
+                    >
                         <Image id="AskIcon" className="ask-icon-normal" src={'/assets/SVG/talk_icon.svg'} width={30} height={30} alt='talk icon'></Image>
-                        <span className="ask-text">ASK SOMETHING…</span>
+                        <span className="ask-text">{IS_CHAT_AVAILABLE ? 'ASK SOMETHING…' : 'UPCOMING FUNCTIONALITY'}</span>
                     </button>
                 </div>
             </div>

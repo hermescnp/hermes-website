@@ -44,6 +44,7 @@ export default function CanvasComponent() {
     return (
         <Canvas
             style={{ width: "100vw", height: "100vh" }}
+            dpr={[1, 1.5]}
             gl={{
                 antialias: true,
                 toneMapping: THREE.LinearToneMapping,
@@ -51,7 +52,7 @@ export default function CanvasComponent() {
                 shadowMapEnabled: false,
                 shadowMapType: THREE.PCFSoftShadowMap,
                 preserveDrawingBuffer: false,
-                powerPreference: "high-performance",
+                powerPreference: "default",
                 logarithmicDepthBuffer: true,
             }}
             onCreated={({ scene }) => {

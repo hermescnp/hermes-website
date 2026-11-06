@@ -98,6 +98,40 @@ progress::-moz-progress-bar {
     opacity: 0;
 }
 
+.LoadingFallback {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    max-width: 420px;
+    padding: 0 24px;
+    text-align: center;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.LoadingFallbackActions {
+    display: flex;
+    gap: 12px;
+}
+
+.LoadingFallbackButton {
+    padding: 10px 22px;
+    border: 1px solid rgba(104, 219, 255, 0.45);
+    border-radius: 999px;
+    color: rgba(255, 255, 255, 0.85);
+    background-color: rgba(11, 30, 51, 1);
+    text-decoration: none;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.LoadingFallbackButton:hover {
+    background-color: #0A1727;
+    color: #ffffff;
+}
+
 /* The outer wrapper serves as the gradient border */
 .start-button-wrapper {
     display: flex;

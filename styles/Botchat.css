@@ -137,6 +137,23 @@
     opacity: 1;
 }
 
+.ask-button--unavailable {
+    cursor: not-allowed;
+    border-color: rgba(104, 219, 255, 0.35);
+}
+
+.ask-button--unavailable:hover {
+    width: 240px;
+}
+
+.ask-button--unavailable .ask-icon-normal {
+    opacity: 0.45;
+}
+
+.ask-button--unavailable .ask-text {
+    color: rgba(255, 255, 255, 0.6);
+}
+
 .ask-icon-normal {
     padding-top: 4px;
 }

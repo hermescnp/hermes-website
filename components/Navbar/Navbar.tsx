@@ -136,7 +136,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         const currentInstanceData = spaceData?.find(item => item.key === currentInstance.key);
         const hasDocumentation = currentInstanceData?.documentation && currentInstanceData.documentation.trim() !== '';
 
-        if (!instanceHasChild && hasDocumentation) {
+        if (!instanceHasChild && hasDocumentation && currentInstance.key !== 'uxtech') {
             setTimeout(() => {
                 setIsInfoPanelExpanded(true);
             }, 2000);
